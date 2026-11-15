@@ -41,7 +41,7 @@ if [ -z "${JSON_ONLY:-}" ]; then
   split -b "${PART_MIB}M" -d -a 1 --numeric-suffixes=1 "$iso" "$work/$pub.part"
   echo "$(sha256sum < "$iso" | cut -d' ' -f1)  $pub" > "$work/$pub.sha256"
   ls -l "$work" | tail -n +2
-  run gh release create "$tag" "$work"/* --repo "$REPO" --title "Sunshine OS $rel ($channel, $day)" \
+  run gh release create "$tag" "$work"/* --repo "$REPO" $([ "$channel" = Release ] || echo --prerelease) --title "Sunshine OS $rel ($channel, $day)" \
     --notes "Sunshine OS $rel ($channel), released $day. Download it from https://tak0dan.github.io/sunshineos-site/ . The ISO is stored here in parts (GitHub's 2 GiB file limit) and served as one file \`$pub\`; to join the parts by hand: \`cat $pub.part* > $pub\` and check it with \`sha256sum -c $pub.sha256\`."
 fi
 
