@@ -84,10 +84,11 @@ else echo "venv present"; fi
 fix_owner
 
 log "4/4 ISO"
-rm -f out/*.iso
+OUTDIR=out; [ -n "${FAST:-}" ] && OUTDIR=out/fast   # FAST builds land in out/fast
+rm -f $OUTDIR/*.iso
 for t in $(seq $((TRIES + 2))); do
   ./build.sh >"$LOG/iso.log" 2>&1; fix_owner
-  ls out/*.iso >/dev/null 2>&1 && break
+  ls $OUTDIR/*.iso >/dev/null 2>&1 && break
   warn "no ISO produced (round $t); last lines:"; tail -5 "$LOG/iso.log" | cut -c1-200
   grep -q "No space left" "$LOG/iso.log" && die "out of disk space"
   missing=$(grep -ohE 'target not found: [^ )]+' "$LOG/iso.log" | awk '{print $NF}' | sort -u | tr '\n' ' ')
@@ -98,7 +99,7 @@ for t in $(seq $((TRIES + 2))); do
   fi
   sleep 10
 done
-ls out/*.iso >/dev/null 2>&1 || die "no ISO after several rounds (see $LOG/iso.log)"
+ls $OUTDIR/*.iso >/dev/null 2>&1 || die "no ISO after several rounds (see $LOG/iso.log)"
 
 log "Done"
-ls -lh out/*.iso; (cd out && sha256sum ./*.iso | tee SHA256SUMS)
+ls -lh $OUTDIR/*.iso; (cd $OUTDIR && sha256sum ./*.iso | tee SHA256SUMS)

@@ -18,6 +18,8 @@ echo "build-aur: $*"
 docker run --rm -e HOST_UID="$(id -u)" -e HOST_GID="$(id -g)" \
   -v "$CACHE/pacman:/var/cache/pacman/pkg" -v "$CACHE/aur-src:/srcdest" -v "$PWD/repo:/repo" -v "$PWD/aur:/aur" -v "$PWD/pkgs:/pkgs:ro" \
   sunshineos-builder bash -c '
+  # packages built earlier in ./repo can be dependencies of later ones (e.g. sunshine-store needs uni-pkg-git)
+  chmod -R a+rX /repo; [ -f /repo/sunshine.db.tar.gz ] && ! grep -q "^\[sunshine\]" /etc/pacman.conf && printf "[sunshine]\\nSigLevel = Optional TrustAll\\nServer = file:///repo\\n" >> /etc/pacman.conf
   pacman -Sy --noconfirm >/dev/null 2>&1
   id builder &>/dev/null || useradd -m builder
   echo "builder ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/builder

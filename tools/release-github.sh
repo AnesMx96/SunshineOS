@@ -22,15 +22,16 @@ gen=${SUNSHINE_VERSION:-$(tr -d '[:space:]' < VERSION)}
 channel=${SUNSHINE_CHANNEL:-Release}; case "$channel" in Release|Beta|Testing) ;; *) echo "SUNSHINE_CHANNEL must be Release, Beta or Testing"; exit 1;; esac
 day=${RELEASE_DATE:-$(date +%F)}
 anchor=${SUNSHINE_ANCHOR:-$(tr -d '[:space:]' < ANCHOR 2>/dev/null || true)}
-[ -n "$anchor" ] || { echo "no numbering anchor: put a date (YYYY-MM-DD) in the ANCHOR file or set SUNSHINE_ANCHOR"; exit 1; }
-rel=$(python3 - "$anchor" "$day" "$gen" <<'PY'
+[ "$channel" = Beta ] || [ -n "$anchor" ] || { echo "no numbering anchor: put a date (YYYY-MM-DD) in the ANCHOR file or set SUNSHINE_ANCHOR"; exit 1; }
+# Beta builds are numbered in plain order (SUNSHINE_VERSION=0.1, 0.2, ...), not with the release scheme
+if [ "$channel" = Beta ]; then rel=$gen; else rel=$(python3 - "$anchor" "$day" "$gen" <<'PY'
 import sys,datetime
 a=datetime.date.fromisoformat(sys.argv[1]); r=datetime.date.fromisoformat(sys.argv[2]); gen=sys.argv[3]
 m=(r.year-a.year)*12+(r.month-a.month)-(1 if r.day<a.day else 0)
 if m<0: sys.exit("the release date is before the anchor date")
 print("%d.%d.%d.%s"%(a.day,a.month,m,gen))
 PY
-) || exit 1
+) || exit 1; fi
 pub="SunshineOS_${rel}_${channel}_${day}.iso"; tag="v${rel}-${channel,,}-${day}"
 run() { if [ -n "${DRY:-}" ]; then echo "DRY: $*"; else "$@"; fi; }
 

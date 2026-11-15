@@ -94,6 +94,13 @@ check("service config files are readable by other users",bad=="",("command timed
 for unit in ("dbus-broker","NetworkManager","sddm"):
     st=run("systemctl is-active %s"%unit)
     check("%s is active"%unit,st=="active",st or "no answer")
+# Beta features: Nix, UNI (used by the store), the NixOS GRUB hook
+st=run("systemctl is-active nix-daemon.socket"); check("nix-daemon.socket is active",st=="active",st or "no answer")
+o=run("nix --version 2>&1 | head -1"); check("nix runs",bool(o) and "nix" in o,o or "no output")
+o=run("command -v uni || echo missing"); check("uni is installed",o=="/usr/bin/uni",o or "no answer")
+o=run("timeout 30 uni detect 2>&1 | head -4 | tr '\\n' ' '; echo rc=$?",timeout=60); check("uni runs (uni detect)",bool(o) and "Native manager" in o,o or "timed out")
+o=run("uni --config /usr/share/sunshine-store/uni.toml detect 2>&1 | grep 'Enabled sources'",timeout=60); check("the store's UNI config enables pacman, flatpak, appimage in order",bool(o) and re.search(r"pacman\(1\).*flatpak\(2\).*appimage\(3\)",o) is not None,o or "timed out")
+o=run("test -x /etc/grub.d/42_nixos && test -f /usr/share/libalpm/hooks/90-sunshine-nixos-grub.hook && sh -n /etc/grub.d/42_nixos && echo yes"); check("NixOS GRUB hook is installed",o=="yes",o or "missing")
 # graphical session: the live user is logged in automatically; wait for the desktop, then look at the screen
 t2=time.time(); up=""
 while time.time()-t2<float(os.environ.get("SMOKE_GUI","150")):

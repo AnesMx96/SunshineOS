@@ -1,0 +1,34 @@
+#!/bin/sh
+# Adds a boot entry for NixOS when another disk holds one, so nobody has to write it by hand.
+# Derived from the manual 40_custom entry: same chainload order, but the EFI partition is found by looking
+# for a NixOS bootloader on every FAT partition, not by a fixed UUID. Runs on every grub-mkconfig.
+# Nothing is printed (and no entry exists) when no NixOS is found.
+[ -d /sys/firmware/efi ] || exit 0
+command -v lsblk >/dev/null || exit 0
+tmp=$(mktemp -d) || exit 0
+trap 'umount "$tmp" 2>/dev/null; rmdir "$tmp" 2>/dev/null' EXIT
+lsblk -rno PATH,FSTYPE | while read -r dev fs; do
+  [ "$fs" = vfat ] || continue
+  mount -o ro,noexec,nosuid "$dev" "$tmp" 2>/dev/null || continue
+  found=""
+  for f in EFI/NixOS-boot/grubx64.efi EFI/systemd/systemd-bootx64.efi; do
+    [ -f "$tmp/$f" ] && { found=$f; break; }
+  done
+  # a systemd-boot ESP of NixOS has loader entries mentioning nixos
+  if [ "$found" = EFI/systemd/systemd-bootx64.efi ] && ! grep -qsl -i nixos "$tmp"/loader/entries/* 2>/dev/null \
+     && [ ! -d "$tmp/EFI/nixos" ]; then found=""; fi
+  umount "$tmp"
+  [ -n "$found" ] || continue
+  uuid=$(blkid -s UUID -o value "$dev")
+  [ -n "$uuid" ] || continue
+  cat <<ENTRY
+menuentry "NixOS (auto-detected on $dev)" --class nixos --class gnu-linux --class os {
+    insmod part_gpt
+    insmod fat
+    search --no-floppy --fs-uuid --set=root $uuid
+    chainloader (\$root)/$found
+}
+ENTRY
+  break
+done
+exit 0

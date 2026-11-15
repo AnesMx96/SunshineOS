@@ -1,0 +1,12 @@
+# Used by the Sunshine Store: it runs UNI for every install and removal. Same order as the terminal default;
+# privileged steps ask through the graphical polkit prompt.
+[sources]
+native   = { enabled = true,  priority = 1 }
+flatpak  = { enabled = true,  priority = 2 }
+appimage = { enabled = true,  priority = 3 }
+aur      = { enabled = true,  priority = 4 }
+snap     = { enabled = false, priority = 5 }
+nix      = { enabled = false, priority = 6 }
+
+[general]
+sudo = "pkexec"

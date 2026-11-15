@@ -425,11 +425,25 @@ def run_command_for(p: Pkg) -> str:
 _APPIMAGE_PY = os.path.join(os.path.dirname(os.path.abspath(__file__)), "appimage.py")
 
 
+# Installs and removals of pacman / AUR / Flatpak / Snap packages go through UNI, so the store and the `uni` command
+# behave the same (same sources, same snapshots, same log). The store config makes privileged steps use polkit.
+UNI_CONFIG = "/usr/share/sunshine-store/uni.toml"
+UNI_SOURCES = {"pacman": "pacman", "aur": "aur", "flatpak": "flatpak", "snap": "snap"}
+
+
+def _uni_argv(p: Pkg, remove: bool) -> list:
+    ref = p.app_id if p.source == "flatpak" else p.name
+    return ["uni", "--config", UNI_CONFIG, "remove" if remove else "install", ref, "--from", UNI_SOURCES[p.source], "-y"]
+
+
 def command_for(p: Pkg, remove: bool = False) -> str:
     if p.source == "wine":
         return f'sunshine-store-windows remove "{p.app_id}"' if remove else run_command_for(p)
     if p.source == "appimage":
         return f"sunshine-store-appimage {'remove' if remove else 'install'} {p.app_id}"
+    if p.source in UNI_SOURCES and shutil.which("uni"):
+        ref = p.app_id if p.source == "flatpak" else p.name
+        return f"uni {'remove' if remove else 'install'} {ref} --from {UNI_SOURCES[p.source]}"
     if p.source == "snap":
         return f"sudo snap {'remove' if remove else 'install'} {p.name}"
     if p.source == "pacman":
@@ -449,6 +463,8 @@ def argv_for(p: Pkg, remove: bool = False) -> list:
         if remove:
             return [sys.executable, _APPIMAGE_PY, "remove", p.app_id]
         return [sys.executable, _APPIMAGE_PY, "install", p.app_id, p.label, p.icon]
+    if p.source in UNI_SOURCES and shutil.which("uni"):
+        return _uni_argv(p, remove)
     if p.source == "snap":
         return ["pkexec", "snap", "remove" if remove else "install", p.name]
     if p.source == "pacman":
