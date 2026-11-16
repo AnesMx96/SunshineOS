@@ -18,13 +18,17 @@ name=$(basename "$iso"); ver=$(sed -E 's/^sunshineos-([0-9.]+)-.*/\1/' <<<"$name
 #   <big>.<small>  generation counters from the VERSION file (or SUNSHINE_VERSION)
 #   channel     Release (default), Beta or Testing (SUNSHINE_CHANNEL); only Release files are served by the download button
 #   <date>      release date, today unless RELEASE_DATE=YYYY-MM-DD is set
-gen=${SUNSHINE_VERSION:-$(tr -d '[:space:]' < VERSION)}
+# Edition: Sol is the main distribution (default, no tag in the file name); other editions are branches such as Sirius (declarative).
+# Each edition has its own version counter: VERSION for Sol, VERSION.<edition in lower case> for the others (or SUNSHINE_VERSION).
+edition=${SUNSHINE_EDITION:-Sol}; [[ "$edition" =~ ^[A-Za-z]+$ ]] || { echo "SUNSHINE_EDITION must be letters only (Sol, Sirius, ...)"; exit 1; }
+vfile=VERSION; [ "$edition" = Sol ] || vfile="VERSION.${edition,,}"
+gen=${SUNSHINE_VERSION:-$(tr -d '[:space:]' < "$vfile")}
 channel=${SUNSHINE_CHANNEL:-Release}; case "$channel" in Release|Beta|Testing) ;; *) echo "SUNSHINE_CHANNEL must be Release, Beta or Testing"; exit 1;; esac
 day=${RELEASE_DATE:-$(date +%F)}
 anchor=${SUNSHINE_ANCHOR:-$(tr -d '[:space:]' < ANCHOR 2>/dev/null || true)}
-[ "$channel" = Beta ] || [ -n "$anchor" ] || { echo "no numbering anchor: put a date (YYYY-MM-DD) in the ANCHOR file or set SUNSHINE_ANCHOR"; exit 1; }
-# Beta builds are numbered in plain order (SUNSHINE_VERSION=0.1, 0.2, ...), not with the release scheme
-if [ "$channel" = Beta ]; then rel=$gen; else rel=$(python3 - "$anchor" "$day" "$gen" <<'PY'
+[ "$channel" != Release ] || [ "$edition" != Sol ] || [ -n "$anchor" ] || { echo "no numbering anchor: put a date (YYYY-MM-DD) in the ANCHOR file or set SUNSHINE_ANCHOR"; exit 1; }
+# Only a Sol Release uses the anchor scheme; everything else is numbered in plain order (0.1, 0.2, ...)
+if [ "$channel" != Release ] || [ "$edition" != Sol ]; then rel=$gen; else rel=$(python3 - "$anchor" "$day" "$gen" <<'PY'
 import sys,datetime
 a=datetime.date.fromisoformat(sys.argv[1]); r=datetime.date.fromisoformat(sys.argv[2]); gen=sys.argv[3]
 m=(r.year-a.year)*12+(r.month-a.month)-(1 if r.day<a.day else 0)
@@ -32,7 +36,8 @@ if m<0: sys.exit("the release date is before the anchor date")
 print("%d.%d.%d.%s"%(a.day,a.month,m,gen))
 PY
 ) || exit 1; fi
-pub="SunshineOS_${rel}_${channel}_${day}.iso"; tag="v${rel}-${channel,,}-${day}"
+if [ "$edition" = Sol ]; then prefix=SunshineOS; tag="v${rel}-${channel,,}-${day}"; else prefix="SunshineOS-${edition}"; tag="v${rel}-${edition,,}-${channel,,}-${day}"; fi
+pub="${prefix}_${rel}_${channel}_${day}.iso"
 run() { if [ -n "${DRY:-}" ]; then echo "DRY: $*"; else "$@"; fi; }
 
 if [ -z "${JSON_ONLY:-}" ]; then
@@ -41,20 +46,20 @@ if [ -z "${JSON_ONLY:-}" ]; then
   split -b "${PART_MIB}M" -d -a 1 --numeric-suffixes=1 "$iso" "$work/$pub.part"
   echo "$(sha256sum < "$iso" | cut -d' ' -f1)  $pub" > "$work/$pub.sha256"
   ls -l "$work" | tail -n +2
-  run gh release create "$tag" "$work"/* --repo "$REPO" $([ "$channel" = Release ] || echo --prerelease) --title "Sunshine OS $rel ($channel, $day)" \
+  run gh release create "$tag" "$work"/* --repo "$REPO" $([ "$channel" = Release ] || echo --prerelease) --title "Sunshine OS $([ "$edition" = Sol ] || echo "$edition ")$rel ($channel, $day)" \
     --notes "Sunshine OS $rel ($channel), released $day. Download it from https://tak0dan.github.io/sunshineos-site/ . The ISO is stored here in parts (GitHub's 2 GiB file limit) and served as one file \`$pub\`; to join the parts by hand: \`cat $pub.part* > $pub\` and check it with \`sha256sum -c $pub.sha256\`."
 fi
 
 if [ -n "${SITE_DIR:-}" ] && [ -z "${DRY:-}" ]; then
   gh release view "$tag" --repo "$REPO" --json assets > out/.assets.json
-  python3 - "$SITE_DIR/release.json" "$rel" "$day" "$pub" "$tag" "${DOWNLOAD_URL:-}" "out/.assets.json" "$(sha256sum < "$iso" | cut -d' ' -f1)" "$channel" <<'PY'
+  python3 - "$SITE_DIR/release.json" "$rel" "$day" "$pub" "$tag" "${DOWNLOAD_URL:-}" "out/.assets.json" "$(sha256sum < "$iso" | cut -d' ' -f1)" "$channel" "$edition" <<'PY'
 import json,sys,os
-p,rel,day,pub,tag,dl,assets,sha,channel=sys.argv[1:]
+p,rel,day,pub,tag,dl,assets,sha,channel,edition=sys.argv[1:]
 parts=sorted([a for a in json.load(open(assets))["assets"] if ".part" in a["name"]],key=lambda a:a["name"])
 if not parts: sys.exit("the release has no parts")
 d=json.load(open(p)) if os.path.exists(p) else {"releases":[]}
 d["releases"]=[r for r in d["releases"] if r.get("file")!=pub]
-d["releases"].insert(0,{"version":rel,"channel":channel,"date":day,"tag":tag,"file":pub,"size":sum(a["size"] for a in parts),"sha256":sha,
+d["releases"].insert(0,{"version":rel,"edition":edition,"channel":channel,"date":day,"tag":tag,"file":pub,"size":sum(a["size"] for a in parts),"sha256":sha,
   "url":dl,"parts":[{"url":a["url"],"size":a["size"]} for a in parts]})
 json.dump(d,open(p,"w"),indent=2); open(p,"a").write("\n"); print("updated",p,"-",len(parts),"parts")
 PY

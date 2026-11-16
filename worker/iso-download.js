@@ -1,17 +1,18 @@
 // Cloudflare Worker: serves the newest Sunshine OS ISO as ONE file.
 // GitHub Releases refuse files of 2 GiB or more, so the ISO is stored there in parts. This Worker looks up the newest
-// SunshineOS_<version>_Release_<date>.iso in the website's release.json and streams its parts back to back as a single download
+// ISO of the asked edition and channel (default: Sol, Release) in the website's release.json and streams its parts back to back as a single download
 // (nothing is stored or buffered here; the join costs no extra time). Range requests work, so downloads can be resumed.
 //
 // release.json entry: { "file": "SunshineOS_1.0_Release_2026-11-12.iso", "date": "...", "version": "...", "size": N,
 //                       "parts": [ { "url": "https://github.com/.../releases/download/<tag>/<file>.part1", "size": N }, ... ] }
 const RELEASES = "https://tak0dan.github.io/sunshineos-site/release.json";
-const NAME = /^SunshineOS_.+_Release_.+\.iso$/;
-
-async function newest(ctx) {
+// The default is the main edition (Sol), newest Release. Other editions are asked for explicitly:  ?edition=Sirius&channel=Testing
+// (names are letters only; an entry without "edition" belongs to Sol). The main download button never carries these parameters.
+async function newest(ctx, edition, channel) {
   const r = await fetch(RELEASES, { cf: { cacheTtl: 120, cacheEverything: true } });
   if (!r.ok) throw new Error("release.json: HTTP " + r.status);
-  const list = ((await r.json()).releases || []).filter(x => NAME.test(x.file || "") && (x.parts || []).length);
+  const list = ((await r.json()).releases || []).filter(x => (x.parts || []).length && /\.iso$/.test(x.file || "") &&
+    (x.edition || "Sol") === edition && x.channel === channel);
   list.sort((a, b) => String(b.date).localeCompare(String(a.date)) ||
     String(b.version).localeCompare(String(a.version), undefined, { numeric: true }));
   if (!list.length) throw new Error("no release with parts");
@@ -47,8 +48,11 @@ export default {
     if (request.method !== "GET" && request.method !== "HEAD") return new Response("Method not allowed", { status: 405 });
     // never stream the ISO into a frame (the Cloudflare dashboard preview does that and freezes the editor)
     if (request.headers.get("Sec-Fetch-Dest") === "iframe") return new Response("Sunshine OS download endpoint: open this address directly to download the ISO.\n", { status: 200 });
+    const q = new URL(request.url).searchParams;
+    const edition = q.get("edition") || "Sol", channel = q.get("channel") || "Release";
+    if (!/^[A-Za-z]{1,20}$/.test(edition) || !/^(Release|Beta|Testing)$/.test(channel)) return new Response("Unknown edition or channel", { status: 400 });
     let rel;
-    try { rel = await newest(ctx); } catch (e) { return new Response("No ISO is published yet (" + e.message + ")", { status: 503 }); }
+    try { rel = await newest(ctx, edition, channel); } catch (e) { return new Response("No ISO is published yet (" + e.message + ")", { status: 503 }); }
     const total = rel.parts.reduce((n, p) => n + p.size, 0);
     const headers = {
       "Content-Type": "application/octet-stream",
