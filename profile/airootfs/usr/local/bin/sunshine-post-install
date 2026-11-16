@@ -19,7 +19,7 @@ echo "Sunshine OS" > etc/motd
 # GRUB look: Sunshine theme (gray, charcoal, pastel orange); /boot is read by GRUB, so no btrfs compression there (see mount.conf)
 if [ -f etc/default/grub ]; then
   sed -i '/^#\?GRUB_THEME=/d;/^#\?GRUB_GFXMODE=/d;/^#\?GRUB_TERMINAL_OUTPUT=/d' etc/default/grub
-  printf '%s\n' 'GRUB_THEME="/usr/share/grub/themes/sunshine/theme.txt"' 'GRUB_GFXMODE=1920x1080,1366x768,auto' 'GRUB_TERMINAL_OUTPUT=gfxterm' 'GRUB_GFXPAYLOAD_LINUX=keep' 'GRUB_DISABLE_BOOTNEXT=true' >> etc/default/grub
+  printf '%s\n' 'GRUB_THEME="/usr/share/grub/themes/sunshine/theme.txt"' 'GRUB_GFXMODE=auto' 'GRUB_TERMINAL_OUTPUT=gfxterm' 'GRUB_GFXPAYLOAD_LINUX=keep' 'GRUB_DISABLE_BOOTNEXT=true' >> etc/default/grub
 fi
 # kernel image + standard (non-archiso) initramfs setup
 # GRUB cannot read btrfs files that end in a hole ("premature end of file"), and the unpacked image is sparse:

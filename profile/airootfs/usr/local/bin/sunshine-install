@@ -281,7 +281,7 @@ systemctl set-default graphical.target
 /usr/local/bin/sunshine-identity apply --quiet
 sed -i 's/^#\?GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="Sunshine OS"/' /etc/default/grub
 sed -i '/^#\?GRUB_THEME=/d;/^#\?GRUB_GFXMODE=/d;/^#\?GRUB_TERMINAL_OUTPUT=/d' /etc/default/grub
-printf '%s\n' 'GRUB_THEME="/usr/share/grub/themes/sunshine/theme.txt"' 'GRUB_GFXMODE=1920x1080,1366x768,auto' 'GRUB_TERMINAL_OUTPUT=gfxterm' 'GRUB_DISABLE_BOOTNEXT=true' >> /etc/default/grub
+printf '%s\n' 'GRUB_THEME="/usr/share/grub/themes/sunshine/theme.txt"' 'GRUB_GFXMODE=auto' 'GRUB_TERMINAL_OUTPUT=gfxterm' 'GRUB_GFXPAYLOAD_LINUX=keep' 'GRUB_DISABLE_BOOTNEXT=true' >> /etc/default/grub
 sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash loglevel=3"/' /etc/default/grub
 EOS
 echo "$USERNAME:$PASS" | chroot "$MNT" /bin/bash -c 'umask 077; cat > /root/.sunshine-cred'
