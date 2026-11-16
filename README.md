@@ -220,6 +220,8 @@ SITE_DIR=<clone of the site repo> DOWNLOAD_URL=<Worker URL> JSON_ONLY=1 tools/re
 
 - `worker/iso-download.js` is the Worker's code (deploy it in the Cloudflare dashboard; it reads the site's `release.json`).
 - The published name is `SunshineOS_<D>.<M>.<months>.<big>.<small>_<Release|Beta|Testing>_<date>.iso`: `<D>.<M>` and `<months>` come from a numbering anchor date kept in a local, git-ignored `ANCHOR` file (`<D>.<M>` is its day and month, `<months>` the whole months from it to the release date); `<big>.<small>` are the generation counters in the `VERSION` file; the channel is `Release` unless `SUNSHINE_CHANNEL=Beta|Testing`. Only `Release` files are served by the download button.
+- **Editions.** `Sol` is the main distribution; other editions are branches of it (the first is `Sirius`, the declarative one with Nix-managed packages). Choose one with `SUNSHINE_EDITION=Sirius`. Sol keeps the name above; other editions are `SunshineOS-<Edition>_<version>_<Release|Beta|Testing>_<date>.iso` with their own plain counter (`VERSION.<edition>`, e.g. `VERSION.sirius`: 0.1, 0.2, ...). The channel is separate from the edition: it says how finished a build is (`Release` tested, `Beta` close to release, `Testing` experimental).
+- `release.json` entries carry `edition` and `channel`. The download Worker serves Sol's newest Release by default and any other build as `<Worker URL>?edition=Sirius&channel=Testing`; the website lists them under "Other editions".
 - To join the parts by hand: `cat SunshineOS_*.iso.part* > SunshineOS.iso`, then `sha256sum -c` against the `.sha256` file.
 - The website reads `release.json`, so the version, file name, architecture and size on its button always match the newest release.
 
