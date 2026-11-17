@@ -1,0 +1,11 @@
+[Unit]
+Description=Sunshine OS: daily restore point (Timeshift)
+
+[Timer]
+OnBootSec=10min
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec=15min
+
+[Install]
+WantedBy=timers.target

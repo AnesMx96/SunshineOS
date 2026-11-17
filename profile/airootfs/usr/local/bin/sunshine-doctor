@@ -83,7 +83,15 @@ if [ "${use:-0}" -ge 95 ]; then bad "root disk ${use}% full"; elif [ "${use:-0}"
 
 sec "Restore points"
 fs=$(findmnt -no FSTYPE / 2>/dev/null)
-if [ "$fs" != btrfs ]; then warn "root is $fs: restore points need btrfs (choose btrfs when installing)"
+if [ "$fs" != btrfs ]; then
+  # not btrfs: restore points are Timeshift (rsync) copies
+  if ! command -v timeshift >/dev/null; then warn "root is $fs: Timeshift is not installed (sudo pacman -S timeshift)"
+  elif [ -e /etc/timeshift/timeshift.json ]; then
+    ok "Timeshift configured for $fs"
+    systemctl is-enabled sunshine-timeshift.timer >/dev/null 2>&1 && ok "daily restore point timer enabled" || { warn "daily restore point timer is not enabled"; [ $FIX = 1 ] && systemctl enable --now sunshine-timeshift.timer >/dev/null 2>&1 && fx "timer enabled"; }
+    c=$(timeshift --list --scripted 2>/dev/null | grep -cE '[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}-[0-9]{2}-[0-9]{2}')
+    [ "${c:-0}" -gt 0 ] && ok "$c restore point(s) available" || warn "no restore points yet (sunshine-snapshot create)"
+  else bad "Timeshift is not configured"; [ $FIX = 1 ] && /usr/local/bin/sunshine-snapshots-setup / >/dev/null 2>&1 && fx "Timeshift set up"; fi
 else
   if [ -e /etc/snapper/configs/root ]; then ok "snapper configured for /"
   else bad "snapper is not configured"; [ $FIX = 1 ] && /usr/local/bin/sunshine-snapshots-setup / >/dev/null 2>&1 && fx "snapshots set up"; fi

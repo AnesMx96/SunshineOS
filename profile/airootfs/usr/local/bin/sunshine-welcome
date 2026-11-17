@@ -131,14 +131,14 @@ class Welcome(QWidget):
         run(["sunshine-update"])
 
     def snapshots(self):
-        on_btrfs = subprocess.run(["findmnt", "-no", "FSTYPE", "/"], capture_output=True, text=True).stdout.strip() == "btrfs"
-        if on_btrfs and shutil.which("btrfs-assistant-launcher"):
-            run(["btrfs-assistant-launcher"])
+        fs = subprocess.run(["findmnt", "-no", "FSTYPE", "/"], capture_output=True, text=True).stdout.strip()
+        if fs == "btrfs" and shutil.which("btrfs-assistant-launcher"):
+            run(["btrfs-assistant-launcher"])          # Snapper restore points (btrfs)
+        elif fs != "btrfs" and shutil.which("timeshift-launcher"):
+            run(["pkexec", "timeshift-launcher"])      # Timeshift restore points (ext4, xfs, ...)
         else:
-            terminal("echo 'Restore points need the btrfs file system.'; echo; "
-                     "echo 'This computer uses a different one, so they are not available.'; "
-                     "echo 'Choose btrfs when installing Sunshine OS to get them.'; echo; read -rp 'Press Enter to close.'",
-                     "Restore points")
+            terminal("echo 'Restore points are not available here.'; echo; sunshine-snapshot status; echo; "
+                     "echo 'Try: sudo sunshine-doctor --fix'; echo; read -rp 'Press Enter to close.'", "Restore points")
 
     def flathub(self):
         terminal("echo 'Enabling Flathub (needs an internet connection)...'; "

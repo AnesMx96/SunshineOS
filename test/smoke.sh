@@ -105,6 +105,8 @@ o=run("truncate -s 16M /tmp/e.img && mkfs.fat /tmp/e.img >/dev/null 2>&1 && L=$(
 check("42_nixos prints nothing when an EFI partition is mounted",o=="0",o or "no answer")
 o=run("grub-mkconfig -o /tmp/g.cfg >/tmp/g.log 2>&1; echo rc=$?; grub-script-check /tmp/g.cfg && echo syntax-ok",timeout=120)
 check("grub-mkconfig works and writes a valid grub.cfg",bool(o) and "rc=0" in o and "syntax-ok" in o,(o or "timed out").replace("\n"," "))
+o=run("command -v timeshift snapper sunshine-snapshot | tr '\\n' ' '"); check("snapper, timeshift and sunshine-snapshot are installed",bool(o) and o.count("/")>=3,o or "no answer")
+o=run("sunshine-snapshot backend 2>&1 | head -1"); check("sunshine-snapshot picks a backend for this file system",bool(o) and ("snapper" in o or "timeshift" in o),o or "no answer")
 o=run("test -x /etc/grub.d/42_nixos && test -f /usr/share/libalpm/hooks/90-sunshine-nixos-grub.hook && sh -n /etc/grub.d/42_nixos && echo yes"); check("NixOS GRUB hook is installed",o=="yes",o or "missing")
 # graphical session: the live user is logged in automatically; wait for the desktop, then look at the screen
 t2=time.time(); up=""

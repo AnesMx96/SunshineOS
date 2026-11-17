@@ -1,0 +1,11 @@
+[Unit]
+Description=Sunshine OS: daily restore point (Timeshift, non-btrfs systems)
+ConditionPathExists=/etc/timeshift/timeshift.json
+ConditionPathExists=!/run/archiso
+
+[Service]
+Type=oneshot
+Nice=19
+IOSchedulingClass=idle
+TimeoutStartSec=infinity
+ExecStart=/usr/local/bin/sunshine-snapshot timeline
