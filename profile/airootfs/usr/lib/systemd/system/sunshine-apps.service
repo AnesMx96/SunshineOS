@@ -1,0 +1,14 @@
+[Unit]
+Description=Sunshine OS: finish the apps you chose (AUR packages, setup, web apps)
+After=network-online.target
+Wants=network-online.target
+ConditionDirectoryNotEmpty=/var/lib/sunshine/pending
+ConditionPathExists=!/run/archiso
+
+[Service]
+Type=oneshot
+TimeoutStartSec=infinity
+ExecStart=/usr/local/bin/sunshine-apps apply
+
+[Install]
+WantedBy=multi-user.target

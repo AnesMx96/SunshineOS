@@ -86,6 +86,10 @@ if [ $CLEAN = 1 ] || [ ! -d "$PAY/root/opt/illogical-impulse-venv" ]; then
 else echo "venv present"; fi
 fix_owner
 
+# the app catalogue goes into the image: the list the installer shows and the list the first update reads
+cp catalogue/apps.toml profile/airootfs/usr/share/sunshine/catalogue.toml
+python3 tools/catalogue.py netinstall profile/airootfs/usr/share/sunshine/netinstall.yaml || die "app catalogue: netinstall list failed"
+
 log "4/4 ISO"
 OUTDIR=out; [ -n "${FAST:-}" ] && OUTDIR=out/fast   # FAST builds land in out/fast
 rm -f $OUTDIR/*.iso
