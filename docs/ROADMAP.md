@@ -29,11 +29,11 @@ design remark that needs a decision or has a limit worth knowing about.
 ## Tools (TUI/CLI)
 - [x] ASCII graph animation while an action runs; the OS animation with the result when everything succeeded (no animation on serious errors)
 - [x] Warm default messages with sun and tea emojis; a config switch for it
-- [~] Ukrainian translation of all Sunshine tools (library, language switch and the update/repair/diagnosis texts are done; the Toulouse default needs the installer to write /etc/sunshine/install-location, which is not wired yet; the other tools still print English), selectable in the apps and in the config; default Ukrainian when the chosen language is Ukrainian or the installation happened in Toulouse, France
+- [x] Ukrainian translation of the Sunshine tools: shared word list (uk.tsv) used by the shell tools and the Python apps (Welcome, Toolbox); selectable in `/etc/sunshine/tools.conf`; default Ukrainian for a Ukrainian system language or an install in Toulouse (the installer notes the city, from the IP address, only when the zone is Europe/Paris)
 - [x] Repair of pacman and the AUR helper taken from Garuda and EndeavourOS (their approach, adapted)
 - [x] The `[sunshine]` repository is part of every system and of the repair tools (`sunshine-repo`, doctor, fix-pacman, update-run, pacman hook)
 - [x] "Restore visuals" button in sunshine-welcome: pull themes/configs from the repository into a directory (new names) and apply them; offline = apply the existing ones
-- [~] Themes and configs stored in the repository (the restore tool pulls them from the SunshineOS repo's overlay; a separate assets repo does not exist yet) (assets repo), pulled on update
+- [x] Themes and configs stored in the repository: `tak0dan/sunshineos-assets` (published with `tools/publish-assets.sh`), pulled by `sunshine-restore-visuals`; optional pull on every update (`visuals_on_update=on`)
 
 ## Diagnostics
 - [x] `~/` log directory (up to 20 logs), written by a diagnosis script run 10 minutes after each graphical login and after every update through Sunshine tools
@@ -56,8 +56,8 @@ All of them go in a catalogue file the installer and `sunshine-store` read; AUR-
 
 ## Distribution of the Sunshine packages
 - [x] `sunshineos-repo` publishes `sunshine-base`, `sunshine-payload` and the AUR-built packages as the `[sunshine]` repository
-- [ ] The ISO installs `sunshine-base` and `sunshine-payload` from that repository instead of copying their files into the image, so tool updates reach installed systems through normal pacman updates. Today an ISO-installed system owns those files without a package, and `sunshine-converge` would hit file conflicts there.
-- [ ] Sign the repository (it is `Optional TrustAll` for now)
+- [x] The installer registers the tools with pacman: `sunshine-base` (signed, from the `[sunshine]` repository build) is shipped on the ISO and installed over the copied files in the new system (`--overwrite`, offline-safe), so tool updates arrive through normal updates. The Hyprland payload (about 565 MB) stays copied, not packaged, on installed systems
+- [x] The `[sunshine]` repository is signed (packages and database; the key is kept outside the repositories, the public key ships in `sunshine-base` and on the ISO); `SigLevel = PackageRequired DatabaseOptional`
 
 ## Editions
 - [x] Declarative features (Nix and its daemon) are Sirius-only: `build.sh` removes them for Sol; `sunshine-base` and the convert-any-Arch payload no longer depend on Nix

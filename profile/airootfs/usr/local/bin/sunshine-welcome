@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+sys.path.insert(0, "/usr/local/lib/sunshine/")
+try:
+    from i18n import tr
+except ImportError:
+    def tr(s):
+        return s
+
 """Sunshine Welcome: first-run window and everyday helper for Sunshine OS."""
 import os
 import shutil
@@ -75,21 +82,21 @@ class Welcome(QWidget):
         grid.setSpacing(12)
         items = []
         if LIVE:
-            b = self.button("💿  Install Sunshine OS\nPut Sunshine OS on this computer", self.install)
+            b = self.button(tr("💿  Install Sunshine OS\nPut Sunshine OS on this computer"), self.install)
             b.setObjectName("primary")
             outer.addWidget(b)
         items += [
-            ("🛍  Get apps\nBrowse and install programs", lambda: run(["sunshine-store"])),
-            ("🔄  Update everything\nSystem, apps and extras", self.update),
-            ("🛟  Restore points\nUndo a bad change (snapshots)", self.snapshots),
-            ("🎨  Restore visuals\nPull the latest themes and apply them (works offline too)", lambda: terminal("sunshine-restore-visuals; echo; read -rp 'Press Enter to close.'", "Restore visuals")),
-            ("🌐  Enable Flathub\nThousands more apps", self.flathub),
-            ("⚙  Settings\nLook, keyboard, language, network", lambda: run(["systemsettings"])),
-            ("🧰  Toolbox\nHealth check, clean up, repair", lambda: run(["sunshine-toolbox"])),
-            ("📱  Phone\nPair a phone: files, notifications", lambda: run(["kdeconnect-app"])),
-            ("🎧  AirPods\nBattery and noise control", lambda: run(["sunshine-pods"])),
-            ("🐣  Pet\nYour virtual pet", lambda: run(["sunshine-pet"])),
-            ("❓  Help && tips\nWhat to do if something is wrong", self.tips),
+            (tr("🛍  Get apps\nBrowse and install programs"), lambda: run(["sunshine-store"])),
+            (tr("🔄  Update everything\nSystem, apps and extras"), self.update),
+            (tr("🛟  Restore points\nUndo a bad change (snapshots)"), self.snapshots),
+            (tr("🎨  Restore visuals\nPull the latest themes and apply them (works offline too)"), lambda: terminal("sunshine-restore-visuals; echo; read -rp 'Press Enter to close.'", "Restore visuals")),
+            (tr("🌐  Enable Flathub\nThousands more apps"), self.flathub),
+            (tr("⚙  Settings\nLook, keyboard, language, network"), lambda: run(["systemsettings"])),
+            (tr("🧰  Toolbox\nHealth check, clean up, repair"), lambda: run(["sunshine-toolbox"])),
+            (tr("📱  Phone\nPair a phone: files, notifications"), lambda: run(["kdeconnect-app"])),
+            (tr("🎧  AirPods\nBattery and noise control"), lambda: run(["sunshine-pods"])),
+            (tr("🐣  Pet\nYour virtual pet"), lambda: run(["sunshine-pet"])),
+            (tr("❓  Help && tips\nWhat to do if something is wrong"), self.tips),
         ]
         for i, (label, fn) in enumerate(items):
             grid.addWidget(self.button(label, fn), i // 3, i % 3)
@@ -97,12 +104,12 @@ class Welcome(QWidget):
         outer.addStretch(1)
 
         bottom = QHBoxLayout()
-        self.cb = QCheckBox("Show this window at startup")
+        self.cb = QCheckBox(tr("Show this window at startup"))
         self.cb.setChecked(not os.path.exists(NOSHOW))
         self.cb.toggled.connect(self.toggle)
         bottom.addWidget(self.cb)
         bottom.addStretch(1)
-        close = QPushButton("Close")
+        close = QPushButton(tr("Close"))
         close.clicked.connect(self.close)
         bottom.addWidget(close)
         outer.addLayout(bottom)

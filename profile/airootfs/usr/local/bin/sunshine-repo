@@ -7,6 +7,7 @@
 # Options: --quiet. Used by sunshine-doctor, sunshine-fix-pacman, sunshine-update-run and a pacman hook (after pacman itself is upgraded).
 URL=${SUNSHINE_REPO_URL:-https://github.com/tak0dan/sunshineos-repo/releases/download/repo}
 CONF=${SUNSHINE_PACMAN_CONF:-/etc/pacman.conf}
+SIGLEVEL="PackageRequired DatabaseOptional"
 mode=${1:-check}; quiet=0; [ "${2:-}" = --quiet ] && quiet=1
 say() { [ "$quiet" = 1 ] || echo "$*"; }
 cur() { awk '/^\[sunshine\]/{f=1;next} /^\[/{f=0} f&&/^Server[[:space:]]*=/{print $3;exit}' "$CONF"; }
@@ -14,20 +15,24 @@ case "$mode" in
   url) echo "$URL";;
   check)
     if ! grep -q '^\[sunshine\]' "$CONF"; then say "the [sunshine] repository is missing from $CONF"; exit 1; fi
-    c=$(cur); [ "$c" = "$URL" ] && { say "[sunshine] repository OK ($URL)"; exit 0; }
+    sl=$(awk '/^\[sunshine\]/{f=1;next} /^\[/{f=0} f&&/^SigLevel/{sub(/^SigLevel[ \t]*=[ \t]*/,"");print;exit}' "$CONF")
+    c=$(cur); [ "$c" = "$URL" ] && [ "$sl" = "$SIGLEVEL" ] && { say "[sunshine] repository OK ($URL, signed)"; exit 0; }
     say "[sunshine] points at '${c:-nothing}', expected $URL"; exit 1;;
   ensure)
     [ "$(id -u)" -eq 0 ] || { echo "run as root: sudo sunshine-repo ensure" >&2; exit 1; }
     "$0" check --quiet && { say "[sunshine] repository OK"; exit 0; }
     cp -a "$CONF" "$CONF.pre-sunshine"
+    # the repository is signed: trust its key (shipped in sunshine-base and on the ISO)
+    [ -f /usr/share/pacman/keyrings/sunshine.gpg ] && pacman-key --populate sunshine >/dev/null 2>&1
     if grep -q '^\[sunshine\]' "$CONF"; then
+      if grep -A4 '^\[sunshine\]' "$CONF" | grep -q '^SigLevel'; then sed -i "/^\[sunshine\]/,/^\[/{s|^SigLevel[[:space:]]*=.*|SigLevel = $SIGLEVEL|}" "$CONF"; else sed -i "/^\[sunshine\]/a SigLevel = $SIGLEVEL" "$CONF"; fi
       if grep -A4 '^\[sunshine\]' "$CONF" | grep -q '^Server'; then
         sed -i "/^\[sunshine\]/,/^\[/{s|^Server[[:space:]]*=.*|Server = $URL|}" "$CONF"
       else
         sed -i "/^\[sunshine\]/a Server = $URL" "$CONF"
       fi
     else
-      printf '\n[sunshine]\nSigLevel = Optional TrustAll\nServer = %s\n' "$URL" >> "$CONF"
+      printf '\n[sunshine]\nSigLevel = %s\nServer = %s\n' "$SIGLEVEL" "$URL" >> "$CONF"
     fi
     say "[sunshine] repository restored in $CONF";;
   *) echo "usage: sunshine-repo check|ensure|url [--quiet]" >&2; exit 2;;

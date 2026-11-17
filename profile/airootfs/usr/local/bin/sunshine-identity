@@ -3,8 +3,9 @@
 # "filesystem" or "lsb-release" package would turn it back into "Arch Linux"; a pacman hook calls this afterwards.
 # usage: sunshine-identity check|apply [--quiet]
 SRC=/usr/share/sunshine/identity
+[ -r /usr/local/lib/sunshine/ui.sh ] && . /usr/local/lib/sunshine/ui.sh 2>/dev/null || { tr() { printf "%s" "$*"; }; t() { printf "%s" "${2:-$1}"; }; }
 mode=${1:-check}; quiet=0; [ "${2:-}" = --quiet ] && quiet=1
-say() { [ "$quiet" = 1 ] || echo "$*"; }
+say() { [ "$quiet" = 1 ] || echo "$(tr "$*")"; }
 drift=0
 chk() { # chk <wanted file> <installed path>
   if [ -e "$2" ] && cmp -s "$1" "$2"; then return 0; fi

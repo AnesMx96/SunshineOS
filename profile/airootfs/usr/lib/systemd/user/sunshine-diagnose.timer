@@ -1,0 +1,8 @@
+[Unit]
+Description=Run the Sunshine diagnosis 10 minutes after the graphical login
+PartOf=graphical-session.target
+[Timer]
+OnActiveSec=10min
+AccuracySec=30s
+[Install]
+WantedBy=graphical-session.target

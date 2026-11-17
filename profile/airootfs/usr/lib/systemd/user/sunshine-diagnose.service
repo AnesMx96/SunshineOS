@@ -1,0 +1,7 @@
+[Unit]
+Description=Sunshine OS system diagnosis
+ConditionPathExists=!/run/archiso
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sunshine-diagnose
+Nice=19

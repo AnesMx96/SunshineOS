@@ -1,0 +1,18 @@
+# Sunshine OS nano: syntax highlighting for C, C++, C#, Java, JavaScript, SQL (MySQL/MariaDB), Nix, Python, Rust, Ruby, Lua, shell and more
+include "/usr/share/nano/*.nanorc"
+include "/usr/share/nano-syntax-highlighting/*.nanorc"
+set linenumbers
+set autoindent
+set tabsize 4
+set tabstospaces
+set mouse
+set smooth
+set softwrap
+set indicator
+set minibar
+set suspendable
+set historylog
+set positionlog
+set zap
+set stateflags
+set speller "aspell -x -c"

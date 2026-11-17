@@ -8,17 +8,24 @@ sun_conf() { local v; for f in "$SUN_CONF_USER" "$SUN_CONF_SYS"; do [ -r "$f" ] 
 SUN_COZY=$(sun_conf cozy on); SUN_ANIM=$(sun_conf animation on); SUN_LANG=$(sun_conf language auto)
 if [ "$SUN_LANG" = auto ]; then
   case "${LC_ALL:-${LC_MESSAGES:-${LANG:-}}}" in uk*) SUN_LANG=uk ;; *) SUN_LANG=en ;; esac
-  grep -qi toulouse /etc/sunshine/install-location 2>/dev/null && SUN_LANG=uk
+  grep -qi '^city=.*toulouse' /etc/sunshine/install-location 2>/dev/null && SUN_LANG=uk
 fi
 declare -A T
-[ "$SUN_LANG" = uk ] && [ -r /usr/share/sunshine/i18n/uk.sh ] && . /usr/share/sunshine/i18n/uk.sh
-t() { local k=$1; printf '%s' "${T[$k]:-$2}"; }
+if [ "$SUN_LANG" = uk ] && [ -r ${SUNSHINE_I18N:-/usr/share/sunshine/i18n}/uk.tsv ]; then
+  while IFS=$'\t' read -r _k _v; do [ -n "$_k" ] && T[$_k]=$_v; done < ${SUNSHINE_I18N:-/usr/share/sunshine/i18n}/uk.tsv
+fi
+# tr "English text": exact match, or a "prefix*" entry (the rest of the text, usually a value, is kept)
+tr() { local s=$* k; [ "$SUN_LANG" = en ] && { printf '%s' "$s"; return; }
+  if [ -n "${T[$s]+x}" ]; then printf '%s' "${T[$s]}"; return; fi
+  for k in "${!T[@]}"; do [[ $k == *'*' ]] && [[ $s == "${k%\*}"* ]] && { printf '%s%s' "${T[$k]%\*}" "${s#"${k%\*}"}"; return; }; done
+  printf '%s' "$s"; }
+t() { local k=$1; [ -n "${T[$k]+x}" ] && printf '%s' "${T[$k]}" || printf '%s' "${2:-$1}"; }
 B=$'\e[1m'; Y=$'\e[38;5;220m'; O=$'\e[38;5;208m'; G=$'\e[32m'; R=$'\e[31m'; D=$'\e[2m'; N=$'\e[0m'
 _cozy() { [ "$SUN_COZY" = on ] && printf '%s' "$1" || printf '%s' "$2"; }
-sec() { printf '\n%s%s %s%s\n' "$Y$B" "$(_cozy ☀ '*')" "$*" "$N"; }
+sec() { printf '\n%s%s %s%s\n' "$Y$B" "$(_cozy ☀ '*')" "$(tr "$*")" "$N"; }
 say() { sec "$@"; }
-ok()  { printf '%s%s %s%s\n' "$G" "$(_cozy '✔ ☕' '+')" "$*" "$N"; }
-bad() { printf '%s%s %s%s\n' "$R" "$(_cozy '✘ 🫖' 'x')" "$*" "$N"; }
+ok()  { printf '%s%s %s%s\n' "$G" "$(_cozy '✔ ☕' '+')" "$(tr "$*")" "$N"; }
+bad() { printf '%s%s %s%s\n' "$R" "$(_cozy '✘ 🫖' 'x')" "$(tr "$*")" "$N"; }
 cozy_done() { [ "$SUN_COZY" = on ] && printf '%s\n' "$Y$(t cozy_done 'All done. Have a warm cup of tea and enjoy the sunshine ☀️🍵')$N"; }
 _sun_frames() { cat <<'S'
       \   |   /

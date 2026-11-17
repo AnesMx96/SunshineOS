@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+sys.path.insert(0, "/usr/local/lib/sunshine/")
+try:
+    from i18n import tr
+except ImportError:
+    def tr(s):
+        return s
+
 """Sunshine Toolbox: maintenance and repair tools of Sunshine OS in one window."""
 import os
 import shutil
@@ -41,39 +48,39 @@ def have(binary):
 
 
 SECTIONS = [
-    ("Keep it healthy", [
-        ("🔄  Update everything", "System, apps and extras, with restore points", lambda: run(["sunshine-update"]), True),
-        ("🩺  Health check", "Find and repair problems (identity, boot, packages, snapshots)", lambda: term("sunshine-doctor --fix", "Health check"), True),
-        ("🧹  Clean up", "Free disk space: old downloads, unused packages, logs", lambda: term("sunshine-cleanup", "Clean up"), True),
-        ("📦  Fix the package manager", "Lock file, keyring, mirrors, databases", lambda: term("sunshine-fix-pacman", "Fix pacman"), True),
+    (tr("Keep it healthy"), [
+        (tr("🔄  Update everything"), tr("System, apps and extras, with restore points"), lambda: run(["sunshine-update"]), True),
+        (tr("🩺  Health check"), tr("Find and repair problems (identity, boot, packages, snapshots)"), lambda: term("sunshine-doctor --fix", "Health check"), True),
+        (tr("🧹  Clean up"), tr("Free disk space: old downloads, unused packages, logs"), lambda: term("sunshine-cleanup", "Clean up"), True),
+        (tr("📦  Fix the package manager"), tr("Lock file, keyring, mirrors, databases"), lambda: term("sunshine-fix-pacman", "Fix pacman"), True),
     ]),
-    ("Go back in time", [
-        ("🛟  Restore points", "Browse, restore or delete snapshots (Btrfs Assistant)",
+    (tr("Go back in time"), [
+        (tr("🛟  Restore points"), tr("Browse, restore or delete snapshots (Btrfs Assistant)"),
          lambda: run(["btrfs-assistant-launcher"]), ON_BTRFS and have("btrfs-assistant-launcher")),
-        ("➕  Make a restore point now", "Save the current state before you try something",
+        (tr("➕  Make a restore point now"), tr("Save the current state before you try something"),
          lambda: term("sunshine-snapshot create 'Before I tried something'", "Restore point"), ON_BTRFS),
     ]),
-    ("Repair", [
-        ("🥾  Repair the boot loader", "Reinstall GRUB and rebuild boot files", lambda: term("sunshine-boot-repair", "Boot repair"), True),
-        ("🪪  Check the system identity", "Make sure the system is still Sunshine OS", lambda: term("sunshine-identity check; sunshine-identity apply", "Identity"), True),
+    (tr("Repair"), [
+        (tr("🥾  Repair the boot loader"), tr("Reinstall GRUB and rebuild boot files"), lambda: term("sunshine-boot-repair", "Boot repair"), True),
+        (tr("🪪  Check the system identity"), tr("Make sure the system is still Sunshine OS"), lambda: term("sunshine-identity check; sunshine-identity apply", "Identity"), True),
     ]),
-    ("Know your computer", [
-        ("🖥  System information", "Hardware, kernel, desktop, packages (paste it when asking for help)",
+    (tr("Know your computer"), [
+        (tr("🖥  System information"), tr("Hardware, kernel, desktop, packages (paste it when asking for help)"),
          lambda: term("sunshine-info", "System information"), True),
-        ("💽  Disks and partitions", "Partition Manager", lambda: run(["partitionmanager"]), have("partitionmanager")),
-        ("🌐  Network", "Wi-Fi, cable, VPN", lambda: run(["kcmshell6", "kcm_networkmanagement"]), have("kcmshell6")),
-        ("⚙  System settings", "Look, keyboard, language, sound", lambda: run(["systemsettings"]), have("systemsettings")),
+        (tr("💽  Disks and partitions"), tr("Partition Manager"), lambda: run(["partitionmanager"]), have("partitionmanager")),
+        (tr("🌐  Network"), tr("Wi-Fi, cable, VPN"), lambda: run(["kcmshell6", "kcm_networkmanagement"]), have("kcmshell6")),
+        (tr("⚙  System settings"), tr("Look, keyboard, language, sound"), lambda: run(["systemsettings"]), have("systemsettings")),
     ]),
-    ("Devices", [
-        ("📱  Phone", "Pair a phone with KDE Connect: files, notifications, clipboard", lambda: run(["kdeconnect-app"]), have("kdeconnect-app")),
-        ("🎧  AirPods", "Battery of each pod and the case, noise control", lambda: run(["sunshine-pods"]), have("sunshine-pods")),
+    (tr("Devices"), [
+        (tr("📱  Phone"), tr("Pair a phone with KDE Connect: files, notifications, clipboard"), lambda: run(["kdeconnect-app"]), have("kdeconnect-app")),
+        (tr("🎧  AirPods"), tr("Battery of each pod and the case, noise control"), lambda: run(["sunshine-pods"]), have("sunshine-pods")),
     ]),
-    ("Fun", [
-        ("🐣  Sunshine Pet", "Feed it, wash it, play with it", lambda: run(["sunshine-pet"]), have("sunshine-pet")),
+    (tr("Fun"), [
+        (tr("🐣  Sunshine Pet"), tr("Feed it, wash it, play with it"), lambda: run(["sunshine-pet"]), have("sunshine-pet")),
     ]),
-    ("Apps", [
-        ("🛍  Sunshine Store", "pacman, AUR and Flatpak in one place", lambda: run(["sunshine-store"]), have("sunshine-store")),
-        ("🌐  Enable Flathub", "Thousands more apps",
+    (tr("Apps"), [
+        (tr("🛍  Sunshine Store"), tr("pacman, AUR and Flatpak in one place"), lambda: run(["sunshine-store"]), have("sunshine-store")),
+        (tr("🌐  Enable Flathub"), tr("Thousands more apps"),
          lambda: term("pkexec flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo && echo Done", "Flathub"), have("flatpak")),
     ]),
 ]

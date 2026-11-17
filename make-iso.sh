@@ -92,6 +92,11 @@ python3 tools/catalogue.py netinstall profile/airootfs/usr/share/sunshine/netins
 
 log "4/4 ISO"
 OUTDIR=out; [ -n "${FAST:-}" ] && OUTDIR=out/fast   # FAST builds land in out/fast
+# The tools of the image are the package sunshine-base from the signed [sunshine] repository: the installer registers it with pacman
+# (shellprocess@ownbase), so tool updates later arrive through normal updates. Newest build from the repository checkout, if there is one.
+mkdir -p profile/airootfs/usr/share/sunshine/pkgs
+SBPKG=$(ls -t "$PWD"/../scratch/repo/out/repo/sunshine-base-*.pkg.tar.zst 2>/dev/null | head -1)
+if [ -n "$SBPKG" ]; then rm -f profile/airootfs/usr/share/sunshine/pkgs/sunshine-base-*; cp "$SBPKG" "$SBPKG.sig" profile/airootfs/usr/share/sunshine/pkgs/ 2>/dev/null && log "sunshine-base for the installer: $(basename "$SBPKG")"; fi
 rm -f $OUTDIR/*.iso
 for t in $(seq $((TRIES + 2))); do
   ./build.sh >"$LOG/iso.log" 2>&1; fix_owner
