@@ -30,6 +30,9 @@ else bad "package keyring missing or empty"
   [ $FIX = 1 ] && pacman-key --init >/dev/null 2>&1 && pacman-key --populate archlinux >/dev/null 2>&1 && fx "keyring initialised"; fi
 if out=$(pacman -Dk 2>&1); then ok "package database consistent"; else bad "package database problem: $(echo "$out" | head -2 | tr '\n' ' ')"; fi
 n=$(find /etc -name '*.pacnew' 2>/dev/null | wc -l); [ "$n" -gt 0 ] && warn "$n config update(s) waiting for review (*.pacnew)" || ok "no pending .pacnew files"
+if /usr/local/bin/sunshine-repo check --quiet; then ok "[sunshine] repository is configured"
+else bad "the [sunshine] package repository is missing or wrong in /etc/pacman.conf"
+  [ $FIX = 1 ] && /usr/local/bin/sunshine-repo ensure --quiet && fx "[sunshine] repository restored"; fi
 if grep -q '^\[sunshine-hypr\]' /etc/pacman.conf 2>/dev/null; then warn "installer leftover [sunshine-hypr] in pacman.conf"; fi
 for p in sddm plasma-desktop hyprland snapper; do pacman -Qq $p >/dev/null 2>&1 || warn "expected package not installed: $p"; done
 
