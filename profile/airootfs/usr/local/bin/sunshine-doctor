@@ -106,6 +106,15 @@ else
   grep -q 'grub-btrfs\|snapshots-btrfs' /boot/grub/grub.cfg 2>/dev/null && ok "snapshots appear in the GRUB menu" || warn "no snapshot entries in the GRUB menu yet"
 fi
 
+if [ -x /usr/local/bin/sunshine-declare ]; then
+  sec "Declarative setup (Sirius)"
+  if [ -f /etc/sunshine/declarative.toml ]; then
+    if /usr/local/bin/sunshine-declare status --quiet; then ok "system matches /etc/sunshine/declarative.toml"
+    else warn "the system differs from /etc/sunshine/declarative.toml (sunshine-declare plan shows how)"; [ $FIX = 1 ] && /usr/local/bin/sunshine-declare apply --quiet && fx "declarative setup applied"; fi
+  else bad "/etc/sunshine/declarative.toml is missing"; fi
+  command -v nix >/dev/null && { systemctl is-active --quiet nix-daemon.socket && ok "nix daemon socket active" || { warn "nix-daemon.socket is not active"; [ $FIX = 1 ] && systemctl enable --now nix-daemon.socket >/dev/null 2>&1 && fx "nix daemon socket enabled"; }; } || bad "nix is not installed"
+fi
+
 echo
 if [ $fails -eq 0 ]; then printf '%s%sAll good%s' "$G" "$B" "$N"; [ $warns -gt 0 ] && printf ' (%s note(s))' "$warns"; echo
 else printf '%s%s%s problem(s) found%s' "$R" "$B" "$fails" "$N"; [ $FIX = 0 ] && printf ' — run: sunshine-doctor --fix'; echo; fi

@@ -1,0 +1,12 @@
+[Unit]
+Description=Make the system match /etc/sunshine/declarative.toml
+After=network-online.target nix-daemon.socket
+Wants=network-online.target
+ConditionPathExists=!/run/archiso
+ConditionPathExists=/etc/sunshine/declarative.toml
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sunshine-declare apply --quiet
+TimeoutStartSec=30min
+[Install]
+WantedBy=multi-user.target

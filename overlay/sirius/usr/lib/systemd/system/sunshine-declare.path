@@ -1,0 +1,8 @@
+[Unit]
+Description=Re-apply the declarative setup when packages or the file change
+[Path]
+PathChanged=/var/lib/sunshine/declarative/dirty
+PathChanged=/etc/sunshine/declarative.toml
+Unit=sunshine-declare.service
+[Install]
+WantedBy=multi-user.target

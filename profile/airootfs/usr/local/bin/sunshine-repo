@@ -10,10 +10,25 @@ CONF=${SUNSHINE_PACMAN_CONF:-/etc/pacman.conf}
 SIGLEVEL="PackageRequired DatabaseOptional"
 mode=${1:-check}; quiet=0; [ "${2:-}" = --quiet ] && quiet=1
 say() { [ "$quiet" = 1 ] || echo "$*"; }
+first() { awk '/^\[/ && $0!="[options]"{print $0; exit}' "$CONF"; }       # the first repository section
 cur() { awk '/^\[sunshine\]/{f=1;next} /^\[/{f=0} f&&/^Server[[:space:]]*=/{print $3;exit}' "$CONF"; }
 # Chaotic-AUR (prebuilt AUR packages) is part of every Sunshine system: added here, so it appears on the first update (or the first pacman
 # upgrade of sunshine-base). Keyring and mirror list come from the [sunshine] repository, with the Chaotic CDN as a fallback.
 # SUNSHINE_CHAOTIC=off in /etc/sunshine/repos.conf keeps it out.
+# [sunshine] must be the first repository: packages are taken from the first repository that has them
+top_sunshine() {
+  [ "$(first)" = "[sunshine]" ] && return 0
+  python3 - "$CONF" <<'PY'
+import re, sys
+p = sys.argv[1]; s = open(p).read()
+m = re.search(r"\n\[sunshine\]\n(?:[^\[\n][^\n]*\n)*", s)
+if not m: sys.exit(0)
+blk = m.group(0).strip("\n") + "\n\n"; s = s.replace(m.group(0), "\n", 1)
+first = re.search(r"^\[(?!options\])[^\]]+\]\s*$", s, re.M)
+s = s[:first.start()] + "# The Sunshine repository is first: its packages win over the same names elsewhere\n" + blk + s[first.start():] if first else s + "\n" + blk
+open(p, "w").write(s)
+PY
+}
 ensure_chaotic() {
   [ "$(sed -n 's/^chaotic=//p' /etc/sunshine/repos.conf 2>/dev/null | tail -1)" = off ] && return 0
   [ -e /var/lib/pacman/db.lck ] && return 0      # called from inside a pacman transaction (the hook): the update tool finishes the job
@@ -36,7 +51,7 @@ case "$mode" in
   check)
     if ! grep -q '^\[sunshine\]' "$CONF"; then say "the [sunshine] repository is missing from $CONF"; exit 1; fi
     sl=$(awk '/^\[sunshine\]/{f=1;next} /^\[/{f=0} f&&/^SigLevel/{sub(/^SigLevel[ \t]*=[ \t]*/,"");print;exit}' "$CONF")
-    c=$(cur); [ "$c" = "$URL" ] && [ "$sl" = "$SIGLEVEL" ] && { say "[sunshine] repository OK ($URL, signed)"; exit 0; }
+    c=$(cur); [ "$c" = "$URL" ] && [ "$sl" = "$SIGLEVEL" ] && [ "$(first)" = "[sunshine]" ] && { say "[sunshine] repository OK ($URL, signed)"; exit 0; }
     say "[sunshine] points at '${c:-nothing}', expected $URL"; exit 1;;
   chaotic) [ "$(id -u)" -eq 0 ] || { echo "run as root: sudo sunshine-repo chaotic" >&2; exit 1; }; ensure_chaotic;;
   ensure)
@@ -55,6 +70,7 @@ case "$mode" in
     else
       printf '\n[sunshine]\nSigLevel = %s\nServer = %s\n' "$SIGLEVEL" "$URL" >> "$CONF"
     fi
+    top_sunshine
     say "[sunshine] repository restored in $CONF"; ensure_chaotic;;
   *) echo "usage: sunshine-repo check|ensure|url [--quiet]" >&2; exit 2;;
 esac

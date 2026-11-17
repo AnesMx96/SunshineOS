@@ -1,0 +1,12 @@
+# Any package change marks the declarative setup as dirty; sunshine-declare.path applies it after the transaction (pacman cannot run pacman)
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Marking the declarative setup for re-checking...
+When = PostTransaction
+Exec = /usr/bin/bash -c 'mkdir -p /var/lib/sunshine/declarative && date +%s > /var/lib/sunshine/declarative/dirty'

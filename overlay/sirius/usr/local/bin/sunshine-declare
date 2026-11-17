@@ -1,0 +1,253 @@
+#!/usr/bin/env python3
+"""sunshine-declare: the declarative setup of Sunshine OS Sirius.
+
+Reads /etc/sunshine/declarative.toml and makes the system match it: pacman packages (installed if missing), Nix packages (in the Sunshine
+profile /nix/var/nix/profiles/sunshine), and systemd services (enable / disable / mask). It runs at boot, after updates through the Sunshine
+tools and when a package change is noticed (sunshine-declare.path). Every apply is recorded as a generation so `rollback` can return to the
+previous file.
+
+  sunshine-declare plan | apply | status | rollback | generations
+  sunshine-declare add|remove pacman|nix|service NAME
+Options: --quiet  --config FILE  (SUNSHINE_DECLARE_CONFIG)  --dry-run
+"""
+import json, os, shutil, subprocess, sys, time, tomllib
+
+CONFIG = os.environ.get("SUNSHINE_DECLARE_CONFIG", "/etc/sunshine/declarative.toml")
+STATE = os.environ.get("SUNSHINE_DECLARE_STATE", "/var/lib/sunshine/declarative")
+NIX_PROFILE = os.environ.get("SUNSHINE_NIX_PROFILE", "/nix/var/nix/profiles/sunshine")
+NIX_ARGS = ["--extra-experimental-features", "nix-command flakes"] + os.environ.get("SUNSHINE_NIX_ARGS", "").split()   # flakes: "nixpkgs#name"
+QUIET = "--quiet" in sys.argv
+DRY = "--dry-run" in sys.argv
+Y, G, R, N = "\033[38;5;220m", "\033[32m", "\033[31m", "\033[0m"
+
+
+def say(msg, color=""):
+    if not QUIET:
+        print(f"{color}{msg}{N if color else ''}")
+
+
+def run(cmd, check=False):
+    return subprocess.run(cmd, capture_output=True, text=True, check=check)
+
+
+def load(path=CONFIG):
+    with open(path, "rb") as f:
+        cfg = tomllib.load(f)
+    cfg.setdefault("options", {})
+    cfg.setdefault("packages", {}).setdefault("pacman", [])
+    cfg["packages"].setdefault("nix", [])
+    sv = cfg.setdefault("services", {})
+    for k in ("enable", "disable", "mask"):
+        sv.setdefault(k, [])
+    return cfg
+
+
+def installed_pacman():
+    return set(run(["pacman", "-Qq"]).stdout.split())
+
+
+def nix_present():
+    return shutil.which("nix") is not None
+
+
+def installed_nix():
+    """Names of the packages in the Sunshine profile."""
+    if not nix_present() or not os.path.exists(NIX_PROFILE + "-1-link") and not os.path.exists(NIX_PROFILE):
+        return set()
+    r = run(["nix", *NIX_ARGS, "profile", "list", "--json", "--profile", NIX_PROFILE])
+    if r.returncode:
+        return set()
+    try:
+        data = json.loads(r.stdout)
+    except ValueError:
+        return set()
+    elements = data.get("elements", {})
+    items = elements.items() if isinstance(elements, dict) else enumerate(elements)
+    names = set()
+    for key, el in items:
+        ref = el.get("originalUrl") or el.get("attrPath") or ""
+        names.add(str(key) if isinstance(elements, dict) else ref.split("#")[-1])
+    return names
+
+
+def unit_state(unit):
+    enabled = run(["systemctl", "is-enabled", unit]).stdout.strip()
+    return enabled
+
+
+def plan(cfg):
+    p = {"pacman_install": [], "nix_install": [], "nix_remove": [], "enable": [], "disable": [], "mask": []}
+    have = installed_pacman()
+    p["pacman_install"] = [x for x in cfg["packages"]["pacman"] if x not in have]
+    if cfg["packages"]["nix"]:
+        if not nix_present():
+            p["nix_install"] = list(cfg["packages"]["nix"])
+        else:
+            have_nix = installed_nix()
+            p["nix_install"] = [x for x in cfg["packages"]["nix"] if x not in have_nix]
+            if cfg["options"].get("prune_nix", True):
+                p["nix_remove"] = sorted(have_nix - set(cfg["packages"]["nix"]))
+    for u in cfg["services"]["enable"]:
+        if unit_state(u) not in ("enabled", "static", "alias", "enabled-runtime"):
+            p["enable"].append(u)
+    for u in cfg["services"]["disable"]:
+        if unit_state(u) in ("enabled", "enabled-runtime"):
+            p["disable"].append(u)
+    for u in cfg["services"]["mask"]:
+        if unit_state(u) != "masked":
+            p["mask"].append(u)
+    return p
+
+
+def show(p):
+    labels = {"pacman_install": "install with pacman", "nix_install": "install with Nix", "nix_remove": "remove from the Nix profile",
+              "enable": "enable service", "disable": "disable service", "mask": "mask service"}
+    n = 0
+    for k, lab in labels.items():
+        for item in p[k]:
+            say(f"  {lab}: {item}")
+            n += 1
+    return n
+
+
+def apply(cfg):
+    if not cfg["options"].get("enabled", True):
+        say("declarative setup is switched off in the file (enabled = false)")
+        return 0
+    p = plan(cfg)
+    n = show(p)
+    if not n:
+        say("the system already matches the declaration", G)
+        return 0
+    if DRY:
+        return 0
+    errors = 0
+    if p["pacman_install"]:
+        say("installing pacman packages ...", Y)
+        r = run(["pacman", "-S", "--needed", "--noconfirm", *p["pacman_install"]])
+        if r.returncode:
+            errors += 1
+            say("pacman failed: " + (r.stderr.strip().splitlines() or ["?"])[-1], R)
+    if p["nix_install"] or p["nix_remove"]:
+        if not nix_present():
+            say("Nix is not installed: install it (sudo pacman -S nix) or remove the Nix packages from the file", R)
+            errors += 1
+        else:
+            os.makedirs(os.path.dirname(NIX_PROFILE), exist_ok=True)
+            for name in p["nix_install"]:
+                say(f"nix: installing {name} ...", Y)
+                r = run(["nix", *NIX_ARGS, "profile", "install", "--profile", NIX_PROFILE, f"nixpkgs#{name}"])
+                if r.returncode:
+                    errors += 1
+                    say(f"nix install {name} failed: " + (r.stderr.strip().splitlines() or ["?"])[-1], R)
+            for name in p["nix_remove"]:
+                say(f"nix: removing {name} ...", Y)
+                r = run(["nix", *NIX_ARGS, "profile", "remove", "--profile", NIX_PROFILE, name])
+                errors += bool(r.returncode)
+    for u in p["enable"]:
+        r = run(["systemctl", "enable", "--now", u])
+        if r.returncode:
+            r = run(["systemctl", "enable", u])            # not running in a booted system (chroot, test): enabling is enough
+        errors += bool(r.returncode)
+        if r.returncode:
+            say(f"could not enable {u}", R)
+    for u in p["disable"]:
+        errors += bool(run(["systemctl", "disable", "--now", u]).returncode)
+    for u in p["mask"]:
+        errors += bool(run(["systemctl", "mask", "--now", u]).returncode)
+    record(cfg, p, errors)
+    say("done" if not errors else f"finished with {errors} problem(s)", G if not errors else R)
+    return 1 if errors else 0
+
+
+def record(cfg, p, errors):
+    gens = os.path.join(STATE, "generations")
+    os.makedirs(gens, exist_ok=True)
+    n = len([f for f in os.listdir(gens) if f.endswith(".toml")]) + 1
+    shutil.copy(CONFIG, os.path.join(gens, f"{n:04d}.toml"))
+    with open(os.path.join(gens, f"{n:04d}.json"), "w") as f:
+        json.dump({"time": int(time.time()), "changes": p, "errors": errors}, f, indent=1)
+
+
+def cmd_status(cfg):
+    p = plan(cfg)
+    n = show(p)
+    say("no drift" if not n else f"{n} difference(s) from the declaration", G if not n else Y)
+    return 1 if n else 0
+
+
+def cmd_rollback():
+    gens = os.path.join(STATE, "generations")
+    files = sorted(f for f in os.listdir(gens) if f.endswith(".toml")) if os.path.isdir(gens) else []
+    if len(files) < 2:
+        say("no earlier generation to go back to", R)
+        return 1
+    prev = os.path.join(gens, files[-2])
+    shutil.copy(prev, CONFIG)
+    say(f"restored the declaration of {files[-2][:-5]}; applying", Y)
+    return apply(load())
+
+
+def edit(action, kind, name):
+    """Edit the file in place (keeps comments): add/remove NAME in the right list."""
+    section_key = {"pacman": ("packages", "pacman"), "nix": ("packages", "nix"), "service": ("services", "enable")}[kind]
+    text = open(CONFIG).read().split("\n")
+    sec, key = section_key
+    cur = None
+    for i, line in enumerate(text):
+        s = line.strip()
+        if s.startswith("[") and s.endswith("]"):
+            cur = s[1:-1]
+        elif cur == sec and s.startswith(key) and "=" in s and "[" in s:
+            j = i
+            while "]" not in text[j].split("#")[0]:
+                j += 1
+            block = "\n".join(text[i:j + 1])
+            items = tomllib.loads(block)[key]
+            if action == "add" and name not in items:
+                items.append(name)
+            elif action == "remove":
+                items = [x for x in items if x != name]
+            new = f"{key} = [" + ", ".join(json.dumps(x) for x in items) + "]"
+            text[i:j + 1] = [new]
+            open(CONFIG, "w").write("\n".join(text))
+            say(f"{action}: {name} ({kind})")
+            return 0
+    say("could not find the list in the file", R)
+    return 1
+
+
+def main():
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    cmd = args[0] if args else "status"
+    if os.geteuid() != 0 and cmd in ("apply", "rollback", "add", "remove") and not DRY and "SUNSHINE_DECLARE_CONFIG" not in os.environ:
+        os.execvp("sudo", ["sudo", sys.argv[0], *sys.argv[1:]])
+    if cmd in ("plan", "status", "apply") and not os.path.exists(CONFIG):
+        say(f"no declaration at {CONFIG}", R)
+        return 1
+    if cmd == "plan":
+        n = show(plan(load()))
+        say("nothing to do" if not n else f"{n} change(s) would be made")
+        return 0
+    if cmd == "status":
+        return cmd_status(load())
+    if cmd == "apply":
+        return apply(load())
+    if cmd == "rollback":
+        return cmd_rollback()
+    if cmd == "generations":
+        gens = os.path.join(STATE, "generations")
+        for f in sorted(os.listdir(gens)) if os.path.isdir(gens) else []:
+            if f.endswith(".json"):
+                d = json.load(open(os.path.join(gens, f)))
+                say(f"{f[:-5]}  {time.strftime('%Y-%m-%d %H:%M', time.localtime(d['time']))}  errors={d['errors']}")
+        return 0
+    if cmd in ("add", "remove") and len(args) == 3 and args[1] in ("pacman", "nix", "service"):
+        rc = edit(cmd, args[1], args[2])
+        return rc or (apply(load()) if not DRY else 0)
+    print(__doc__)
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())

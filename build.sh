@@ -16,7 +16,7 @@ mkdir -p "$CACHE/pacman" out repo
 chmod -R a+rwX "$CACHE/pacman" 2>/dev/null || true
 docker run --rm --privileged -e HOST_UID="$(id -u)" -e HOST_GID="$(id -g)" -e FAST="${FAST:-}" -e SUNSHINE_EDITION="${SUNSHINE_EDITION:-Sol}" \
   -v "$PWD/profile:/profile-src:ro" -v "$PWD/repo:/repo:ro" -v "$PWD/out:/out" -v sunshineos-work:/work \
-  -v "$CACHE/pacman:/var/cache/pacman/pkg" -v "$PWD/tools:/tools:ro" \
+  -v "$CACHE/pacman:/var/cache/pacman/pkg" -v "$PWD/tools:/tools:ro" -v "$PWD/overlay/sirius:/sirius:ro" \
   sunshineos-builder bash -c '
     set -u
     umask 022
@@ -28,7 +28,7 @@ docker run --rm --privileged -e HOST_UID="$(id -u)" -e HOST_GID="$(id -g)" -e FA
     if [ "${SUNSHINE_EDITION,,}" != sirius ]; then
       sed -i "/^nix$/d" /profile/packages.x86_64; rm -f /profile/airootfs/etc/systemd/system/multi-user.target.wants/nix-daemon.service
       echo "edition: ${SUNSHINE_EDITION} (no Nix)"
-    else echo "edition: Sirius (declarative: Nix included)"; fi
+    else cp -a /sirius/. /profile/airootfs/; echo "edition: Sirius (declarative: Nix and sunshine-declare included)"; fi
     rm -rf /work/* /work/.[!.]*
     out=/out
     if [ -n "$FAST" ]; then   # test build: light compression (minutes, not an hour), bigger image, written to out/fast/

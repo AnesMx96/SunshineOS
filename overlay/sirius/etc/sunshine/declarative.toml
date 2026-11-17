@@ -1,0 +1,33 @@
+# Sunshine OS Sirius: the declarative part of the system.
+# This file says what the system must contain. `sunshine-declare apply` makes it so, and it runs by itself at boot, after updates made
+# with the Sunshine tools, and whenever a package change is noticed. Change the file, not the system:
+#   sunshine-declare plan        show what would change          sunshine-declare apply     do it
+#   sunshine-declare status      drift report                    sunshine-declare rollback  go back to the previous file
+#   sunshine-declare add pacman|nix|service NAME                 sunshine-declare remove pacman|nix|service NAME
+
+[options]
+enabled = true            # false: the tool does nothing (nothing is removed)
+prune_nix = true          # remove Nix packages in the Sunshine profile that are not listed below
+strict_services = false   # true: also disable the essential services that are listed under disable
+
+[packages]
+# installed with pacman if missing (never removed by this tool)
+pacman = [
+  "base", "linux", "linux-firmware", "networkmanager", "sudo", "git", "nano", "sddm", "plasma-desktop",
+  "snapper", "grub", "nix",
+]
+# installed into the Sunshine Nix profile (/nix/var/nix/profiles/sunshine) from nixpkgs; its bin directory is on every user's PATH
+nix = [
+  "hello",
+]
+
+[services]
+# enabled (and started if the system is running)
+enable = [
+  "NetworkManager.service", "sddm.service", "nix-daemon.socket", "fstrim.timer", "snapper-timeline.timer", "snapper-cleanup.timer",
+  "sunshine-declare.path",
+]
+# disabled
+disable = []
+# masked (cannot be started by anything)
+mask = []
