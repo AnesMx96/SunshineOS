@@ -36,7 +36,7 @@ PlasmoidItem {
                 property var hist2: []
                 property real value: 0
                 property real value2: 0
-                property real top: modelData.max > 0 ? modelData.max : 1
+                property real maxv: modelData.max > 0 ? modelData.max : 1
 
                 // the GPU sensor id differs between drivers: the first id that reports a value wins
                 Sensors.Sensor { id: s1; sensorId: modelData.ids[0]; enabled: true }
@@ -54,7 +54,7 @@ PlasmoidItem {
                             cell.value2 = cell.num(s2.value)
                             var h2 = cell.hist2.slice(-39); h2.push(cell.value2); cell.hist2 = h2
                             var m = 1024 * 10; for (var i = 0; i < h.length; i++) m = Math.max(m, h[i], h2[i] || 0)
-                            cell.top = m
+                            cell.maxv = m
                         }
                         canvas.requestPaint()
                     }
@@ -71,7 +71,7 @@ PlasmoidItem {
                             c.beginPath()
                             for (var i = 0; i < data.length; i++) {
                                 var x = w - (data.length - 1 - i) * (w / (n - 1))
-                                var y = h - Math.min(1, data[i] / cell.top) * (h - 2) - 1
+                                var y = h - Math.min(1, data[i] / cell.maxv) * (h - 2) - 1
                                 if (i === 0) c.moveTo(x, y); else c.lineTo(x, y)
                             }
                             c.strokeStyle = col; c.lineWidth = 1.5; c.stroke()
