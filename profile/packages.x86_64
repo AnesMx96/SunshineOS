@@ -263,7 +263,6 @@ kirigami
 syntax-highlighting
 glib2
 libqalculate
-zen-browser-bin
 snapper
 snap-pac
 grub-btrfs
@@ -278,3 +277,10 @@ sshfs
 nix
 uni-pkg-git
 sunshine-icon-theme
+clang
+typescript-language-server
+bash-language-server
+python-lsp-server
+rust-analyzer
+lua-language-server
+nano-syntax-highlighting

@@ -15,3 +15,7 @@ theme=__aurorae__svg__Sunshine
 
 [plasmarc][Theme]
 name=Sunshine
+
+[ksplashrc][KSplash]
+Theme=com.sunshineos.sunshine
+Engine=KSplashQML

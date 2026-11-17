@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# "Restore visuals": pulls the Sunshine themes and configs from the repository into ~/.local/share/sunshine/visuals/<date> and applies them.
+# Offline: applies the ones already on the system. usage: sunshine-restore-visuals [--offline]
+. /usr/local/lib/sunshine/ui.sh 2>/dev/null
+REPO=${SUNSHINE_ASSETS_REPO:-https://github.com/tak0dan/SunshineOS.git}
+DEST=$HOME/.local/share/sunshine/visuals; STAMP=$(date +%Y%m%d-%H%M%S); NEW=$DEST/$STAMP; mkdir -p "$DEST"
+online=false; [ "${1:-}" != --offline ] && curl -fsI --max-time 6 https://github.com >/dev/null 2>&1 && online=true
+if $online; then
+  sec "Pulling the latest themes and configs"
+  if git clone -q --depth 1 --filter=blob:none --sparse "$REPO" "$NEW/src" 2>/dev/null && git -C "$NEW/src" sparse-checkout set overlay/system/usr/share overlay/skel/.config 2>/dev/null; then
+    S=$NEW/src/overlay/system/usr/share
+    for d in plasma/desktoptheme plasma/plasmoids aurorae/themes Kvantum color-schemes; do
+      [ -d "$S/$d" ] && mkdir -p "$HOME/.local/share/$d" && cp -r "$S/$d/." "$HOME/.local/share/$d/"
+    done
+    mkdir -p "$HOME/.config/Kvantum"; [ -d "$S/Kvantum" ] && cp -r "$S/Kvantum/." "$HOME/.config/Kvantum/"
+    ok "pulled into $NEW"
+    ls -1dt "$DEST"/20* 2>/dev/null | tail -n +4 | while read -r old; do rm -rf "$old"; done       # keep the last 3 pulls
+  else bad "could not pull from the repository; applying what is installed"; fi
+else echo "offline: applying the themes that are already installed"; fi
+sec "Applying"
+[ -x /usr/local/bin/sunshine-plasma-setup ] && /usr/local/bin/sunshine-plasma-setup --reapply >/dev/null 2>&1
+command -v plasma-apply-colorscheme >/dev/null && plasma-apply-colorscheme SunshineDark >/dev/null 2>&1
+command -v plasma-apply-desktoptheme >/dev/null && plasma-apply-desktoptheme Sunshine >/dev/null 2>&1
+kwriteconfig6 --file kdeglobals --group KDE --key widgetStyle kvantum 2>/dev/null
+kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key theme __aurorae__svg__Sunshine 2>/dev/null
+qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1
+ok "visuals restored"; cozy_done 2>/dev/null

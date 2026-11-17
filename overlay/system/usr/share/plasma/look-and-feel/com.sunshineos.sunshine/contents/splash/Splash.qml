@@ -1,96 +1,45 @@
-/*
- *   Copyright 2014 Marco Martin <mart@kde.org>
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License version 2,
- *   or (at your option) any later version, as published by the Free
- *   Software Foundation
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details
- *
- *   You should have received a copy of the GNU General Public
- *   License along with this program; if not, write to the
- *   Free Software Foundation, Inc.,
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+// Sunshine OS welcome animation: the pixel-art Sunshine logo builds up, then rests while the session loads.
+import QtQuick 2.15
 
-import QtQuick 2.1
-
-
-Image {
+Rectangle {
     id: root
-    source: "images/background.jpg"
-
+    color: "#0b1020"
     property int stage
+    readonly property int frames: 180
+    readonly property int cols: 12
+    readonly property int cell: 80
+    property int frame: 0
 
-    onStageChanged: {
-        if (stage == 1) {
-            introAnimation.running = true
-        }
-    }
     Image {
-        id: topRect
-        anchors.horizontalCenter: parent.horizontalCenter
-        y: root.height
-        source: "images/rectangle.svg"
-        Image {
-            source: "images/kde.svg"
-            anchors.centerIn: parent
-        }
-        Rectangle {
-            radius: 3
-            color: "#505050"
-            anchors {
-                bottom: parent.bottom
-                bottomMargin: 50
-                horizontalCenter: parent.horizontalCenter
-            }
-            height: 6
-            width: height*36
-            Rectangle {
-                radius: 3
-                anchors {
-                    left: parent.left
-                    top: parent.top
-                    bottom: parent.bottom
-                }
-                width: (parent.width / 6) * (stage - 1)
-                color: "#ffffff"
-                Behavior on width { 
-                    PropertyAnimation {
-                        duration: 250
-                        easing.type: Easing.InOutQuad
-                    }
-                }
-            }
-        }
+        id: logo
+        anchors.centerIn: parent
+        anchors.verticalCenterOffset: -parent.height * 0.04
+        width: root.cell * 4; height: width
+        source: "images/logo-sprite.png"
+        smooth: false; mipmap: false
+        sourceClipRect: Qt.rect((root.frame % root.cols) * root.cell, Math.floor(root.frame / root.cols) * root.cell, root.cell, root.cell)
     }
-
-    SequentialAnimation {
-        id: introAnimation
-        running: false
-
-        ParallelAnimation {
-            PropertyAnimation {
-                property: "y"
-                target: topRect
-                to: root.height / 3
-                duration: 1000
-                easing.type: Easing.InOutBack
-                easing.overshoot: 1.0
-            }
-
-            PropertyAnimation {
-                property: "y"
-                target: bottomRect
-                to: 2 * (root.height / 3) - bottomRect.height
-                duration: 1000
-                easing.type: Easing.InOutBack
-                easing.overshoot: 1.0
-            }
+    Timer {
+        interval: 28; running: true; repeat: true
+        onTriggered: if (root.frame < root.frames - 1) root.frame++
+    }
+    Text {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: logo.bottom; anchors.topMargin: 24
+        text: "Sunshine OS"; color: "#ffd27a"; font.pixelSize: 26; font.letterSpacing: 4; font.bold: true
+        opacity: Math.min(1, root.frame / 90)
+    }
+    Rectangle {      // progress: orange to gold
+        id: track
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom; anchors.bottomMargin: parent.height * 0.12
+        width: Math.min(parent.width * 0.3, 420); height: 4; radius: 2; color: "#24202a"
+        Rectangle {
+            height: parent.height; radius: 2
+            width: parent.width * Math.min(1, root.stage / 6)
+            gradient: Gradient { orientation: Gradient.Horizontal
+                GradientStop { position: 0.0; color: "#e87932" } GradientStop { position: 0.6; color: "#f5a442" } GradientStop { position: 1.0; color: "#ffd27a" } }
+            Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.InOutQuad } }
         }
     }
 }

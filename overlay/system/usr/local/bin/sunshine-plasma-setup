@@ -1,6 +1,7 @@
 #!/bin/bash
 # First Plasma login: Sunshine wallpaper (flower), panel launchers (Store instead of Discover). Runs once per user.
 M="${XDG_STATE_HOME:-$HOME/.local/state}/sunshine/plasma-setup.done"
+[ "${1:-}" = --reapply ] && rm -f "$M"
 [ -e "$M" ] && exit 0
 for i in $(seq 1 40); do pgrep -x plasmashell >/dev/null && break; sleep 1; done
 sleep 4
@@ -34,7 +35,7 @@ fi
 Q=$(command -v qdbus6 || command -v qdbus)
 SM=false; [ -d /usr/share/plasma/plasmoids/com.sunshineos.startmenu ] && SM=true
 # Windows 11 style taskbar: 48 px, full width, menu + app icons centred between two spacers, tray and clock on the right
-[ -n "$Q" ] && "$Q" org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript 'var L=["applications:sunshine-store.desktop","applications:org.kde.dolphin.desktop","applications:zen.desktop","applications:org.kde.konsole.desktop","applications:org.kde.kate.desktop","applications:sunshine-welcome.desktop"];
+[ -n "$Q" ] && "$Q" org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript 'var L=["applications:sunshine-store.desktop","applications:org.kde.dolphin.desktop","applications:firefox.desktop","applications:org.kde.konsole.desktop","applications:org.kde.kate.desktop","applications:sunshine-welcome.desktop"];
 var startmenu='"$SM"'; var updates=startmenu;
 var p=panels()[0];
 for (var id of p.widgetIds) p.widgetById(id).remove();

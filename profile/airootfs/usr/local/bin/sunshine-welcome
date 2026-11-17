@@ -82,6 +82,7 @@ class Welcome(QWidget):
             ("🛍  Get apps\nBrowse and install programs", lambda: run(["sunshine-store"])),
             ("🔄  Update everything\nSystem, apps and extras", self.update),
             ("🛟  Restore points\nUndo a bad change (snapshots)", self.snapshots),
+            ("🎨  Restore visuals\nPull the latest themes and apply them (works offline too)", lambda: terminal("sunshine-restore-visuals; echo; read -rp 'Press Enter to close.'", "Restore visuals")),
             ("🌐  Enable Flathub\nThousands more apps", self.flathub),
             ("⚙  Settings\nLook, keyboard, language, network", lambda: run(["systemsettings"])),
             ("🧰  Toolbox\nHealth check, clean up, repair", lambda: run(["sunshine-toolbox"])),

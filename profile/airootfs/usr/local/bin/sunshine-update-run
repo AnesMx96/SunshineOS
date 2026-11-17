@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 # Safe, friendly full-system update. Runs as root (via pkexec).
 set -u
-B=$'\e[1m'; Y=$'\e[38;5;220m'; G=$'\e[32m'; R=$'\e[31m'; N=$'\e[0m'
-say()  { printf '\n%s☀ %s%s\n' "$Y$B" "$*" "$N"; }
-ok()   { printf '%s✔ %s%s\n' "$G" "$*" "$N"; }
-bad()  { printf '%s✘ %s%s\n' "$R" "$*" "$N"; }
+[ -r /usr/local/lib/sunshine/ui.sh ] && . /usr/local/lib/sunshine/ui.sh || { B=; Y=; G=; R=; N=; say() { echo "* $*"; }; ok() { echo "+ $*"; }; bad() { echo "x $*"; }; cozy_done() { :; }; sun_success_anim() { :; }; }
 finish() { echo; read -rp "Press Enter to close this window." _; exit "${1:-0}"; }
 
 [ "$(id -u)" -eq 0 ] || exec pkexec "$0" "$@"
@@ -60,5 +57,7 @@ say "Apps you chose"
 say "Health check"
 /usr/local/bin/sunshine-doctor --fix --quiet || true
 [ -n "${REAL_USER:-}" ] && { sudo -u "$REAL_USER" /usr/local/bin/sunshine-update-check seen; sudo -u "$REAL_USER" /usr/local/bin/sunshine-update-check --quiet; } >/dev/null 2>&1
-ok "All done"
+ok "$(t all_done "All done")"
+[ -x /usr/local/bin/sunshine-diagnose ] && [ -n "${REAL_USER:-}" ] && sudo -u "$REAL_USER" /usr/local/bin/sunshine-diagnose --after-update >/dev/null 2>&1 &
+sun_success_anim; cozy_done
 finish 0

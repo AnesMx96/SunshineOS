@@ -14,7 +14,7 @@ cd "$(dirname "$0")"
 CACHE=${SUNSHINE_CACHE:-$PWD/cache}   # packages and downloads are kept here between builds
 mkdir -p "$CACHE/pacman" out repo
 chmod -R a+rwX "$CACHE/pacman" 2>/dev/null || true
-docker run --rm --privileged -e HOST_UID="$(id -u)" -e HOST_GID="$(id -g)" -e FAST="${FAST:-}" \
+docker run --rm --privileged -e HOST_UID="$(id -u)" -e HOST_GID="$(id -g)" -e FAST="${FAST:-}" -e SUNSHINE_EDITION="${SUNSHINE_EDITION:-Sol}" \
   -v "$PWD/profile:/profile-src:ro" -v "$PWD/repo:/repo:ro" -v "$PWD/out:/out" -v sunshineos-work:/work \
   -v "$CACHE/pacman:/var/cache/pacman/pkg" -v "$PWD/tools:/tools:ro" \
   sunshineos-builder bash -c '
@@ -24,6 +24,11 @@ docker run --rm --privileged -e HOST_UID="$(id -u)" -e HOST_GID="$(id -g)" -e FA
     command -v grub-install >/dev/null || { cat /tmp/grub-install.log; echo "ERROR: grub could not be installed in the builder"; exit 1; }
     rm -rf /profile && cp -r /profile-src /profile && chown -R root:root /profile && chmod -R go=u /profile && chmod -R go-w /profile
     bash /tools/prefetch.sh || true
+    # Editions: the declarative features (Nix and its daemon) belong to Sirius only; Sol (the stable release) has none of them
+    if [ "${SUNSHINE_EDITION,,}" != sirius ]; then
+      sed -i "/^nix$/d" /profile/packages.x86_64; rm -f /profile/airootfs/etc/systemd/system/multi-user.target.wants/nix-daemon.service
+      echo "edition: ${SUNSHINE_EDITION} (no Nix)"
+    else echo "edition: Sirius (declarative: Nix included)"; fi
     rm -rf /work/* /work/.[!.]*
     out=/out
     if [ -n "$FAST" ]; then   # test build: light compression (minutes, not an hour), bigger image, written to out/fast/
