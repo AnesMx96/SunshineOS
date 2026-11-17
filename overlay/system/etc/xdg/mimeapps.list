@@ -1,4 +1,7 @@
 [Default Applications]
+application/pdf=org.kde.okular.desktop
+text/markdown=org.kde.okular.desktop;org.kde.kate.desktop
+text/x-markdown=org.kde.okular.desktop;org.kde.kate.desktop
 x-scheme-handler/http=zen.desktop;firefox.desktop
 x-scheme-handler/https=zen.desktop;firefox.desktop
 x-scheme-handler/about=zen.desktop;firefox.desktop
@@ -9,8 +12,6 @@ application/x-extension-htm=zen.desktop;firefox.desktop
 application/x-extension-html=zen.desktop;firefox.desktop
 application/x-extension-xhtml=zen.desktop;firefox.desktop
 text/plain=org.kde.kate.desktop
-text/markdown=org.kde.kate.desktop
-text/x-markdown=org.kde.kate.desktop
 text/x-python=org.kde.kate.desktop
 text/x-csrc=org.kde.kate.desktop
 text/x-chdr=org.kde.kate.desktop

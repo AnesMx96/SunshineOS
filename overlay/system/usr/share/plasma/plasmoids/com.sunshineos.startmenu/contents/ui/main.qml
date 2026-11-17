@@ -1,6 +1,7 @@
 // Sunshine start menu: search field, 4-column pinned grid ("All apps"), two-column recommended files ("More"), user and power footer.
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Window
 import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
 import org.kde.kirigami as Kirigami
@@ -21,9 +22,24 @@ PlasmoidItem {
     property bool allApps: false
     property string userName: ""
 
-    switchWidth: Kirigami.Units.gridUnit * 5
-    switchHeight: Kirigami.Units.gridUnit * 5
+    property bool open: false
+    readonly property int taskbarH: 62      // the 48 px taskbar plus a gap; the top bar is above the menu anyway
+    readonly property int menuW: Math.max(560, Math.round(Screen.width * 0.30))
+    readonly property int menuH: Math.round(Screen.height * 0.60)
     preferredRepresentation: compactRepresentation
+    fullRepresentation: Item { }
+    Connections { target: Plasmoid; function onActivated() { root.open = !root.open } }
+    PlasmaCore.Dialog {
+        id: dlg
+        visible: root.open
+        location: PlasmaCore.Types.Floating
+        backgroundHints: PlasmaCore.Types.StandardBackground
+        hideOnWindowDeactivate: true
+        x: Screen.virtualX + Math.round((Screen.width - root.menuW) / 2)
+        y: Screen.virtualY + Screen.height - root.taskbarH - root.menuH
+        onVisibleChanged: if (!visible) root.open = false
+        mainItem: MenuContent { implicitWidth: root.menuW; implicitHeight: root.menuH; width: root.menuW; height: root.menuH }
+    }
     Plasmoid.icon: "sunshine-menu"
     Plasmoid.status: PlasmaCore.Types.ActiveStatus
 
@@ -36,7 +52,7 @@ PlasmoidItem {
         for (var i = 0; i < pinnedIds.length; i++) if (found[pinnedIds[i]]) l.push(found[pinnedIds[i]])
         pinned = l
     }
-    function close() { root.expanded = false }
+    function close() { root.open = false }
     function run(cmd) { exec.connectSource(cmd) }
 
     P5Support.DataSource {
@@ -69,41 +85,40 @@ PlasmoidItem {
         Layout.minimumWidth: Kirigami.Units.iconSizes.medium + Kirigami.Units.smallSpacing * 2
         Layout.preferredWidth: Layout.minimumWidth
         Kirigami.Icon { anchors.centerIn: parent; width: Math.min(parent.height, Kirigami.Units.iconSizes.medium + 4); height: width; source: "sunshine-menu"; active: ma.containsMouse }
-        MouseArea { id: ma; anchors.fill: parent; hoverEnabled: true; onClicked: root.expanded = !root.expanded }
+        MouseArea { id: ma; anchors.fill: parent; hoverEnabled: true; onClicked: root.open = !root.open }
     }
 
-    fullRepresentation: Item {
+    component Pill: Rectangle {
+        id: pill
+        property alias label: t.text
+        signal clicked()
+        implicitWidth: t.implicitWidth + 34; implicitHeight: 28; radius: 14
+        color: pa.containsMouse ? Qt.rgba(1, 0.64, 0.26, 0.12) : "transparent"
+        border.width: 1; border.color: pa.containsMouse ? root.gold : Qt.rgba(0.91, 0.47, 0.2, 0.75)
+        Row { anchors.centerIn: parent; spacing: 6
+            Text { id: t; color: root.amber; font.pixelSize: 13; anchors.verticalCenter: parent.verticalCenter }
+            Text { text: "›"; color: root.amber; font.pixelSize: 16; anchors.verticalCenter: parent.verticalCenter }
+        }
+        MouseArea { id: pa; anchors.fill: parent; hoverEnabled: true; onClicked: pill.clicked() }
+    }
+    component Header: RowLayout {
+        property alias title: h.text
+        property alias pill: p.label
+        signal pillClicked()
+        Layout.fillWidth: true
+        Text { id: h; color: root.amber; font.pixelSize: 15; font.bold: true; Layout.leftMargin: 12 }
+        Item { Layout.fillWidth: true }
+        Pill { id: p; onClicked: parent.pillClicked() }
+    }
+
+
+    component MenuContent: Item {
         id: menu
-        Layout.minimumWidth: 600; Layout.preferredWidth: 600; Layout.maximumWidth: 600
-        Layout.minimumHeight: 640; Layout.preferredHeight: 640; Layout.maximumHeight: 640
         focus: true
         Keys.onEscapePressed: root.close()
         Connections {
             target: root
-            function onExpandedChanged() { if (root.expanded) { search.text = ""; root.allApps = false; search.forceActiveFocus() } }
-        }
-
-        component Pill: Rectangle {
-            id: pill
-            property alias label: t.text
-            signal clicked()
-            implicitWidth: t.implicitWidth + 34; implicitHeight: 28; radius: 14
-            color: pa.containsMouse ? Qt.rgba(1, 0.64, 0.26, 0.12) : "transparent"
-            border.width: 1; border.color: pa.containsMouse ? root.gold : Qt.rgba(0.91, 0.47, 0.2, 0.75)
-            Row { anchors.centerIn: parent; spacing: 6
-                Text { id: t; color: root.amber; font.pixelSize: 13; anchors.verticalCenter: parent.verticalCenter }
-                Text { text: "›"; color: root.amber; font.pixelSize: 16; anchors.verticalCenter: parent.verticalCenter }
-            }
-            MouseArea { id: pa; anchors.fill: parent; hoverEnabled: true; onClicked: pill.clicked() }
-        }
-        component Header: RowLayout {
-            property alias title: h.text
-            property alias pill: p.label
-            signal pillClicked()
-            Layout.fillWidth: true
-            Text { id: h; color: root.amber; font.pixelSize: 15; font.bold: true; Layout.leftMargin: 12 }
-            Item { Layout.fillWidth: true }
-            Pill { id: p; onClicked: parent.pillClicked() }
+            function onOpenChanged() { if (root.open) { search.text = ""; root.allApps = false; search.forceActiveFocus() } }
         }
 
         ColumnLayout {
@@ -155,7 +170,7 @@ PlasmoidItem {
                 Repeater {
                     model: root.pinned
                     delegate: Item {
-                        width: 136; height: 92
+                        width: Math.floor((menu.width - 32) / 4); height: 92
                         Rectangle { anchors.fill: parent; anchors.margins: 2; radius: 8; color: pa2.containsMouse ? Qt.rgba(1, 0.64, 0.26, 0.09) : "transparent"
                             Rectangle { visible: pa2.containsMouse; width: 18; height: 2; radius: 1; color: root.gold; anchors.horizontalCenter: parent.horizontalCenter; anchors.bottom: parent.bottom; anchors.bottomMargin: 3 } }
                         Column { anchors.centerIn: parent; spacing: 7
@@ -195,7 +210,7 @@ PlasmoidItem {
                     model: recent
                     delegate: Item {
                         visible: index < 6
-                        width: (menu.width - 40) / 2; height: visible ? 54 : 0
+                        width: Math.floor((menu.width - 40) / 2); height: visible ? 54 : 0
                         Rectangle { anchors.fill: parent; radius: 8; color: ra2.containsMouse ? Qt.rgba(1, 0.64, 0.26, 0.09) : "transparent" }
                         Row { anchors.fill: parent; anchors.leftMargin: 10; spacing: 12
                             Kirigami.Icon { source: model.decoration; width: 30; height: 30; anchors.verticalCenter: parent.verticalCenter }
@@ -231,6 +246,29 @@ PlasmoidItem {
                     }
                 }
             }
+        }
+        // rich gold glow at the bottom centre: frame colour -> light orange -> yellow towards the middle
+        Canvas {
+            anchors.left: parent.left; anchors.right: parent.right; anchors.bottom: parent.bottom
+            height: 46; enabled: false
+            onPaint: {
+                var c = getContext("2d"); c.reset()
+                var w = width, h = height
+                c.save(); c.translate(w / 2, h); c.scale((w / 2) / h, 1)
+                var g = c.createRadialGradient(0, 0, 0, 0, 0, h)
+                g.addColorStop(0.0, "rgba(255,210,122,0.55)"); g.addColorStop(0.35, "rgba(245,164,66,0.28)"); g.addColorStop(0.7, "rgba(232,121,50,0.10)"); g.addColorStop(1.0, "rgba(232,121,50,0)")
+                c.fillStyle = g; c.fillRect(-h, -h, 2 * h, h); c.restore()
+            }
+        }
+        Rectangle {
+            anchors.left: parent.left; anchors.right: parent.right; anchors.bottom: parent.bottom
+            height: 2
+            gradient: Gradient { orientation: Gradient.Horizontal
+                GradientStop { position: 0.0; color: "transparent" }
+                GradientStop { position: 0.22; color: "#99e87932" }
+                GradientStop { position: 0.5; color: "#ffffd27a" }
+                GradientStop { position: 0.78; color: "#99e87932" }
+                GradientStop { position: 1.0; color: "transparent" } }
         }
     }
 }

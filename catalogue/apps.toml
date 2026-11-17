@@ -27,6 +27,13 @@ desc = "A Firefox-based browser focused on calm and privacy"
 aur = ["zen-browser-bin"]
 first_update = true
 [[app]]
+id = "okular"
+name = "Okular"
+group = "Everyday"
+desc = "PDF and Markdown reader (the default for both)"
+pacman = ["okular"]
+selected = true
+[[app]]
 id = "libreoffice"
 name = "LibreOffice"
 group = "Everyday"
