@@ -26,8 +26,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#d1cabf"
-     bordercolor="#72625a"
+     pagecolor="#cbc7c5"
+     bordercolor="#69616b"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -58,7 +58,7 @@
      id="defs3">
     <style
        id="current-color-scheme"
-       type="text/css">.ColorScheme-Text { color:#54352d; } .ColorScheme-Highlight { color:#ff9456; }</style>
+       type="text/css">.ColorScheme-Text { color:#292c4d; } .ColorScheme-Highlight { color:#f58f4c; }</style>
   </defs>
   <g
      id="yakuake">
@@ -71,10 +71,10 @@
        y="0" />
     <path
        id="rect836"
-       style="fill:#efe5d0;fill-opacity:1;stroke-width:2.01449;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+       style="fill:#f4f0eb;fill-opacity:1;stroke-width:2.01449;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
        d="M 4,2 C 2.892,2 2,2.892 2,4 v 14 c 0,1.108 0.892,2 2,2 h 14 c 1.108,0 2,-0.892 2,-2 V 4 C 20,2.892 19.108,2 18,2 Z m 0,1 h 14 c 0.554,0 1,0.446 1,1 v 14 c 0,0.554 -0.446,1 -1,1 H 4 C 3.446,19 3,18.554 3,18 V 4 C 3,3.446 3.446,3 4,3 Z" />
     <rect
-       style="fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.94902;paint-order:stroke fill markers"
+       style="fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.94902;paint-order:stroke fill markers"
        id="rect855"
        width="5"
        height="1"
@@ -85,7 +85,7 @@
        id="g2704"
        transform="translate(-0.17066231,-0.17157214)">
       <rect
-         style="fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.94902;paint-order:stroke fill markers"
+         style="fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.94902;paint-order:stroke fill markers"
          id="rect2698"
          width="5"
          height="1"
@@ -94,7 +94,7 @@
          ry="0.5"
          transform="rotate(-45)" />
       <rect
-         style="fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.94902;paint-order:stroke fill markers"
+         style="fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.94902;paint-order:stroke fill markers"
          id="rect2700"
          width="5"
          height="1"

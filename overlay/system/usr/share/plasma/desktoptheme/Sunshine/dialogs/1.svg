@@ -26,8 +26,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#efe5d0"
-     bordercolor="#72625a"
+     pagecolor="#f4f0eb"
+     bordercolor="#69616b"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -54,7 +54,7 @@
      inkscape:document-rotation="0"
      inkscape:pagecheckerboard="0"
      inkscape:showpageshadow="0"
-     inkscape:deskcolor="#d8d3ca">
+     inkscape:deskcolor="#d3d0cf">
     <inkscape:grid
        type="xygrid"
        id="grid1008" />
@@ -295,7 +295,7 @@
        d="m 190,252 h 50 v 0.87475 h -50 z"
        id="path945"
        inkscape:connector-curvature="0"
-       style="opacity:0.001;fill:#efe5d0;fill-opacity:1;stroke-width:0.353505" />
+       style="opacity:0.001;fill:#f4f0eb;fill-opacity:1;stroke-width:0.353505" />
   </g>
   <g
      transform="matrix(0,-1.1176497,-1.1176497,0,222.93312,112.82072)"
@@ -472,7 +472,7 @@
        inkscape:connector-curvature="0" />
     <path
        id="path1252"
-       style="color:#000000;opacity:0.001;isolation:auto;mix-blend-mode:normal;solid-color:#000000;fill:#efe5d0;fill-opacity:1;stroke-width:2;color-rendering:auto;image-rendering:auto;shape-rendering:auto"
+       style="color:#000000;opacity:0.001;isolation:auto;mix-blend-mode:normal;solid-color:#000000;fill:#f4f0eb;fill-opacity:1;stroke-width:2;color-rendering:auto;image-rendering:auto;shape-rendering:auto"
        d="M 71 20.998047 L 71 21.998047 A 8 8 0 0 1 78.935547 28.998047 L 79 28.998047 A 8 8 0 0 0 71 20.998047 z " />
   </g>
   <g
@@ -541,33 +541,33 @@
        inkscape:connector-curvature="0" />
     <path
        id="path904"
-       style="color:#000000;opacity:0.001;isolation:auto;mix-blend-mode:normal;solid-color:#000000;fill:#efe5d0;fill-opacity:1;stroke-width:2;color-rendering:auto;image-rendering:auto;shape-rendering:auto"
+       style="color:#000000;opacity:0.001;isolation:auto;mix-blend-mode:normal;solid-color:#000000;fill:#f4f0eb;fill-opacity:1;stroke-width:2;color-rendering:auto;image-rendering:auto;shape-rendering:auto"
        d="M 29 21 A 8 8 0 0 0 21 29 L 21.068359 29 A 8 8 0 0 1 29 22 L 29 21 z "
        transform="matrix(0,0.5,0.5,0,-7.5,37.439)" />
   </g>
   <rect
-     style="color:#000000;isolation:auto;mix-blend-mode:normal;solid-color:#000000;fill:#ff8d4c;stroke-width:1.41421342;color-rendering:auto;image-rendering:auto;shape-rendering:auto"
+     style="color:#000000;isolation:auto;mix-blend-mode:normal;solid-color:#000000;fill:#f58941;stroke-width:1.41421342;color-rendering:auto;image-rendering:auto;shape-rendering:auto"
      height="7.9999981"
      width="4"
      y="21.000002"
      x="48"
      id="hint-top-margin" />
   <rect
-     style="color:#000000;isolation:auto;mix-blend-mode:normal;solid-color:#000000;fill:#ff8d4c;stroke-width:1.41421354;color-rendering:auto;image-rendering:auto;shape-rendering:auto"
+     style="color:#000000;isolation:auto;mix-blend-mode:normal;solid-color:#000000;fill:#f58941;stroke-width:1.41421354;color-rendering:auto;image-rendering:auto;shape-rendering:auto"
      height="4"
      width="8"
      y="48.000004"
      x="71"
      id="hint-right-margin" />
   <rect
-     style="color:#000000;isolation:auto;mix-blend-mode:normal;solid-color:#000000;fill:#ff8d4c;stroke-width:1.41421354;color-rendering:auto;image-rendering:auto;shape-rendering:auto"
+     style="color:#000000;isolation:auto;mix-blend-mode:normal;solid-color:#000000;fill:#f58941;stroke-width:1.41421354;color-rendering:auto;image-rendering:auto;shape-rendering:auto"
      height="4"
      width="8"
      y="48.000004"
      x="21"
      id="hint-left-margin" />
   <rect
-     style="color:#000000;isolation:auto;mix-blend-mode:normal;solid-color:#000000;fill:#ff8d4c;stroke-width:1.41420543;color-rendering:auto;image-rendering:auto;shape-rendering:auto"
+     style="color:#000000;isolation:auto;mix-blend-mode:normal;solid-color:#000000;fill:#f58941;stroke-width:1.41420543;color-rendering:auto;image-rendering:auto;shape-rendering:auto"
      height="7.9999084"
      width="4"
      y="71.000092"

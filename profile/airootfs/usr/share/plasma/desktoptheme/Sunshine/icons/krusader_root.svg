@@ -14,13 +14,13 @@
      id="defs22" />
   <sodipodi:namedview
      id="namedview20"
-     pagecolor="#d1cabf"
+     pagecolor="#cbc7c5"
      bordercolor="#000000"
      borderopacity="1"
      inkscape:showpageshadow="true"
      inkscape:pageopacity="0"
      inkscape:pagecheckerboard="false"
-     inkscape:deskcolor="#d4cec4"
+     inkscape:deskcolor="#cfcbc9"
      showgrid="true"
      inkscape:lockguides="false"
      inkscape:zoom="10.429825"
@@ -45,7 +45,7 @@
   <g
      id="krusader_root">
     <rect
-       style="opacity:0.00100002;fill:#e0c7b8;fill-opacity:1"
+       style="opacity:0.00100002;fill:#eca779;fill-opacity:1"
        width="32"
        height="32"
        x="0"
@@ -59,7 +59,7 @@
        id="path1099-2"
        d="m 16.91368,23.499999 c 0,0.647193 -0.530503,1.172797 -1.183734,1.172797 -0.653232,0 -1.183741,-0.525604 -1.183741,-1.172797 0,-0.647533 0.530509,-1.172793 1.183741,-1.172793 0.653231,0 1.183734,0.52526 1.183734,1.172793 z"
        class="ColorScheme-Text "
-       style="color:#efe5d0;fill:#d65b65;fill-opacity:1" />
+       style="color:#f4f0eb;fill:#d65b65;fill-opacity:1" />
     <path
        id="rect1"
        style="fill:#d65b65;fill-opacity:1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
@@ -100,7 +100,7 @@
   <g
      id="22-22-krusader_root">
     <rect
-       style="opacity:0.00100002;fill:#e0c7b8;fill-opacity:1"
+       style="opacity:0.00100002;fill:#eca779;fill-opacity:1"
        width="22"
        height="22"
        x="32"

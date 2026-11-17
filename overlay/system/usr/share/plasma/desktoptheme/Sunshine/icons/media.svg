@@ -45,8 +45,8 @@
      gridtolerance="10"
      objecttolerance="10"
      borderopacity="1"
-     bordercolor="#72625a"
-     pagecolor="#d1cabf"
+     bordercolor="#69616b"
+     pagecolor="#cbc7c5"
      inkscape:snap-bbox="true"
      inkscape:bbox-nodes="true"
      inkscape:snap-bbox-edge-midpoints="true"
@@ -60,7 +60,7 @@
      id="defs3">
     <style
        type="text/css"
-       id="current-color-scheme">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       id="current-color-scheme">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
   </defs>
   <g
      id="media-record"
@@ -96,9 +96,9 @@
        class="ColorScheme-Text"
        d="m 5,1035.4 v 12 h 12 v -12 z"
        enable-background="new"
-       fill="#efe5d0"
+       fill="#f4f0eb"
        id="path12"
-       style="fill:#efe5d0;fill-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1" />
   </g>
   <g
      id="media-skip-forward"
@@ -115,9 +115,9 @@
        class="ColorScheme-Text"
        d="m 19,1037.4 v 8 h -2 v -8 z m -2,4 -7,4 v -8 z m -7,0 -7,4 v -8 z"
        enable-background="new"
-       fill="#efe5d0"
+       fill="#f4f0eb"
        id="path17"
-       style="fill:#efe5d0;fill-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1" />
   </g>
   <g
      id="media-skip-backward"
@@ -134,9 +134,9 @@
        class="ColorScheme-Text"
        d="m 19,1037.4 v 8 h -2 v -8 z m -2,4 -7,4 v -8 z m -7,0 -7,4 v -8 z"
        enable-background="new"
-       fill="#efe5d0"
+       fill="#f4f0eb"
        id="path22"
-       style="fill:#efe5d0;fill-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1" />
   </g>
   <g
      id="media-seek-forward"
@@ -153,9 +153,9 @@
        class="ColorScheme-Text"
        d="m 11,1037.4 7,4 -7,4 z m 0,4 -7,4 v -8 z"
        enable-background="new"
-       fill="#efe5d0"
+       fill="#f4f0eb"
        id="path27"
-       style="fill:#efe5d0;fill-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1" />
   </g>
   <g
      id="media-seek-backward"
@@ -172,9 +172,9 @@
        class="ColorScheme-Text"
        d="m 11,1037.4 7,4 -7,4 z m 0,4 -7,4 v -8 z"
        enable-background="new"
-       fill="#efe5d0"
+       fill="#f4f0eb"
        id="path32"
-       style="fill:#efe5d0;fill-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1" />
   </g>
   <g
      id="media-eject"
@@ -190,11 +190,11 @@
     <path
        class="ColorScheme-Text"
        d="m 11,1036.4 -5,5 v 1 h 10 v -1 z m -5,8 v 2 h 10 v -2 z"
-       color="#efe5d0"
+       color="#f4f0eb"
        display="block"
-       fill="#efe5d0"
+       fill="#f4f0eb"
        id="path37"
-       style="fill:#efe5d0;fill-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1" />
   </g>
   <g
      id="media-playback-pause"
@@ -211,9 +211,9 @@
        class="ColorScheme-Text"
        d="m 5,1035.4 v 12 h 4 v -12 z m 8,0 v 12 h 4 v -12 z"
        enable-background="new"
-       fill="#efe5d0"
+       fill="#f4f0eb"
        id="path42"
-       style="fill:#efe5d0;fill-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1" />
   </g>
   <g
      id="media-playback-start"
@@ -230,15 +230,15 @@
        class="ColorScheme-Text"
        d="m 6,1035.4 v 12 l 11,-6 -9.8992,-5.3996 z"
        enable-background="new"
-       fill="#efe5d0"
+       fill="#f4f0eb"
        id="path47"
-       style="fill:#efe5d0;fill-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1" />
   </g>
   <g
      id="media-playback-paused"
      transform="translate(-25,-28)">
     <rect
-       style="color:#efe5d0;stroke-width:1.5"
+       style="color:#f4f0eb;stroke-width:1.5"
        x="0.99975014"
        y="27.99975"
        width="22.0005"
@@ -248,13 +248,13 @@
        opacity="0.01"
        id="rect50" />
     <circle
-       style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="circle901"
        cx="12"
        cy="39"
        r="7.5001144" />
     <rect
-       style="fill:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect967"
        width="1"
        height="6"
@@ -262,7 +262,7 @@
        y="36"
        ry="0.5" />
     <rect
-       style="fill:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect1068"
        width="1"
        height="6"
@@ -274,7 +274,7 @@
      id="media-playback-playing"
      transform="translate(-25,-28)">
     <rect
-       style="color:#efe5d0;stroke-width:1.5"
+       style="color:#f4f0eb;stroke-width:1.5"
        x="24.99975"
        y="27.99975"
        width="22.0005"
@@ -286,10 +286,10 @@
     <path
        sodipodi:nodetypes="cccc"
        d="m 34,36 v 6 l 4,-3 z"
-       style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect932" />
     <circle
-       style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="circle1152"
        cx="36"
        cy="39"
@@ -299,7 +299,7 @@
      id="media-playback-stopped"
      transform="translate(-25,-28)">
     <rect
-       style="color:#efe5d0;stroke-width:1.5"
+       style="color:#f4f0eb;stroke-width:1.5"
        x="48.999752"
        y="27.99975"
        width="22.0005"
@@ -309,13 +309,13 @@
        opacity="0.01"
        id="rect60" />
     <circle
-       style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="circle1287"
        cx="60"
        cy="39"
        r="7.5001144" />
     <rect
-       style="fill:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect1666"
        width="6"
        height="6"

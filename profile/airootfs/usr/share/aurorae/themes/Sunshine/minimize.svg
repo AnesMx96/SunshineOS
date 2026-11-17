@@ -69,8 +69,8 @@
     </filter>
   </defs>
   <sodipodi:namedview
-     pagecolor="#d1cabf"
-     bordercolor="#576075"
+     pagecolor="#cbc7c5"
+     bordercolor="#69616b"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -94,7 +94,7 @@
      inkscape:snap-bbox-edge-midpoints="true"
      inkscape:pagecheckerboard="0"
      inkscape:showpageshadow="0"
-     inkscape:deskcolor="#d1cabf">
+     inkscape:deskcolor="#cbc7c5">
     <inkscape:grid
        type="xygrid"
        id="grid949"
@@ -142,7 +142,7 @@
          height="0.26458332"
          width="2.6458333"
          id="rect13192"
-         style="color:#1b253e;fill:#efe5d0;fill-opacity:1" />
+         style="color:#1e1f37;fill:#f4f0eb;fill-opacity:1" />
     </g>
   </g>
   <g
@@ -178,7 +178,7 @@
          height="0.26458332"
          width="2.6458333"
          id="rect13293"
-         style="color:#1b253e;fill:#efe5d0;fill-opacity:1;opacity:0.4" />
+         style="color:#1e1f37;fill:#f4f0eb;fill-opacity:1;opacity:0.4" />
     </g>
   </g>
   <g
@@ -214,7 +214,7 @@
          height="0.26458332"
          width="2.6458333"
          id="rect15896"
-         style="color:#1b253e;opacity:0.4;fill:#efe5d0;fill-opacity:1" />
+         style="color:#1e1f37;opacity:0.4;fill:#f4f0eb;fill-opacity:1" />
     </g>
   </g>
   <g
@@ -224,7 +224,7 @@
        id="use1628"
        transform="matrix(1.1578947,0,0,0.87500003,11.293531,17.363282)">
       <rect
-         style="color:#1b253e;opacity:0.1;fill:#efe5d0;fill-opacity:1"
+         style="color:#1e1f37;opacity:0.1;fill:#f4f0eb;fill-opacity:1"
          id="rect17449"
          width="10.054167"
          height="8.4666662"
@@ -243,7 +243,7 @@
          id="rect17443"
          style="opacity:0.003;fill:#000000;fill-opacity:1;stroke-width:0.220007" />
       <rect
-         style="color:#1b253e;fill:#efe5d0;fill-opacity:1"
+         style="color:#1e1f37;fill:#f4f0eb;fill-opacity:1"
          id="rect17445"
          width="2.6458333"
          height="0.26458332"
@@ -266,7 +266,7 @@
          height="8.4666662"
          width="10.054167"
          id="rect19001"
-         style="color:#1b253e;opacity:0.25;fill:#efe5d0;fill-opacity:1"
+         style="color:#1e1f37;opacity:0.25;fill:#f4f0eb;fill-opacity:1"
          class="ColorScheme-Text" />
     </g>
     <g
@@ -280,7 +280,7 @@
          x="27.516666"
          y="-25.135416" />
       <rect
-         style="color:#1b253e;fill:#efe5d0;fill-opacity:1"
+         style="color:#1e1f37;fill:#f4f0eb;fill-opacity:1"
          id="rect19007"
          width="2.6458333"
          height="0.26458332"

@@ -1,15 +1,15 @@
 <svg width="112" height="34" version="1.1" viewBox="0 0 112 34" xmlns="http://www.w3.org/2000/svg">
  <style id="current-color-scheme" type="text/css">.ColorScheme-ButtonBackground {
-            color:#efe5d0;
-            stop-color:#efe5d0;
+            color:#f4f0eb;
+            stop-color:#f4f0eb;
         }
         .ColorScheme-ButtonHover {
-            color:#f6c1a2;
-            stop-color:#f6c1a2;
+            color:#eca779;
+            stop-color:#eca779;
         }
         .ColorScheme-ButtonFocus{
-            color:#fd8a48;
-            stop-color:#fd8a48;
+            color:#ea8846;
+            stop-color:#ea8846;
         }</style>
  <g id="normal-center" transform="translate(-174,-62)">
   <path d="m180 68h22v22h-22z" fill="transparent" fill-rule="evenodd"/>

@@ -27,8 +27,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#d1cabf"
-     bordercolor="#576075"
+     pagecolor="#cbc7c5"
+     bordercolor="#69616b"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -54,14 +54,14 @@
      id="defs81">
     <style
        id="current-color-scheme"
-       type="text/css">.ColorScheme-Text{color:#dec7ba}</style>
+       type="text/css">.ColorScheme-Text{color:#eca779}</style>
   </defs>
   <g
      id="quassel"
      transform="translate(-1 -1)">
     <path
        id="rect3881"
-       fill="#efe5d0"
+       fill="#f4f0eb"
        fill-opacity=".01"
        stroke="none"
        d="M1 1h22v22H1z" />
@@ -73,14 +73,14 @@
        fill="currentColor"
        fill-opacity="1"
        stroke="none"
-       style="fill:#efe5d0;fill-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1" />
   </g>
   <g
      transform="translate(-25 -1)"
      id="quassel_inactive">
     <path
        id="rect3777"
-       fill="#efe5d0"
+       fill="#f4f0eb"
        fill-opacity=".01"
        stroke="none"
        d="M1 1h22v22H1z" />
@@ -93,7 +93,7 @@
        fill="currentColor"
        fill-opacity="1"
        stroke="none"
-       style="fill:#efe5d0;fill-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1" />
   </g>
   <g
      transform="translate(23 -1)"
@@ -101,7 +101,7 @@
      stroke="none">
     <path
        id="rect3785"
-       fill="#efe5d0"
+       fill="#f4f0eb"
        fill-opacity=".01"
        d="M1 1h22v22H1z" />
     <path
@@ -110,7 +110,7 @@
        d="M11 3a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 1a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm2 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"
        fill="currentColor"
        fill-opacity="1"
-       color="#fa8947"
-       style="fill:#ff9151;fill-opacity:1" />
+       color="#e78646"
+       style="fill:#ff8a3c;fill-opacity:1" />
   </g>
 </svg>

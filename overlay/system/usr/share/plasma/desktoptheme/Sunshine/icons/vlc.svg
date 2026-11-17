@@ -26,8 +26,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#d1cabf"
-     bordercolor="#72625a"
+     pagecolor="#cbc7c5"
+     bordercolor="#69616b"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -48,7 +48,7 @@
      inkscape:document-rotation="0"
      inkscape:showpageshadow="2"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d8d3ca">
+     inkscape:deskcolor="#d3d0cf">
     <inkscape:grid
        id="grid1"
        units="px"
@@ -56,9 +56,9 @@
        originy="0"
        spacingx="1"
        spacingy="1"
-       empcolor="#ff6005"
+       empcolor="#ef6000"
        empopacity="0.30196078"
-       color="#ff6005"
+       color="#ef6000"
        opacity="0.14902"
        empspacing="5"
        enabled="true"
@@ -69,7 +69,7 @@
     <style
        id="current-color-scheme"
        type="text/css">.ColorScheme-Text {
-        color:#54352d;
+        color:#292c4d;
       }</style>
   </defs>
   <g
@@ -83,7 +83,7 @@
          transform="translate(0 1030.4)"
          d="m9.8809 3a1.0001 1.0001 0 0 0-0.96484 0.73438l-3.6602 13.266h1.0391l3.5859-13h2.2383l3.5859 13h1.0391l-3.6602-13.266a1.0001 1.0001 0 0 0-0.96484-0.73438h-2.2383z"
          id="path5"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <g
          class="ColorScheme-Text"
          fill="currentColor"
@@ -96,15 +96,15 @@
            rx="1"
            ry="1"
            id="rect7"
-           style="fill:#efe5d0;fill-opacity:1" />
+           style="fill:#f4f0eb;fill-opacity:1" />
         <path
            d="m 9,1037.4 h 4 l 1,2 H 8 Z"
            id="path9"
-           style="fill:#efe5d0;fill-opacity:1;stroke-width:0.816497" />
+           style="fill:#f4f0eb;fill-opacity:1;stroke-width:0.816497" />
         <path
            d="m 7.5,1042.4 h 7 l 1,2 h -9 z"
            id="path11"
-           style="fill:#efe5d0;fill-opacity:1;stroke-width:0.816497" />
+           style="fill:#f4f0eb;fill-opacity:1;stroke-width:0.816497" />
       </g>
       <rect
          y="1030.4"

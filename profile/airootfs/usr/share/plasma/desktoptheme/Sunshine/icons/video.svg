@@ -13,8 +13,8 @@
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:dc="http://purl.org/dc/elements/1.1/">
   <sodipodi:namedview
-     pagecolor="#d1cabf"
-     bordercolor="#576075"
+     pagecolor="#cbc7c5"
+     bordercolor="#69616b"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -44,57 +44,57 @@
     <style
        id="current-color-scheme"
        type="text/css">.ColorScheme-Text {
-        color:#6a758f;
+        color:#807683;
       }
       .ColorScheme-Background{
-        color:#efe5d0;
+        color:#f4f0eb;
       }
       .ColorScheme-Highlight{
-        color:#fa8947;
+        color:#e78646;
       }
       .ColorScheme-ViewText {
-        color:#6a758f;
+        color:#807683;
       }
       .ColorScheme-ViewBackground{
-        color:#efe5d0;
+        color:#f4f0eb;
       }
       .ColorScheme-ViewHover {
-        color:#fa8947;
+        color:#e78646;
       }
       .ColorScheme-ViewFocus{
-        color:#ff843d;
+        color:#ff7e28;
       }
       .ColorScheme-ButtonText {
-        color:#6a758f;
+        color:#807683;
       }
       .ColorScheme-ButtonBackground{
-        color:#efe5d0;
+        color:#f4f0eb;
       }
       .ColorScheme-ButtonHover {
-        color:#fa8947;
+        color:#e78646;
       }
       .ColorScheme-ButtonFocus{
-        color:#ff843d;
+        color:#ff7e28;
       }</style>
     <style
        type="text/css"
-       id="style3">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       id="style3">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
     <style
        type="text/css"
        id="style5" />
     <style
        type="text/css"
        id="style7">.ColorScheme-Text {
-            color:#1b253e;
+            color:#1e1f37;
         }
         .ColorScheme-Background {
-            color:#efe5d0;
+            color:#f4f0eb;
         }
         .ColorScheme-ViewBackground {
-            color:#efe5d0;
+            color:#f4f0eb;
         }
         .ColorScheme-ButtonFocus {
-            color:#fd8a48;
+            color:#ea8846;
         }
         .ColorScheme-PositiveText {
             color:#5b8a4b;
@@ -123,21 +123,21 @@
      transform="translate(27)">
     <g
        transform="translate(-69.5,1.5)"
-       fill="#efe5d0"
+       fill="#f4f0eb"
        id="g49"
-       style="fill:#efe5d0;fill-opacity:1">
+       style="fill:#f4f0eb;fill-opacity:1">
       <g
          transform="translate(-0.5)"
          id="g31"
-         style="fill:#efe5d0;fill-opacity:1">
+         style="fill:#f4f0eb;fill-opacity:1">
         <path
            d="m 55.23,-22.733 a 3,3 0 0 1 0.26953,1.2334 3,3 0 0 1 -3,3 3,3 0 0 1 -1.2305,-0.2666 3,3 0 0 0 2.7305,1.7666 3,3 0 0 0 3,-3 3,3 0 0 0 -1.7695,-2.7334 z"
            id="path27"
-           style="fill:#efe5d0;fill-opacity:1" />
+           style="fill:#f4f0eb;fill-opacity:1" />
         <path
            d="m 54,-23 a 3,3 0 0 0 -3,3 3,3 0 0 0 3,3 3,3 0 0 0 3,-3 3,3 0 0 0 -3,-3 z m 0,0.75 A 2.25,2.25 0 0 1 56.25,-20 2.25,2.25 0 0 1 54,-17.75 2.25,2.25 0 0 1 51.75,-20 2.25,2.25 0 0 1 54,-22.25 Z"
            id="path29"
-           style="fill:#efe5d0;fill-opacity:1" />
+           style="fill:#f4f0eb;fill-opacity:1" />
       </g>
       <rect
          x="53"
@@ -146,7 +146,7 @@
          height="2"
          ry="0.5"
          id="rect33"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          x="53"
          y="-16"
@@ -154,7 +154,7 @@
          height="2"
          ry="0.5"
          id="rect35"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          transform="rotate(45)"
          x="23.188"
@@ -163,7 +163,7 @@
          height="2"
          ry="0.5"
          id="rect37"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          transform="rotate(45)"
          x="23.188"
@@ -172,7 +172,7 @@
          height="2"
          ry="0.5"
          id="rect39"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          transform="rotate(90)"
          x="-20.5"
@@ -181,7 +181,7 @@
          height="2"
          ry="0.5"
          id="rect41"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          transform="rotate(90)"
          x="-20.5"
@@ -190,7 +190,7 @@
          height="2"
          ry="0.5"
          id="rect43"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          transform="rotate(135)"
          x="-52.472"
@@ -199,7 +199,7 @@
          height="2"
          ry="0.5"
          id="rect45"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          transform="rotate(135)"
          x="-52.472"
@@ -208,7 +208,7 @@
          height="2"
          ry="0.5"
          id="rect47"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
     </g>
     <rect
        id="rect3832-6-3"
@@ -218,21 +218,21 @@
        height="32"
        fill-opacity="0" />
     <rect
-       style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        id="rect8113"
        width="1"
        height="2"
        x="-19"
        y="-9" />
     <rect
-       style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        id="rect8115"
        width="1"
        height="2"
        x="-14"
        y="-9" />
     <rect
-       style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:2.49444;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:2.49444;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        id="rect8117"
        width="14"
        height="1"
@@ -241,28 +241,28 @@
        ry="0.5" />
     <path
        id="path8119"
-       style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m -26,-28 c -1.108,0 -2,0.892 -2,2 v 15 c 0,1.108 0.892,2 2,2 h 20 c 1.108,0 2,-0.892 2,-2 v -15 c 0,-1.108 -0.892,-2 -2,-2 z m 0,1 h 20 c 0.554,0 1,0.446 1,1 v 15 c 0,0.554 -0.446,1 -1,1 h -20 c -0.554,0 -1,-0.446 -1,-1 v -15 c 0,-0.554 0.446,-1 1,-1 z"
        sodipodi:nodetypes="ssssssssssssssssss" />
   </g>
   <g
      id="22-22-video-display-brightness">
     <rect
-       style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        id="rect1633-2"
        width="1"
        height="2"
        x="8"
        y="17" />
     <rect
-       style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        id="rect1635-9"
        width="1"
        height="2"
        x="13"
        y="17" />
     <rect
-       style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:2.10819;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:2.10819;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        id="rect1637"
        width="10"
        height="1"
@@ -271,7 +271,7 @@
        ry="0.5" />
     <path
        id="rect7217"
-       style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 5,5 C 3.892,5 3,5.892 3,7 v 8 c 0,1.108 0.892,2 2,2 h 12 c 1.108,0 2,-0.892 2,-2 V 7 C 19,5.892 18.108,5 17,5 Z m 0,1 h 12 c 0.554,0 1,0.446 1,1 v 8 c 0,0.554 -0.446,1 -1,1 H 5 C 4.446,16 4,15.554 4,15 V 7 C 4,6.446 4.446,6 5,6 Z"
        sodipodi:nodetypes="ssssssssssssssssss" />
     <rect
@@ -283,15 +283,15 @@
        y="0" />
     <g
        transform="translate(-39.5,1.5)"
-       fill="#efe5d0"
+       fill="#f4f0eb"
        id="g82"
-       style="fill:#efe5d0;fill-opacity:1">
+       style="fill:#f4f0eb;fill-opacity:1">
       <circle
          cx="50.5"
          cy="9.5"
          r="1.5"
          id="circle64"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          x="50"
          y="6"
@@ -299,7 +299,7 @@
          height="1"
          ry="0.5"
          id="rect66"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          x="50"
          y="12"
@@ -307,7 +307,7 @@
          height="1"
          ry="0.5"
          id="rect68"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          transform="rotate(45)"
          x="41.925999"
@@ -316,7 +316,7 @@
          height="1"
          ry="0.5"
          id="rect70"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          transform="rotate(45)"
          x="41.925999"
@@ -325,7 +325,7 @@
          height="1"
          ry="0.5"
          id="rect72"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          transform="rotate(90)"
          x="9"
@@ -334,7 +334,7 @@
          height="1"
          ry="0.5"
          id="rect74"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          transform="rotate(90)"
          x="9"
@@ -343,7 +343,7 @@
          height="1"
          ry="0.5"
          id="rect76"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          transform="rotate(-45)"
          x="28.490999"
@@ -352,7 +352,7 @@
          height="1"
          ry="0.5"
          id="rect78"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
       <rect
          transform="rotate(-45)"
          x="28.490999"
@@ -361,7 +361,7 @@
          height="1"
          ry="0.5"
          id="rect80"
-         style="fill:#efe5d0;fill-opacity:1" />
+         style="fill:#f4f0eb;fill-opacity:1" />
     </g>
   </g>
 </svg>

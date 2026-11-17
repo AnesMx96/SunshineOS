@@ -14,8 +14,8 @@
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
      id="namedview88"
-     pagecolor="#efe5d0"
-     bordercolor="#576075"
+     pagecolor="#f4f0eb"
+     bordercolor="#69616b"
      borderopacity="1.0"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -39,48 +39,48 @@
     <style
        id="current-color-scheme"
        type="text/css">.ColorScheme-Text {
-        color:#253457;
-        stop-color:#253457;
+        color:#292c4d;
+        stop-color:#292c4d;
       }
       .ColorScheme-Background {
-        color:#efe5d0;
-        stop-color:#efe5d0;
+        color:#f4f0eb;
+        stop-color:#f4f0eb;
       }
       .ColorScheme-Highlight {
-        color:#ff833c;
-        stop-color:#ff833c;
+        color:#eb823b;
+        stop-color:#eb823b;
       }
       .ColorScheme-ViewText {
-        color:#253457;
-        stop-color:#253457;
+        color:#292c4d;
+        stop-color:#292c4d;
       }
       .ColorScheme-ViewBackground {
-        color:#efe5d0;
-        stop-color:#efe5d0;
+        color:#f4f0eb;
+        stop-color:#f4f0eb;
       }
       .ColorScheme-ViewHover {
-        color:#f6c1a2;
-        stop-color:#f6c1a2;
+        color:#eca779;
+        stop-color:#eca779;
       }
       .ColorScheme-ViewFocus{
-        color:#ff833c;
-        stop-color:#ff833c;
+        color:#eb823b;
+        stop-color:#eb823b;
       }
       .ColorScheme-ButtonText {
-        color:#253457;
-        stop-color:#253457;
+        color:#292c4d;
+        stop-color:#292c4d;
       }
       .ColorScheme-ButtonBackground {
-        color:#efe5d0;
-        stop-color:#efe5d0;
+        color:#f4f0eb;
+        stop-color:#f4f0eb;
       }
       .ColorScheme-ButtonHover {
-        color:#f6c1a2;
-        stop-color:#f6c1a2;
+        color:#eca779;
+        stop-color:#eca779;
       }
       .ColorScheme-ButtonFocus{
-        color:#ff833c;
-        stop-color:#ff833c;
+        color:#eb823b;
+        stop-color:#eb823b;
       }</style>
     <linearGradient
        id="a">
@@ -289,7 +289,7 @@
        fill="currentColor" />
     <path
        id="path932"
-       style="opacity:0.1;fill:#efe5d0"
+       style="opacity:0.1;fill:#f4f0eb"
        d="M 34 24 C 28.46 24 24 28.46 24 34 L 24.048828 34 C 24.547522 28.933027 28.797624 25 34 25 L 34 24 z "
        transform="translate(-15,882.36001)" />
   </g>
@@ -327,7 +327,7 @@
        width="1"
        height="32"
        id="rect973"
-       style="fill:#efe5d0;opacity:0.1" />
+       style="fill:#f4f0eb;opacity:0.1" />
   </g>
   <g
      id="center"
@@ -456,8 +456,8 @@
        y="-51"
        width="6"
        height="32"
-       color="#efe5d0"
-       fill="#131a2c"
+       color="#f4f0eb"
+       fill="#151627"
        opacity="0"
        id="rect62" />
     <rect
@@ -490,8 +490,8 @@
     <path
        transform="translate(0,904.36)"
        d="m 19,6 c -3.324,0 -6,2.676 -6,6 h 6 V 7 Z"
-       color="#efe5d0"
-       fill="#131a2c"
+       color="#f4f0eb"
+       fill="#151627"
        opacity="0"
        id="path71" />
   </g>
@@ -685,7 +685,7 @@
        id="path1832"
        d="M 32 131 C 26.46 131 22 135.46 22 141 L 22.048828 141 C 22.547522 135.93303 26.797624 132 32 132 L 32 131 z "
        transform="translate(-13,775.36)"
-       style="fill:#efe5d0;opacity:0.1" />
+       style="fill:#f4f0eb;opacity:0.1" />
   </g>
   <g
      id="blurred-top"
@@ -714,7 +714,7 @@
        width="1"
        height="32"
        id="rect1873"
-       style="opacity:0.1;fill:#efe5d0" />
+       style="opacity:0.1;fill:#f4f0eb" />
   </g>
   <g
      id="blurred-center"

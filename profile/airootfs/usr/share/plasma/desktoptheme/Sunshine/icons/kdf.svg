@@ -26,8 +26,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#d1cabf"
-     bordercolor="#576075"
+     pagecolor="#cbc7c5"
+     bordercolor="#69616b"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -59,7 +59,7 @@
      id="defs3">
     <style
        id="current-color-scheme"
-       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       type="text/css">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
   </defs>
   <rect
      class="ColorScheme-Text"
@@ -74,7 +74,7 @@
      id="kdf"
      transform="translate(22,-10)">
     <rect
-       style="opacity:0.00100002;fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:0.00100002;fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect846-3"
        width="22"
        height="22"
@@ -83,7 +83,7 @@
        ry="0" />
     <path
        id="rect1665"
-       style="fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+       style="fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
        d="m -5.5,29 c 1.38071,0 2.5,-1.11929 2.5,-2.5 v -11 C -3,14.1193 -4.11929,13 -5.5,13 h -11 c -1.3807,0 -2.5,1.1193 -2.5,2.5 v 11 c 0,1.38071 1.1193,2.5 2.5,2.5 z m 0,-1 H -9 V 25.5 C -9,24.67157 -9.67157,24 -10.5,24 H -18 v -8.5 c 0,-0.8284 0.6716,-1.5 1.5,-1.5 h 11 c 0.82843,0 1.5,0.6716 1.5,1.5 v 11 c 0,0.82843 -0.67157,1.5 -1.5,1.5 z m -4.5,0 h -6.5 C -17.3284,28 -18,27.32843 -18,26.5 V 25 h 7.5 c 0.27614,0 0.5,0.22386 0.5,0.5 z" />
   </g>
   <g
@@ -96,7 +96,7 @@
        style="fill:none" />
     <path
        id="path3447"
-       style="fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+       style="fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
        d="m -29.5,31 c 1.38071,0 2.5,-1.11929 2.5,-2.5 v -9 c 0,-1.3807 -1.11929,-2.5 -2.5,-2.5 h -9 c -1.3807,0 -2.5,1.1193 -2.5,2.5 v 9 c 0,1.38071 1.1193,2.5 2.5,2.5 z m 0,-1 h -3.25 v -1.5 c 0,-0.82843 -0.67157,-1.5 -1.5,-1.5 H -40 v -7.5 c 0,-0.8284 0.6716,-1.5 1.5,-1.5 h 9 c 0.82843,0 1.5,0.6716 1.5,1.5 v 9 c 0,0.82843 -0.67157,1.5 -1.5,1.5 z m -4.25,0 H -38.5 C -39.3284,30 -40,29.32843 -40,28.5 V 28 h 5.75 c 0.27614,0 0.5,0.22386 0.5,0.5 z"
        sodipodi:nodetypes="sssssssssscsscsssssscsscssc" />
   </g>

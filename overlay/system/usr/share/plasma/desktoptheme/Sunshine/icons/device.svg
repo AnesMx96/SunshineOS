@@ -26,7 +26,7 @@
   </metadata>
   <sodipodi:namedview
      id="namedview33"
-     bordercolor="#72625a"
+     bordercolor="#69616b"
      borderopacity="1"
      gridtolerance="10"
      guidetolerance="10"
@@ -51,7 +51,7 @@
      inkscape:window-y="40"
      inkscape:zoom="8"
      objecttolerance="10"
-     pagecolor="#d1cabf"
+     pagecolor="#cbc7c5"
      showgrid="true"
      showguides="true"
      inkscape:document-rotation="0"
@@ -65,7 +65,7 @@
      id="defs3">
     <style
        id="current-color-scheme"
-       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       type="text/css">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
   </defs>
   <g
      id="16-16-device-notifier">
@@ -81,11 +81,11 @@
        id="g999">
       <path
          inkscape:connector-curvature="0"
-         style="opacity:1;fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:1.28900659;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="opacity:1;fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:1.28900659;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 5,31 v 9 h 6 v -9 z m 1,1 h 4 v 7.076172 H 6 Z"
          id="rect945" />
       <path
-         style="opacity:1;fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:0.70164645;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="opacity:1;fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:0.70164645;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="M 6 29 L 6 32 L 10 32 L 10 29 L 6 29 z M 7 30 L 9 30 L 9 31 L 7 31 L 7 30 z "
          transform="translate(7.6293945e-6)"
          id="rect979" />
@@ -105,12 +105,12 @@
        transform="translate(-29)">
       <path
          id="rect890"
-         style="fill:#efe5d0;fill-opacity:1;stroke-width:0.05;stroke-linecap:round;stroke-linejoin:round"
+         style="fill:#f4f0eb;fill-opacity:1;stroke-width:0.05;stroke-linecap:round;stroke-linejoin:round"
          d="m 30,-15 c -0.554,0 -1,0.446 -1,1 v 6 c 0,0.554 0.446,1 1,1 h 20 c 0.554,0 1,-0.446 1,-1 v -6 c 0,-0.554 -0.446,-1 -1,-1 z m 0,1 h 20 v 6 H 30 Z"
          sodipodi:nodetypes="sssssssssccccc" />
       <path
          id="rect2527"
-         style="color:#000000;fill:#efe5d0;stroke-width:0.0738341;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         style="color:#000000;fill:#f4f0eb;stroke-width:0.0738341;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
          d="m 34,-22 c -0.549112,0 -0.687596,0.539044 -0.992188,1 l -3.964979,6.708456 H 50.957167 L 46.992188,-21 C 46.687596,-21.460956 46.549112,-22 46,-22 Z"
          sodipodi:nodetypes="sccccss" />
       <circle

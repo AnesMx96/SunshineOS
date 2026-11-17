@@ -26,8 +26,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#d1cabf"
-     bordercolor="#72625a"
+     pagecolor="#cbc7c5"
+     bordercolor="#69616b"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -50,34 +50,34 @@
     <style
        id="current-color-scheme"
        type="text/css">.ColorScheme-Text {
-        color:#54352d;
+        color:#292c4d;
       }
       .ColorScheme-Background{
-        color:#efe5d0;
+        color:#f4f0eb;
       }
       .ColorScheme-ViewText {
-        color:#54352d;
+        color:#292c4d;
       }
       .ColorScheme-ViewBackground{
-        color:#efe5d0;
+        color:#f4f0eb;
       }
       .ColorScheme-ViewHover {
-        color:#fd8a48;
+        color:#ea8846;
       }
       .ColorScheme-ViewFocus{
-        color:#fd8a48;
+        color:#ea8846;
       }
       .ColorScheme-ButtonText {
-        color:#54352d;
+        color:#292c4d;
       }
       .ColorScheme-ButtonBackground{
-        color:#efe5d0;
+        color:#f4f0eb;
       }
       .ColorScheme-ButtonHover {
-        color:#fd8a48;
+        color:#ea8846;
       }
       .ColorScheme-ButtonFocus{
-        color:#fd8a48;
+        color:#ea8846;
       }</style>
   </defs>
   <g
@@ -86,7 +86,7 @@
     <path
        class="ColorScheme-Text"
        d="m 32.969,13.594 v 40 h 3 v -40 z"
-       color="#54352d"
+       color="#292c4d"
        fill="currentColor"
        fill-opacity="0.3"
        opacity="0.01"
@@ -94,17 +94,17 @@
     <path
        class="ColorScheme-Background"
        d="m 33.969,13.594 v 40 h 1 v -40 z"
-       color="#efe5d0"
+       color="#f4f0eb"
        fill="currentColor"
        fill-opacity="0.1"
        id="path7" />
     <path
        class="ColorScheme-Text"
        d="m 33.969,13.594 v 40 h 1 v -40 z"
-       color="#54352d"
+       color="#292c4d"
        fill-opacity="0.15"
        id="path9"
-       style="fill:#efe5d0;fill-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1" />
   </g>
   <g
      id="horizontal-line"
@@ -112,7 +112,7 @@
     <path
        class="ColorScheme-Text"
        d="m 75.691,55.529 h -40 v 3 h 40 z"
-       color="#54352d"
+       color="#292c4d"
        fill="currentColor"
        fill-opacity="0.3"
        opacity="0.01"
@@ -120,16 +120,16 @@
     <path
        class="ColorScheme-Background"
        d="m 75.691,56.529 h -40 v 1 h 40 z"
-       color="#efe5d0"
+       color="#f4f0eb"
        fill="currentColor"
        fill-opacity="0.1"
        id="path14" />
     <path
        class="ColorScheme-Text"
        d="m 75.691,56.529 h -40 v 1 h 40 z"
-       color="#54352d"
+       color="#292c4d"
        fill-opacity="0.15"
        id="path16"
-       style="fill:#efe5d0;fill-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1" />
   </g>
 </svg>

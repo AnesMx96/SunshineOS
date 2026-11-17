@@ -52,8 +52,8 @@
      gridtolerance="10"
      objecttolerance="10"
      borderopacity="1"
-     bordercolor="#576075"
-     pagecolor="#d1cabf"
+     bordercolor="#69616b"
+     pagecolor="#cbc7c5"
      inkscape:pagecheckerboard="0"
      inkscape:object-paths="true"
      inkscape:snap-intersection-paths="true">
@@ -66,7 +66,7 @@
     <style
        type="text/css"
        id="current-color-scheme">
-   .ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }
+   .ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }
   </style>
     <style
        type="text/css"
@@ -75,21 +75,21 @@
        id="a">
       <stop
          offset="0"
-         stop-color="#efe5d0"
+         stop-color="#f4f0eb"
          id="stop945" />
       <stop
          offset=".508"
-         stop-color="#efe5d0"
+         stop-color="#f4f0eb"
          stop-opacity=".235"
          id="stop947" />
       <stop
          offset=".835"
-         stop-color="#efe5d0"
+         stop-color="#f4f0eb"
          stop-opacity=".157"
          id="stop949" />
       <stop
          offset="1"
-         stop-color="#efe5d0"
+         stop-color="#f4f0eb"
          stop-opacity=".392"
          id="stop951" />
     </linearGradient>
@@ -97,16 +97,16 @@
        id="c">
       <stop
          offset="0"
-         stop-color="#2a3b62"
+         stop-color="#2f3157"
          id="stop954" />
       <stop
          offset=".5"
-         stop-color="#586278"
+         stop-color="#6b636d"
          stop-opacity=".498"
          id="stop956" />
       <stop
          offset="1"
-         stop-color="#586278"
+         stop-color="#6b636d"
          stop-opacity="0"
          id="stop958" />
     </linearGradient>
@@ -114,19 +114,19 @@
        id="b">
       <stop
          offset="0"
-         stop-color="#afa491"
+         stop-color="#a59e9b"
          id="stop961" />
       <stop
          offset=".262"
-         stop-color="#69748d"
+         stop-color="#7e7581"
          id="stop963" />
       <stop
          offset=".705"
-         stop-color="#8b6048"
+         stop-color="#a65118"
          id="stop965" />
       <stop
          offset="1"
-         stop-color="#444b5c"
+         stop-color="#524c54"
          id="stop967" />
     </linearGradient>
     <style
@@ -135,7 +135,7 @@
     <style
        id="current-color-scheme-56"
        type="text/css">
-   .ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }
+   .ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }
   </style>
     <style
        id="current-color-scheme-6-2"
@@ -1306,11 +1306,11 @@
       <stop
          id="stop1540"
          offset="0"
-         stop-color="#8a3b0d" />
+         stop-color="#723710" />
       <stop
          id="stop1542"
          offset="1"
-         stop-color="#c75411" />
+         stop-color="#ab5318" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -1323,11 +1323,11 @@
       <stop
          id="stop1545"
          offset="0"
-         stop-color="#c96e39" />
+         stop-color="#d0651e" />
       <stop
          id="stop1547"
          offset="1"
-         stop-color="#bc5316" />
+         stop-color="#a65018" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -1340,11 +1340,11 @@
       <stop
          id="stop1550"
          offset="0"
-         stop-color="#e86113" />
+         stop-color="#c9621d" />
       <stop
          id="stop1552"
          offset="1"
-         stop-color="#ff8742" />
+         stop-color="#f1843c" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -1357,11 +1357,11 @@
       <stop
          id="stop1555"
          offset="0"
-         stop-color="#e25f13" />
+         stop-color="#c5601c" />
       <stop
          id="stop1557"
          offset="1"
-         stop-color="#fb823c" />
+         stop-color="#e7803b" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -1374,11 +1374,11 @@
       <stop
          id="stop1560"
          offset="0"
-         stop-color="#c15212" />
+         stop-color="#a65118" />
       <stop
          id="stop1562"
          offset="1"
-         stop-color="#ee7c3a" />
+         stop-color="#e27832" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -1391,11 +1391,11 @@
       <stop
          id="stop1565"
          offset="0"
-         stop-color="#944111" />
+         stop-color="#7f3e12" />
       <stop
          id="stop1567"
          offset="1"
-         stop-color="#e8671c" />
+         stop-color="#d2661e" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -1407,15 +1407,15 @@
       <stop
          id="stop4408"
          offset="0"
-         stop-color="#ff975b" />
+         stop-color="#ff9046" />
       <stop
          id="stop4410"
          offset="1"
-         stop-color="#ffa774" />
+         stop-color="#ff9f5f" />
     </linearGradient>
     <style
        type="text/css"
-       id="current-color-scheme-5">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       id="current-color-scheme-5">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
     <filter
        color-interpolation-filters="sRGB"
        height="1.072"
@@ -1433,11 +1433,11 @@
     <linearGradient
        id="linearGradient1107">
       <stop
-         stop-color="#444b5c"
+         stop-color="#524c54"
          offset="0"
          id="stop833" />
       <stop
-         stop-color="#080b13"
+         stop-color="#090a11"
          offset="1"
          id="stop835" />
     </linearGradient>
@@ -1453,11 +1453,11 @@
        gradientTransform="matrix(3.7822477,0,0,3.7822477,210.68399,-23.662411)"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ff9151"
+         stop-color="#ff8a3c"
          offset="0"
          id="stop840" />
       <stop
-         stop-color="#ff9151"
+         stop-color="#ff8a3c"
          offset="1"
          id="stop842" />
     </linearGradient>
@@ -1470,11 +1470,11 @@
        gradientTransform="matrix(2.2677698,0,0,2.0472441,143.18742,36.820754)"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#f15800"
+         stop-color="#dc5800"
          offset="0"
          id="stop845" />
       <stop
-         stop-color="#9b400a"
+         stop-color="#7f3e12"
          offset="1"
          id="stop847" />
     </linearGradient>
@@ -1487,11 +1487,11 @@
        gradientTransform="matrix(3.7822477,0,0,3.7822477,224.77212,-93.087944)"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#efe5d0"
+         stop-color="#f4f0eb"
          offset="0"
          id="stop850" />
       <stop
-         stop-color="#d9d4cb"
+         stop-color="#d4d1d0"
          offset="1"
          id="stop852" />
     </linearGradient>
@@ -1530,7 +1530,7 @@
        xlink:href="#linearGradient1107" />
     <style
        type="text/css"
-       id="current-color-scheme-0">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       id="current-color-scheme-0">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
     <filter
        color-interpolation-filters="sRGB"
        height="1.072"
@@ -5012,11 +5012,11 @@
       <stop
          id="stop9797"
          offset="0"
-         stop-color="#ff7d32" />
+         stop-color="#eb7c31" />
       <stop
          id="stop9799"
          offset="1"
-         stop-color="#f3b692" />
+         stop-color="#eca779" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -5029,22 +5029,22 @@
       <stop
          id="stop10025"
          offset="0"
-         stop-color="#fd8742" />
+         stop-color="#ea8541" />
       <stop
          id="stop10027"
          offset="1"
-         stop-color="#ffaa79" />
+         stop-color="#fba368" />
     </linearGradient>
     <linearGradient
        id="linearGradient1108">
       <stop
          id="stop10030"
          offset="0"
-         stop-color="#ffa46f" />
+         stop-color="#ff9c5a" />
       <stop
          id="stop10032"
          offset="1"
-         stop-color="#fd7120" />
+         stop-color="#e77122" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -5057,11 +5057,11 @@
       <stop
          id="stop10035"
          offset="0"
-         stop-color="#e26319" />
+         stop-color="#c9621d" />
       <stop
          id="stop10037"
          offset="1"
-         stop-color="#ab3f00" />
+         stop-color="#8b3e0b" />
     </linearGradient>
     <linearGradient
        xlink:href="#linearGradient1108"
@@ -5093,11 +5093,11 @@
       <stop
          id="stop10120"
          offset="0"
-         stop-color="#fd8742" />
+         stop-color="#ea8541" />
       <stop
          id="stop10122"
          offset="1"
-         stop-color="#ffaa79" />
+         stop-color="#fba368" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -5110,11 +5110,11 @@
       <stop
          id="stop10130"
          offset="0"
-         stop-color="#e26319" />
+         stop-color="#c9621d" />
       <stop
          id="stop10132"
          offset="1"
-         stop-color="#ab3f00" />
+         stop-color="#8b3e0b" />
     </linearGradient>
     <filter
        color-interpolation-filters="sRGB"
@@ -5138,12 +5138,12 @@
       <stop
          id="stop1565-1"
          offset="0"
-         stop-color="#944111"
-         style="stop-color:#994616;stop-opacity:1" />
+         stop-color="#7f3e12"
+         style="stop-color:#884213;stop-opacity:1" />
       <stop
          id="stop1567-0"
          offset="1"
-         stop-color="#e8671c" />
+         stop-color="#d2661e" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -5156,11 +5156,11 @@
       <stop
          id="stop839"
          offset="0"
-         stop-color="#ff843d" />
+         stop-color="#f18137" />
       <stop
          id="stop841"
          offset="1"
-         stop-color="#ffa46f" />
+         stop-color="#ff9c5a" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -5173,11 +5173,11 @@
       <stop
          id="stop844"
          offset="0"
-         stop-color="#ff8e4d" />
+         stop-color="#fe8839" />
       <stop
          id="stop846"
          offset="1"
-         stop-color="#ff8138" />
+         stop-color="#f57d2d" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -5190,11 +5190,11 @@
       <stop
          id="stop849"
          offset="0"
-         stop-color="#ff7b2f" />
+         stop-color="#f27828" />
       <stop
          id="stop851"
          offset="1"
-         stop-color="#ff6004" />
+         stop-color="#d96315" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -5207,11 +5207,11 @@
       <stop
          id="stop854"
          offset="0"
-         stop-color="#ff6811" />
+         stop-color="#f26609" />
       <stop
          id="stop856"
          offset="1"
-         stop-color="#f05800" />
+         stop-color="#d75904" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -5224,11 +5224,11 @@
       <stop
          id="stop859"
          offset="0"
-         stop-color="#ea5600" />
+         stop-color="#d45501" />
       <stop
          id="stop861"
          offset="1"
-         stop-color="#c84900" />
+         stop-color="#b34800" />
     </linearGradient>
     <clipPath
        id="clipPath13429-86">
@@ -6393,11 +6393,11 @@
       <stop
          id="stop1488"
          offset="0"
-         stop-color="#e37d42" />
+         stop-color="#e1762f" />
       <stop
          id="stop1490"
          offset="1"
-         stop-color="#bc5316" />
+         stop-color="#a65018" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -6410,11 +6410,11 @@
       <stop
          id="stop1493"
          offset="0"
-         stop-color="#dd5a0e" />
+         stop-color="#bc5b1b" />
       <stop
          id="stop1495"
          offset="1"
-         stop-color="#fb823c" />
+         stop-color="#e7803b" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -6427,11 +6427,11 @@
       <stop
          id="stop1498"
          offset="0"
-         stop-color="#c15212" />
+         stop-color="#a65118" />
       <stop
          id="stop1500"
          offset="1"
-         stop-color="#ee7c3a" />
+         stop-color="#e27832" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -6444,11 +6444,11 @@
       <stop
          id="stop1503"
          offset="0"
-         stop-color="#96400d" />
+         stop-color="#7d3d12" />
       <stop
          id="stop1505"
          offset="1"
-         stop-color="#e36e2a" />
+         stop-color="#d9691f" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -6461,11 +6461,11 @@
       <stop
          id="stop1508"
          offset="0"
-         stop-color="#e86113" />
+         stop-color="#c9621d" />
       <stop
          id="stop1510"
          offset="1"
-         stop-color="#ff8742" />
+         stop-color="#f1843c" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -6478,11 +6478,11 @@
       <stop
          id="stop1513"
          offset="0"
-         stop-color="#e86113" />
+         stop-color="#c9621d" />
       <stop
          id="stop1515"
          offset="1"
-         stop-color="#ff8742" />
+         stop-color="#f1843c" />
     </linearGradient>
     <filter
        color-interpolation-filters="sRGB"
@@ -6522,11 +6522,11 @@
        y2="8.4679"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#d1cabf"
+         stop-color="#cbc7c5"
          offset="0"
          id="stop7282" />
       <stop
-         stop-color="#efe5d0"
+         stop-color="#f4f0eb"
          offset="1"
          id="stop7284" />
     </linearGradient>
@@ -6535,7 +6535,7 @@
        id="style3066" />
     <style
        id="current-color-scheme-67"
-       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       type="text/css">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
     <filter
        id="a-53"
        x="-.036"
@@ -6555,7 +6555,7 @@
        type="text/css" />
     <style
        type="text/css"
-       id="current-color-scheme-5-6">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       id="current-color-scheme-5-6">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
     <filter
        color-interpolation-filters="sRGB"
        height="1.072"
@@ -6870,11 +6870,11 @@
        gradientTransform="matrix(0.88889,0,0,0.88889,100.02,-0.64674)"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#fba572"
+         stop-color="#eca06d"
          offset="0"
          id="stop977" />
       <stop
-         stop-color="#fb5c00"
+         stop-color="#e65c00"
          offset="1"
          id="stop979" />
     </linearGradient>
@@ -6891,7 +6891,7 @@
          offset="0"
          id="stop982" />
       <stop
-         stop-color="#c47140"
+         stop-color="#d2661e"
          offset="1"
          id="stop984" />
     </linearGradient>
@@ -6932,22 +6932,22 @@
     <linearGradient
        id="linearGradient1124">
       <stop
-         stop-color="#e26319"
+         stop-color="#c9621d"
          offset="0"
          id="stop1727" />
       <stop
-         stop-color="#ab3f00"
+         stop-color="#8b3e0b"
          offset="1"
          id="stop1729" />
     </linearGradient>
     <linearGradient
        id="linearGradient1116">
       <stop
-         stop-color="#ff843d"
+         stop-color="#f58032"
          offset="0"
          id="stop1732" />
       <stop
-         stop-color="#ff5e01"
+         stop-color="#e65f05"
          offset="1"
          id="stop1734" />
     </linearGradient>
@@ -6996,11 +6996,11 @@
        gradientTransform="translate(2.8923,-7.2683)"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ff843d"
+         stop-color="#f18137"
          offset="0"
          id="stop1850" />
       <stop
-         stop-color="#ffa46f"
+         stop-color="#ff9c5a"
          offset="1"
          id="stop1852" />
     </linearGradient>
@@ -7012,11 +7012,11 @@
        y2="14.287"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ff8e4d"
+         stop-color="#fe8839"
          offset="0"
          id="stop1855" />
       <stop
-         stop-color="#ff8138"
+         stop-color="#f57d2d"
          offset="1"
          id="stop1857" />
     </linearGradient>
@@ -7028,11 +7028,11 @@
        y2="14.287"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ff7b2f"
+         stop-color="#f27828"
          offset="0"
          id="stop1860" />
       <stop
-         stop-color="#ff6004"
+         stop-color="#d96315"
          offset="1"
          id="stop1862" />
     </linearGradient>
@@ -7044,11 +7044,11 @@
        y2="14.287"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ff6811"
+         stop-color="#f26609"
          offset="0"
          id="stop1865" />
       <stop
-         stop-color="#f05800"
+         stop-color="#d75904"
          offset="1"
          id="stop1867" />
     </linearGradient>
@@ -7060,11 +7060,11 @@
        y2="14.287"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ea5600"
+         stop-color="#d45501"
          offset="0"
          id="stop1870" />
       <stop
-         stop-color="#c84900"
+         stop-color="#b34800"
          offset="1"
          id="stop1872" />
     </linearGradient>
@@ -7090,7 +7090,7 @@
        id="style1015" />
     <style
        id="current-color-scheme-56-8"
-       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       type="text/css">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
     <filter
        id="a-2"
        x="-.036"
@@ -7110,7 +7110,7 @@
        type="text/css" />
     <style
        type="text/css"
-       id="current-color-scheme-3">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       id="current-color-scheme-3">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
     <filter
        color-interpolation-filters="sRGB"
        height="1.072"
@@ -7133,7 +7133,7 @@
        id="style823" />
     <style
        id="current-color-scheme-5-7"
-       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       type="text/css">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
     <filter
        id="a-6-0"
        x="-.036"
@@ -7159,7 +7159,7 @@
        type="text/css" />
     <style
        type="text/css"
-       id="current-color-scheme-06">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       id="current-color-scheme-06">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
     <filter
        style="color-interpolation-filters:sRGB"
        height="1.072"
@@ -7176,7 +7176,7 @@
        id="style883" />
     <style
        id="current-color-scheme-5-66"
-       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       type="text/css">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
     <filter
        id="a-6-4"
        x="-0.035999998"
@@ -7208,7 +7208,7 @@
       <stop
          id="stop864"
          offset="0"
-         stop-color="#233051" />
+         stop-color="#272948" />
       <stop
          id="stop866"
          offset="1" />
@@ -7224,7 +7224,7 @@
       <stop
          id="stop869"
          offset="0"
-         stop-color="#233051" />
+         stop-color="#272948" />
       <stop
          id="stop871"
          offset="1" />
@@ -7240,19 +7240,19 @@
       <stop
          id="stop874"
          offset="0"
-         stop-color="#ff9151" />
+         stop-color="#ff8a3c" />
       <stop
          id="stop876"
          offset=".2964"
-         stop-color="#ff8d4c" />
+         stop-color="#ff8737" />
       <stop
          id="stop878"
          offset=".72739"
-         stop-color="#f4935b" />
+         stop-color="#e78f55" />
       <stop
          id="stop880"
          offset="1"
-         stop-color="#e79464" />
+         stop-color="#e68c50" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -7265,15 +7265,15 @@
       <stop
          id="stop883"
          offset="0"
-         stop-color="#293a60" />
+         stop-color="#2e3155" />
       <stop
          id="stop885"
          offset="1"
-         stop-color="#151e32" />
+         stop-color="#18192c" />
     </linearGradient>
     <style
        id="current-color-scheme-8"
-       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       type="text/css">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
     <filter
        id="a-7"
        x="-.036"
@@ -7290,7 +7290,7 @@
        type="text/css" />
     <style
        type="text/css"
-       id="current-color-scheme-5-2">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
+       id="current-color-scheme-5-2">.ColorScheme-Text { color:#f4f0eb; } .ColorScheme-Highlight { color:#e79157; } .ColorScheme-ButtonBackground { color:#f4f0eb; }</style>
     <filter
        color-interpolation-filters="sRGB"
        height="1.072"
@@ -7350,7 +7350,7 @@
        y2="16"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ffbe99"
+         stop-color="#ffa366"
          offset="0"
          id="stop2" />
       <stop
@@ -7449,11 +7449,11 @@
        y2="16"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ff7e33"
+         stop-color="#fb7922"
          offset="0"
          id="stop15" />
       <stop
-         stop-color="#ff9a60"
+         stop-color="#f49557"
          offset="1"
          id="stop17" />
     </linearGradient>
@@ -7474,7 +7474,7 @@
        y2="16"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ff9558"
+         stop-color="#ee9254"
          offset="0"
          id="stop25" />
       <stop
@@ -7523,7 +7523,7 @@
   <g
      id="g10056"
      transform="matrix(3.7796,0,0,3.7796,-14.03111,-121.41017)"
-     style="fill:#c67749;stroke-width:0.26458001">
+     style="fill:#db6a1f;stroke-width:0.26458001">
     <circle
        id="circle10050"
        r="0"
@@ -7544,7 +7544,7 @@
   <g
      transform="matrix(3.779602,0,0,3.779602,195.35432,-51.281588)"
      id="g7301"
-     style="fill:#c67749;stroke-width:0.26458001">
+     style="fill:#db6a1f;stroke-width:0.26458001">
     <circle
        id="circle7295"
        r="0"
@@ -7570,33 +7570,33 @@
      cy="-1327.5347"
      r="0"
      id="circle868"
-     style="fill:#c67749;stroke-width:1.00001" />
+     style="fill:#db6a1f;stroke-width:1.00001" />
   <circle
      cx="-1468.636"
      cy="-1319.484"
      r="0"
      id="circle870"
-     style="fill:#c67749;stroke-width:1.00001" />
+     style="fill:#db6a1f;stroke-width:1.00001" />
   <circle
      cx="-1445.6182"
      cy="-1345.261"
      r="0"
      id="circle872"
-     style="fill:#c67749;stroke-width:1.00001" />
+     style="fill:#db6a1f;stroke-width:1.00001" />
   <circle
      cx="-1456.2766"
      cy="-1318.577"
      r="0"
      id="circle874"
-     style="fill:#c67749;stroke-width:1.00001" />
+     style="fill:#db6a1f;stroke-width:1.00001" />
   <circle
      cx="-1343.9772"
      cy="-1412.5453"
      r="0"
      id="circle878"
-     style="fill:#c67749;stroke-width:1.00001" />
+     style="fill:#db6a1f;stroke-width:1.00001" />
   <circle
-     style="fill:#c67749;fill-rule:evenodd;stroke-width:1.00001"
+     style="fill:#db6a1f;fill-rule:evenodd;stroke-width:1.00001"
      cx="-244.47583"
      cy="-147.05518"
      r="0"
@@ -7606,7 +7606,7 @@
      cy="-1348.481"
      r="0"
      id="circle882"
-     style="fill:#c67749;stroke-width:1.00001" />
+     style="fill:#db6a1f;stroke-width:1.00001" />
   <g
      id="22-22-system-shutdown"
      transform="translate(-1.455167,7.999821)">
@@ -7628,9 +7628,9 @@
          height="1"
          width="8"
          id="rect3200"
-         style="fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.41422;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers" />
+         style="fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.41422;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers" />
       <path
-         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
          id="path3202"
          sodipodi:type="arc"
          sodipodi:cx="16.5"
@@ -7659,7 +7659,7 @@
        transform="translate(-3.000291,-30.996857)">
       <path
          transform="matrix(-0.70710679,-0.70710677,-0.70710679,0.70710677,0,0)"
-         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
          id="path3240"
          sodipodi:type="arc"
          sodipodi:cx="-14.139915"
@@ -7673,7 +7673,7 @@
          d="m -10.389916,109.73056 a 7.5,7.5 0 0 1 -9.053301,-1.19189 7.5,7.5 0 0 1 -1.191889,-9.053303 7.5,7.5 0 0 1 8.436334,-3.494444" />
       <path
          transform="matrix(-0.70710679,-0.70710677,-0.70710679,0.70710677,0,0)"
-         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
          id="path3255"
          sodipodi:type="arc"
          sodipodi:cx="-8.4487724"
@@ -7702,7 +7702,7 @@
        id="g3304"
        transform="translate(-2.0034778,-29.99698)">
       <rect
-         style="fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
+         style="fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
          id="rect3283"
          width="4"
          height="1"
@@ -7712,7 +7712,7 @@
          transform="matrix(0,1,1,0,0,0)" />
       <path
          id="path3285"
-         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
          transform="rotate(-45)"
          sodipodi:type="arc"
          sodipodi:cx="-72.827553"
@@ -7732,7 +7732,7 @@
          height="1"
          width="4"
          id="rect3287"
-         style="fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers" />
+         style="fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers" />
     </g>
   </g>
   <g
@@ -7750,7 +7750,7 @@
        transform="translate(121.99971,-3.996857)">
       <path
          transform="matrix(-0.70710679,-0.70710677,-0.70710679,0.70710677,0,0)"
-         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
          id="path3332"
          sodipodi:type="arc"
          sodipodi:cx="-14.139915"
@@ -7764,7 +7764,7 @@
          d="m -10.389916,109.73056 a 7.5,7.5 0 0 1 -9.053301,-1.19189 7.5,7.5 0 0 1 -1.191889,-9.053303 7.5,7.5 0 0 1 8.436334,-3.494444" />
       <path
          transform="matrix(-0.70710679,-0.70710677,-0.70710679,0.70710677,0,0)"
-         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
          id="path3334"
          sodipodi:type="arc"
          sodipodi:cx="-8.4487724"
@@ -7782,7 +7782,7 @@
        transform="translate(9,3.9999942)">
       <rect
          transform="rotate(-45)"
-         style="opacity:1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.1731;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
+         style="opacity:1;fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.1731;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
          id="rect3362"
          width="5.2185783"
          height="1.054822"
@@ -7796,10 +7796,10 @@
          height="1.0000076"
          width="5"
          id="rect3364"
-         style="opacity:1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.11804;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers" />
+         style="opacity:1;fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.11804;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers" />
       <rect
          ry="0.49999237"
-         style="opacity:1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.999992;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
+         style="opacity:1;fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.999992;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
          id="rect3366"
          width="4"
          height="0.99998474"
@@ -7812,7 +7812,7 @@
      id="22-22-system-lock-screen">
     <path
        id="rect24367"
-       style="fill:#efe5d0;fill-opacity:1;stroke-width:1.06066;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#f4f0eb;fill-opacity:1;stroke-width:1.06066;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 135,60 c -1.108,0 -2,0.892 -2,2 v 5 c 0,1.108 0.892,2 2,2 h 11 c 1.108,0 2,-0.892 2,-2 v -5 c 0,-1.108 -0.892,-2 -2,-2 z m 0,1 h 11 c 0.554,0 1,0.446 1,1 v 5 c 0,0.554 -0.446,1 -1,1 h -11 c -0.554,0 -1,-0.446 -1,-1 v -5 c 0,-0.554 0.446,-1 1,-1 z" />
     <rect
        id="rect4255-5"
@@ -7823,7 +7823,7 @@
        style="opacity:0.00100002;fill:currentColor;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        inkscape:connector-curvature="0"
-       style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:0.458258;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:0.458258;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 140.5,52.999821 c -2.493,0 -4.5,2.007 -4.5,4.5 v 3.5 h 1 v -3.5 c 0,-1.939 1.561,-3.5 3.5,-3.5 1.939,0 3.5,1.561 3.5,3.5 v 3.5 h 1 v -3.5 c 0,-2.493 -2.007,-4.5 -4.5,-4.5 z"
        id="path3507"
        sodipodi:nodetypes="ssccsssccss" />
@@ -7843,7 +7843,7 @@
        transform="translate(-0.94546503,-23.779429)">
       <path
          id="path3545"
-         style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          sodipodi:type="arc"
          sodipodi:cx="183"
          sodipodi:cy="86"
@@ -7856,7 +7856,7 @@
          d="M 175.75556,84.058857 A 7.5,7.5 0 0 1 183,78.5 a 7.5,7.5 0 0 1 7.24444,5.558857" />
       <circle
          id="path3557"
-         style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          cx="183"
          cy="74"
          r="4.5" />
@@ -7875,13 +7875,13 @@
        rx="0"
        ry="0" />
     <circle
-       style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="path3264"
        cx="-64.01786"
        cy="-21.017857"
        r="13.500022" />
     <path
-       style="opacity:1;fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="path3276"
        sodipodi:type="arc"
        sodipodi:cx="-64.017242"
@@ -7894,7 +7894,7 @@
        sodipodi:arc-type="arc"
        d="m -62.07607,-28.261795 a 7.5001144,7.5001144 0 0 1 5.530402,7.898233 7.5001144,7.5001144 0 0 1 -6.817897,6.817896 7.5001144,7.5001144 0 0 1 -7.898232,-5.530402" />
     <path
-       style="opacity:1;fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="path3286"
        sodipodi:type="arc"
        sodipodi:cx="-69.320625"
@@ -7920,7 +7920,7 @@
        id="rect3663"
        style="opacity:0;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
     <rect
-       style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:1.41422;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:1.41422;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect3669"
        width="5.0000038"
        height="1.0000038"
@@ -7936,9 +7936,9 @@
        height="1"
        width="5"
        id="rect3671"
-       style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:1.41421;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:1.41421;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
-       style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="path3347"
        sodipodi:type="arc"
        sodipodi:cx="-24.000023"
@@ -7951,7 +7951,7 @@
        sodipodi:arc-type="arc"
        d="m -18.696641,-15.696641 a 7.5001144,7.5001144 0 0 1 -8.620598,1.423266 7.5001144,7.5001144 0 0 1 -4.118734,-7.705609 7.5001144,7.5001144 0 0 1 5.97275,-6.377041 7.5001144,7.5001144 0 0 1 7.95849,3.605945" />
     <circle
-       style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="circle5398"
        cx="-24.000023"
        cy="-21.000023"
@@ -7970,13 +7970,13 @@
        rx="0"
        ry="0" />
     <circle
-       style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="circle5488"
        cx="-64.01786"
        cy="-21.017857"
        r="13.500022" />
     <path
-       style="opacity:1;fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="path5490"
        sodipodi:type="arc"
        sodipodi:cx="-64.017242"
@@ -7989,7 +7989,7 @@
        sodipodi:arc-type="arc"
        d="m -62.07607,-28.261795 a 7.5001144,7.5001144 0 0 1 5.530402,7.898233 7.5001144,7.5001144 0 0 1 -6.817897,6.817896 7.5001144,7.5001144 0 0 1 -7.898232,-5.530402" />
     <path
-       style="opacity:1;fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="path5492"
        sodipodi:type="arc"
        sodipodi:cx="-69.320625"
@@ -8018,13 +8018,13 @@
        id="g11673"
        transform="translate(1.0000006,30.999977)">
       <circle
-         style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
          id="circle8070"
          cx="15"
          cy="-51.999977"
          r="13.500022" />
       <path
-         style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:0.999771;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
          id="circle8439"
          sodipodi:type="arc"
          sodipodi:cx="14.999978"
@@ -8037,7 +8037,7 @@
          sodipodi:arc-type="arc"
          d="m 18.750036,-58.495267 a 7.5001144,7.5001144 0 0 1 3.494496,8.436463 7.5001144,7.5001144 0 0 1 -7.244554,5.558941 7.5001144,7.5001144 0 0 1 -7.2445542,-5.558942 7.5001144,7.5001144 0 0 1 3.4944972,-8.436462" />
       <rect
-         style="fill:#efe5d0;fill-opacity:1;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         style="fill:#f4f0eb;fill-opacity:1;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect8661"
          width="1"
          height="8"
@@ -8062,7 +8062,7 @@
        id="g4741">
       <rect
          transform="rotate(-90)"
-         style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:0.243332;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:0.243332;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect3260"
          width="1"
          height="18"
@@ -8070,7 +8070,7 @@
          y="90"
          ry="0.5" />
       <rect
-         style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:0.181369;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:0.181369;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect3262"
          height="10"
          x="90.009666"
@@ -8079,7 +8079,7 @@
          transform="matrix(0.70710678,-0.70710678,-0.70710678,-0.70710678,0,0)"
          width="1" />
       <rect
-         style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:0.181369;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:0.181369;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect4736"
          height="10"
          x="61.017647"
@@ -8089,7 +8089,7 @@
          width="1" />
     </g>
     <circle
-       style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="circle14566"
        cx="99"
        cy="-21"
@@ -8108,7 +8108,7 @@
        id="rect3759"
        style="opacity:0;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
     <circle
-       style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="circle17229"
        cx="139"
        cy="-20.999977"
@@ -8117,12 +8117,12 @@
        id="g18724">
       <path
          id="rect3763"
-         style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:2.22681;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#f4f0eb;fill-opacity:1;stroke:none;stroke-width:2.22681;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 134,-21 c -1.108,0 -2,0.892 -2,2 v 5 c 0,1.108 0.892,2 2,2 h 10 c 1.108,0 2,-0.892 2,-2 v -5 c 0,-1.108 -0.892,-2 -2,-2 z m 0,1 h 10 c 0.554,0 1,0.446 1,1 v 5 c 0,0.554 -0.446,1 -1,1 h -10 c -0.554,0 -1,-0.446 -1,-1 v -5 c 0,-0.554 0.446,-1 1,-1 z"
          sodipodi:nodetypes="ssssssssssssssssss" />
       <path
          id="rect17824"
-         style="fill:#efe5d0;fill-opacity:1;stroke-width:1.43548;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         style="fill:#f4f0eb;fill-opacity:1;stroke-width:1.43548;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
          d="m 139,-29 c -2.216,0 -4,1.784 -4,4 v 5 h 1 v -5 c 0,-1.662 1.338,-3 3,-3 1.662,0 3,1.338 3,3 v 5 h 1 v -5 c 0,-2.216 -1.784,-4 -4,-4 z" />
     </g>
   </g>
@@ -8138,7 +8138,7 @@
        rx="0"
        ry="0" />
     <circle
-       style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="circle17322"
        cx="178"
        cy="15.999977"
@@ -8147,11 +8147,11 @@
        id="g21803"
        transform="translate(-0.9998697,37.49991)">
       <path
-         style="color:#000000;fill:#efe5d0;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none;paint-order:stroke fill markers"
+         style="color:#000000;fill:#f4f0eb;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none;paint-order:stroke fill markers"
          d="m 178.99805,-21.5 c -4.00385,5.24e-4 -7.39656,2.971 -7.92774,6.939453 A 0.4998855,0.4998855 0 0 0 171.5,-14 a 0.4998855,0.4998855 0 0 0 0.5625,-0.427734 c 0.46575,-3.479632 3.42684,-6.071807 6.9375,-6.072266 3.51066,-4.59e-4 6.47084,2.590803 6.9375,6.070312 a 0.4998855,0.4998855 0 0 0 0.5625,0.427735 0.4998855,0.4998855 0 0 0 0.42969,-0.560547 c -0.53222,-3.968314 -3.9278,-6.938024 -7.93164,-6.9375 z"
          id="circle8251" />
       <circle
-         style="fill:none;fill-opacity:1;stroke:#efe5d0;stroke-width:1.00017;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         style="fill:none;fill-opacity:1;stroke:#f4f0eb;stroke-width:1.00017;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
          id="circle21389"
          cx="179"
          cy="-24.999912"
@@ -8172,7 +8172,7 @@
        id="g3426"
        transform="translate(3.7919431,-19.500179)">
       <rect
-         style="opacity:1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.58114;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
+         style="opacity:1;fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.58114;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
          id="rect3420"
          width="10.000012"
          height="1"
@@ -8181,7 +8181,7 @@
          ry="0.5" />
       <rect
          transform="rotate(45)"
-         style="opacity:1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.22474;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
+         style="opacity:1;fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.22474;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
          id="rect3422"
          width="6"
          height="0.99999237"
@@ -8195,12 +8195,12 @@
          height="0.99999237"
          width="6"
          id="rect3424"
-         style="opacity:1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.22474;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
+         style="opacity:1;fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.22474;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:1;paint-order:stroke fill markers"
          transform="matrix(0.70710678,-0.70710678,-0.70710678,-0.70710678,0,0)" />
     </g>
     <path
        id="rect27491"
-       style="fill:#efe5d0;fill-opacity:1;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#f4f0eb;fill-opacity:1;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        d="M 95 53 C 93.892 53 93 53.892 93 55 L 93 67 C 93 68.108 93.892 69 95 69 L 101 69 L 101 68 L 95 68 C 94.446 68 94 67.554 94 67 L 94 55 C 94 54.446 94.446 54 95 54 L 101 54 L 101 53 L 95 53 z " />
   </g>
 </svg>

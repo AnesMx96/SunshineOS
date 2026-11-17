@@ -17,7 +17,7 @@
      id="current-color-scheme"
      type="text/css">
 .ColorScheme-Text { 
-    color:#e0c7b8;
+    color:#eca779;
 }
 </style>
   <metadata
@@ -34,7 +34,7 @@
   <defs
      id="defs16" />
   <sodipodi:namedview
-     pagecolor="#efe5d0"
+     pagecolor="#f4f0eb"
      bordercolor="#000000"
      borderopacity="1"
      objecttolerance="10"
@@ -57,7 +57,7 @@
      inkscape:document-rotation="0"
      inkscape:showpageshadow="false"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d8d3ca">
+     inkscape:deskcolor="#d3d0cf">
     <inkscape:grid
        type="xygrid"
        id="grid882"
@@ -77,7 +77,7 @@
      id="22-22-audacious">
     <path
        id="path2"
-       style="fill:#efe5d0;fill-opacity:1;stroke-width:2.744;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.999975"
+       style="fill:#f4f0eb;fill-opacity:1;stroke-width:2.744;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.999975"
        d="M 43 13 A 7.9999995 7.9999995 0 0 0 35 21 A 7.9999995 7.9999995 0 0 0 43 29 A 7.9999995 7.9999995 0 0 0 51 21 A 7.9999995 7.9999995 0 0 0 43 13 z M 43 14 A 6.999999 6.999999 0 0 1 50 21 A 6.999999 6.999999 0 0 1 43 28 A 6.999999 6.999999 0 0 1 36 21 A 6.999999 6.999999 0 0 1 43 14 z " />
     <rect
        style="opacity:0.00100002"
@@ -91,7 +91,7 @@
        p-id="6902"
        id="path8"
        sodipodi:nodetypes="sscccccsssssccccc"
-       style="fill:#efe5d0;fill-opacity:1;stroke-width:0.857143" />
+       style="fill:#f4f0eb;fill-opacity:1;stroke-width:0.857143" />
   </g>
   <g
      id="audacious">
@@ -107,10 +107,10 @@
        p-id="6902"
        id="path7"
        sodipodi:nodetypes="sscccccsssssccccc"
-       style="fill:#efe5d0;fill-opacity:1" />
+       style="fill:#f4f0eb;fill-opacity:1" />
     <path
        id="path1"
-       style="fill:#efe5d0;fill-opacity:1;stroke-width:7.6822;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.999975"
+       style="fill:#f4f0eb;fill-opacity:1;stroke-width:7.6822;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.999975"
        d="m 15.999999,2 a 14,14 0 0 0 -14,14 14,14 0 0 0 14,14 14,14 0 0 0 14,-14 14,14 0 0 0 -14,-14 z m 0,1 a 13,13 0 0 1 13,13 13,13 0 0 1 -13,13 13,13 0 0 1 -13,-13 13,13 0 0 1 13,-13 z" />
   </g>
 </svg>

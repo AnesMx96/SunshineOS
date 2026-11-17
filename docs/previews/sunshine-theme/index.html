@@ -1,62 +1,18 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sunshine theme preview</title>
-<style>
-:root{--bg:#0e1422;--panel:#141b2e;--card:#1a2236;--text:#efe5d0;--muted:#9a927f;--accent:#ff9654;--line:rgba(239,229,208,.12)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,Segoe UI,Inter,sans-serif}
-main{max-width:1100px;margin:0 auto;padding:40px 20px 80px}
-h1{font-size:34px;margin:0 0 6px;letter-spacing:-.02em}h1 span{color:var(--accent)}h2{margin:48px 0 12px;font-size:22px;border-top:1px solid var(--line);padding-top:28px}
-p{color:var(--muted);max-width:70ch}.lead{font-size:18px;color:var(--text)}
-img{max-width:100%;border-radius:12px;border:1px solid var(--line);display:block}
-.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.sw{display:flex;gap:10px;flex-wrap:wrap}.sw div{width:150px;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--card)}
-.sw i{display:block;height:54px}.sw b{display:block;padding:6px 10px 0;font-size:14px}.sw small{display:block;padding:0 10px 8px;color:var(--muted)}
-.tag{display:inline-block;background:var(--accent);color:#2a1a0e;border-radius:999px;padding:2px 12px;font-weight:600;font-size:13px}
-.cap{font-size:14px;color:var(--muted);margin:8px 2px 0}.ok{color:#7fae6a}
-table{border-collapse:collapse;width:100%;max-width:760px}td,th{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left}th{color:var(--muted);font-weight:500}
-</style></head><body><main>
-<span class="tag">Redesign preview 1</span>
-<h1>Sunshine <span>theme</span></h1>
-<p class="lead">A dark Windows 11 style in the Sunshine palette: deep indigo, cream text, orange accent. It replaces "Sunshine Win11" and is the default in the live session and for every new user.</p>
-
-<h2>Palette</h2>
-<div class="sw">
-<div><i style="background:#0e1422"></i><b>Window</b><small>#0e1422</small></div>
-<div><i style="background:#141b2e"></i><b>Menus, popups</b><small>#141b2e, 85% opaque</small></div>
-<div><i style="background:#1a2236"></i><b>Tooltips</b><small>#1a2236</small></div>
-<div><i style="background:#efe5d0"></i><b>Text, strokes</b><small>#efe5d0</small></div>
-<div><i style="background:#ff9654"></i><b>Accent</b><small>#ff9654</small></div>
-<div><i style="background:#e06c75"></i><b>Warning, close</b><small>#e06c75</small></div>
-<div><i style="background:#7fae6a"></i><b>Positive</b><small>#7fae6a</small></div>
-</div>
-
-<h2>The desktop</h2>
-<img src="desktop.png" alt="Sunshine theme desktop with the Welcome window and the taskbar">
-<p class="cap">Real screenshot of the live session. Solid title bar in the window colour, rounded corners, thin Windows 11 style buttons (cream), taskbar with a 1px top edge, tray icons in the palette.</p>
-
-<h2>Application menu: 15% transparent</h2>
-<img src="menu.png" alt="Application menu over a bright window">
-<p class="cap">Measured on this screenshot: what lies behind the menu shows through at <b>15%</b> (the menu is <b>85% opaque</b>). The limit you set was 20%, the target 15%. The bright yellow bar behind it is the worst case.</p>
-
-<h2>The artwork</h2>
-<img src="art.png" alt="Theme frames on a bright checkerboard">
-<p class="cap">The frames drawn on a bright checkerboard so the transparency is visible: dialog/menu (12 px corners), tooltip (8 px), taskbar (flat, top edge), and the opaque variant used when the compositor cannot blur.</p>
-
-<h2>Icons</h2>
-<div class="grid">
-<div><img src="icons-before.png" alt="Panel icons before"><p class="cap">Before: loud pure red, green and blue accents and the Windows logo on the start button.</p></div>
-<div><img src="icons-after.png" alt="Panel icons after"><p class="cap">After: cream outlines, the palette's soft red and green, accent orange, and the Sunshine sparkle as the start icon.</p></div>
-</div>
-
-<h2>What changed</h2>
-<table>
-<tr><th>Part</th><th>Now</th></tr>
-<tr><td>Name</td><td>"Sunshine theme" everywhere (was "SunshineWin11"); packages <code>com.sunshineos.sunshine</code>, <code>Sunshine</code></td></tr>
-<tr><td>Plasma theme</td><td>New: it had no artwork, only colours and icons, so Plasma fell back to its defaults. Now dialogs, menus, tooltips, widgets and the taskbar are drawn by the theme</td></tr>
-<tr><td>Window frame</td><td>Solid title bar in the window colour, new button set (minimize, maximize, restore, close, all desktops, keep above/below)</td></tr>
-<tr><td>Icons</td><td>113 panel/tray icons put into the palette; Windows start logo replaced</td></tr>
-<tr><td>Default</td><td>Applied by the look-and-feel package, by the first-login script and by the default user config (plasmarc, kwinrc, kdeglobals)</td></tr>
-</table>
-<h2>Not in this item yet</h2>
-<p>Top bar with graph widgets, the splash animation, the Kickoff layout, Kando and Pamac themes. Next up in the roadmap.</p>
+<!doctype html><html><head><meta charset="utf-8"><title>Sunshine theme preview</title><style>
+:root{--bg:#0b1020;--card:#191923;--text:#f4f0eb;--acc:#e87932;--gold:#ffd27a;--mut:#aaa3a0}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,sans-serif;padding:32px 16px}
+main{max-width:1100px;margin:auto}h1{margin:0 0 4px;background:linear-gradient(90deg,#e87932,#f5a442,#ffd27a);-webkit-background-clip:text;color:transparent}
+h2{color:var(--gold);margin:36px 0 8px}p{color:var(--mut);margin:4px 0 12px}
+img{width:100%;border-radius:12px;display:block;border:1px solid #e87932}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}.n{background:var(--card);padding:14px 18px;border-radius:12px;border:1px solid #6b3f27}
+</style></head><body><main><h1>Sunshine theme</h1>
+<p>Dark smoked glass with an orange-amber-gold gradient rim. Midnight navy surfaces, warm white text, burnt orange selection. Screenshots from the live system.</p>
+<h2>Application launcher</h2><img src="menu.png" alt="launcher"><p>Navy glass at 86%, gradient rim, 12 px corners, orange outlined search field, taskbar with a rim line at 78%.</p>
+<h2>Desktop</h2><img src="desktop.png" alt="desktop">
+<h2>Window frame (gradient rim, rounded, soft shadow, active and inactive)</h2><img src="frame.png" alt="window frame" style="max-width:260px">
+<h2>Palette</h2><div class="g">
+<div class="n"><b style="color:#e87932">#E87932</b> burnt orange (accent)<br><b style="color:#f5a442">#F5A442</b> amber<br><b style="color:#ffd27a">#FFD27A</b> gold (highlights)</div>
+<div class="n"><b>#0B1020</b> midnight navy<br><b>#151729</b> deep indigo<br><b>#191923</b> glass<br><b>#24202A</b> elevated</div>
+<div class="n"><b>#F4F0EB</b> warm white text<br><b style="color:#aaa3a0">#AAA3A0</b> secondary<br><b style="color:#69636a">#69636A</b> disabled</div></div>
+<h2>Notes</h2><div class="n">Window corners are 4 px: KWin's Aurorae cannot round a frame more than its border width, so the specified 10 px needs a KWin effect and is tracked on the roadmap. Blur is enabled in kwinrc; the VM has no GPU compositing so blur is not visible in these screenshots.</div>
 </main></body></html>

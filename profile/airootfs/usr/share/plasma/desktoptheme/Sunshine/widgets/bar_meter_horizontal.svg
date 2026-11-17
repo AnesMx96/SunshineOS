@@ -26,8 +26,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#efe5d0"
-     bordercolor="#576075"
+     pagecolor="#f4f0eb"
+     bordercolor="#69616b"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -50,48 +50,48 @@
     <style
        id="current-color-scheme"
        type="text/css">.ColorScheme-Text {
-        color:#253457;
-        stop-color:#253457;
+        color:#292c4d;
+        stop-color:#292c4d;
       }
       .ColorScheme-Background {
-        color:#efe5d0;
-        stop-color:#efe5d0;
+        color:#f4f0eb;
+        stop-color:#f4f0eb;
       }
       .ColorScheme-Highlight {
-        color:#fd8a48;
-        stop-color:#fd8a48;
+        color:#ea8846;
+        stop-color:#ea8846;
       }
       .ColorScheme-ViewText {
-        color:#253457;
-        stop-color:#253457;
+        color:#292c4d;
+        stop-color:#292c4d;
       }
       .ColorScheme-ViewBackground {
-        color:#efe5d0;
-        stop-color:#efe5d0;
+        color:#f4f0eb;
+        stop-color:#f4f0eb;
       }
       .ColorScheme-ViewHover {
-        color:#f6c1a2;
-        stop-color:#f6c1a2;
+        color:#eca779;
+        stop-color:#eca779;
       }
       .ColorScheme-ViewFocus{
-        color:#fd8a48;
-        stop-color:#fd8a48;
+        color:#ea8846;
+        stop-color:#ea8846;
       }
       .ColorScheme-ButtonText {
-        color:#253457;
-        stop-color:#253457;
+        color:#292c4d;
+        stop-color:#292c4d;
       }
       .ColorScheme-ButtonBackground {
-        color:#efe5d0;
-        stop-color:#efe5d0;
+        color:#f4f0eb;
+        stop-color:#f4f0eb;
       }
       .ColorScheme-ButtonHover {
-        color:#f6c1a2;
-        stop-color:#f6c1a2;
+        color:#eca779;
+        stop-color:#eca779;
       }
       .ColorScheme-ButtonFocus{
-        color:#fd8a48;
-        stop-color:#fd8a48;
+        color:#ea8846;
+        stop-color:#ea8846;
       }</style>
   </defs>
   <rect
@@ -158,53 +158,53 @@
      class="ColorScheme-Highlight"
      d="m 17,27 v 3 c 1.662,0 3,-1.338 3,-3 z"
      inkscape:connector-curvature="0"
-     style="color:#fd8a48;fill:#ffa06a;fill-opacity:1" />
+     style="color:#ea8846;fill:#ff9955;fill-opacity:1" />
   <path
      id="bar-active-right"
      class="ColorScheme-Highlight"
      d="m 17,24 v 2 h 3 v -2 z"
      inkscape:connector-curvature="0"
-     style="color:#fd8a48;fill:#ffa06a;fill-opacity:1" />
+     style="color:#ea8846;fill:#ff9955;fill-opacity:1" />
   <path
      id="bar-active-topright"
      class="ColorScheme-Highlight"
      d="m 17,20 v 3 h 3 c 0,-1.662 -1.338,-3 -3,-3 z"
      inkscape:connector-curvature="0"
-     style="color:#fd8a48;fill:#ffa06a;fill-opacity:1" />
+     style="color:#ea8846;fill:#ff9955;fill-opacity:1" />
   <path
      id="bar-active-bottomleft"
      class="ColorScheme-Highlight"
      d="m 10,27 c 0,1.662 1.338,3 3,3 v -3 z"
      inkscape:connector-curvature="0"
-     style="color:#fd8a48;fill:#ffa06a;fill-opacity:1" />
+     style="color:#ea8846;fill:#ff9955;fill-opacity:1" />
   <path
      id="bar-active-left"
      class="ColorScheme-Highlight"
      d="m 10,24 v 2 h 3 v -2 z"
      inkscape:connector-curvature="0"
-     style="color:#fd8a48;fill:#ffa06a;fill-opacity:1" />
+     style="color:#ea8846;fill:#ff9955;fill-opacity:1" />
   <path
      id="bar-active-topleft"
      class="ColorScheme-Highlight"
      d="m 13,20 c -1.662,0 -3,1.338 -3,3 h 3 z"
      inkscape:connector-curvature="0"
-     style="color:#fd8a48;fill:#ffa06a;fill-opacity:1" />
+     style="color:#ea8846;fill:#ff9955;fill-opacity:1" />
   <path
      id="bar-active-bottom"
      class="ColorScheme-Highlight"
      d="m 14,27 v 3 h 2 v -3 z"
      inkscape:connector-curvature="0"
-     style="color:#fd8a48;fill:#ffa06a;fill-opacity:1" />
+     style="color:#ea8846;fill:#ff9955;fill-opacity:1" />
   <path
      id="bar-active-center"
      class="ColorScheme-Highlight"
      d="m 16,24 h -2 v 2 h 2 z"
      inkscape:connector-curvature="0"
-     style="color:#fd8a48;fill:#ffa06a;fill-opacity:1" />
+     style="color:#ea8846;fill:#ff9955;fill-opacity:1" />
   <path
      id="bar-active-top"
      class="ColorScheme-Highlight"
      d="m 14,20 v 3 h 2 v -3 z"
      inkscape:connector-curvature="0"
-     style="color:#fd8a48;fill:#ffa06a;fill-opacity:1" />
+     style="color:#ea8846;fill:#ff9955;fill-opacity:1" />
 </svg>

@@ -51,13 +51,13 @@
   </defs>
   <sodipodi:namedview
      id="namedview55"
-     pagecolor="#d1cabf"
-     bordercolor="#e0834c"
+     pagecolor="#cbc7c5"
+     bordercolor="#e27b36"
      borderopacity="1"
      inkscape:showpageshadow="false"
      inkscape:pageopacity="1"
      inkscape:pagecheckerboard="true"
-     inkscape:deskcolor="#d1cabf"
+     inkscape:deskcolor="#cbc7c5"
      showgrid="false"
      inkscape:zoom="4.9002476"
      inkscape:cx="-36.324695"
@@ -106,24 +106,24 @@
   <style
      id="current-color-scheme"
      type="text/css">.ColorScheme-Text {
-            color:#1b253e;
-            stop-color:#1b253e;
+            color:#1e1f37;
+            stop-color:#1e1f37;
         }
         .ColorScheme-Background {
-            color:#efe5d0;
-            stop-color:#efe5d0;
+            color:#f4f0eb;
+            stop-color:#f4f0eb;
         }
 .ColorScheme-Highlight { 
-    color:#c48764;
-    stop-color:#c48764;
+    color:#e27932;
+    stop-color:#e27932;
 }
         .ColorScheme-ButtonText {
-            color:#1b253e;
-            stop-color:#1b253e;
+            color:#1e1f37;
+            stop-color:#1e1f37;
         }
         .ColorScheme-ButtonBackground {
-            color:#efe5d0;
-            stop-color:#efe5d0;
+            color:#f4f0eb;
+            stop-color:#f4f0eb;
         }</style>
   <rect
      id="hint-stretch-borders"
@@ -149,13 +149,13 @@
          d="M 30,45 C 30,36.628883 36.606391,30 45,30 V 45"
          opacity="0.5"
          class="ColorScheme-Highlight"
-         style="fill:#ffa06a;fill-opacity:1" />
+         style="fill:#ff9955;fill-opacity:1" />
       <path
          id="path2040"
          fill="currentColor"
          class="ColorScheme-Highlight"
          d="m 30,45 c 0,-8.371117 6.606391,-15 15,-15 v 1 c -7.750845,0 -14,6.202439 -14,14"
-         style="fill:#ffa06a;fill-opacity:1" />
+         style="fill:#ff9955;fill-opacity:1" />
     </g>
     <g
        transform="matrix(0.53333333,0,0,-0.53333333,14,32)"
@@ -171,13 +171,13 @@
          class="ColorScheme-Highlight"
          d="M 30,45 C 30,36.628883 36.606391,30 45,30 V 45"
          opacity="0.5"
-         style="fill:#ffa06a;fill-opacity:1" />
+         style="fill:#ff9955;fill-opacity:1" />
       <path
          id="path2291"
          fill="currentColor"
          class="ColorScheme-Highlight"
          d="m 30,45 c 0,-8.371117 6.606391,-15 15,-15 v 1 c -7.750845,0 -14,6.202439 -14,14"
-         style="fill:#ffa06a;fill-opacity:1" />
+         style="fill:#ff9955;fill-opacity:1" />
     </g>
   </g>
   <g
@@ -196,13 +196,13 @@
          class="ColorScheme-Highlight"
          d="M 30,45 C 30,36.628883 36.606391,30 45,30 V 45"
          opacity="0.5"
-         style="fill:#ffa06a;fill-opacity:1" />
+         style="fill:#ff9955;fill-opacity:1" />
       <path
          id="path2285"
          fill="currentColor"
          class="ColorScheme-Highlight"
          d="m 30,45 c 0,-8.371117 6.606391,-15 15,-15 v 1 c -7.750845,0 -14,6.202439 -14,14"
-         style="fill:#ffa06a;fill-opacity:1" />
+         style="fill:#ff9955;fill-opacity:1" />
     </g>
     <g
        transform="matrix(0,-0.53333333,-0.53333333,0,67,32)"
@@ -218,13 +218,13 @@
          class="ColorScheme-Highlight"
          d="M 30,45 C 30,36.628883 36.606391,30 45,30 V 45"
          opacity="0.5"
-         style="fill:#ffa06a;fill-opacity:1" />
+         style="fill:#ff9955;fill-opacity:1" />
       <path
          id="path2297"
          fill="currentColor"
          class="ColorScheme-Highlight"
          d="m 30,45 c 0,-8.371117 6.606391,-15 15,-15 v 1 c -7.750845,0 -14,6.202439 -14,14"
-         style="fill:#ffa06a;fill-opacity:1" />
+         style="fill:#ff9955;fill-opacity:1" />
     </g>
   </g>
   <g
@@ -241,13 +241,13 @@
          id="path2453"
          class="ColorScheme-Highlight"
          d="m 53,30 h 5 v 15 h -5 z"
-         style="opacity:0.5;fill:#ffa06a;fill-rule:evenodd;fill-opacity:1" />
+         style="opacity:0.5;fill:#ff9955;fill-rule:evenodd;fill-opacity:1" />
       <path
          fill="currentColor"
          id="path2455"
          class="ColorScheme-Highlight"
          d="m 53,31 h 5 v -1 h -5 z"
-         style="fill:#ffa06a;fill-opacity:1" />
+         style="fill:#ff9955;fill-opacity:1" />
     </g>
     <g
        transform="matrix(1,0,0,-0.53333333,-15,32)"
@@ -261,13 +261,13 @@
          id="path2644"
          class="ColorScheme-Highlight"
          d="m 53,30 h 5 v 15 h -5 z"
-         style="opacity:0.5;fill:#ffa06a;fill-rule:evenodd;fill-opacity:1" />
+         style="opacity:0.5;fill:#ff9955;fill-rule:evenodd;fill-opacity:1" />
       <path
          fill="currentColor"
          id="path2646"
          class="ColorScheme-Highlight"
          d="m 53,31 h 5 v -1 h -5 z"
-         style="fill:#ffa06a;fill-opacity:1" />
+         style="fill:#ff9955;fill-opacity:1" />
     </g>
   </g>
   <g
@@ -341,7 +341,7 @@
     </g>
   </g>
   <rect
-     style="opacity:0.01;fill:#ffa06a;fill-opacity:1;stroke-width:145.989;stroke-linecap:round"
+     style="opacity:0.01;fill:#ff9955;fill-opacity:1;stroke-width:145.989;stroke-linecap:round"
      id="hint-bar-size"
      width="38"
      height="16"
@@ -414,7 +414,7 @@
     <path
        id="rect1962"
        d="m 95,19 c -7,0 -13,6 -13,13 0,7 6,13 13,13 7,0 13,-6 13,-13 0,-7 -6,-13 -13,-13 z m 0,2 c 6,0 11,5 11,11 0,6 -5,11 -11,11 -6,0 -11,-5 -11,-11 0,-6 5,-11 11,-11 z"
-       style="opacity:0.33;fill:#ffa06a;fill-opacity:1"
+       style="opacity:0.33;fill:#ff9955;fill-opacity:1"
        class="ColorScheme-Highlight"
        sodipodi:nodetypes="ssssssssss" />
   </g>

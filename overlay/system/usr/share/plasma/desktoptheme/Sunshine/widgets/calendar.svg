@@ -26,8 +26,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#efe5d0"
-     bordercolor="#72625a"
+     pagecolor="#f4f0eb"
+     bordercolor="#69616b"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -50,52 +50,52 @@
     <style
        id="current-color-scheme"
        type="text/css">.ColorScheme-Text {
-        color:#54352d;
-        stop-color:#54352d;
+        color:#292c4d;
+        stop-color:#292c4d;
       }
       .ColorScheme-Background {
-        color:#efe5d0;
-        stop-color:#efe5d0;
+        color:#f4f0eb;
+        stop-color:#f4f0eb;
       }
       .ColorScheme-Highlight {
-        color:#fd8a48;
-        stop-color:#fd8a48;
+        color:#ea8846;
+        stop-color:#ea8846;
       }
       .ColorScheme-ViewText {
-        color:#54352d;
-        stop-color:#54352d;
+        color:#292c4d;
+        stop-color:#292c4d;
       }
       .ColorScheme-ViewBackground {
-        color:#efe5d0;
-        stop-color:#efe5d0;
+        color:#f4f0eb;
+        stop-color:#f4f0eb;
       }
       .ColorScheme-ViewHover {
-        color:#f6c1a2;
-        stop-color:#f6c1a2;
+        color:#eca779;
+        stop-color:#eca779;
       }
       .ColorScheme-ViewFocus{
-        color:#fd8a48;
-        stop-color:#fd8a48;
+        color:#ea8846;
+        stop-color:#ea8846;
       }
       .ColorScheme-ButtonText {
-        color:#54352d;
-        stop-color:#54352d;
+        color:#292c4d;
+        stop-color:#292c4d;
       }
       .ColorScheme-ButtonBackground {
-        color:#efe5d0;
-        stop-color:#efe5d0;
+        color:#f4f0eb;
+        stop-color:#f4f0eb;
       }
       .ColorScheme-ButtonHover {
-        color:#f6c1a2;
-        stop-color:#f6c1a2;
+        color:#eca779;
+        stop-color:#eca779;
       }
       .ColorScheme-ButtonFocus{
-        color:#fd8a48;
-        stop-color:#fd8a48;
+        color:#ea8846;
+        stop-color:#ea8846;
       }</style>
   </defs>
   <path
-     style="color:#fd8a48;fill:#ffa06a;fill-opacity:1"
+     style="color:#ea8846;fill:#ff9955;fill-opacity:1"
      inkscape:connector-curvature="0"
      d="M 30,14 14,30 h 16 z"
      class="ColorScheme-Highlight"

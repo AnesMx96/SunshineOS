@@ -27,8 +27,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#d1cabf"
-     bordercolor="#72625a"
+     pagecolor="#cbc7c5"
+     bordercolor="#69616b"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -50,7 +50,7 @@
      inkscape:document-rotation="0"
      inkscape:showpageshadow="0"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d8d3ca">
+     inkscape:deskcolor="#d3d0cf">
     <inkscape:grid
        type="xygrid"
        id="grid3899" />
@@ -74,11 +74,11 @@
        gradientTransform="translate(-30.7663,35.718065)"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ffbe99"
+         stop-color="#ffa366"
          offset="0"
          id="stop3186" />
       <stop
-         stop-color="#ffbe99"
+         stop-color="#fba46a"
          offset="1"
          id="stop3188" />
     </linearGradient>
@@ -91,11 +91,11 @@
        gradientTransform="matrix(0.91667,0,0,0.91667,-28.0358,30.389065)"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#f6aa7d"
+         stop-color="#eba474"
          offset="0"
          id="stop3191" />
       <stop
-         stop-color="#da7439"
+         stop-color="#de6c20"
          offset="1"
          id="stop3193" />
     </linearGradient>
@@ -110,7 +110,7 @@
     <linearGradient
        id="linearGradient22227">
       <stop
-         stop-color="#ffbe99"
+         stop-color="#ffa366"
          offset="0"
          id="stop3181" />
       <stop
@@ -135,11 +135,11 @@
        d="M 0,0 H 22 V 22 H 0 Z"
        id="path6" />
     <path
-       style="fill:#efe5d0;fill-opacity:1"
+       style="fill:#f4f0eb;fill-opacity:1"
        d="m 13,3 a 1,1 0 0 0 -1,1 v 11 h 2 V 14.458984 C 14.607485,14.81219 15.297298,14.998156 16,15 18.209139,15 20,13.209139 20,11 20,8.7908608 18.209139,7 16,7 15.29748,7.00125 14.607679,7.1865555 14,7.5390625 V 4 A 1,1 0 0 0 13,3 Z m 3,6 c 1.104569,0 2,0.8954308 2,2 0,1.104569 -0.895431,2 -2,2 -1.104569,0 -2,-0.895431 -2,-2 0,-1.1045692 0.895431,-2 2,-2 z"
        id="path8" />
     <path
-       style="opacity:1;fill:#efe5d0;fill-opacity:1"
+       style="opacity:1;fill:#f4f0eb;fill-opacity:1"
        d="m 6,7 c -2.209139,0 -4,1.7908608 -4,4 0,2.209139 1.790861,4 4,4 0.702523,-0.0013 1.392325,-0.188495 2,-0.541016 V 18 a 1,1 0 0 0 1,1 1,1 0 0 0 1,-1 V 7 H 8 V 7.5410156 C 7.392515,7.1878093 6.702702,7.0018543 6,7 Z M 6,9 C 7.10457,9 8,9.8954308 8,11 8,12.104569 7.10457,13 6,13 4.895431,13 4,12.104569 4,11 4,9.8954308 4.895431,9 6,9 Z"
        id="path10" />
   </g>
@@ -157,11 +157,11 @@
        transform="translate(17,-1)">
       <path
          id="rect3953"
-         style="opacity:1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke-width:0.107227;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+         style="opacity:1;fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke-width:0.107227;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
          d="m -7.0789474,11.421053 a 4.9736842,4.9736842 0 0 0 -4.9736846,4.973684 4.9736842,4.9736842 0 0 0 4.9736846,4.973684 4.9736842,4.9736842 0 0 0 2.7631579,-0.844058 v 6.370374 c 0,0.612313 0.4929487,1.105263 1.1052632,1.105263 0.6123144,0 1.1052631,-0.49295 1.1052631,-1.105263 v -10.5 -4.973684 h -2.2105263 v 0.837581 a 4.9736842,4.9736842 0 0 0 -2.7631579,-0.837581 z m 0,2.210526 a 2.7631579,2.7631579 0 0 1 2.7631579,2.763158 2.7631579,2.7631579 0 0 1 -2.7631579,2.763158 2.7631579,2.7631579 0 0 1 -2.7631579,-2.763158 2.7631579,2.7631579 0 0 1 2.7631579,-2.763158 z" />
       <path
          id="path4802"
-         style="opacity:1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd;stroke-width:0.107227;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+         style="opacity:1;fill:#f4f0eb;fill-opacity:1;fill-rule:evenodd;stroke-width:0.107227;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
          d="M 5.0789474,23.578947 A 4.9736842,4.9736842 0 0 0 10.052632,18.605263 4.9736842,4.9736842 0 0 0 5.0789474,13.631579 4.9736842,4.9736842 0 0 0 2.3157895,14.475637 V 8.1052632 C 2.3157895,7.4929496 1.8228408,7 1.2105263,7 0.59821185,7 0.10526316,7.4929496 0.10526316,8.1052632 V 18.605263 23.578947 H 2.3157895 v -0.837581 a 4.9736842,4.9736842 0 0 0 2.7631579,0.837581 z m 0,-2.210526 a 2.7631579,2.7631579 0 0 1 -2.7631579,-2.763158 2.7631579,2.7631579 0 0 1 2.7631579,-2.763158 2.7631579,2.7631579 0 0 1 2.7631579,2.763158 2.7631579,2.7631579 0 0 1 -2.7631579,2.763158 z" />
     </g>
   </g>
