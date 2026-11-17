@@ -100,6 +100,11 @@ o=run("nix --version 2>&1 | head -1"); check("nix runs",bool(o) and "nix" in o,o
 o=run("command -v uni || echo missing"); check("uni is installed",o=="/usr/bin/uni",o or "no answer")
 o=run("timeout 30 uni detect 2>&1 | head -4 | tr '\\n' ' '; echo rc=$?",timeout=60); check("uni runs (uni detect)",bool(o) and "Native manager" in o,o or "timed out")
 o=run("uni --config /usr/share/sunshine-store/uni.toml detect 2>&1 | grep 'Enabled sources'",timeout=60); check("the store's UNI config enables pacman, flatpak, appimage in order",bool(o) and re.search(r"pacman\(1\).*flatpak\(2\).*appimage\(3\)",o) is not None,o or "timed out")
+# grub.d scripts print into grub.cfg: a stray line (a mount warning for the already mounted EFI partition) made every installation fail at the bootloader
+o=run("truncate -s 16M /tmp/e.img && mkfs.fat /tmp/e.img >/dev/null 2>&1 && L=$(losetup -f --show /tmp/e.img) && mkdir -p /tmp/esp && mount $L /tmp/esp && /etc/grub.d/42_nixos 2>/dev/null | wc -c; umount /tmp/esp 2>/dev/null; losetup -D 2>/dev/null",timeout=60)
+check("42_nixos prints nothing when an EFI partition is mounted",o=="0",o or "no answer")
+o=run("grub-mkconfig -o /tmp/g.cfg >/tmp/g.log 2>&1; echo rc=$?; grub-script-check /tmp/g.cfg && echo syntax-ok",timeout=120)
+check("grub-mkconfig works and writes a valid grub.cfg",bool(o) and "rc=0" in o and "syntax-ok" in o,(o or "timed out").replace("\n"," "))
 o=run("test -x /etc/grub.d/42_nixos && test -f /usr/share/libalpm/hooks/90-sunshine-nixos-grub.hook && sh -n /etc/grub.d/42_nixos && echo yes"); check("NixOS GRUB hook is installed",o=="yes",o or "missing")
 # graphical session: the live user is logged in automatically; wait for the desktop, then look at the screen
 t2=time.time(); up=""

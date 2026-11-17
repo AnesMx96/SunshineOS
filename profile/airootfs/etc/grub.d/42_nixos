@@ -2,24 +2,32 @@
 # Adds a boot entry for NixOS when another disk holds one, so nobody has to write it by hand.
 # Derived from the manual 40_custom entry: same chainload order, but the EFI partition is found by looking
 # for a NixOS bootloader on every FAT partition, not by a fixed UUID. Runs on every grub-mkconfig.
-# Nothing is printed (and no entry exists) when no NixOS is found.
+# RULES for a grub.d script: stdout is pasted into grub.cfg, so NOTHING but menu entries may be printed there (a stray "mount warning" made
+# grub.cfg a syntax error and every installation failed at the bootloader step). All other output is discarded, and the script always exits 0.
+# Partitions that are already mounted (the EFI system partition at /boot/efi!) are read where they are mounted, never mounted again.
 [ -d /sys/firmware/efi ] || exit 0
-command -v lsblk >/dev/null || exit 0
-tmp=$(mktemp -d) || exit 0
-trap 'umount "$tmp" 2>/dev/null; rmdir "$tmp" 2>/dev/null' EXIT
-lsblk -rno PATH,FSTYPE | while read -r dev fs; do
+command -v lsblk >/dev/null 2>&1 || exit 0
+tmp=$(mktemp -d 2>/dev/null) || exit 0
+mounted=""
+cleanup() { [ -n "$mounted" ] && umount "$tmp" >/dev/null 2>&1; rmdir "$tmp" >/dev/null 2>&1; }
+trap cleanup EXIT
+lsblk -rno PATH,FSTYPE 2>/dev/null | while read -r dev fs; do
   [ "$fs" = vfat ] || continue
-  mount -o ro,noexec,nosuid "$dev" "$tmp" 2>/dev/null || continue
+  root=$(findmnt -rno TARGET "$dev" 2>/dev/null | head -n 1)
+  if [ -z "$root" ]; then
+    mount -o ro,noexec,nosuid "$dev" "$tmp" >/dev/null 2>&1 || continue
+    root=$tmp; mounted=1
+  fi
   found=""
   for f in EFI/NixOS-boot/grubx64.efi EFI/systemd/systemd-bootx64.efi; do
-    [ -f "$tmp/$f" ] && { found=$f; break; }
+    [ -f "$root/$f" ] && { found=$f; break; }
   done
   # a systemd-boot ESP of NixOS has loader entries mentioning nixos
-  if [ "$found" = EFI/systemd/systemd-bootx64.efi ] && ! grep -qsl -i nixos "$tmp"/loader/entries/* 2>/dev/null \
-     && [ ! -d "$tmp/EFI/nixos" ]; then found=""; fi
-  umount "$tmp"
+  if [ "$found" = EFI/systemd/systemd-bootx64.efi ] && ! grep -qsl -i nixos "$root"/loader/entries/* 2>/dev/null \
+     && [ ! -d "$root/EFI/nixos" ]; then found=""; fi
+  [ "$root" = "$tmp" ] && { umount "$tmp" >/dev/null 2>&1; mounted=""; }
   [ -n "$found" ] || continue
-  uuid=$(blkid -s UUID -o value "$dev")
+  uuid=$(blkid -s UUID -o value "$dev" 2>/dev/null)
   [ -n "$uuid" ] || continue
   cat <<ENTRY
 menuentry "NixOS (auto-detected on $dev)" --class nixos --class gnu-linux --class os {
