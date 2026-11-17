@@ -4,6 +4,8 @@
 # applies /usr/share/sunshine/fastfetch/sunshine-logos.patch on top, builds it and replaces the binary.
 # Called by the installer and by the pacman hook after every fastfetch install/upgrade. If anything fails the stock
 # fastfetch stays untouched (it still works; only the two logos are missing).
+# The system-wide config (/etc/xdg/fastfetch) already shows the Sunshine logo and colours with stock fastfetch: no rebuild needed.
+[ -f /etc/xdg/fastfetch/config.jsonc ] && [ -z "${SUNSHINE_FORCE_FF_PATCH:-}" ] && { echo "Sunshine fastfetch config present: stock fastfetch is enough"; exit 0; }
 PATCH=/usr/share/sunshine/fastfetch/sunshine-logos.patch
 LOG=/var/log/sunshine/fastfetch-patch.log; mkdir -p "$(dirname "$LOG")"
 exec > >(tee -a "$LOG") 2>&1
