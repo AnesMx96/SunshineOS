@@ -1,0 +1,23 @@
+# Maintainer: Sunshine OS
+# The Sunshine icon theme: Fluent icon theme (Windows 11 style, GPL-3.0, vinceliuice) in its orange variant, installed as Sunshine-orange(-dark).
+pkgname=sunshine-icon-theme
+pkgver=2026.08.31
+pkgrel=1
+pkgdesc='Sunshine OS icons: Fluent icon theme, orange variant'
+arch=('any')
+url='https://github.com/vinceliuice/Fluent-icon-theme'
+license=('GPL-3.0-or-later')
+depends=('hicolor-icon-theme')
+makedepends=('git')
+_commit=c8a244f571ef8fb47812bdc9dbce76546cedce69
+source=("Fluent-icon-theme-$_commit.tar.gz::https://github.com/vinceliuice/Fluent-icon-theme/archive/$_commit.tar.gz")
+sha256sums=('SKIP')
+
+package() {
+  cd "$srcdir/Fluent-icon-theme-$_commit"
+  install -d "$pkgdir/usr/share/icons"
+  bash ./install.sh -d "$pkgdir/usr/share/icons" -n Sunshine orange
+  rm -rf "$pkgdir"/usr/share/icons/.Sunshine-light-base 2>/dev/null || true
+  find "$pkgdir" -type d -exec chmod 755 {} +
+  find "$pkgdir" -type f -exec chmod 644 {} +
+}

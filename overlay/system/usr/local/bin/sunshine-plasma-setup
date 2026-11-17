@@ -14,6 +14,8 @@ done
 command -v plasma-apply-colorscheme >/dev/null && plasma-apply-colorscheme SunshineDark
 # Darkly widget style (the Dolphin view and sidebar transparency from ~/.config/darklyrc need it); only when it is installed
 [ -e /usr/lib/qt6/plugins/styles/libkvantum.so ] && kwriteconfig6 --file kdeglobals --group KDE --key widgetStyle kvantum
+# Sunshine icons (Fluent, orange variant) when the package is installed
+[ -d /usr/share/icons/Sunshine-orange-dark ] && { /usr/lib/plasma-changeicons Sunshine-orange-dark >/dev/null 2>&1 || kwriteconfig6 --file kdeglobals --group Icons --key Theme Sunshine-orange-dark; }
 # Sunshine theme: Plasma theme, window decoration with the buttons on the right
 command -v plasma-apply-desktoptheme >/dev/null && plasma-apply-desktoptheme Sunshine
 kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key library org.kde.kwin.aurorae
@@ -43,4 +45,5 @@ p.addWidget("org.kde.plasma.systemtray");
 p.addWidget("org.kde.plasma.digitalclock");
 p.addWidget("org.kde.plasma.showdesktop");
 ' >/dev/null 2>&1
+[ -x /usr/local/bin/sunshine-topbar ] && /usr/local/bin/sunshine-topbar
 mkdir -p "$(dirname "$M")"; : > "$M"

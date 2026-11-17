@@ -1,0 +1,29 @@
+#!/bin/bash
+# Sunshine top bar (like the Garuda Dr460nized bar, plus live graphs): global menu on the left, then line graphs for network, disk space,
+# CPU and GPU, the clock in the middle. Run inside a Plasma session; `sunshine-topbar remove` takes it away again.
+Q=$(command -v qdbus6 || command -v qdbus) || exit 1
+if [ "${1:-}" = remove ]; then
+  "$Q" org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript 'for (var p of panels()) if (p.location=="top") p.remove();' >/dev/null; exit 0
+fi
+"$Q" org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript '
+for (var q of panels()) if (q.location=="top") q.remove();
+var t=new Panel; t.location="top"; t.floating=false; t.lengthMode="fill"; t.height=Math.round(gridUnit*1.9); t.hiding="none";
+function graph(sensors,colors,title,w){
+  var m=t.addWidget("org.kde.plasma.systemmonitor");
+  m.currentConfigGroup=["Appearance"]; m.writeConfig("chartFace","org.kde.ksysguard.linechart"); m.writeConfig("title",title);
+  m.currentConfigGroup=["Sensors"]; m.writeConfig("sensorIds",JSON.stringify(sensors)); m.writeConfig("sensorColors",JSON.stringify(colors)); m.writeConfig("totalSensor","");
+  m.currentConfigGroup=["SensorColors"]; for (var i=0;i<sensors.length;i++) m.writeConfig(sensors[i],colors[i]);
+  m.currentConfigGroup=["FaceConfig"]; m.writeConfig("showTitle","false"); m.writeConfig("smooth","true"); m.writeConfig("showLegend","false"); m.writeConfig("yRange","auto"); m.writeConfig("rangeAuto","true");
+  m.writeConfig("rangeFrom",0); m.writeConfig("rangeTo",100);
+  return m;
+}
+t.addWidget("org.kde.plasma.appmenu");
+t.addWidget("org.kde.plasma.panelspacer");
+graph(["network/all/download","network/all/upload"],["#f5a442","#e87932"],"Network");
+graph(["disk/all/usedPercent"],["#ffd27a"],"Disk");
+graph(["cpu/all/usage"],["#e87932"],"CPU");
+graph(["gpu/gpu1/usage"],["#f5a442"],"GPU");
+t.addWidget("org.kde.plasma.panelspacer");
+t.addWidget("org.kde.plasma.digitalclock");
+t.addWidget("org.kde.plasma.panelspacer");
+' >/dev/null
