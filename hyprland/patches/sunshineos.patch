@@ -182,6 +182,19 @@ index 1f43b8b..31c55c9 100644
 +hl.window_rule({match = {class = "^(sunshine-store)$" },            float = true})
 +hl.window_rule({match = {class = "^(sunshine-store)$" },            center = true})
 +hl.window_rule({match = {class = "^(sunshine-store)$" },            size = {"(monitor_w*0.7)", "(monitor_h*0.8)"} })
+diff --git a/dots/.config/kitty/kitty.conf b/dots/.config/kitty/kitty.conf
+index ec13e79..9749c2b 100644
+--- a/dots/.config/kitty/kitty.conf
++++ b/dots/.config/kitty/kitty.conf
+@@ -16,7 +16,7 @@ window_margin_width 21.75
+ confirm_os_window_close 0
+ 
+ # Opacity
+-background_opacity 0.6
++background_opacity 0.8
+ dynamic_background_opacity 1
+ # Use fish shell
+ shell fish
 diff --git a/dots/.config/quickshell/ii/assets/icons/sunshine-symbolic.svg b/dots/.config/quickshell/ii/assets/icons/sunshine-symbolic.svg
 new file mode 100644
 index 0000000..37164d5
@@ -50179,7 +50192,7 @@ index 5fcd1bb..fcae572 100644
                  property bool verbose: true
                  property bool vertical: false
 diff --git a/dots/.config/quickshell/ii/scripts/colors/applycolor.sh b/dots/.config/quickshell/ii/scripts/colors/applycolor.sh
-index a215c5a..c031f22 100755
+index a215c5a..0ab598d 100755
 --- a/dots/.config/quickshell/ii/scripts/colors/applycolor.sh
 +++ b/dots/.config/quickshell/ii/scripts/colors/applycolor.sh
 @@ -73,7 +73,20 @@ apply_anyterm() {
@@ -50193,7 +50206,7 @@ index a215c5a..c031f22 100755
 +  mkdir -p "$(dirname "$dst")"
 +  awk 'function rgb(h){ h=substr(h,2); return sprintf("%d,%d,%d", strtonum("0x" substr(h,1,2)), strtonum("0x" substr(h,3,2)), strtonum("0x" substr(h,5,2))) }
 +    $1=="background"{bg=rgb($2)} $1=="foreground"{fg=rgb($2)} $1 ~ /^color[0-9]+$/ { n=substr($1,6)+0; if (n<16) c[n]=rgb($2) }
-+    END{ print "[General]\nDescription=Sunshine\nOpacity=0.92\nWallpaper=\n";
++    END{ print "[General]\nDescription=Sunshine\nOpacity=0.80\nBlur=true\nWallpaper=\n";
 +         print "[Background]\nColor=" bg "\n\n[BackgroundIntense]\nColor=" bg "\n\n[Foreground]\nColor=" fg "\n\n[ForegroundIntense]\nColor=" fg "\n";
 +         for (i=0;i<8;i++) { print "[Color" i "]\nColor=" c[i] "\n\n[Color" i "Intense]\nColor=" c[i+8] "\n" } }' "$src" > "$dst.tmp" && mv -f "$dst.tmp" "$dst"
 +}
@@ -50218,10 +50231,10 @@ index f23cce5..236b204 100644
 diff --git a/dots/.config/starship.toml b/dots/.config/starship.toml
 old mode 100755
 new mode 100644
-index 32bdd20..d33620c
+index 32bdd20..0dc4c85
 --- a/dots/.config/starship.toml
 +++ b/dots/.config/starship.toml
-@@ -1,103 +1,135 @@
+@@ -1,103 +1,137 @@
 -# Don't print a new line at the start of the prompt
 -add_newline = false
 -# Pipes ╰─ ╭─
@@ -50432,10 +50445,12 @@ index 32bdd20..d33620c
 +
 +[status]
 +disabled = false
-+format = '[$symbol$status ]($style)'
++# a failed command shows ✘, what happened for the common cases (127 = command not found) and the exit code
++format = '[$symbol$status ($signal_name )]($style)'
 +symbol = '✘ '
 +success_symbol = ''
-+not_found_symbol = '? '
++not_found_symbol = '✘ command not found '
++not_executable_symbol = '✘ not executable '
 +sigint_symbol = '󰜺 '
 +signal_symbol = '⚡'
 +style = 'fg:#ff8f7a bold'

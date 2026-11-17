@@ -1,6 +1,7 @@
 [General]
 Description=Sunshine
-Opacity=0.92
+Opacity=0.80
+Blur=true
 Wallpaper=
 
 [Background]

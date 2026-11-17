@@ -229,6 +229,9 @@ fish
 starship
 eza
 bat
+nnn
+ranger
+tree
 fzf
 zoxide
 zsh-autosuggestions
@@ -237,6 +240,7 @@ qt6-tools
 cmake
 ripgrep
 breeze
+darkly-bin
 gnome-keyring
 polkit-kde-agent
 systemsettings

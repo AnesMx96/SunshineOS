@@ -12,6 +12,8 @@ for i in $(seq 1 30); do   # Plasma may not be ready to take the wallpaper yet: 
   grep -q "$(basename "$W")" "$APPLETS" 2>/dev/null && break; sleep 3
 done
 command -v plasma-apply-colorscheme >/dev/null && plasma-apply-colorscheme SunshineDark
+# Darkly widget style (the Dolphin view and sidebar transparency from ~/.config/darklyrc need it); only when it is installed
+[ -e /usr/lib/qt6/plugins/styles/darkly6.so ] && kwriteconfig6 --file kdeglobals --group KDE --key widgetStyle Darkly
 # Sunshine Win11 look: Plasma theme, window decoration with the buttons on the right
 command -v plasma-apply-desktoptheme >/dev/null && plasma-apply-desktoptheme SunshineWin11
 kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key library org.kde.kwin.aurorae

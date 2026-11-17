@@ -120,10 +120,12 @@ format = '[[ 󱦟 $duration ](fg:#ff9654 bg:#161c2b)]($style)'
 
 [status]
 disabled = false
-format = '[$symbol$status ]($style)'
+# a failed command shows ✘, what happened for the common cases (127 = command not found) and the exit code
+format = '[$symbol$status ($signal_name )]($style)'
 symbol = '✘ '
 success_symbol = ''
-not_found_symbol = '? '
+not_found_symbol = '✘ command not found '
+not_executable_symbol = '✘ not executable '
 sigint_symbol = '󰜺 '
 signal_symbol = '⚡'
 style = 'fg:#ff8f7a bold'

@@ -1,6 +1,9 @@
 [kdeglobals][General]
 ColorScheme=SunshineDark
 
+[kdeglobals][KDE]
+widgetStyle=Darkly
+
 [kwinrc][org.kde.kdecoration2]
 ButtonsOnLeft=
 ButtonsOnRight=IAX

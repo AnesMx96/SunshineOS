@@ -102,7 +102,7 @@ sub(ac, "apply_term() {\n", '''apply_konsole() {
   mkdir -p "$(dirname "$dst")"
   awk 'function rgb(h){ h=substr(h,2); return sprintf("%d,%d,%d", strtonum("0x" substr(h,1,2)), strtonum("0x" substr(h,3,2)), strtonum("0x" substr(h,5,2))) }
     $1=="background"{bg=rgb($2)} $1=="foreground"{fg=rgb($2)} $1 ~ /^color[0-9]+$/ { n=substr($1,6)+0; if (n<16) c[n]=rgb($2) }
-    END{ print "[General]\\nDescription=Sunshine\\nOpacity=0.92\\nWallpaper=\\n";
+    END{ print "[General]\\nDescription=Sunshine\\nOpacity=0.80\\nBlur=true\\nWallpaper=\\n";
          print "[Background]\\nColor=" bg "\\n\\n[BackgroundIntense]\\nColor=" bg "\\n\\n[Foreground]\\nColor=" fg "\\n\\n[ForegroundIntense]\\nColor=" fg "\\n";
          for (i=0;i<8;i++) { print "[Color" i "]\\nColor=" c[i] "\\n\\n[Color" i "Intense]\\nColor=" c[i+8] "\\n" } }' "$src" > "$dst.tmp" && mv -f "$dst.tmp" "$dst"
 }
@@ -137,3 +137,6 @@ sub(os.path.join(cfg, "hypr/hyprland/rules.lua"), 'class = "^(sunshine-welcome)$
 
 # 14. no Hyprland news / donation pop-ups (they appear on the second login and look like an error to a new user)
 sub(os.path.join(cfg, "hypr/hyprland/general.lua"), "    misc = {", "    ecosystem = { no_update_news = true, no_donation_nag = true },\n    misc = {")
+
+# 10. Terminals are 20% transparent in every session (kitty here, foot already has alpha=0.8, Konsole above)
+sub(os.path.join(cfg, "kitty/kitty.conf"), "background_opacity 0.6", "background_opacity 0.8")
