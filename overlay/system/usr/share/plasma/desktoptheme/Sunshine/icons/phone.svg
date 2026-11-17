@@ -26,7 +26,7 @@
   </metadata>
   <sodipodi:namedview
      id="namedview26"
-     bordercolor="#576075"
+     bordercolor="#72625a"
      borderopacity="1"
      gridtolerance="10"
      guidetolerance="10"
@@ -67,7 +67,7 @@
        id="current-color-scheme-3"
        type="text/css">
       .ColorScheme-Text {
-        color:#253457;
+        color:#54352d;
       }
       .ColorScheme-Background {
         color:#efe5d0;
@@ -76,7 +76,7 @@
         color:#fd8a48;
       }
       .ColorScheme-ViewText {
-        color:#253457;
+        color:#54352d;
       }
       .ColorScheme-ViewBackground {
         color:#efe5d0;
@@ -88,7 +88,7 @@
         color:#fd8a48;
       }
       .ColorScheme-ButtonText {
-        color:#253457;
+        color:#54352d;
       }
       .ColorScheme-ButtonBackground {
         color:#efe5d0;

@@ -47,8 +47,8 @@
      gridtolerance="10"
      objecttolerance="10"
      borderopacity="1"
-     bordercolor="#576075"
-     pagecolor="#304471">
+     bordercolor="#72625a"
+     pagecolor="#6d453b">
     <inkscape:grid
        id="grid903"
        type="xygrid" />
@@ -58,13 +58,13 @@
     <style
        type="text/css"
        id="current-color-scheme">.ColorScheme-Text {
-        color:#253457;
+        color:#54352d;
       }
       .ColorScheme-Background{
         color:#efe5d0;
       }
       .ColorScheme-ViewText {
-        color:#253457;
+        color:#54352d;
       }
       .ColorScheme-ViewBackground{
         color:#efe5d0;
@@ -76,7 +76,7 @@
         color:#fd8a48;
       }
       .ColorScheme-ButtonText {
-        color:#253457;
+        color:#54352d;
       }
       .ColorScheme-ButtonBackground{
         color:#efe5d0;
@@ -167,7 +167,7 @@
        transform="scale(1,-1)"
        class="ColorScheme-ViewBackground" />
     <rect
-       style="color:#253457;opacity:0;fill:#000000"
+       style="color:#54352d;opacity:0;fill:#000000"
        id="rect18"
        height="1"
        width="40"

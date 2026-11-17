@@ -27,7 +27,7 @@
      id="defs41" />
   <sodipodi:namedview
      pagecolor="#d1cabf"
-     bordercolor="#576075"
+     bordercolor="#72625a"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -88,7 +88,7 @@
        id="rect3154"
        class="ColorScheme-Text"
        d="m 51,49 v 1 H 19 v -1 z"
-       style="color:#1b253e;opacity:0.1;fill:#efe5d0;fill-opacity:1"
+       style="color:#3c2620;opacity:0.1;fill:#efe5d0;fill-opacity:1"
        inkscape:connector-curvature="0" />
   </g>
   <path
@@ -109,7 +109,7 @@
        id="path3178"
        class="ColorScheme-Text"
        d="m 57,49 h -6 v 1 h 6 c 0,-1 -2e-5,0 0,-1 z"
-       style="color:#1b253e;opacity:0.1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd"
+       style="color:#3c2620;opacity:0.1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd"
        inkscape:connector-curvature="0" />
   </g>
   <g
@@ -124,7 +124,7 @@
        id="path3184"
        class="ColorScheme-Text"
        d="m 19,50 v -1 h -4 l -2,-2e-5 v 1 L 15,50 h 1 z"
-       style="color:#1b253e;opacity:0.1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd"
+       style="color:#3c2620;opacity:0.1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd"
        inkscape:connector-curvature="0" />
   </g>
   <path
@@ -169,7 +169,7 @@
        id="rect3154-9"
        class="ColorScheme-Text"
        d="m 99,7.0000038 v -1 H 67 v 1 z"
-       style="color:#1b253e;opacity:0.1;fill:#efe5d0;fill-opacity:1"
+       style="color:#3c2620;opacity:0.1;fill:#efe5d0;fill-opacity:1"
        inkscape:connector-curvature="0" />
   </g>
   <path
@@ -190,7 +190,7 @@
        id="path3178-2"
        class="ColorScheme-Text"
        d="M 105,7 H 99 V 6 h 6 c 0,1 -2e-5,0 0,1 z"
-       style="color:#1b253e;opacity:0.1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd"
+       style="color:#3c2620;opacity:0.1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd"
        inkscape:connector-curvature="0" />
   </g>
   <g
@@ -205,7 +205,7 @@
        id="path3184-8"
        class="ColorScheme-Text"
        d="m 67,5.9999838 v 1 h -4 l -2,2e-5 v -1 l 2,-2e-5 h 1 z"
-       style="color:#1b253e;opacity:0.1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd"
+       style="color:#3c2620;opacity:0.1;fill:#efe5d0;fill-opacity:1;fill-rule:evenodd"
        inkscape:connector-curvature="0" />
   </g>
   <path

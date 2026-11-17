@@ -29,7 +29,7 @@
   </metadata>
   <sodipodi:namedview
      pagecolor="#d3cdc3"
-     bordercolor="#576075"
+     bordercolor="#72625a"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -94,8 +94,8 @@
     <style
        id="current-color-scheme"
        type="text/css">.ColorScheme-Text {
-        color:#253457;
-        stop-color:#253457;
+        color:#54352d;
+        stop-color:#54352d;
       }
       .ColorScheme-Background {
         color:#efe5d0;
@@ -106,8 +106,8 @@
         stop-color:#fd8a48;
       }
       .ColorScheme-ViewText {
-        color:#253457;
-        stop-color:#253457;
+        color:#54352d;
+        stop-color:#54352d;
       }
       .ColorScheme-ViewBackground {
         color:#efe5d0;
@@ -122,8 +122,8 @@
         stop-color:#fd8a48;
       }
       .ColorScheme-ButtonText {
-        color:#253457;
-        stop-color:#253457;
+        color:#54352d;
+        stop-color:#54352d;
       }
       .ColorScheme-ButtonBackground {
         color:#efe5d0;
@@ -265,7 +265,7 @@
        height="32"
        width="8.0000181"
        id="rect4152"
-       style="color:#efe5d0;opacity:0.85;fill:#151e32;fill-opacity:1;stroke:none;stroke-width:1.1547"
+       style="color:#efe5d0;opacity:0.85;fill:#201d2d;fill-opacity:1;stroke:none;stroke-width:1.1547"
        transform="matrix(0,-1,-1,0,0,0)"
        class="ColorScheme-Background" />
     <rect
@@ -283,7 +283,7 @@
      transform="translate(31,-904.36218)">
     <path
        sodipodi:nodetypes="cccc"
-       style="opacity:0.85;fill:#151e32;fill-opacity:1;stroke:none;stroke-width:2.66667"
+       style="opacity:0.85;fill:#201d2d;fill-opacity:1;stroke:none;stroke-width:2.66667"
        d="m 29,910.36218 c -8.863965,0 -16,7.13604 -16,16 h 16 z"
        id="rect4159"
        inkscape:connector-curvature="0" />
@@ -300,7 +300,7 @@
      height="12.000099"
      width="12.000099"
      id="center"
-     style="color:#efe5d0;opacity:0.85;fill:#151e32;fill-opacity:1;stroke:none;stroke-width:0.3750031" />
+     style="color:#efe5d0;opacity:0.85;fill:#201d2d;fill-opacity:1;stroke:none;stroke-width:0.3750031" />
   <rect
      style="fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:0.7070992"
      id="hint-top-margin"

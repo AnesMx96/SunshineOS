@@ -14,8 +14,8 @@
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
      id="namedview1815"
-     pagecolor="#525b70"
-     bordercolor="#576075"
+     pagecolor="#6d5d55"
+     bordercolor="#72625a"
      borderopacity="1.0"
      inkscape:showpageshadow="2"
      inkscape:pageopacity="0"
@@ -40,8 +40,8 @@
     <style
        id="current-color-scheme"
        type="text/css">.ColorScheme-Text {
-        color:#253457;
-        stop-color:#253457;
+        color:#54352d;
+        stop-color:#54352d;
       }
       .ColorScheme-Background {
         color:#efe5d0;
@@ -52,8 +52,8 @@
         stop-color:#fd8a48;
       }
       .ColorScheme-ViewText {
-        color:#253457;
-        stop-color:#253457;
+        color:#54352d;
+        stop-color:#54352d;
       }
       .ColorScheme-ViewBackground {
         color:#efe5d0;
@@ -68,8 +68,8 @@
         stop-color:#fd8a48;
       }
       .ColorScheme-ButtonText {
-        color:#253457;
-        stop-color:#253457;
+        color:#54352d;
+        stop-color:#54352d;
       }
       .ColorScheme-ButtonBackground {
         color:#efe5d0;

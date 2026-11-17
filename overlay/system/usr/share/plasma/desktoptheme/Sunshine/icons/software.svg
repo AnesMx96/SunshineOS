@@ -29,7 +29,7 @@
   </metadata>
   <sodipodi:namedview
      pagecolor="#d1cabf"
-     bordercolor="#576075"
+     bordercolor="#72625a"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -58,7 +58,7 @@
     <style
        id="current-color-scheme"
        type="text/css">
-   .ColorScheme-Text { color:#233152; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#233152; }
+   .ColorScheme-Text { color:#50322b; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#50322b; }
   </style>
   </defs>
   <use
@@ -245,11 +245,11 @@
          sodipodi:cy="11.31262"
          sodipodi:cx="-36.934963"
          sodipodi:type="arc"
-         style="fill:none;stroke:#233051;stroke-width:1.00026;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;stroke:#4e312a;stroke-width:1.00026;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="path981"
          d="m -31.631676,16.615908 a 7.4999809,7.4999809 0 0 1 -8.59447,1.435987 7.4999809,7.4999809 0 0 1 -4.151966,-7.66082 7.4999809,7.4999809 0 0 1 5.894945,-6.4169 7.4999809,7.4999809 0 0 1 7.984741,3.4886792" />
       <rect
-         style="opacity:1;fill:#233051;fill-opacity:1;stroke-width:0.912871;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+         style="opacity:1;fill:#4e312a;fill-opacity:1;stroke-width:0.912871;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect983"
          width="5"
          height="1"
@@ -258,7 +258,7 @@
          ry="0.5"
          transform="rotate(7.8703413)" />
       <rect
-         style="opacity:1;fill:#233051;fill-opacity:1;stroke-width:0.912871;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+         style="opacity:1;fill:#4e312a;fill-opacity:1;stroke-width:0.912871;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect985"
          width="5"
          height="1"

@@ -14,7 +14,7 @@
    xmlns:dc="http://purl.org/dc/elements/1.1/">
   <sodipodi:namedview
      pagecolor="#d1cabf"
-     bordercolor="#576075"
+     bordercolor="#72625a"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -44,7 +44,7 @@
     <style
        id="current-color-scheme"
        type="text/css">.ColorScheme-Text {
-        color:#6a758f;
+        color:#8b786e;
       }
       .ColorScheme-Background{
         color:#efe5d0;
@@ -53,7 +53,7 @@
         color:#fa8947;
       }
       .ColorScheme-ViewText {
-        color:#6a758f;
+        color:#8b786e;
       }
       .ColorScheme-ViewBackground{
         color:#efe5d0;
@@ -65,7 +65,7 @@
         color:#ff843d;
       }
       .ColorScheme-ButtonText {
-        color:#6a758f;
+        color:#8b786e;
       }
       .ColorScheme-ButtonBackground{
         color:#efe5d0;
@@ -85,7 +85,7 @@
     <style
        type="text/css"
        id="style7">.ColorScheme-Text {
-            color:#1b253e;
+            color:#3c2620;
         }
         .ColorScheme-Background {
             color:#efe5d0;

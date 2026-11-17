@@ -52,7 +52,7 @@
      gridtolerance="10"
      objecttolerance="10"
      borderopacity="1"
-     bordercolor="#576075"
+     bordercolor="#72625a"
      pagecolor="#d1cabf"
      inkscape:pagecheckerboard="0"
      inkscape:object-paths="true"
@@ -97,16 +97,16 @@
        id="c">
       <stop
          offset="0"
-         stop-color="#2a3b62"
+         stop-color="#5f3c33"
          id="stop954" />
       <stop
          offset=".5"
-         stop-color="#586278"
+         stop-color="#74645c"
          stop-opacity=".498"
          id="stop956" />
       <stop
          offset="1"
-         stop-color="#586278"
+         stop-color="#74645c"
          stop-opacity="0"
          id="stop958" />
     </linearGradient>
@@ -118,7 +118,7 @@
          id="stop961" />
       <stop
          offset=".262"
-         stop-color="#69748d"
+         stop-color="#8a766c"
          id="stop963" />
       <stop
          offset=".705"
@@ -126,7 +126,7 @@
          id="stop965" />
       <stop
          offset="1"
-         stop-color="#444b5c"
+         stop-color="#5a4d46"
          id="stop967" />
     </linearGradient>
     <style
@@ -1433,11 +1433,11 @@
     <linearGradient
        id="linearGradient1107">
       <stop
-         stop-color="#444b5c"
+         stop-color="#5a4d46"
          offset="0"
          id="stop833" />
       <stop
-         stop-color="#080b13"
+         stop-color="#0c0b11"
          offset="1"
          id="stop835" />
     </linearGradient>
@@ -7208,7 +7208,7 @@
       <stop
          id="stop864"
          offset="0"
-         stop-color="#233051" />
+         stop-color="#4e312a" />
       <stop
          id="stop866"
          offset="1" />
@@ -7224,7 +7224,7 @@
       <stop
          id="stop869"
          offset="0"
-         stop-color="#233051" />
+         stop-color="#4e312a" />
       <stop
          id="stop871"
          offset="1" />
@@ -7265,11 +7265,11 @@
       <stop
          id="stop883"
          offset="0"
-         stop-color="#293a60" />
+         stop-color="#5d3b32" />
       <stop
          id="stop885"
          offset="1"
-         stop-color="#151e32" />
+         stop-color="#201d2d" />
     </linearGradient>
     <style
        id="current-color-scheme-8"

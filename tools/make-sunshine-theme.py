@@ -32,8 +32,8 @@ def mapc(hexcolor):
     if l >= .86 and s < .25: return CREAM                               # white and near white: text, glyphs, strokes
     if s < .2:                                                          # greys -> the indigo / warm ramp
         if l < .02: return c
-        if l < .30: return hls(0, 222, l * 1.1 + .01, .40)               # dark greys: the indigo backgrounds
-        if l < .60: return hls(0, 222, l, .15)                          # mid greys
+        if l < .30: return hls(0, 250 if l < .12 else 12, l * 1.15 + .01, .22 if l < .12 else .30)               # dark greys: the indigo backgrounds
+        if l < .60: return hls(0, 20, l, .12)                          # mid greys
         return hls(0, 38, l, .16)                                       # light greys: warm
     if 185 <= h <= 265: return hls(0, 22, min(.8, l + .06), min(1, s * 1.1 + .1))   # blues -> the orange accent
     if 70 <= h < 170: return hls(0, 105, l, .30)                        # greens -> the soft green
@@ -83,6 +83,9 @@ def plasma_post(rel, t):
     # menus, popups, tooltips and the taskbar: 85% opaque (upstream: 60%)
     if rel.startswith("translucent/"):
         t = t.replace("opacity:0.6;fill:", f"opacity:{TRANSLUCENCY};fill:")
+        # thin orange rim, like the reference mock-up: the frame edge pieces were near-black
+        if rel.endswith(("dialogs/background.svg", "widgets/panel-background.svg", "widgets/background.svg", "widgets/tooltip.svg")):
+            t = re.sub(r'(<g\s+style="fill:)#050505(;fill-opacity:)0\.85882("\s+id="(?:top|bottom|left|right|topleft|topright|bottomleft|bottomright)")', r'\1#d9803f\g<2>0.9\3', t)
     return t
 
 def main():
@@ -113,9 +116,9 @@ def main():
     if kv.exists(): shutil.rmtree(kv)
     convert_tree(SRC / "Kvantum/Win11OS-dark", kv, rename=lambda x: x.replace("Win11OS-dark", "Sunshine"))
     cf = kv / "Sunshine.kvconfig"; t = cf.read_text()
-    pal = {"window.color": "#0e1422", "base.color": "#10172a", "alt.base.color": "#131b2e", "button.color": "#1a2236", "light.color": "#262f47", "mid.light.color": "#20283d",
-           "dark.color": "#0a101c", "mid.color": "#161d30", "highlight.color": ACCENT, "inactive.highlight.color": "#7a5a45", "text.color": CREAM, "window.text.color": CREAM,
-           "button.text.color": CREAM, "disabled.text.color": "#7d7766", "tooltip.base.color": "#1a2236", "tooltip.text.color": CREAM, "highlight.text.color": "#2a1a0e",
+    pal = {"window.color": "#17121a", "base.color": "#1a141c", "alt.base.color": "#1f1820", "button.color": "#2b2027", "light.color": "#3a2b30", "mid.light.color": "#322529",
+           "dark.color": "#100c13", "mid.color": "#231a21", "highlight.color": ACCENT, "inactive.highlight.color": "#7a5a45", "text.color": CREAM, "window.text.color": CREAM,
+           "button.text.color": CREAM, "disabled.text.color": "#7d7766", "tooltip.base.color": "#2b2027", "tooltip.text.color": CREAM, "highlight.text.color": "#2a1a0e",
            "link.color": ACCENT, "link.visited.color": "#c9a15a"}
     for k, v in pal.items(): t = re.sub(rf"(?m)^{re.escape(k)}=.*$", f"{k}={v}", t)
     t = re.sub(r"(?m)^author=.*$", "author=Sunshine OS, after Win11OS-kde (yeyushengfan258) and Vince Liuice's KvAdapta-based theme", t)

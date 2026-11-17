@@ -28,7 +28,7 @@
   </metadata>
   <sodipodi:namedview
      pagecolor="#d1cabf"
-     bordercolor="#576075"
+     bordercolor="#72625a"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -97,11 +97,11 @@
     <linearGradient
        id="linearGradient1107">
       <stop
-         stop-color="#444b5c"
+         stop-color="#5a4d46"
          offset="0"
          id="stop833" />
       <stop
-         stop-color="#080b13"
+         stop-color="#0c0b11"
          offset="1"
          id="stop835" />
     </linearGradient>

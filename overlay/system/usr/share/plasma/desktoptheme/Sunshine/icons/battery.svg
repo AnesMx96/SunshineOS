@@ -37,7 +37,7 @@
         color:#000000;
       }
       .ColorScheme-ViewFocus{
-        color:#4d5568;
+        color:#65564f;
       }
       .ColorScheme-ButtonText {
         color:#efe5d0;
@@ -113,7 +113,7 @@
      inkscape:pageshadow="2"
      inkscape:pageopacity="0"
      borderopacity="1.0"
-     bordercolor="#576075"
+     bordercolor="#72625a"
      pagecolor="#d1cabf"
      id="base"
      inkscape:pagecheckerboard="0"

@@ -27,8 +27,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#233051"
-     bordercolor="#576075"
+     pagecolor="#4e312a"
+     bordercolor="#72625a"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -60,13 +60,13 @@
     <style
        id="current-color-scheme"
        type="text/css">
-   .ColorScheme-Text { color:#233152; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#233152; }
+   .ColorScheme-Text { color:#50322b; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#50322b; }
   </style>
   </defs>
   <g
      id="g1148"
      transform="translate(98.806641,-26.5)"
-     style="fill:#8690a6;fill-opacity:1">
+     style="fill:#a39289;fill-opacity:1">
     <path
        id="path1116"
        style="opacity:1;fill:#b8ae9c;fill-opacity:1;stroke-width:1.7647;stroke-linecap:round"
@@ -90,7 +90,7 @@
     <g
        id="g1137"
        transform="translate(0,1)"
-       style="fill:#8690a6;fill-opacity:1">
+       style="fill:#a39289;fill-opacity:1">
       <rect
          style="opacity:1;fill:#b8ae9c;fill-opacity:1;stroke-width:2;stroke-linecap:round"
          id="rect1128"

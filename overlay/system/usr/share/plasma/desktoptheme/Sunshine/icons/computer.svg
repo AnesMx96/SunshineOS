@@ -55,7 +55,7 @@
      gridtolerance="10"
      objecttolerance="10"
      borderopacity="1"
-     bordercolor="#576075"
+     bordercolor="#72625a"
      pagecolor="#d1cabf"
      inkscape:pagecheckerboard="0">
     <inkscape:grid
@@ -115,7 +115,7 @@
       <stop
          id="stop864"
          offset="0"
-         stop-color="#233051" />
+         stop-color="#4e312a" />
       <stop
          id="stop866"
          offset="1" />
@@ -131,7 +131,7 @@
       <stop
          id="stop869"
          offset="0"
-         stop-color="#233051" />
+         stop-color="#4e312a" />
       <stop
          id="stop871"
          offset="1" />
@@ -172,11 +172,11 @@
       <stop
          id="stop883"
          offset="0"
-         stop-color="#293a60" />
+         stop-color="#5d3b32" />
       <stop
          id="stop885"
          offset="1"
-         stop-color="#151e32" />
+         stop-color="#201d2d" />
     </linearGradient>
   </defs>
   <g

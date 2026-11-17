@@ -36,7 +36,7 @@
        gradientUnits="userSpaceOnUse">
       <stop
          offset="0%"
-         style="stop-color:#263458; stop-opacity:1"
+         style="stop-color:#55352e; stop-opacity:1"
          id="stop18" />
       <stop
          offset="100%"
@@ -46,7 +46,7 @@
   </defs>
   <sodipodi:namedview
      pagecolor="#d1cabf"
-     bordercolor="#576075"
+     bordercolor="#72625a"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"

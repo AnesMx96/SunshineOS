@@ -35,11 +35,11 @@
        gradientTransform="matrix(0.74046,0,0,1.4809,4.9143898,5.9478024)"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#263558"
+         stop-color="#56362e"
          offset="0"
          id="stop29845" />
       <stop
-         stop-color="#4d5669"
+         stop-color="#665750"
          offset="1"
          id="stop29847" />
     </linearGradient>
@@ -51,12 +51,12 @@
        y2="20.146999"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#263558"
+         stop-color="#56362e"
          stop-opacity=".25"
          offset="0"
          id="stop29850" />
       <stop
-         stop-color="#263558"
+         stop-color="#56362e"
          stop-opacity="0"
          offset="1"
          id="stop29852" />
@@ -70,7 +70,7 @@
        gradientUnits="userSpaceOnUse"
        gradientTransform="translate(188.253,-1036.7346)">
       <stop
-         stop-color="#1f2b47"
+         stop-color="#452c25"
          id="stop35711" />
       <stop
          offset="1"

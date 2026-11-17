@@ -14,7 +14,7 @@
   <sodipodi:namedview
      id="namedview130"
      pagecolor="#efe5d0"
-     bordercolor="#576075"
+     bordercolor="#72625a"
      borderopacity="1.0"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -35,7 +35,7 @@
        id="current-color-scheme"
        type="text/css">
       .ColorScheme-Text {
-        color:#253457;
+        color:#54352d;
       }
       .ColorScheme-Background {
         color:#efe5d0;
@@ -44,7 +44,7 @@
         color:#fd8a48;
       }
       .ColorScheme-ViewText {
-        color:#253457;
+        color:#54352d;
       }
       .ColorScheme-ViewBackground {
         color:#efe5d0;
@@ -56,7 +56,7 @@
         color:#fd8a48;
       }
       .ColorScheme-ButtonText {
-        color:#253457;
+        color:#54352d;
       }
       .ColorScheme-ButtonBackground {
         color:#efe5d0;

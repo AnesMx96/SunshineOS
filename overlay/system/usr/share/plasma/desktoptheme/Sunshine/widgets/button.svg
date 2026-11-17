@@ -27,8 +27,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#28385d"
-     bordercolor="#576075"
+     pagecolor="#5a3930"
+     bordercolor="#72625a"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -54,7 +54,7 @@
      inkscape:document-rotation="0"
      inkscape:pagecheckerboard="0"
      inkscape:showpageshadow="0"
-     inkscape:deskcolor="#28385d">
+     inkscape:deskcolor="#5a3930">
     <inkscape:grid
        type="xygrid"
        id="grid1331" />
@@ -91,8 +91,8 @@
     <style
        id="current-color-scheme"
        type="text/css">.ColorScheme-Text {
-        color:#253457;
-        stop-color:#253457;
+        color:#54352d;
+        stop-color:#54352d;
       }
       .ColorScheme-Background {
         color:#efe5d0;
@@ -103,8 +103,8 @@
         stop-color:#fd8a48;
       }
       .ColorScheme-ViewText {
-        color:#253457;
-        stop-color:#253457;
+        color:#54352d;
+        stop-color:#54352d;
       }
       .ColorScheme-ViewBackground {
         color:#efe5d0;
@@ -119,8 +119,8 @@
         stop-color:#fd8a48;
       }
       .ColorScheme-ButtonText {
-        color:#253457;
-        stop-color:#253457;
+        color:#54352d;
+        stop-color:#54352d;
       }
       .ColorScheme-ButtonBackground {
         color:#efe5d0;
@@ -855,7 +855,7 @@
      x="-105"
      y="236" />
   <g
-     style="fill:#495163;stroke-width:1.32360542"
+     style="fill:#60534c;stroke-width:1.32360542"
      id="toolbutton-hover-bottom"
      transform="matrix(0.99999999,0,0,0.85618573,237.99999,-775.87851)">
     <g
@@ -1008,7 +1008,7 @@
      x="-104"
      y="291" />
   <g
-     style="fill:#495163;stroke-width:1.32360542"
+     style="fill:#60534c;stroke-width:1.32360542"
      id="toolbutton-pressed-bottom"
      transform="matrix(0.99999999,0,0,0.85618574,293,-775.87864)">
     <g

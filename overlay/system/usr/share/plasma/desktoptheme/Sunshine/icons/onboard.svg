@@ -18,7 +18,7 @@
      inkscape:showpageshadow="2"
      inkscape:pageopacity="0"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#6d7893"
+     inkscape:deskcolor="#8f7b71"
      showgrid="true"
      inkscape:zoom="8"
      inkscape:cx="31.4375"
@@ -43,11 +43,11 @@
      id="defs194">
     <style
        id="current-color-scheme"
-       type="text/css">.ColorScheme-Background { color:#111829; }
-.ColorScheme-ButtonBackground { color:#243254; }
+       type="text/css">.ColorScheme-Background { color:#1a1825; }
+.ColorScheme-ButtonBackground { color:#51332c; }
 .ColorScheme-Highlight { color:#ff9456; }
 .ColorScheme-Text { color:#efe5d0; }
-.ColorScheme-ViewBackground { color:#19233b; }
+.ColorScheme-ViewBackground { color:#39241f; }
 .ColorScheme-NegativeText { color:#d55560; }
 .ColorScheme-PositiveText { color:#6ba358; }
 .ColorScheme-NeutralText { color:#d2962d; }
