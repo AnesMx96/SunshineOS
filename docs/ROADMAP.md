@@ -8,8 +8,8 @@ design remark that needs a decision or has a limit worth knowing about.
 - [x] GRUB theme panel redone as a 9-slice frame (no longer runs off the screen; checked at 1024x768 and 1920x1080)
 - [x] Installer failed at the bootloader step (`42_nixos` printed a mount warning into grub.cfg); fixed, with smoke-test checks
 - [x] Packages built from the AUR were root-only (Darkly, GTK theme, `uni`, browser ...): repaired, build fixed, repair runs in `make-iso.sh`
-- [ ] Btrfs layout: inspect this PC's subvolumes and mirror them in `modules/mount.conf` (the installer already creates @, @home, @log, @cache and .snapshots)
-- [ ] Snapper installed and configured. **note:** Snapper snapshots need btrfs (or LVM thin); for ext4/xfs the fallback is Timeshift (rsync)
+- [x] Btrfs layout mirrors the maintainer's PC (@, @home, @root, @srv, @cache, @log, @tmp, noatime + zstd; Snapper adds .snapshots)
+- [x] Snapper (btrfs) and Timeshift/rsync (other file systems) behind `sunshine-snapshot`; daily timer, pre-update restore point, doctor and Welcome support
 - [ ] Installer: list the packages that are going to be installed so they can be de-selected (Calamares `netinstall` groups)
 - [ ] Installer: app and upgrade selection, grouped (see "Catalogue")
 
