@@ -14,10 +14,10 @@ PlasmoidItem {
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
 
     readonly property var graphs: [
-        { label: "NET", ids: ["network/all/download", "network/all/upload"], color: "#f5a442", color2: "#e87932", max: 0 },
-        { label: "DISK", ids: ["disk/all/usedPercent"], color: "#ffd27a", max: 100 },
-        { label: "CPU", ids: ["cpu/all/usage"], color: "#e87932", max: 100 },
-        { label: "GPU", ids: ["gpu/gpu1/usage", "gpu/gpu0/usage"], color: "#f5a442", max: 100 }
+        { label: "NET", ids: ["network/all/download", "network/all/upload"], color: "#6fd3c0", color2: "#5aa9f0", max: 0 },
+        { label: "DISK", ids: ["disk/all/usedPercent"], color: "#c4a0ff", max: 100 },
+        { label: "CPU", ids: ["cpu/all/usage"], color: "#ff8f6b", max: 100 },
+        { label: "GPU", ids: ["gpu/gpu1/usage", "gpu/gpu0/usage"], color: "#9be37a", max: 100 }
     ]
 
     component Graphs: RowLayout {
@@ -76,7 +76,7 @@ PlasmoidItem {
                             }
                             c.strokeStyle = col; c.lineWidth = 1.5; c.stroke()
                             c.lineTo(w, h); c.lineTo(w - (data.length - 1) * (w / (n - 1)), h); c.closePath()
-                            c.globalAlpha = alpha; c.fillStyle = col; c.fill(); c.globalAlpha = 1
+                            var gr = c.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, col); gr.addColorStop(1, "rgba(0,0,0,0)"); c.globalAlpha = Math.min(1, alpha * 2.4); c.fillStyle = gr; c.fill(); c.globalAlpha = 1
                         }
                         line(cell.hist, modelData.color, 0.18)
                         if (modelData.label === "NET") line(cell.hist2, modelData.color2, 0.12)

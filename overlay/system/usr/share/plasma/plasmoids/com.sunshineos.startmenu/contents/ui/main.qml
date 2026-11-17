@@ -24,7 +24,7 @@ PlasmoidItem {
 
     property bool open: false
     readonly property int taskbarH: 62      // the 48 px taskbar plus a gap; the top bar is above the menu anyway
-    readonly property int menuW: Math.max(560, Math.round(Screen.width * 0.30))
+    readonly property int menuW: Math.max(532, Math.round(Screen.width * 0.285))
     readonly property int menuH: Math.round(Screen.height * 0.60)
     preferredRepresentation: compactRepresentation
     fullRepresentation: Item { }

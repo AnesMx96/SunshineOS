@@ -1,8 +1,8 @@
 [Unit]
-Description=Check for updates every 6 hours
+Description=Check for updates every hour
 [Timer]
-OnStartupSec=10min
-OnUnitActiveSec=6h
+OnStartupSec=3min
+OnUnitActiveSec=1h
 RandomizedDelaySec=15min
 Persistent=true
 [Install]

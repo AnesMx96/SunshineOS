@@ -1,6 +1,6 @@
 #!/bin/bash
-# Sunshine top bar (like the Garuda Dr460nized bar, plus live graphs): global menu on the left, then line graphs for network, disk space,
-# CPU and GPU, the clock in the middle. Run inside a Plasma session; `sunshine-topbar remove` takes it away again.
+# Sunshine top bar (after Garuda Dr460nized, plus live graphs): window buttons + title + global menu on the left, the clock in the middle,
+# live graphs (network, disk, CPU, GPU) and the user switcher on the right. Run inside a Plasma session; `sunshine-topbar remove` takes it away.
 Q=$(command -v qdbus6 || command -v qdbus) || exit 1
 if [ "${1:-}" = remove ]; then
   "$Q" org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript 'for (var p of panels()) if (p.location=="top") p.remove();' >/dev/null; exit 0
@@ -8,10 +8,11 @@ fi
 "$Q" org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript '
 for (var q of panels()) if (q.location=="top") q.remove();
 var t=new Panel; t.location="top"; t.floating=false; t.lengthMode="fill"; t.height=Math.round(gridUnit*1.9); t.hiding="none";
+t.addWidget("com.sunshineos.windowbar");
 t.addWidget("org.kde.plasma.appmenu");
-t.addWidget("org.kde.plasma.panelspacer");
-t.addWidget("com.sunshineos.graphs");
 t.addWidget("org.kde.plasma.panelspacer");
 t.addWidget("org.kde.plasma.digitalclock");
 t.addWidget("org.kde.plasma.panelspacer");
+t.addWidget("com.sunshineos.graphs");
+t.addWidget("org.kde.plasma.userswitcher");
 ' >/dev/null

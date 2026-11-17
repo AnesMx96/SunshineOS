@@ -35,7 +35,7 @@ Q=$(command -v qdbus6 || command -v qdbus)
 SM=false; [ -d /usr/share/plasma/plasmoids/com.sunshineos.startmenu ] && SM=true
 # Windows 11 style taskbar: 48 px, full width, menu + app icons centred between two spacers, tray and clock on the right
 [ -n "$Q" ] && "$Q" org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript 'var L=["applications:sunshine-store.desktop","applications:org.kde.dolphin.desktop","applications:zen.desktop","applications:org.kde.konsole.desktop","applications:org.kde.kate.desktop","applications:sunshine-welcome.desktop"];
-var startmenu='"$SM"';
+var startmenu='"$SM"'; var updates=startmenu;
 var p=panels()[0];
 for (var id of p.widgetIds) p.widgetById(id).remove();
 p.height=48; p.floating=false; p.lengthMode="fill";
@@ -43,6 +43,7 @@ p.addWidget("org.kde.plasma.panelspacer");
 var k=p.addWidget(startmenu?"com.sunshineos.startmenu":"org.kde.plasma.kickoff"); k.globalShortcut="Meta"; k.currentConfigGroup=["General"]; k.writeConfig("icon","sunshine-menu"); k.writeConfig("favoritesDisplay",0); k.writeConfig("applicationsDisplay",0); k.writeConfig("favorites",L.concat(["applications:sunshine-toolbox.desktop","applications:systemsettings.desktop"]));
 var t=p.addWidget("org.kde.plasma.icontasks"); t.currentConfigGroup=["General"]; t.writeConfig("launchers",L);
 p.addWidget("org.kde.plasma.panelspacer");
+p.addWidget(updates?"com.sunshineos.updates":"org.kde.plasma.marginsseparator");
 p.addWidget("org.kde.plasma.systemtray");
 p.addWidget("org.kde.plasma.digitalclock");
 p.addWidget("org.kde.plasma.showdesktop");

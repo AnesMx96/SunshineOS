@@ -59,5 +59,6 @@ say "Apps you chose"
 /usr/local/bin/sunshine-apps first-update 2>&1 | tail -5 # LibreOffice, Zen ...: offered on the very first update (once)
 say "Health check"
 /usr/local/bin/sunshine-doctor --fix --quiet || true
+[ -n "${REAL_USER:-}" ] && { sudo -u "$REAL_USER" /usr/local/bin/sunshine-update-check seen; sudo -u "$REAL_USER" /usr/local/bin/sunshine-update-check --quiet; } >/dev/null 2>&1
 ok "All done"
 finish 0
