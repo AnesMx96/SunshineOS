@@ -26,7 +26,7 @@
   </metadata>
   <sodipodi:namedview
      id="namedview26"
-     bordercolor="#666666"
+     bordercolor="#576075"
      borderopacity="1"
      gridtolerance="10"
      guidetolerance="10"
@@ -42,7 +42,7 @@
      inkscape:window-y="0"
      inkscape:zoom="5.2693538"
      objecttolerance="10"
-     pagecolor="#c8c8c8"
+     pagecolor="#d1cabf"
      showgrid="true"
      inkscape:document-rotation="0"
      inkscape:pagecheckerboard="0"
@@ -50,7 +50,7 @@
      inkscape:snap-bbox="true"
      inkscape:bbox-nodes="true"
      inkscape:showpageshadow="0"
-     inkscape:deskcolor="#c8c8c8">
+     inkscape:deskcolor="#d1cabf">
     <inkscape:grid
        id="grid835"
        type="xygrid" />
@@ -59,45 +59,45 @@
      id="defs81">
     <style
        id="current-color-scheme"
-       type="text/css">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <style
        id="current-color-scheme-9"
-       type="text/css">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <style
        id="current-color-scheme-3"
        type="text/css">
       .ColorScheme-Text {
-        color:#1a202d;
+        color:#253457;
       }
       .ColorScheme-Background {
         color:#efe5d0;
       }
       .ColorScheme-Highlight {
-        color:#ff9654;
+        color:#fd8a48;
       }
       .ColorScheme-ViewText {
-        color:#1a202d;
+        color:#253457;
       }
       .ColorScheme-ViewBackground {
         color:#efe5d0;
       }
       .ColorScheme-ViewHover {
-        color:#ff9654;
+        color:#f6c1a2;
       }
       .ColorScheme-ViewFocus{
-        color:#ff9654;
+        color:#fd8a48;
       }
       .ColorScheme-ButtonText {
-        color:#1a202d;
+        color:#253457;
       }
       .ColorScheme-ButtonBackground {
         color:#efe5d0;
       }
       .ColorScheme-ButtonHover {
-        color:#ff9654;
+        color:#f6c1a2;
       }
       .ColorScheme-ButtonFocus{
-        color:#ff9654;
+        color:#fd8a48;
       }
       </style>
   </defs>
@@ -206,7 +206,7 @@
        transform="translate(-155.53572,-436.50504)">
       <path
          id="rect5795"
-         style="fill:none;fill-opacity:1;stroke:#ff9654;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;fill-opacity:1;stroke:#ff9151;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 234.53572,411.50504 v 2 h -1 v 3 l 2,2 v 3 c 0,0.554 0.446,1 1,1 0.554,0 1,-0.446 1,-1 v -3 l 2,-2 v -3 h -1 v -2 z"
          sodipodi:nodetypes="cccccssscccccc" />
       <g
@@ -267,7 +267,7 @@
        transform="translate(-160.03594,-406.50504)">
       <path
          id="path5778"
-         style="fill:none;fill-opacity:1;stroke:#ff9654;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;fill-opacity:1;stroke:#ff9151;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 235.53572,414.50504 v 1 h -1 v 2 l 1,1 v 1 c 0,0.554 -0.0538,1 0.50022,1 0.554,0 0.49978,-0.446 0.49978,-1 v -1 l 1,-1 v -2 h -1 v -1 z"
          sodipodi:nodetypes="cccccssscccccc" />
       <g
@@ -329,7 +329,7 @@
        transform="translate(-163.03594,-383.50504)">
       <path
          id="path9556"
-         style="fill:none;fill-opacity:1;stroke:#ff9654;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;fill-opacity:1;stroke:#ff9151;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 235.53572,414.50504 v 1 h -0.49978 v 1 h 0.49978 v 1 c 0,0.554 -0.0538,1 0.50022,1 0.554,0 0.49978,-0.446 0.49978,-1 v -1 h 0.50022 v -1 h -0.50022 v -1 z"
          sodipodi:nodetypes="cccccssscccccc" />
       <g

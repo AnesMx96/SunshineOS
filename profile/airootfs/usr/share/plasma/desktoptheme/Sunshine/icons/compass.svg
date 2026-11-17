@@ -14,8 +14,8 @@
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
      id="namedview35"
-     pagecolor="#c8c8c8"
-     bordercolor="#999999"
+     pagecolor="#d1cabf"
+     bordercolor="#a99d89"
      borderopacity="1"
      inkscape:pageshadow="0"
      inkscape:pageopacity="0"
@@ -43,28 +43,28 @@
     <linearGradient
        id="linearGradient860">
       <stop
-         stop-color="#7fae6a"
+         stop-color="#8ab87a"
          offset="0"
          id="stop2" />
       <stop
-         stop-color="#ff9654"
+         stop-color="#d2962d"
          offset="1"
          id="stop4" />
     </linearGradient>
     <linearGradient
        id="linearGradient11">
       <stop
-         stop-color="#7fae6a"
+         stop-color="#8ab87a"
          offset="0"
          id="stop7" />
       <stop
-         stop-color="#ff9654"
+         stop-color="#d2962d"
          offset="1"
          id="stop9" />
     </linearGradient>
     <style
        id="current-color-scheme"
-       type="text/css">.ColorScheme-Text { color:#565656; } .ColorScheme-Highlight { color:#ff9654; }</style>
+       type="text/css">.ColorScheme-Text { color:#495163; } .ColorScheme-Highlight { color:#f5955e; }</style>
     <linearGradient
        id="linearGradient848"
        x2="22"

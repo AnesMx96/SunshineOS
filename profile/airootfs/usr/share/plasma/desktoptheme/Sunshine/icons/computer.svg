@@ -55,8 +55,8 @@
      gridtolerance="10"
      objecttolerance="10"
      borderopacity="1"
-     bordercolor="#666666"
-     pagecolor="#c8c8c8"
+     bordercolor="#576075"
+     pagecolor="#d1cabf"
      inkscape:pagecheckerboard="0">
     <inkscape:grid
        id="grid879"
@@ -66,7 +66,7 @@
      id="defs6">
     <style
        type="text/css"
-       id="current-color-scheme">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       id="current-color-scheme">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <filter
        style="color-interpolation-filters:sRGB"
        height="1.072"
@@ -83,7 +83,7 @@
        id="style883" />
     <style
        id="current-color-scheme-5"
-       type="text/css">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <filter
        id="a-6"
        x="-0.035999998"
@@ -115,7 +115,7 @@
       <stop
          id="stop864"
          offset="0"
-         stop-color="#323232" />
+         stop-color="#233051" />
       <stop
          id="stop866"
          offset="1" />
@@ -131,7 +131,7 @@
       <stop
          id="stop869"
          offset="0"
-         stop-color="#323232" />
+         stop-color="#233051" />
       <stop
          id="stop871"
          offset="1" />
@@ -147,19 +147,19 @@
       <stop
          id="stop874"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#ff9151" />
       <stop
          id="stop876"
          offset=".2964"
-         stop-color="#ff9654" />
+         stop-color="#ff8d4c" />
       <stop
          id="stop878"
          offset=".72739"
-         stop-color="#ff9654" />
+         stop-color="#f4935b" />
       <stop
          id="stop880"
          offset="1"
-         stop-color="#5a7dd2" />
+         stop-color="#e79464" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -172,11 +172,11 @@
       <stop
          id="stop883"
          offset="0"
-         stop-color="#3c3c3c" />
+         stop-color="#293a60" />
       <stop
          id="stop885"
          offset="1"
-         stop-color="#0e1422" />
+         stop-color="#151e32" />
     </linearGradient>
   </defs>
   <g
@@ -188,7 +188,7 @@
        transform="scale(-1,1)"
        id="rect23"
        y="37.983051"
-       style="color:#bebebe;opacity:0;stroke-width:2" />
+       style="color:#c8c1b4;opacity:0;stroke-width:2" />
     <g
        id="g1030"
        transform="translate(26,-1.0169487)">
@@ -234,7 +234,7 @@
        x="-24"
        transform="scale(-1,1)"
        id="rect16"
-       style="color:#bebebe;fill:none" />
+       style="color:#c8c1b4;fill:none" />
     <rect
        height="16"
        width="16"
@@ -242,7 +242,7 @@
        x="-24"
        transform="scale(-1,1)"
        id="rect18"
-       style="color:#bebebe;opacity:0;stroke-width:3" />
+       style="color:#c8c1b4;opacity:0;stroke-width:3" />
     <g
        id="g1067"
        transform="translate(19)">
@@ -287,7 +287,7 @@
        transform="scale(-1,1)"
        id="rect893"
        y="37.983051"
-       style="color:#bebebe;opacity:0;stroke-width:2" />
+       style="color:#c8c1b4;opacity:0;stroke-width:2" />
     <g
        id="g1113"
        transform="translate(-27.5,-0.0169487)">
@@ -315,7 +315,7 @@
        x="-72"
        transform="scale(-1,1)"
        id="rect922"
-       style="color:#bebebe;fill:none" />
+       style="color:#c8c1b4;fill:none" />
     <rect
        height="16"
        width="16"
@@ -323,7 +323,7 @@
        x="-72"
        transform="scale(-1,1)"
        id="rect924"
-       style="color:#bebebe;opacity:0;stroke-width:3" />
+       style="color:#c8c1b4;opacity:0;stroke-width:3" />
     <g
        id="g1131"
        transform="translate(-18.5,0.99152374)">

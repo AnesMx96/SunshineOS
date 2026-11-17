@@ -2,7 +2,7 @@
 ColorScheme=SunshineDark
 
 [KDE]
-widgetStyle=Darkly
+widgetStyle=kvantum
 LookAndFeelPackage=com.sunshineos.sunshine
 
 [Icons]

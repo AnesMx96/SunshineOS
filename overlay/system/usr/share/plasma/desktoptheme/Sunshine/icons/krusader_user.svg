@@ -12,19 +12,19 @@
    xmlns:svg="http://www.w3.org/2000/svg">
   <style
      id="current-color-scheme"
-     type="text/css">.ColorScheme-Text { color:#d6dbf1; }
+     type="text/css">.ColorScheme-Text { color:#edc3ab; }
 </style>
   <defs
      id="defs363" />
   <sodipodi:namedview
      id="namedview361"
-     pagecolor="#c8c8c8"
+     pagecolor="#d1cabf"
      bordercolor="#000000"
      borderopacity="1"
      inkscape:showpageshadow="true"
      inkscape:pageopacity="0"
      inkscape:pagecheckerboard="false"
-     inkscape:deskcolor="#cccccc"
+     inkscape:deskcolor="#d4cec4"
      showgrid="true"
      inkscape:zoom="2.6074563"
      inkscape:cx="-109.30193"
@@ -48,7 +48,7 @@
   <g
      id="krusader_user">
     <rect
-       style="opacity:0.00100002;fill:#eceff4;fill-opacity:1"
+       style="opacity:0.00100002;fill:#e0c7b8;fill-opacity:1"
        width="32"
        height="32"
        x="0"
@@ -103,7 +103,7 @@
   <g
      id="22-22-krusader_user">
     <rect
-       style="opacity:0.00100002;fill:#eceff4;fill-opacity:1"
+       style="opacity:0.00100002;fill:#e0c7b8;fill-opacity:1"
        width="22"
        height="22"
        x="32"

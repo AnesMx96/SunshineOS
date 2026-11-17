@@ -119,10 +119,3 @@ IntensityEffect=0
 [KDE]
 contrast=4
 
-[WM]
-activeBackground=14,20,34
-activeBlend=255,150,84
-activeForeground=239,229,208
-inactiveBackground=22,25,35
-inactiveBlend=154,146,127
-inactiveForeground=154,146,127

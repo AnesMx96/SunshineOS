@@ -241,6 +241,7 @@ cmake
 ripgrep
 breeze
 darkly-bin
+kvantum
 gnome-keyring
 polkit-kde-agent
 systemsettings

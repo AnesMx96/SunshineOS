@@ -45,8 +45,8 @@
      gridtolerance="10"
      objecttolerance="10"
      borderopacity="1"
-     bordercolor="#666666"
-     pagecolor="#c8c8c8"
+     bordercolor="#576075"
+     pagecolor="#d1cabf"
      inkscape:snap-bbox="true"
      inkscape:bbox-nodes="true"
      inkscape:snap-bbox-edge-midpoints="true"
@@ -60,7 +60,7 @@
      id="defs3">
     <style
        type="text/css"
-       id="current-color-scheme">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       id="current-color-scheme">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
   </defs>
   <g
      id="media-record"
@@ -77,9 +77,9 @@
        class="ColorScheme-Highlight"
        d="m 11,1035.4 c -3.311,0 -6,2.6888 -6,6 0,3.311 2.689,6 6,6 3.311,0 6,-2.689 6,-6 0,-3.3112 -2.689,-6 -6,-6 z"
        enable-background="new"
-       fill="#e06c75"
+       fill="#de7b83"
        id="path7"
-       style="fill:#e06c75;fill-opacity:1" />
+       style="fill:#d65b65;fill-opacity:1" />
   </g>
   <g
      id="media-playback-stop"
@@ -96,7 +96,7 @@
        class="ColorScheme-Text"
        d="m 5,1035.4 v 12 h 12 v -12 z"
        enable-background="new"
-       fill="#dedede"
+       fill="#efe5d0"
        id="path12"
        style="fill:#efe5d0;fill-opacity:1" />
   </g>
@@ -115,7 +115,7 @@
        class="ColorScheme-Text"
        d="m 19,1037.4 v 8 h -2 v -8 z m -2,4 -7,4 v -8 z m -7,0 -7,4 v -8 z"
        enable-background="new"
-       fill="#dedede"
+       fill="#efe5d0"
        id="path17"
        style="fill:#efe5d0;fill-opacity:1" />
   </g>
@@ -134,7 +134,7 @@
        class="ColorScheme-Text"
        d="m 19,1037.4 v 8 h -2 v -8 z m -2,4 -7,4 v -8 z m -7,0 -7,4 v -8 z"
        enable-background="new"
-       fill="#dedede"
+       fill="#efe5d0"
        id="path22"
        style="fill:#efe5d0;fill-opacity:1" />
   </g>
@@ -153,7 +153,7 @@
        class="ColorScheme-Text"
        d="m 11,1037.4 7,4 -7,4 z m 0,4 -7,4 v -8 z"
        enable-background="new"
-       fill="#dedede"
+       fill="#efe5d0"
        id="path27"
        style="fill:#efe5d0;fill-opacity:1" />
   </g>
@@ -172,7 +172,7 @@
        class="ColorScheme-Text"
        d="m 11,1037.4 7,4 -7,4 z m 0,4 -7,4 v -8 z"
        enable-background="new"
-       fill="#dedede"
+       fill="#efe5d0"
        id="path32"
        style="fill:#efe5d0;fill-opacity:1" />
   </g>
@@ -190,9 +190,9 @@
     <path
        class="ColorScheme-Text"
        d="m 11,1036.4 -5,5 v 1 h 10 v -1 z m -5,8 v 2 h 10 v -2 z"
-       color="#dedede"
+       color="#efe5d0"
        display="block"
-       fill="#dedede"
+       fill="#efe5d0"
        id="path37"
        style="fill:#efe5d0;fill-opacity:1" />
   </g>
@@ -211,7 +211,7 @@
        class="ColorScheme-Text"
        d="m 5,1035.4 v 12 h 4 v -12 z m 8,0 v 12 h 4 v -12 z"
        enable-background="new"
-       fill="#dedede"
+       fill="#efe5d0"
        id="path42"
        style="fill:#efe5d0;fill-opacity:1" />
   </g>
@@ -230,7 +230,7 @@
        class="ColorScheme-Text"
        d="m 6,1035.4 v 12 l 11,-6 -9.8992,-5.3996 z"
        enable-background="new"
-       fill="#dedede"
+       fill="#efe5d0"
        id="path47"
        style="fill:#efe5d0;fill-opacity:1" />
   </g>
@@ -238,12 +238,12 @@
      id="media-playback-paused"
      transform="translate(-25,-28)">
     <rect
-       style="color:#dedede;stroke-width:1.5"
+       style="color:#efe5d0;stroke-width:1.5"
        x="0.99975014"
        y="27.99975"
        width="22.0005"
        height="22.0005"
-       fill="#e06c75"
+       fill="#cd3542"
        fill-opacity="0.00392163"
        opacity="0.01"
        id="rect50" />
@@ -274,12 +274,12 @@
      id="media-playback-playing"
      transform="translate(-25,-28)">
     <rect
-       style="color:#dedede;stroke-width:1.5"
+       style="color:#efe5d0;stroke-width:1.5"
        x="24.99975"
        y="27.99975"
        width="22.0005"
        height="22.0005"
-       fill="#e06c75"
+       fill="#cd3542"
        fill-opacity="0.00392163"
        opacity="0.01"
        id="rect55" />
@@ -299,12 +299,12 @@
      id="media-playback-stopped"
      transform="translate(-25,-28)">
     <rect
-       style="color:#dedede;stroke-width:1.5"
+       style="color:#efe5d0;stroke-width:1.5"
        x="48.999752"
        y="27.99975"
        width="22.0005"
        height="22.0005"
-       fill="#e06c75"
+       fill="#cd3542"
        fill-opacity="0.00392163"
        opacity="0.01"
        id="rect60" />

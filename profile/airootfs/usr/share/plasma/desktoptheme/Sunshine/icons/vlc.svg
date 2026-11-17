@@ -26,8 +26,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#c8c8c8"
-     bordercolor="#666666"
+     pagecolor="#d1cabf"
+     bordercolor="#576075"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -48,7 +48,7 @@
      inkscape:document-rotation="0"
      inkscape:showpageshadow="2"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1">
+     inkscape:deskcolor="#d8d3ca">
     <inkscape:grid
        id="grid1"
        units="px"
@@ -56,9 +56,9 @@
        originy="0"
        spacingx="1"
        spacingy="1"
-       empcolor="#ff9654"
+       empcolor="#ff6005"
        empopacity="0.30196078"
-       color="#ff9654"
+       color="#ff6005"
        opacity="0.14902"
        empspacing="5"
        enabled="true"
@@ -69,7 +69,7 @@
     <style
        id="current-color-scheme"
        type="text/css">.ColorScheme-Text {
-        color:#363636;
+        color:#253457;
       }</style>
   </defs>
   <g

@@ -12,13 +12,13 @@
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
      id="namedview16"
-     pagecolor="#c8c8c8"
+     pagecolor="#d1cabf"
      bordercolor="#000000"
      borderopacity="1"
      inkscape:showpageshadow="2"
      inkscape:pageopacity="0"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#cccccc"
+     inkscape:deskcolor="#d4cec4"
      showgrid="true"
      inkscape:zoom="5.6568545"
      inkscape:cx="-43.2219"
@@ -77,14 +77,14 @@
        hide_knots="false" />
     <style
        id="current-color-scheme"
-       type="text/css">.ColorScheme-Background { color:#181818; }
-.ColorScheme-ButtonBackground { color:#343434; }
-.ColorScheme-Highlight { color:#ff9654; }
-.ColorScheme-Text { color:#eceff4; }
-.ColorScheme-ViewBackground { color:#242424; }
-.ColorScheme-NegativeText { color:#e06c75; }
-.ColorScheme-PositiveText { color:#4caf50; }
-.ColorScheme-NeutralText { color:#ff9654; }
+       type="text/css">.ColorScheme-Background { color:#111829; }
+.ColorScheme-ButtonBackground { color:#243254; }
+.ColorScheme-Highlight { color:#ff9456; }
+.ColorScheme-Text { color:#e0c7b8; }
+.ColorScheme-ViewBackground { color:#19233b; }
+.ColorScheme-NegativeText { color:#d55560; }
+.ColorScheme-PositiveText { color:#6ba358; }
+.ColorScheme-NeutralText { color:#d2962d; }
 </style>
   </defs>
   <g

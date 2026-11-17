@@ -51,8 +51,8 @@
      gridtolerance="10"
      objecttolerance="10"
      borderopacity="1"
-     bordercolor="#666666"
-     pagecolor="#c8c8c8"
+     bordercolor="#576075"
+     pagecolor="#d1cabf"
      inkscape:pagecheckerboard="0">
     <inkscape:grid
        id="grid819"
@@ -62,7 +62,7 @@
      id="defs6">
     <style
        type="text/css"
-       id="current-color-scheme">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       id="current-color-scheme">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <filter
        color-interpolation-filters="sRGB"
        height="1.072"
@@ -82,7 +82,7 @@
        id="style822" />
     <style
        id="current-color-scheme-5"
-       type="text/css">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <filter
        id="a-6"
        x="-.036"
@@ -399,11 +399,11 @@
       <stop
          id="stop977"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#fba572" />
       <stop
          id="stop979"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#fb5c00" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -416,11 +416,11 @@
       <stop
          id="stop982"
          offset="0"
-         stop-color="#a578e1" />
+         stop-color="#e2bb77" />
       <stop
          id="stop984"
          offset="1"
-         stop-color="#5046a0" />
+         stop-color="#c47140" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -433,11 +433,11 @@
       <stop
          id="stop987"
          offset="0"
-         stop-color="#eb82aa" />
+         stop-color="#e28b92" />
       <stop
          id="stop989"
          offset="1"
-         stop-color="#e06c75" />
+         stop-color="#cd3743" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -450,44 +450,44 @@
       <stop
          id="stop992"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#d9a449" />
       <stop
          id="stop994"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#d49a35" />
     </linearGradient>
     <linearGradient
        id="linearGradient1124">
       <stop
          id="stop1727"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#e26319" />
       <stop
          id="stop1729"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#ab3f00" />
     </linearGradient>
     <linearGradient
        id="linearGradient1116">
       <stop
          id="stop1732"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#ff843d" />
       <stop
          id="stop1734"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#ff5e01" />
     </linearGradient>
     <linearGradient
        id="linearGradient1108">
       <stop
          id="stop1737"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#ffa46f" />
       <stop
          id="stop1739"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#fd7120" />
     </linearGradient>
     <linearGradient
        xlink:href="#linearGradient1108"
@@ -536,11 +536,11 @@
       <stop
          id="stop1850"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#ff843d" />
       <stop
          id="stop1852"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#ffa46f" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -552,11 +552,11 @@
       <stop
          id="stop1855"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#ff8e4d" />
       <stop
          id="stop1857"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#ff8138" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -568,11 +568,11 @@
       <stop
          id="stop1860"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#ff7b2f" />
       <stop
          id="stop1862"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#ff6004" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -584,11 +584,11 @@
       <stop
          id="stop1865"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#ff6811" />
       <stop
          id="stop1867"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#f05800" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -600,11 +600,11 @@
       <stop
          id="stop1870"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#ea5600" />
       <stop
          id="stop1872"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#c84900" />
     </linearGradient>
     <filter
        color-interpolation-filters="sRGB"
@@ -628,7 +628,7 @@
        type="text/css" />
     <style
        type="text/css"
-       id="current-color-scheme-56">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       id="current-color-scheme-56">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <filter
        color-interpolation-filters="sRGB"
        height="1.072"
@@ -648,7 +648,7 @@
        id="style822-2" />
     <style
        id="current-color-scheme-3"
-       type="text/css">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <filter
        id="a-5"
        x="-.036"
@@ -671,7 +671,7 @@
        type="text/css" />
     <style
        type="text/css"
-       id="current-color-scheme-5-7">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       id="current-color-scheme-5-7">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <filter
        color-interpolation-filters="sRGB"
        height="1.072"

@@ -2,7 +2,7 @@
 ColorScheme=SunshineDark
 
 [kdeglobals][KDE]
-widgetStyle=Darkly
+widgetStyle=kvantum
 
 [kdeglobals][Icons]
 Theme=breeze-dark

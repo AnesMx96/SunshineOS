@@ -27,8 +27,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#c8c8c8"
-     bordercolor="#666666"
+     pagecolor="#d1cabf"
+     bordercolor="#576075"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -50,7 +50,7 @@
      inkscape:document-rotation="0"
      inkscape:showpageshadow="0"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1">
+     inkscape:deskcolor="#d8d3ca">
     <inkscape:grid
        type="xygrid"
        id="grid3899" />
@@ -74,11 +74,11 @@
        gradientTransform="translate(-30.7663,35.718065)"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ff9654"
+         stop-color="#ffbe99"
          offset="0"
          id="stop3186" />
       <stop
-         stop-color="#ff9654"
+         stop-color="#ffbe99"
          offset="1"
          id="stop3188" />
     </linearGradient>
@@ -91,11 +91,11 @@
        gradientTransform="matrix(0.91667,0,0,0.91667,-28.0358,30.389065)"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ff9654"
+         stop-color="#f6aa7d"
          offset="0"
          id="stop3191" />
       <stop
-         stop-color="#396ebb"
+         stop-color="#da7439"
          offset="1"
          id="stop3193" />
     </linearGradient>
@@ -110,11 +110,11 @@
     <linearGradient
        id="linearGradient22227">
       <stop
-         stop-color="#ff9654"
+         stop-color="#ffbe99"
          offset="0"
          id="stop3181" />
       <stop
-         stop-color="#fcffff"
+         stop-color="#fefefd"
          offset="1"
          id="stop3183" />
     </linearGradient>

@@ -27,8 +27,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#c8c8c8"
-     bordercolor="#666666"
+     pagecolor="#d1cabf"
+     bordercolor="#576075"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -54,7 +54,7 @@
      id="defs81">
     <style
        id="current-color-scheme"
-       type="text/css">.ColorScheme-Text{color:#D3DAE3}</style>
+       type="text/css">.ColorScheme-Text{color:#dec7ba}</style>
   </defs>
   <g
      id="quassel"
@@ -110,7 +110,7 @@
        d="M11 3a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 1a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm2 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"
        fill="currentColor"
        fill-opacity="1"
-       color="#ff9654"
-       style="fill:#ff9654;fill-opacity:1" />
+       color="#fa8947"
+       style="fill:#ff9151;fill-opacity:1" />
   </g>
 </svg>

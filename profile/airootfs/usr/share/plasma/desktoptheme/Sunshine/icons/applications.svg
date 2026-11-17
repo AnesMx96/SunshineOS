@@ -51,8 +51,8 @@
      gridtolerance="10"
      objecttolerance="10"
      borderopacity="1"
-     bordercolor="#666666"
-     pagecolor="#c8c8c8"
+     bordercolor="#576075"
+     pagecolor="#d1cabf"
      inkscape:pagecheckerboard="0">
     <inkscape:grid
        id="grid848"
@@ -62,7 +62,7 @@
      id="defs6">
     <style
        type="text/css"
-       id="current-color-scheme">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       id="current-color-scheme">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <filter
        color-interpolation-filters="sRGB"
        height="1.072"
@@ -79,7 +79,7 @@
        id="style834" />
     <style
        id="current-color-scheme-5"
-       type="text/css">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <filter
        id="a-6"
        x="-.036"
@@ -1257,11 +1257,11 @@
       <stop
          id="stop1434"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#8a3b0d" />
       <stop
          id="stop1436"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#c75411" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -1274,11 +1274,11 @@
       <stop
          id="stop1439"
          offset="0"
-         stop-color="#4164a2" />
+         stop-color="#c96e39" />
       <stop
          id="stop1441"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#bc5316" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -1291,11 +1291,11 @@
       <stop
          id="stop1444"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#e86113" />
       <stop
          id="stop1446"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#ff8742" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -1308,11 +1308,11 @@
       <stop
          id="stop1449"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#e25f13" />
       <stop
          id="stop1451"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#fb823c" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -1325,11 +1325,11 @@
       <stop
          id="stop1454"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#c15212" />
       <stop
          id="stop1456"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#ee7c3a" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
@@ -1342,11 +1342,11 @@
       <stop
          id="stop1459"
          offset="0"
-         stop-color="#ff9654" />
+         stop-color="#944111" />
       <stop
          id="stop1461"
          offset="1"
-         stop-color="#ff9654" />
+         stop-color="#e8671c" />
     </linearGradient>
     <clipPath
        id="clipPath13429-7">

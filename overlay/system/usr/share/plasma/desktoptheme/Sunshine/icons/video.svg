@@ -13,8 +13,8 @@
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:dc="http://purl.org/dc/elements/1.1/">
   <sodipodi:namedview
-     pagecolor="#c8c8c8"
-     bordercolor="#666666"
+     pagecolor="#d1cabf"
+     bordercolor="#576075"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -44,48 +44,48 @@
     <style
        id="current-color-scheme"
        type="text/css">.ColorScheme-Text {
-        color:#7B7C7E;
+        color:#6a758f;
       }
       .ColorScheme-Background{
         color:#efe5d0;
       }
       .ColorScheme-Highlight{
-        color:#ff9654;
+        color:#fa8947;
       }
       .ColorScheme-ViewText {
-        color:#7B7C7E;
+        color:#6a758f;
       }
       .ColorScheme-ViewBackground{
         color:#efe5d0;
       }
       .ColorScheme-ViewHover {
-        color:#ff9654;
+        color:#fa8947;
       }
       .ColorScheme-ViewFocus{
-        color:#ff9654;
+        color:#ff843d;
       }
       .ColorScheme-ButtonText {
-        color:#7B7C7E;
+        color:#6a758f;
       }
       .ColorScheme-ButtonBackground{
         color:#efe5d0;
       }
       .ColorScheme-ButtonHover {
-        color:#ff9654;
+        color:#fa8947;
       }
       .ColorScheme-ButtonFocus{
-        color:#ff9654;
+        color:#ff843d;
       }</style>
     <style
        type="text/css"
-       id="style3">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       id="style3">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <style
        type="text/css"
        id="style5" />
     <style
        type="text/css"
        id="style7">.ColorScheme-Text {
-            color:#0e1422;
+            color:#1b253e;
         }
         .ColorScheme-Background {
             color:#efe5d0;
@@ -94,16 +94,16 @@
             color:#efe5d0;
         }
         .ColorScheme-ButtonFocus {
-            color:#ff9654;
+            color:#fd8a48;
         }
         .ColorScheme-PositiveText {
-            color:#7fae6a;
+            color:#5b8a4b;
         }
         .ColorScheme-NeutralText {
-            color:#ff9654;
+            color:#cb902b;
         }
         .ColorScheme-NegativeText {
-            color:#e06c75;
+            color:#d24c57;
         }</style>
   </defs>
   <metadata

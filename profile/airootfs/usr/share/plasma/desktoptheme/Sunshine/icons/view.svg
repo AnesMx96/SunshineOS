@@ -27,8 +27,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#c8c8c8"
-     bordercolor="#666666"
+     pagecolor="#d1cabf"
+     bordercolor="#576075"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -62,7 +62,7 @@
      id="defs6">
     <style
        id="current-color-scheme"
-       type="text/css">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <filter
        id="a"
        x="-.036"
@@ -79,7 +79,7 @@
        type="text/css" />
     <style
        type="text/css"
-       id="current-color-scheme-5">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       id="current-color-scheme-5">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
     <filter
        color-interpolation-filters="sRGB"
        height="1.072"
@@ -97,11 +97,11 @@
     <linearGradient
        id="linearGradient1107">
       <stop
-         stop-color="#505050"
+         stop-color="#444b5c"
          offset="0"
          id="stop833" />
       <stop
-         stop-color="#0a0a0a"
+         stop-color="#080b13"
          offset="1"
          id="stop835" />
     </linearGradient>
@@ -117,11 +117,11 @@
        gradientTransform="matrix(3.7822477,0,0,3.7822477,210.68399,-23.662411)"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ff9654"
+         stop-color="#ff9151"
          offset="0"
          id="stop840" />
       <stop
-         stop-color="#ff9654"
+         stop-color="#ff9151"
          offset="1"
          id="stop842" />
     </linearGradient>
@@ -134,11 +134,11 @@
        gradientTransform="matrix(2.2677698,0,0,2.0472441,143.18742,36.820754)"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#ff9654"
+         stop-color="#f15800"
          offset="0"
          id="stop845" />
       <stop
-         stop-color="#ff9654"
+         stop-color="#9b400a"
          offset="1"
          id="stop847" />
     </linearGradient>
@@ -155,7 +155,7 @@
          offset="0"
          id="stop850" />
       <stop
-         stop-color="#d2d2d2"
+         stop-color="#d9d4cb"
          offset="1"
          id="stop852" />
     </linearGradient>
@@ -261,31 +261,31 @@
     </g>
   </g>
   <circle
-     style="fill:#5e4aa6;stroke-width:1.00000715"
+     style="fill:#c67749;stroke-width:1.00000715"
      id="circle868"
      r="0"
      cy="-1268.7548"
      cx="-1463.114" />
   <circle
-     style="fill:#5e4aa6;stroke-width:1.00000715"
+     style="fill:#c67749;stroke-width:1.00000715"
      id="circle870"
      r="0"
      cy="-1260.7041"
      cx="-1394.1741" />
   <circle
-     style="fill:#5e4aa6;stroke-width:1.00000715"
+     style="fill:#c67749;stroke-width:1.00000715"
      id="circle872"
      r="0"
      cy="-1286.4811"
      cx="-1371.1562" />
   <circle
-     style="fill:#5e4aa6;stroke-width:1.00000715"
+     style="fill:#c67749;stroke-width:1.00000715"
      id="circle874"
      r="0"
      cy="-1259.7971"
      cx="-1381.8147" />
   <circle
-     style="fill:#5e4aa6;stroke-width:1.00000715"
+     style="fill:#c67749;stroke-width:1.00000715"
      id="circle878"
      r="0"
      cy="-1353.7654"
@@ -295,9 +295,9 @@
      r="0"
      cy="-88.275215"
      cx="-170.01389"
-     style="fill:#5e4aa6;fill-rule:evenodd;stroke-width:1.00000715" />
+     style="fill:#c67749;fill-rule:evenodd;stroke-width:1.00000715" />
   <circle
-     style="fill:#5e4aa6;stroke-width:1.00000715"
+     style="fill:#c67749;stroke-width:1.00000715"
      id="circle882"
      r="0"
      cy="-1289.701"

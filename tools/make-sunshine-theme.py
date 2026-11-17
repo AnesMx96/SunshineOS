@@ -1,129 +1,130 @@
 #!/usr/bin/env python3
-"""Generates the artwork of the "Sunshine theme" Plasma desktop theme: dialog/menu, panel (taskbar), tooltip and widget backgrounds as Plasma SVG
-frames (translucent variant 85% opaque, opaque variant 100%), plus metadata.json. The icons and the `colors` file are kept.
-usage: python3 tools/make-sunshine-theme.py            (writes overlay/system/usr/share/plasma/desktoptheme/Sunshine/ and mirrors it into profile/airootfs)"""
-import json, pathlib, shutil, sys
+"""Builds the "Sunshine theme" from Win11OS-kde (https://github.com/yeyushengfan258/Win11OS-kde, GPL-3.0, the dark variant; KDE Store item 2106375):
+its Plasma desktop theme, Aurorae window frame and Kvantum widget style, re-coloured into the Sunshine palette (blue -> orange accent, white -> cream, grey ->
+indigo ramp) with Sunshine's own rules on top: menus, popups and the taskbar are 15% transparent (85% opaque). The SDDM parts of Win11OS-kde are NOT used.
+Output (and a mirror in profile/airootfs):
+  usr/share/plasma/desktoptheme/Sunshine   usr/share/aurorae/themes/Sunshine   usr/share/Kvantum/Sunshine
+usage: python3 tools/make-sunshine-theme.py [path to a Win11OS-kde checkout]     (default: cache/win11os-kde, cloned at the pinned commit)"""
+import colorsys, gzip, json, os, pathlib, re, shutil, subprocess, sys
 root = pathlib.Path(__file__).resolve().parent.parent
-OV = root / "overlay/system/usr/share/plasma/desktoptheme"       # the source: tools/import-end4.sh copies overlay/system into the image
-PR = root / "profile/airootfs/usr/share/plasma/desktoptheme"     # mirrored here so both trees stay identical
-OUT = OV / "Sunshine"
-OLD = OV / "SunshineWin11"                                       # first run only: the colours and panel icons of the previous theme
+PIN = "9f021c3"      # Win11OS-kde commit this was built from
+SRC = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else root / "cache/win11os-kde"
+OV = root / "overlay/system/usr/share"; PR = root / "profile/airootfs/usr/share"
+CREAM, ACCENT, RED, GREEN, YELLOW = "#efe5d0", "#ff9654", "#e06c75", "#7fae6a", "#e5c07b"
+KEEP = {"#ff00ff", "#00ff00", "#ff0000", "#0000ff", "#00ffff", "#ffff00", "#000000", "#ffffff00"}   # hidden helper shapes and shadows in Plasma SVGs
+TRANSLUCENCY = 0.85          # 15% transparent: the limit set for the application menu is 20%
 
-# The Sunshine palette (same as the Plasma colour scheme, GRUB, terminals, prompt)
-BG_DIALOG = "#141b2e"      # menus, popups, flyouts
-BG_PANEL = "#0e1422"       # taskbar
-BG_TOOLTIP = "#1a2236"
-TEXT = "#efe5d0"
-ACCENT = "#ff9654"
-BORDER = TEXT              # drawn at low opacity
-TRANSLUCENCY = 0.85        # 15% transparent: the maximum allowed for the application menu is 20%
+def hexrgb(h):
+    h = h.lstrip("#")
+    if len(h) == 3: h = "".join(c * 2 for c in h)
+    return tuple(int(h[i:i + 2], 16) / 255 for i in (0, 2, 4))
 
-def frame(r, fill, fill_op, border_op, border_sides, margin, name):
-    """A 3x3 Plasma SVG frame. r = corner radius (0 = square), border_sides subset of {top,bottom,left,right}, margin = content margin in px."""
-    c = max(r, 3); n = 3 * c
-    def px(x, y, w, h): return f'x="{x}" y="{y}" width="{w}" height="{h}"'
-    sw = 1
-    def edge(id_, x, y, w, h, side):
-        line = ""
-        if side in border_sides:
-            lx = {"top": (x, y, w, sw), "bottom": (x, y + h - sw, w, sw), "left": (x, y, sw, h), "right": (x + w - sw, y, sw, h)}[side]
-            line = f'<rect {px(*lx)} fill="{BORDER}" fill-opacity="{border_op}"/>'
-        return f'<g id="{id_}"><rect {px(x, y, w, h)} fill="{fill}" fill-opacity="{fill_op}"/>{line}</g>'
-    def corner(id_, x, y, quad, sides):
-        if r == 0:
-            parts = f'<rect {px(x, y, c, c)} fill="{fill}" fill-opacity="{fill_op}"/>'
-            for s in sides:
-                if s in border_sides:
-                    lx = {"top": (x, y, c, sw), "bottom": (x, y + c - sw, c, sw), "left": (x, y, sw, c), "right": (x + c - sw, y, sw, c)}[s]
-                    parts += f'<rect {px(*lx)} fill="{BORDER}" fill-opacity="{border_op}"/>'
-            return f'<g id="{id_}">{parts}</g>'
-        R = c
-        shapes = {
-            "tl": (f"M{x},{y+R} A{R},{R} 0 0 1 {x+R},{y} L{x+R},{y+R} Z", f"M{x+.5},{y+R} A{R-.5},{R-.5} 0 0 1 {x+R},{y+.5}"),
-            "tr": (f"M{x},{y} A{R},{R} 0 0 1 {x+R},{y+R} L{x},{y+R} Z", f"M{x},{y+.5} A{R-.5},{R-.5} 0 0 1 {x+R-.5},{y+R}"),
-            "bl": (f"M{x},{y} L{x+R},{y} L{x+R},{y+R} A{R},{R} 0 0 1 {x},{y} Z".replace(f"L{x+R},{y+R} A", f"L{x+R},{y+R} L{x+R},{y+R} A"), f"M{x+.5},{y} A{R-.5},{R-.5} 0 0 0 {x+R},{y+R-.5}"),
-            "br": (f"M{x},{y} L{x+R},{y} A{R},{R} 0 0 1 {x},{y+R} Z", f"M{x+R-.5},{y} A{R-.5},{R-.5} 0 0 1 {x},{y+R-.5}"),
-        }
-        # simple, explicit quarter shapes (centre of the arc is the inner corner of the cell)
-        cx, cy = {"tl": (x + R, y + R), "tr": (x, y + R), "bl": (x + R, y), "br": (x, y)}[quad]
-        import math
-        def arc_fill():
-            if quad == "tl": return f"M{x},{y+R} A{R},{R} 0 0 1 {x+R},{y} L{x+R},{y+R} Z"
-            if quad == "tr": return f"M{x},{y} A{R},{R} 0 0 1 {x+R},{y+R} L{x},{y+R} Z"
-            if quad == "bl": return f"M{x},{y} L{x+R},{y} L{x+R},{y+R} A{R},{R} 0 0 1 {x},{y} Z"
-            return f"M{x},{y+R} L{x},{y} L{x+R},{y} A{R},{R} 0 0 1 {x},{y+R} Z"
-        def arc_line():
-            h = R - .5
-            if quad == "tl": return f"M{x+.5},{y+R} A{h},{h} 0 0 1 {x+R},{y+.5}"
-            if quad == "tr": return f"M{x},{y+.5} A{h},{h} 0 0 1 {x+R-.5},{y+R}"
-            if quad == "bl": return f"M{x+R},{y+R-.5} A{h},{h} 0 0 1 {x+.5},{y}"
-            return f"M{x+R-.5},{y} A{h},{h} 0 0 1 {x},{y+R-.5}"
-        parts = f'<path d="{arc_fill()}" fill="{fill}" fill-opacity="{fill_op}"/>'
-        if set(sides) & border_sides:
-            parts += f'<path d="{arc_line()}" fill="none" stroke="{BORDER}" stroke-opacity="{border_op}" stroke-width="1"/>'
-        return f'<g id="{id_}">{parts}</g>'
-    el = [
-        corner("topleft", 0, 0, "tl", ("top", "left")), edge("top", c, 0, c, c, "top"), corner("topright", 2 * c, 0, "tr", ("top", "right")),
-        edge("left", 0, c, c, c, "left"), f'<g id="center"><rect {px(c, c, c, c)} fill="{fill}" fill-opacity="{fill_op}"/></g>', edge("right", 2 * c, c, c, c, "right"),
-        corner("bottomleft", 0, 2 * c, "bl", ("bottom", "left")), edge("bottom", c, 2 * c, c, c, "bottom"), corner("bottomright", 2 * c, 2 * c, "br", ("bottom", "right")),
-    ]
-    m = margin
-    hints = "".join(f'<rect id="hint-{k}" x="{x}" y="{y}" width="{w}" height="{h}" fill="none"/>' for k, (x, y, w, h) in {
-        "top-margin": (0, 0, 1, m), "bottom-margin": (0, 0, 1, m), "left-margin": (0, 0, m, 1), "right-margin": (0, 0, m, 1),
-        "top-inset": (0, 0, 1, 0), "bottom-inset": (0, 0, 1, 0), "left-inset": (0, 0, 0, 1), "right-inset": (0, 0, 0, 1)}.items())
-    masks = "".join(f'<rect id="mask-{k}" x="{x}" y="{y}" width="{c}" height="{c}" fill="#000"/>' for k, (x, y) in {
-        "topleft": (0, 0), "top": (c, 0), "topright": (2 * c, 0), "left": (0, c), "center": (c, c), "right": (2 * c, c),
-        "bottomleft": (0, 2 * c), "bottom": (c, 2 * c), "bottomright": (2 * c, 2 * c)}.items())
-    tile = f'<rect id="hint-tile-center" x="0" y="0" width="1" height="1" fill="none"/>'
-    return (f'<?xml version="1.0" encoding="UTF-8"?>\n<!-- Sunshine theme: {name}. Generated by tools/make-sunshine-theme.py: edit the generator, not this file. -->\n'
-            f'<svg xmlns="http://www.w3.org/2000/svg" width="{n}" height="{n}" viewBox="0 0 {n} {n}">\n' + "\n".join(el) + "\n" + hints + "\n" + masks + "\n" + tile + "\n</svg>\n")
+def tohex(r, g, b): return "#%02x%02x%02x" % (round(r * 255), round(g * 255), round(b * 255))
 
-ALL = {"top", "bottom", "left", "right"}
-SPECS = {   # relative path inside the theme: (radius, fill, border sides, margin)
-    "dialogs/background": (12, BG_DIALOG, ALL, 10),
-    "widgets/background": (12, BG_DIALOG, ALL, 8),
-    "widgets/translucentbackground": (12, BG_DIALOG, ALL, 8),
-    "widgets/tooltip": (8, BG_TOOLTIP, ALL, 6),
-    "widgets/panel-background": (0, BG_PANEL, {"top"}, 0),
-}
+def hls(h, hh, l, s):
+    r, g, b = colorsys.hls_to_rgb(hh / 360 % 1.0, max(0, min(1, l)), max(0, min(1, s)))
+    return tohex(r, g, b)
+
+def mapc(hexcolor):
+    c = hexcolor.lower()
+    if c in KEEP or c in {CREAM, ACCENT, RED, GREEN, YELLOW}: return c
+    r, g, b = hexrgb(c); h, l, s = colorsys.rgb_to_hls(r, g, b); h *= 360
+    if l >= .86 and s < .25: return CREAM                               # white and near white: text, glyphs, strokes
+    if s < .2:                                                          # greys -> the indigo / warm ramp
+        if l < .02: return c
+        if l < .30: return hls(0, 222, l * 1.1 + .01, .40)               # dark greys: the indigo backgrounds
+        if l < .60: return hls(0, 222, l, .15)                          # mid greys
+        return hls(0, 38, l, .16)                                       # light greys: warm
+    if 185 <= h <= 265: return hls(0, 22, min(.8, l + .06), min(1, s * 1.1 + .1))   # blues -> the orange accent
+    if 70 <= h < 170: return hls(0, 105, l, .30)                        # greens -> the soft green
+    if h >= 335 or h < 15: return hls(0, 355, l, .60)                   # reds -> the soft red
+    return hls(0, 38, l, .65)                                           # yellows / oranges -> the soft yellow
+
+HEX = re.compile(r"#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})(?![0-9a-fA-F])")
+def recolor(t): return HEX.sub(lambda m: mapc(m.group(0)), t)
+
+def read(p):
+    b = p.read_bytes()
+    if p.suffix == ".svgz":
+        try: b = gzip.decompress(b)
+        except Exception: pass
+    return b.decode("utf-8", "surrogateescape")
+
+def write(p, text, gz=False):
+    p.parent.mkdir(parents=True, exist_ok=True)
+    data = text.encode("utf-8", "surrogateescape")
+    p.write_bytes(gzip.compress(data) if gz else data)
+
+def convert_tree(src, dst, rename=None, post=None):
+    for f in sorted(src.rglob("*")):
+        if not f.is_file(): continue
+        rel = f.relative_to(src); parts = list(rel.parts)
+        if rename: parts = [rename(x) for x in parts]
+        out = dst.joinpath(*parts)
+        if f.suffix in (".svg", ".svgz", ".kvconfig", ".qml", ".desktop", ".json", ".colors") or f.name == "colors" or f.name.endswith("rc"):
+            t = recolor(read(f))
+            if post: t = post(str(rel), t)
+            write(out, t, gz=f.suffix == ".svgz")
+        else:
+            out.parent.mkdir(parents=True, exist_ok=True); shutil.copy(f, out)
 
 def fix_modes(path):
-    # files must be readable by every user whatever the umask / default ACL of the machine that runs this tool
-    import os
     for r, ds, fs in os.walk(path):
         os.chmod(r, 0o755)
         for f in fs: os.chmod(os.path.join(r, f), 0o644)
 
+def ensure_source():
+    if SRC.exists(): return
+    SRC.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["git", "clone", "-q", "https://github.com/yeyushengfan258/Win11OS-kde.git", str(SRC)], check=True)
+    subprocess.run(["git", "-C", str(SRC), "checkout", "-q", PIN], check=True)
+
+def plasma_post(rel, t):
+    # menus, popups, tooltips and the taskbar: 85% opaque (upstream: 60%)
+    if rel.startswith("translucent/"):
+        t = t.replace("opacity:0.6;fill:", f"opacity:{TRANSLUCENCY};fill:")
+    return t
+
 def main():
-    keep = {}                                   # colours and icons survive a regeneration
-    for item in ("colors", "icons"):
-        for base in (OUT, OLD):
-            if (base / item).exists(): keep[item] = base / item; break
-    stash = root / ".theme-stash"
-    if stash.exists(): shutil.rmtree(stash)
-    stash.mkdir()
-    for item, path in keep.items(): (shutil.copytree if path.is_dir() else shutil.copy)(path, stash / item)
-    if OUT.exists(): shutil.rmtree(OUT)
-    OUT.mkdir(parents=True)
-    for variant, op, bop in (("", TRANSLUCENCY, 0.14), ("translucent/", TRANSLUCENCY, 0.14), ("opaque/", 1.0, 0.18)):
-        for rel, (r, fill, sides, margin) in SPECS.items():
-            if variant == "opaque/" and rel in ("widgets/background", "widgets/translucentbackground"): continue
-            if variant == "translucent/" and rel in ("widgets/background", "widgets/translucentbackground"): pass
-            p = OUT / (variant + rel + ".svg"); p.parent.mkdir(parents=True, exist_ok=True)
-            p.write_text(frame(r, fill, op, bop, sides, margin, rel))
-    for item in keep:
-        (shutil.copytree if (stash / item).is_dir() else shutil.copy)(stash / item, OUT / item)
-    shutil.rmtree(stash)
-    (OUT / "metadata.json").write_text(json.dumps({
-        "KPlugin": {"Id": "Sunshine", "Name": "Sunshine theme", "Category": "",
-                    "Description": "Sunshine OS: a dark Windows 11 style in the Sunshine palette (indigo, cream, orange). Menus and the taskbar are 15% transparent.",
-                    "EnabledByDefault": True, "License": "GPL-3.0-or-later", "Version": "1.0", "Website": "https://github.com/tak0dan/SunshineOS",
-                    "Authors": [{"Name": "Sunshine OS"}]},
-        "X-Plasma-API": "5.0"}, indent=2) + "\n")   # same shape as the KDE themes (breeze-dark): Plasma's theme list needs X-Plasma-API
-    fix_modes(OUT)
-    if (PR / "Sunshine").exists(): shutil.rmtree(PR / "Sunshine")
-    shutil.copytree(OUT, PR / "Sunshine"); fix_modes(PR / "Sunshine")
-    print("theme written to", OUT, "(and mirrored to profile/airootfs)", "-", sum(1 for _ in OUT.rglob("*.svg")), "svg files")
+    ensure_source()
+    dark = SRC / "plasma/desktoptheme/Win11OS-dark"
+    out = OV / "plasma/desktoptheme/Sunshine"
+    if out.exists(): shutil.rmtree(out)
+    convert_tree(dark, out, rename=lambda x: "opaque" if x == "solid" else x, post=plasma_post)
+    # the palette of the theme = the Sunshine colour scheme
+    scheme = (root / "overlay/system/usr/share/color-schemes/SunshineDark.colors").read_text()
+    (out / "colors").write_text(re.sub(r"\n\[(General|KDE|WM)\][^\[]*", "\n", scheme))
+    for old in ("metadata.desktop",): (out / old).unlink(missing_ok=True)
+    (out / "metadata.json").write_text(json.dumps({
+        "KPlugin": {"Id": "Sunshine", "Name": "Sunshine theme", "Category": "", "EnabledByDefault": True, "License": "GPL-3.0-or-later", "Version": "2.0",
+                    "Description": "Sunshine OS: a dark Windows 11 style in the Sunshine palette (indigo, cream, orange), after Win11OS-kde by yeyushengfan258. Menus and the taskbar are 15% transparent.",
+                    "Website": "https://github.com/tak0dan/SunshineOS", "Authors": [{"Name": "Sunshine OS"}, {"Name": "yeyushengfan258 (Win11OS-kde)"}]},
+        "X-Plasma-API": "5.0"}, indent=2) + "\n")
+    (out / "NOTICE").write_text("Based on Win11OS-kde (dark) by yeyushengfan258, GPL-3.0: https://github.com/yeyushengfan258/Win11OS-kde (KDE Store item 2106375).\nRe-coloured and adapted for Sunshine OS by tools/make-sunshine-theme.py.\n")
+    # window frame
+    au = OV / "aurorae/themes/Sunshine"
+    if au.exists(): shutil.rmtree(au)
+    convert_tree(SRC / "aurorae/Win11OS-dark", au, rename=lambda x: x.replace("Win11OS-dark", "Sunshine"))
+    (au / "metadata.desktop").write_text("[Desktop Entry]\nName=Sunshine theme\nComment=Sunshine OS window decoration (after Win11OS-kde)\nX-KDE-PluginInfo-Name=Sunshine\nX-KDE-PluginInfo-Author=Sunshine OS\nX-KDE-PluginInfo-License=GPL-3.0-or-later\n")
+    rc = au / "Sunshinerc"; t = rc.read_text()
+    t = re.sub(r"ActiveTextColor=.*", "ActiveTextColor=239,229,208,255", t); t = re.sub(r"InactiveTextColor=.*", "InactiveTextColor=154,146,127,255", t); rc.write_text(t)
+    # Kvantum widget style (Windows 11 like controls)
+    kv = OV / "Kvantum/Sunshine"
+    if kv.exists(): shutil.rmtree(kv)
+    convert_tree(SRC / "Kvantum/Win11OS-dark", kv, rename=lambda x: x.replace("Win11OS-dark", "Sunshine"))
+    cf = kv / "Sunshine.kvconfig"; t = cf.read_text()
+    pal = {"window.color": "#0e1422", "base.color": "#10172a", "alt.base.color": "#131b2e", "button.color": "#1a2236", "light.color": "#262f47", "mid.light.color": "#20283d",
+           "dark.color": "#0a101c", "mid.color": "#161d30", "highlight.color": ACCENT, "inactive.highlight.color": "#7a5a45", "text.color": CREAM, "window.text.color": CREAM,
+           "button.text.color": CREAM, "disabled.text.color": "#7d7766", "tooltip.base.color": "#1a2236", "tooltip.text.color": CREAM, "highlight.text.color": "#2a1a0e",
+           "link.color": ACCENT, "link.visited.color": "#c9a15a"}
+    for k, v in pal.items(): t = re.sub(rf"(?m)^{re.escape(k)}=.*$", f"{k}={v}", t)
+    t = re.sub(r"(?m)^author=.*$", "author=Sunshine OS, after Win11OS-kde (yeyushengfan258) and Vince Liuice's KvAdapta-based theme", t)
+    cf.write_text(t)
+    for p in (out, au, kv): fix_modes(p)
+    for sub in ("plasma/desktoptheme/Sunshine", "aurorae/themes/Sunshine", "Kvantum/Sunshine"):
+        if (PR / sub).exists(): shutil.rmtree(PR / sub)
+        shutil.copytree(OV / sub, PR / sub)
+    print("Sunshine theme built:", sum(1 for _ in out.rglob("*") if _.is_file()), "plasma files,", sum(1 for _ in au.iterdir()), "aurorae files,", sum(1 for _ in kv.iterdir()), "kvantum files")
 
 if __name__ == "__main__":
     main()

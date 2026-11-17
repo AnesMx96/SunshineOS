@@ -28,7 +28,7 @@
   </metadata>
   <sodipodi:namedview
      id="namedview20"
-     bordercolor="#666666"
+     bordercolor="#576075"
      borderopacity="1"
      gridtolerance="10"
      guidetolerance="10"
@@ -44,14 +44,14 @@
      inkscape:window-y="40"
      inkscape:zoom="7.5853272"
      objecttolerance="10"
-     pagecolor="#c8c8c8"
+     pagecolor="#d1cabf"
      showgrid="false"
      inkscape:pagecheckerboard="0" />
   <defs
      id="defs3">
     <style
        id="current-color-scheme"
-       type="text/css">.ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }</style>
+       type="text/css">.ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }</style>
   </defs>
   <g
      id="configure">

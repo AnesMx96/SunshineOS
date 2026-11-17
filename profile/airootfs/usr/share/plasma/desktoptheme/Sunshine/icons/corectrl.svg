@@ -35,11 +35,11 @@
        gradientTransform="matrix(0.74046,0,0,1.4809,4.9143898,5.9478024)"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#2e3440"
+         stop-color="#263558"
          offset="0"
          id="stop29845" />
       <stop
-         stop-color="#4c566a"
+         stop-color="#4d5669"
          offset="1"
          id="stop29847" />
     </linearGradient>
@@ -51,12 +51,12 @@
        y2="20.146999"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#2e3440"
+         stop-color="#263558"
          stop-opacity=".25"
          offset="0"
          id="stop29850" />
       <stop
-         stop-color="#2e3440"
+         stop-color="#263558"
          stop-opacity="0"
          offset="1"
          id="stop29852" />
@@ -70,7 +70,7 @@
        gradientUnits="userSpaceOnUse"
        gradientTransform="translate(188.253,-1036.7346)">
       <stop
-         stop-color="#292c2f"
+         stop-color="#1f2b47"
          id="stop35711" />
       <stop
          offset="1"
@@ -80,7 +80,7 @@
     </linearGradient>
   </defs>
   <sodipodi:namedview
-     pagecolor="#c8c8c8"
+     pagecolor="#d1cabf"
      bordercolor="#000000"
      borderopacity="1"
      objecttolerance="10"
@@ -103,7 +103,7 @@
      inkscape:showpageshadow="true"
      inkscape:lockguides="false"
      inkscape:pagecheckerboard="false"
-     inkscape:deskcolor="#cdcdcd">
+     inkscape:deskcolor="#d5cfc5">
     <inkscape:grid
        type="xygrid"
        id="grid2747"
@@ -117,7 +117,7 @@
   <g
      id="corectrl">
     <rect
-       style="opacity:0.00100002;fill:#d1d5e9;fill-opacity:1"
+       style="opacity:0.00100002;fill:#e5c5b3;fill-opacity:1"
        width="32"
        height="32"
        x="0"
@@ -149,12 +149,12 @@
          d="m -15,8 v 7 h 6 v -2 h -1 v 1 h -3 v -1.710323 l -1,-0.905062 V 9 h 4 v 1 h 1 V 8 Z"
          id="path8"
          sodipodi:nodetypes="ccccccccccccccc"
-         style="fill:#ff9654;fill-opacity:1" />
+         style="fill:#fefefd;fill-opacity:1" />
       <path
          d="m -15,17 v 7 h 6 v -2 h -1 v 1 h -3 v -1.710323 l -1,-0.905062 V 18 h 4 v 1 h 1 v -2 z"
          id="path10"
          sodipodi:nodetypes="ccccccccccccccc"
-         style="fill:#ff9654;fill-opacity:1" />
+         style="fill:#fefefd;fill-opacity:1" />
       <rect
          style="fill:#efe5d0;fill-opacity:1;stroke-width:0.19245"
          width="1.0000004"
@@ -400,7 +400,7 @@
   <g
      id="22-22-corectrl">
     <rect
-       style="opacity:0.00100002;fill:#d1d5e9;fill-opacity:1"
+       style="opacity:0.00100002;fill:#e5c5b3;fill-opacity:1"
        width="22"
        height="22"
        x="32"
@@ -411,7 +411,7 @@
        transform="translate(0,-21)">
       <path
          id="rect77"
-         style="fill:#ff9654;fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
+         style="fill:#fefefd;fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
          d="m 38,35 c -1.107999,0 -2,0.892001 -2,2 v 10 c 0,1.107999 0.892001,2 2,2 h 10 c 1.107999,0 2,-0.892001 2,-2 V 37 c 0,-1.107999 -0.892001,-2 -2,-2 z m 0,1 h 10 c 0.553999,0 1,0.446001 1,1 v 10 c 0,0.553999 -0.446001,1 -1,1 H 38 c -0.553999,0 -1,-0.446001 -1,-1 V 37 c 0,-0.553999 0.446001,-1 1,-1 z" />
       <rect
          style="fill:#efe5d0;fill-opacity:1;stroke-width:0.430331"
@@ -430,7 +430,7 @@
       <path
          d="m 44,40 v 5 h 4 v -2 h -1 v 1 h -1 v -1 l -1,-1 v -1 h 2 v 1 h 1 v -2 z"
          id="path80"
-         style="fill:#ff9654;fill-opacity:1"
+         style="fill:#fefefd;fill-opacity:1"
          sodipodi:nodetypes="ccccccccccccccc" />
       <rect
          style="fill:#efe5d0;fill-opacity:1;stroke-width:0.19245"

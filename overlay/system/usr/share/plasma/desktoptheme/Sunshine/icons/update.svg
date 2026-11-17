@@ -27,8 +27,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#323232"
-     bordercolor="#666666"
+     pagecolor="#233051"
+     bordercolor="#576075"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -60,39 +60,39 @@
     <style
        id="current-color-scheme"
        type="text/css">
-   .ColorScheme-Text { color:#333333; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#333333; }
+   .ColorScheme-Text { color:#233152; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#233152; }
   </style>
   </defs>
   <g
      id="g1148"
      transform="translate(98.806641,-26.5)"
-     style="fill:#969696;fill-opacity:1">
+     style="fill:#8690a6;fill-opacity:1">
     <path
        id="path1116"
-       style="opacity:1;fill:#aaaaaa;fill-opacity:1;stroke-width:1.7647;stroke-linecap:round"
+       style="opacity:1;fill:#b8ae9c;fill-opacity:1;stroke-width:1.7647;stroke-linecap:round"
        d="M -20,40.607422 V 39.193359 L -21.693359,37.5 -20,35.806641 V 34.392578 L -23.107422,37.5 Z" />
     <path
        id="path1108"
-       style="opacity:1;fill:#aaaaaa;fill-opacity:1;stroke-width:1.7647;stroke-linecap:round"
+       style="opacity:1;fill:#b8ae9c;fill-opacity:1;stroke-width:1.7647;stroke-linecap:round"
        d="m -9.392578,45 h -1.414063 L -12.5,46.693359 -14.193359,45 h -1.414063 L -12.5,48.107422 Z" />
     <path
        id="path1100"
-       style="opacity:1;fill:#aaaaaa;fill-opacity:1;stroke-width:1.7647;stroke-linecap:round"
+       style="opacity:1;fill:#b8ae9c;fill-opacity:1;stroke-width:1.7647;stroke-linecap:round"
        d="m -5,34.392578 v 1.414063 L -3.306641,37.5 -5,39.193359 v 1.414063 L -1.892578,37.5 Z" />
     <path
        id="path1092"
-       style="opacity:1;fill:#aaaaaa;fill-opacity:1;stroke-width:1.7647;stroke-linecap:round"
+       style="opacity:1;fill:#b8ae9c;fill-opacity:1;stroke-width:1.7647;stroke-linecap:round"
        d="M -12.5,26.892578 -15.607422,30 h 1.414063 L -12.5,28.306641 -10.806641,30 h 1.414063 z" />
     <path
        id="path1057"
-       style="opacity:1;fill:#aaaaaa;fill-opacity:1;stroke-width:1.7647;stroke-linecap:round"
+       style="opacity:1;fill:#b8ae9c;fill-opacity:1;stroke-width:1.7647;stroke-linecap:round"
        d="m -20,30 v 4.392578 1.414063 3.386718 1.414063 V 45 h 4.392578 1.414063 3.386718 1.4140629 H -5 V 40.607422 39.193359 35.806641 34.392578 30 h -4.3925781 -1.4140629 -3.386718 -1.414063 z m 1,1 h 2.392578 1.414063 5.3867184 1.4140625 H -6 v 2.392578 1.414063 5.386718 1.414063 V 44 H -8.3925781 -9.8066406 -15.193359 -16.607422 -19 v -2.392578 -1.414063 -5.386718 -1.414063 z" />
     <g
        id="g1137"
        transform="translate(0,1)"
-       style="fill:#969696;fill-opacity:1">
+       style="fill:#8690a6;fill-opacity:1">
       <rect
-         style="opacity:1;fill:#aaaaaa;fill-opacity:1;stroke-width:2;stroke-linecap:round"
+         style="opacity:1;fill:#b8ae9c;fill-opacity:1;stroke-width:2;stroke-linecap:round"
          id="rect1128"
          width="4"
          height="1"
@@ -101,7 +101,7 @@
          ry="0.5"
          transform="rotate(-45)" />
       <rect
-         style="opacity:1;fill:#aaaaaa;fill-opacity:1;stroke-width:2;stroke-linecap:round"
+         style="opacity:1;fill:#b8ae9c;fill-opacity:1;stroke-width:2;stroke-linecap:round"
          id="rect1130"
          width="4"
          height="1"
@@ -110,7 +110,7 @@
          ry="0.5"
          transform="matrix(-0.70710678,-0.70710678,-0.70710678,0.70710678,0,0)" />
       <rect
-         style="opacity:1;fill:#aaaaaa;fill-opacity:1;stroke-width:2;stroke-linecap:round"
+         style="opacity:1;fill:#b8ae9c;fill-opacity:1;stroke-width:2;stroke-linecap:round"
          id="rect1132"
          width="1"
          height="7"

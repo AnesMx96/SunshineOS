@@ -14,17 +14,17 @@
    xmlns:svg="http://www.w3.org/2000/svg">
   <style
      id="current-color-scheme"
-     type="text/css">.ColorScheme-Text { color:#d6dbf1; }
+     type="text/css">.ColorScheme-Text { color:#edc3ab; }
 </style>
   <sodipodi:namedview
      id="namedview20"
-     pagecolor="#c8c8c8"
+     pagecolor="#d1cabf"
      bordercolor="#000000"
      borderopacity="1"
      inkscape:showpageshadow="2"
      inkscape:pageopacity="0"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#cccccc"
+     inkscape:deskcolor="#d4cec4"
      showgrid="true"
      inkscape:zoom="22.627417"
      inkscape:cx="15.733126"
@@ -42,9 +42,9 @@
        originy="0"
        spacingx="1"
        spacingy="1"
-       empcolor="#ff9654"
+       empcolor="#ff6005"
        empopacity="0.30196078"
-       color="#ff9654"
+       color="#ff6005"
        opacity="0.14902"
        empspacing="5"
        dotted="false"
@@ -61,7 +61,7 @@
   <g
      id="mellowplayer">
     <rect
-       style="opacity:0.00100002;fill:#d1d5e9;fill-opacity:1"
+       style="opacity:0.00100002;fill:#e5c5b3;fill-opacity:1"
        width="32"
        height="32"
        x="0"
@@ -92,7 +92,7 @@
   <g
      id="22-22-mellowplayer">
     <rect
-       style="opacity:0.00100002;fill:#d1d5e9;fill-opacity:1"
+       style="opacity:0.00100002;fill:#e5c5b3;fill-opacity:1"
        width="22"
        height="22"
        x="32"

@@ -26,8 +26,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#c8c8c8"
-     bordercolor="#646464"
+     pagecolor="#d1cabf"
+     bordercolor="#555e73"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -50,7 +50,7 @@
      inkscape:document-rotation="0"
      inkscape:pagecheckerboard="0"
      inkscape:showpageshadow="0"
-     inkscape:deskcolor="#c8c8c8">
+     inkscape:deskcolor="#d1cabf">
     <inkscape:grid
        type="xygrid"
        id="grid815" />
@@ -60,12 +60,12 @@
     <style
        id="current-color-scheme"
        type="text/css">
-   .ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }
+   .ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }
   </style>
     <style
        type="text/css"
        id="current-color-scheme-5">
-   .ColorScheme-Text { color:#dedede; } .ColorScheme-Highlight { color:#ff9654; } .ColorScheme-ButtonBackground { color:#dedede; }
+   .ColorScheme-Text { color:#efe5d0; } .ColorScheme-Highlight { color:#f5955e; } .ColorScheme-ButtonBackground { color:#efe5d0; }
   </style>
     <style
        type="text/css"
@@ -79,15 +79,15 @@
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(7.2689767,0,0,7.2689767,-191.16266,-61.390926)">
       <stop
-         stop-color="#b4327d"
+         stop-color="#be8728"
          offset="0"
          id="stop578" />
       <stop
-         stop-color="#e06c75"
+         stop-color="#a42933"
          offset=".55628"
          id="stop580" />
       <stop
-         stop-color="#e06c75"
+         stop-color="#6c1b22"
          offset="1"
          id="stop582" />
     </linearGradient>
@@ -100,11 +100,11 @@
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(17.444375,0,0,17.444375,-434.33594,-159.69232)">
       <stop
-         stop-color="#e06c75"
+         stop-color="#cf3f4b"
          offset="0"
          id="stop592" />
       <stop
-         stop-color="#e06c75"
+         stop-color="#781e25"
          offset="1"
          id="stop594" />
     </linearGradient>
@@ -117,15 +117,15 @@
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(17.444375,0,0,17.444375,-434.33594,-159.69232)">
       <stop
-         stop-color="#e06c75"
+         stop-color="#a92a35"
          offset="0"
          id="stop585" />
       <stop
-         stop-color="#e06c75"
+         stop-color="#a82a34"
          offset=".51348"
          id="stop587" />
       <stop
-         stop-color="#ff9654"
+         stop-color="#bf8828"
          offset="1"
          id="stop589" />
     </linearGradient>
@@ -133,7 +133,7 @@
   <g
      id="office-chart-pie">
     <rect
-       style="color:#bebebe;display:inline;overflow:visible;visibility:visible;opacity:0.514644;fill:none;stroke:none;stroke-width:3;marker:none;enable-background:accumulate"
+       style="color:#c8c1b4;display:inline;overflow:visible;visibility:visible;opacity:0.514644;fill:none;stroke:none;stroke-width:3;marker:none;enable-background:accumulate"
        id="rect35722"
        width="32"
        height="32"

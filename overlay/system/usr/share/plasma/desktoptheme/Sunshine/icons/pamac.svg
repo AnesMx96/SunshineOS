@@ -12,8 +12,8 @@
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
      id="namedview23"
-     pagecolor="#c8c8c8"
-     bordercolor="#666666"
+     pagecolor="#d1cabf"
+     bordercolor="#576075"
      borderopacity="1.0"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0"
@@ -42,7 +42,7 @@
      id="defs3">
     <style
        id="current-color-scheme"
-       type="text/css">.ColorScheme-Text{color:#dfdfdf;}.ColorScheme-Highlight{color:#ff9654;}</style>
+       type="text/css">.ColorScheme-Text{color:#efe5d0;}.ColorScheme-Highlight{color:#f5955e;}</style>
   </defs>
   <defs
      id="defs7">
@@ -120,7 +120,7 @@
        rx="0"
        ry="0" />
     <circle
-       style="fill:#ff9654;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4.80001;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+       style="fill:#ff711f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4.80001;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
        id="path3769"
        cx="59"
        cy="56.050793"
@@ -284,7 +284,7 @@
         </g>
       </g>
       <circle
-         style="fill:#ff9654;fill-opacity:1;fill-rule:evenodd;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+         style="fill:#ff711f;fill-opacity:1;fill-rule:evenodd;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
          id="path4597"
          cx="82"
          cy="18"

@@ -46,12 +46,12 @@
      objecttolerance="10"
      borderopacity="1"
      bordercolor="#000000"
-     pagecolor="#c8c8c8"
+     pagecolor="#d1cabf"
      inkscape:document-rotation="0"
      inkscape:lockguides="false"
      inkscape:showpageshadow="false"
      inkscape:pagecheckerboard="false"
-     inkscape:deskcolor="#cccccc">
+     inkscape:deskcolor="#d4cec4">
     <inkscape:grid
        type="xygrid"
        id="grid905"
@@ -88,7 +88,7 @@
          id="stop2" />
       <stop
          offset="1"
-         stop-color="#afafaf"
+         stop-color="#bcb2a2"
          id="stop4" />
     </linearGradient>
     <linearGradient
@@ -101,11 +101,11 @@
        gradientUnits="userSpaceOnUse">
       <stop
          offset="0%"
-         style="stop-color:#303b3d; stop-opacity:1"
+         style="stop-color:#263458; stop-opacity:1"
          id="stop18" />
       <stop
          offset="100%"
-         style="stop-color:#bc985d; stop-opacity:1"
+         style="stop-color:#d7a042; stop-opacity:1"
          id="stop20" />
     </linearGradient>
   </defs>
@@ -266,7 +266,7 @@
      id="image-x-generic">
     <rect
        id="rect11"
-       style="opacity:0.00100002;fill:#d1d5e9;fill-opacity:1"
+       style="opacity:0.00100002;fill:#e5c5b3;fill-opacity:1"
        y="0"
        x="0"
        height="32"
@@ -299,7 +299,7 @@
     <path
        id="path6"
        d="m 32,10 h 22 c 0,0 0,0 0,0 v 22 c 0,0 0,0 0,0 H 32 c 0,0 0,0 0,0 z"
-       style="opacity:0;fill:#d1d5e9;fill-opacity:1" />
+       style="opacity:0;fill:#e5c5b3;fill-opacity:1" />
     <path
        style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:0.976725;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;enable-background:new"
        d="m 41.411028,20.740557 c -0.294639,-0.02148 -0.59206,0.0695 -0.803664,0.291233 L 34.6,27.327553 c 0,0.672456 0,0.672456 0,0.672456 l 13.588384,-2e-5 -5.990538,-6.873215 c -0.201072,-0.230725 -0.492202,-0.364702 -0.786818,-0.386217 z"

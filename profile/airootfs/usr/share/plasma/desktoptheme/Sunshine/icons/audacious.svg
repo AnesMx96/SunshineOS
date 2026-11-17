@@ -17,7 +17,7 @@
      id="current-color-scheme"
      type="text/css">
 .ColorScheme-Text { 
-    color:#eceff4;
+    color:#e0c7b8;
 }
 </style>
   <metadata
@@ -57,7 +57,7 @@
      inkscape:document-rotation="0"
      inkscape:showpageshadow="false"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1">
+     inkscape:deskcolor="#d8d3ca">
     <inkscape:grid
        type="xygrid"
        id="grid882"

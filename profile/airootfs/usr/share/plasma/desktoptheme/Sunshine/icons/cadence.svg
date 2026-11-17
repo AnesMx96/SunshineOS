@@ -12,13 +12,13 @@
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
      id="namedview1156"
-     pagecolor="#c8c8c8"
-     bordercolor="#666666"
+     pagecolor="#d1cabf"
+     bordercolor="#576075"
      borderopacity="1.0"
      inkscape:showpageshadow="2"
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#b4b4b4"
+     inkscape:deskcolor="#c0b7a8"
      showgrid="true"
      inkscape:zoom="10.429825"
      inkscape:cx="25.312026"
@@ -36,9 +36,9 @@
        originy="10"
        spacingx="1"
        spacingy="1"
-       empcolor="#ff9654"
+       empcolor="#ff6005"
        empopacity="0.30196078"
-       color="#ff9654"
+       color="#ff6005"
        opacity="0.14901961"
        empspacing="5"
        dotted="false"
@@ -61,7 +61,7 @@
          style="fill:#efe5d0;fill-opacity:1;stroke:none;stroke-width:2;stroke-linejoin:round"
          d="m 43,13 a 8,8 0 0 0 -8,8 8,8 0 0 0 8,8 8,8 0 0 0 8,-8 8,8 0 0 0 -8,-8 z m 0,1 a 7,7 0 0 1 7,7 7,7 0 0 1 -7,7 7,7 0 0 1 -7,-7 7,7 0 0 1 7,-7 z" />
       <rect
-         style="opacity:0.00100002;fill:#d1d5e9;fill-opacity:1"
+         style="opacity:0.00100002;fill:#e5c5b3;fill-opacity:1"
          width="22"
          height="22"
          x="32"
@@ -76,7 +76,7 @@
   <g
      id="cadence">
     <rect
-       style="opacity:0.00100002;fill:#d1d5e9;fill-opacity:1"
+       style="opacity:0.00100002;fill:#e5c5b3;fill-opacity:1"
        width="32"
        height="32"
        x="0"
