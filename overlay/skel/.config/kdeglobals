@@ -3,6 +3,7 @@ ColorScheme=SunshineDark
 
 [KDE]
 widgetStyle=Darkly
+LookAndFeelPackage=com.sunshineos.sunshine
 
 [Icons]
 Theme=breeze-dark

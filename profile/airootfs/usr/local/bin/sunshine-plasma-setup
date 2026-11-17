@@ -14,10 +14,10 @@ done
 command -v plasma-apply-colorscheme >/dev/null && plasma-apply-colorscheme SunshineDark
 # Darkly widget style (the Dolphin view and sidebar transparency from ~/.config/darklyrc need it); only when it is installed
 [ -e /usr/lib/qt6/plugins/styles/darkly6.so ] && kwriteconfig6 --file kdeglobals --group KDE --key widgetStyle Darkly
-# Sunshine Win11 look: Plasma theme, window decoration with the buttons on the right
-command -v plasma-apply-desktoptheme >/dev/null && plasma-apply-desktoptheme SunshineWin11
+# Sunshine theme: Plasma theme, window decoration with the buttons on the right
+command -v plasma-apply-desktoptheme >/dev/null && plasma-apply-desktoptheme Sunshine
 kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key library org.kde.kwin.aurorae
-kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key theme __aurorae__svg__SunshineWin11
+kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key theme __aurorae__svg__Sunshine
 kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnLeft ""
 kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight IAX
 qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1
@@ -30,7 +30,7 @@ if systemd-detect-virt -q 2>/dev/null; then
   qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1
 fi
 Q=$(command -v qdbus6 || command -v qdbus)
-# Win11 taskbar: 48 px, full width, menu + app icons centred between two spacers, tray and clock on the right
+# Windows 11 style taskbar: 48 px, full width, menu + app icons centred between two spacers, tray and clock on the right
 [ -n "$Q" ] && "$Q" org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript 'var L=["applications:sunshine-store.desktop","applications:org.kde.dolphin.desktop","applications:zen.desktop","applications:org.kde.konsole.desktop","applications:org.kde.kate.desktop","applications:sunshine-welcome.desktop"];
 var p=panels()[0];
 for (var id of p.widgetIds) p.widgetById(id).remove();

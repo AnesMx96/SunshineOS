@@ -1,0 +1,18 @@
+{
+  "KPlugin": {
+    "Id": "Sunshine",
+    "Name": "Sunshine theme",
+    "Category": "",
+    "Description": "Sunshine OS: a dark Windows 11 style in the Sunshine palette (indigo, cream, orange). Menus and the taskbar are 15% transparent.",
+    "EnabledByDefault": true,
+    "License": "GPL-3.0-or-later",
+    "Version": "1.0",
+    "Website": "https://github.com/tak0dan/SunshineOS",
+    "Authors": [
+      {
+        "Name": "Sunshine OS"
+      }
+    ]
+  },
+  "X-Plasma-API": "5.0"
+}
