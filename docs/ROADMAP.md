@@ -10,8 +10,8 @@ design remark that needs a decision or has a limit worth knowing about.
 - [x] Packages built from the AUR were root-only (Darkly, GTK theme, `uni`, browser ...): repaired, build fixed, repair runs in `make-iso.sh`
 - [x] Btrfs layout mirrors the maintainer's PC (@, @home, @root, @srv, @cache, @log, @tmp, noatime + zstd; Snapper adds .snapshots)
 - [x] Snapper (btrfs) and Timeshift/rsync (other file systems) behind `sunshine-snapshot`; daily timer, pre-update restore point, doctor and Welcome support
-- [ ] Installer: list the packages that are going to be installed so they can be de-selected (Calamares `netinstall` groups)
-- [ ] Installer: app and upgrade selection, grouped (see "Catalogue")
+- [~] Installer: apps list with groups and a checkbox per app (Calamares `netinstall`, generated from `catalogue/apps.toml`; the wiring is done and its files validate, but it has not been run in a real installer yet: needs an ISO rebuild)
+- [~] Installer: app selection, grouped (same list; see "Catalogue")
 
 ## Look and feel
 - [x] Terminals (konsole, kitty, ghostty, alacritty, foot) 20% transparent in the Sunshine palette
@@ -44,6 +44,7 @@ design remark that needs a decision or has a limit worth knowing about.
 - [ ] git with aliases; a GitHub GUI app. **note:** GitHub Desktop has no official Linux build; candidates are the community build from the AUR or `gh` with `gitg`/GitKraken
 
 ## Catalogue (installer groups and first-update apps)
+Status: the catalogue (47 apps, all package names verified against the official repos and the AUR), the 47 `sunshine-app-*` meta-packages in the `[sunshine]` repo, the `sunshine-apps` queue (AUR via the AUR helper at the first online start, setup scripts, web apps), `sunshine-webapp`, and the first-update step in `sunshine-update` are done and tested in a clean container. Web wrappers and GitHub Desktop (AUR `github-desktop-bin`) are included. Still to do: the Kando and Pamac themes (wait for the Sunshine theme), real-installer test, and a store view of the catalogue.
 Installed on the very first update: Zen browser, LibreOffice.
 Groups to offer in the installer (each de-selectable):
 - **System:** BlackArch repository, printer support (CUPS), linux-zen kernel, linux-lts kernel, wine, proton-ge, bottles, VirtualBox, QEMU, Piper
