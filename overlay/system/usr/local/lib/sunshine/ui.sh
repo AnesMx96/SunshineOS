@@ -27,22 +27,38 @@ say() { sec "$@"; }
 ok()  { printf '%s%s %s%s\n' "$G" "$(_cozy '✔ ☕' '+')" "$(tr "$*")" "$N"; }
 bad() { printf '%s%s %s%s\n' "$R" "$(_cozy '✘ 🫖' 'x')" "$(tr "$*")" "$N"; }
 cozy_done() { [ "$SUN_COZY" = on ] && printf '%s\n' "$Y$(t cozy_done 'All done. Have a warm cup of tea and enjoy the sunshine ☀️🍵')$N"; }
-_sun_frames() { cat <<'S'
-      \   |   /
-       .-"""-.
-   -- (   ☀   ) --
-       '-...-'
-      /   |   \
+_sun_art() { cat <<'S'
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠰⣦⣄⠀⠀⠘⣧⡀⠀⣿⣿⠀⢀⣼⠃⠀⠀⣠⣴⠆⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠙⢿⣷⣤⡀⢻⡷⠀⠿⠿⠀⢾⡟⢀⣤⣾⡿⠋⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣀⠀⠀⠻⣿⠛⠀⢀⣠⣤⣤⣄⡀⠀⠛⣿⠟⠀⠀⣀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠉⠻⢿⡶⠀⢀⣾⣿⣿⣿⣿⣿⣿⣷⡀⠀⢶⡿⠟⠉⠀⠀⠀⠀⠀
+⠀⢀⣀⣠⣤⣤⣤⣤⡄⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⢠⣤⣤⣤⣤⣄⣀⡀⠀
+⠀⠈⠉⠙⠛⠛⠛⠛⠃⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠘⠛⠛⠛⠛⠋⠉⠁⠀
+⠀⠀⠀⠀⠀⣀⣴⣾⠷⠀⠈⢿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠾⣷⣦⣀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠉⠀⠀⣴⣿⣤⠀⠈⠙⠛⠛⠋⠁⠀⣤⣿⣦⠀⠀⠉⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣠⣾⡿⠛⠁⣼⡷⠀⣶⣶⠀⢾⣧⠈⠛⢿⣷⣄⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠰⠟⠋⠀⠀⢠⡟⠁⠀⣿⣿⠀⠈⢻⡄⠀⠀⠙⠻⠆⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 S
 }
+# the Sunshine animation: a braille-drawn sun that pulses from deep orange to gold (drawn in place, then it stays)
 sun_success_anim() {
   [ "$SUN_ANIM" = on ] && [ -t 1 ] || return 0
-  local i c
-  for i in 1 2 3; do
-    for c in 208 214 220 226 220 214; do
-      printf '\e[?25l\e[5A'; _sun_frames | while IFS= read -r l; do printf '\e[38;5;%sm%s\e[0m\e[K\n' "$c" "$l"; done; sleep 0.06
+  local lines=() l i f n pal=(166 202 208 214 220 226 220 214 208 202) rows
+  while IFS= read -r l; do lines+=("$l"); done < <(_sun_art); rows=${#lines[@]}
+  printf '\e[?25l'
+  for f in $(seq 0 23); do
+    [ "$f" -gt 0 ] && printf '\e[%sA' "$rows"
+    for i in "${!lines[@]}"; do
+      n=$(( ( (i > rows/2 ? i - rows/2 : rows/2 - i) + f ) % ${#pal[@]} ))      # rings of colour travelling outwards
+      printf '\e[38;5;%sm%s\e[0m\e[K\n' "${pal[$n]}" "${lines[$i]}"
     done
-  done; printf '\e[?25h'
+    sleep 0.07
+  done
+  printf '\e[?25h'
 }
 sun_run() {            # sun_run "label" cmd args...
   local label=$1; shift; local log; log=$(mktemp)

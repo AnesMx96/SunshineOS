@@ -18,6 +18,7 @@ LOG=$DIR/diagnosis-$(date +%Y-%m-%d_%H%M%S)${1:+${1/--/-}}.log
   sec "Conflicts and orphans"; echo "Orphans: $(pacman -Qdtq 2>/dev/null | wc -l)"; pacman -Qdtq 2>/dev/null | head -10; echo ".pacnew/.pacsave files:"; find /etc -name '*.pacnew' -o -name '*.pacsave' 2>/dev/null | head -10
   sec "Services and daemons"; systemctl --failed --no-legend 2>/dev/null; systemctl --user --failed --no-legend 2>/dev/null; echo "Failed units above (none listed = none failed)"
   sec "Boot (initramfs / dracut)"; ls -l /boot/initramfs-*.img 2>/dev/null | awk '{print $5, $9}'; command -v lsinitcpio >/dev/null && for i in /boot/initramfs-linux*.img; do [ -f "$i" ] && { lsinitcpio "$i" >/dev/null 2>&1 && echo "$i: readable" || echo "$i: PROBLEM reading it"; }; done
+  [ -x /usr/local/bin/sunshine-declare ] && { sec "Declarative setup (Sirius)"; sunshine-declare status 2>&1 | head -12; command -v nix >/dev/null && { echo "nix: $(nix --version)"; systemctl is-active nix-daemon.socket; }; }
   sec "Snapshots"; command -v sunshine-snapshot >/dev/null && sunshine-snapshot status 2>&1 | head -8
   sec "Journal: errors this boot"; journalctl -p 3 -b --no-pager 2>/dev/null | tail -12
 } > "$LOG" 2>&1

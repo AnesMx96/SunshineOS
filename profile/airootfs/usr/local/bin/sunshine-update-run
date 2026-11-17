@@ -64,8 +64,9 @@ fi
 if command -v flatpak >/dev/null && flatpak remotes 2>/dev/null | grep -q .; then
   say "Updating Flatpak apps"; flatpak update -y --noninteractive || true
 fi
-if command -v yay >/dev/null && [ -n "${REAL_USER:-}" ]; then
-  say "Updating AUR (community) packages"; sudo -u "$REAL_USER" yay -Sua --noconfirm --needed || true
+aurh=$(command -v paru || command -v yay || true)
+if [ -n "$aurh" ] && [ -n "${REAL_USER:-}" ]; then
+  say "Updating AUR (community) packages"; sudo -u "$REAL_USER" "$aurh" -Sua --noconfirm --needed || true
 fi
 
 say "Tidying up"
