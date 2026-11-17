@@ -72,6 +72,9 @@ for t in $(seq $TRIES); do
   unset FORCE   # on retries only build what is still missing
 done
 unset FORCE
+# packages must be readable by normal users (a build on a host with restrictive default ACLs makes them root-only: the Darkly style, GTK theme,
+# `uni`, the browser ... then exist but do not work); repairs only what is broken and rewrites the repo database
+tools/fix-pkg-modes.sh >"$LOG/pkgmodes.log" 2>&1 || warn "package mode check failed (see $LOG/pkgmodes.log)"; tail -1 "$LOG/pkgmodes.log"; fix_owner
 
 log "3/4 Hyprland payload"
 if [ $CLEAN = 1 ] || [ ! -d "$PAY/root/etc/skel" ]; then

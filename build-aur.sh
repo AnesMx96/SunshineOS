@@ -27,10 +27,10 @@ docker run --rm -e HOST_UID="$(id -u)" -e HOST_GID="$(id -g)" \
   failed=()
   for p in "$@"; do
     sudo -u builder bash -c "
-      set -e; cd /aur; rm -rf $p
+      set -e; umask 022; mkdir -p /tmp/makepkg-build; cd /aur; rm -rf $p
       if [ -d /pkgs/$p ]; then cp -r /pkgs/$p $p; else for i in 1 2 3; do rm -rf $p; git clone -q https://aur.archlinux.org/$p.git && [ -f $p/PKGBUILD ] && break; sleep 5; done; fi
       cd $p
-      SRCDEST=/srcdest MAKEFLAGS=-j\$(nproc) makepkg -sCf --noconfirm --needed --skippgpcheck
+      BUILDDIR=/tmp/makepkg-build SRCDEST=/srcdest MAKEFLAGS=-j\$(nproc) makepkg -sCf --noconfirm --needed --skippgpcheck
       cp -f *.pkg.tar.zst /repo/" || { echo "### FAILED: $p"; failed+=("$p"); }
   done
   cd /repo && rm -f sunshine.db* sunshine.files* && repo-add sunshine.db.tar.gz $(ls *.pkg.tar.zst | grep -v -- "-debug-")
