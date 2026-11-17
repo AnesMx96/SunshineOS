@@ -16,6 +16,11 @@
       selected: false
       packages:
         - sunshine-app-zen
+    - name: "Okular"
+      description: "PDF and Markdown reader (the default for both) (official repos)"
+      selected: true
+      packages:
+        - sunshine-app-okular
     - name: "LibreOffice"
       description: "Documents, spreadsheets, presentations (official repos)"
       selected: false
