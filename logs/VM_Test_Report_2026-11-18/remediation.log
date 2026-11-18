@@ -303,3 +303,126 @@ The operation has completed successfully.
 ==> Formatting
 ERROR: unable to open /dev/sda2: Device or resource busy
 ERROR: mkfs.btrfs failed
+########## STEP 8: INSTALL RETRY (CLEAN HOLDERS) @ 2026-11-18T19:51:39+01:00 ##########
+NO_INSTALLER
+READY
+INSTALL_PID=6026
+=== final installer log tail ===
+==> Partitioning /dev/sda (bios)
+Creating new GPT entries in memory.
+Warning: The kernel is still using the old partition table.
+The new table will be used at the next reboot or after you
+run partprobe(8) or kpartx(8)
+The operation has completed successfully.
+==> Formatting
+ERROR: unable to open /dev/sda2: Device or resource busy
+ERROR: mkfs.btrfs failed
+=== disk ===
+NAME   SIZE FSTYPE MOUNTPOINT
+sda     20G        
+├─sda1   2M btrfs  
+└─sda2  20G btrfs  
+########## STEP 9: MANUAL PARTITION/FORMAT DIAGNOSIS @ 2026-11-18T19:52:01+01:00 ##########
+/dev/sda: 8 bytes were erased at offset 0x00000200 (gpt): 45 46 49 20 50 41 52 54
+/dev/sda: 8 bytes were erased at offset 0x4fffffe00 (gpt): 45 46 49 20 50 41 52 54
+/dev/sda: 2 bytes were erased at offset 0x000001fe (PMBR): 55 aa
+Creating new GPT entries in memory.
+Warning: The kernel is still using the old partition table.
+The new table will be used at the next reboot or after you
+run partprobe(8) or kpartx(8)
+The operation has completed successfully.
+=== state before mkfs ===
+NAME   SIZE FSTYPE MOUNTPOINT
+sda     20G        
+├─sda1   2M btrfs  
+└─sda2  20G btrfs  
+Label: 'sunshine'  uuid: b4919183-3a6d-407e-a084-fbb4acd64551
+	Total devices 1 FS bytes used 9.15GiB
+	devid    1 size 20.00GiB used 11.02GiB path /dev/sda2
+
+Label: none  uuid: b758df1e-96cf-4d4c-80bc-97e0c8258cec
+	Total devices 1 FS bytes used 5.24GiB
+	devid    1 size 8.00GiB used 7.99GiB path /dev/sda1
+=== mkfs ===
+ERROR: unable to open /dev/sda2: Device or resource busy
+btrfs-progs v7.3
+See https://btrfs.readthedocs.io for more information.
+
+MKFS_RC=1
+=== forget stale btrfs devices and format ===
+FORGET_RC=0
+wipefs: error: /dev/sda2: probing initialization failed: Device or resource busy
+/dev/sda1: 8 bytes were erased at offset 0x00010040 (btrfs): 5f 42 48 52 66 53 5f 4d
+Label: 'sunshine'  uuid: b4919183-3a6d-407e-a084-fbb4acd64551
+	Total devices 1 FS bytes used 9.15GiB
+	devid    1 size 20.00GiB used 11.02GiB path /dev/sda2
+ERROR: unable to open /dev/sda2: Device or resource busy
+btrfs-progs v7.3
+See https://btrfs.readthedocs.io for more information.
+
+MKFS_RC=1
+NAME   SIZE FSTYPE
+sda     20G 
+├─sda1   2M 
+└─sda2  20G btrfs
+########## STEP 10: KERNEL DEVICE RESET @ 2026-11-18T19:52:31+01:00 ##########
+host0
+host1
+host2
+1
+lsblk: /dev/sda: No such file or directory
+lsblk: /dev/sda: No such file or directory
+Label: 'sunshine'  uuid: b4919183-3a6d-407e-a084-fbb4acd64551
+	Total devices 1 FS bytes used 9.15GiB
+	devid    1 size 20.00GiB used 11.02GiB path /dev/sdb2
+=== inspect rescanned disk ===
+NAME   SIZE TYPE FSTYPE   MOUNTPOINT
+loop0  2.7G loop squashfs /run/archiso/airootfs
+sdb     20G disk          
+├─sdb1   2M part          
+└─sdb2  20G part btrfs    
+sr0    2.8G rom  iso9660  /run/archiso/bootmnt
+zram0    0B disk swap     
+=== forget ===
+Label: 'sunshine'  uuid: b4919183-3a6d-407e-a084-fbb4acd64551
+	Total devices 1 FS bytes used 9.15GiB
+	devid    1 size 20.00GiB used 11.02GiB path /dev/sdb2
+=== format sdb2 ===
+/dev/sdb2: 8 bytes were erased at offset 0x00010040 (btrfs): 5f 42 48 52 66 53 5f 4d
+btrfs-progs v7.3
+See https://btrfs.readthedocs.io for more information.
+
+NOTE: default settings have changed in version 6.19 (supported since linux 6.1):
+      - enable block-group-tree (-O bgt)
+
+Label:              sunshine
+UUID:               7271cf69-f1fc-404f-bb54-4aba6d8605e4
+Node size:          16384
+Sector size:        4096	(CPU page size: 4096)
+Filesystem size:    20.00GiB
+Block group profiles:
+  Data:             single            8.00MiB
+  Metadata:         DUP             256.00MiB
+  System:           DUP               8.00MiB
+SSD detected:       no
+Zoned device:       no
+Features:           extref, skinny-metadata, no-holes, free-space-tree, block-group-tree
+Checksum:           crc32c
+Number of devices:  1
+Devices:
+   ID        SIZE  PATH     
+    1    20.00GiB  /dev/sdb2
+
+MKFS_RC=0
+NAME   SIZE FSTYPE
+sdb     20G 
+├─sdb1   2M 
+└─sdb2  20G 
+########## STEP 11: INSTALL TO /dev/sdb @ 2026-11-18T19:52:57+01:00 ##########
+pacman-init=active
+196:rsync -aHAXx --no-inc-recursive \
+NAME   SIZE FSTYPE
+sdb     20G 
+├─sdb1   2M 
+└─sdb2  20G btrfs
+INSTALL_PID=6536
