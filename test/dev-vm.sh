@@ -32,6 +32,7 @@ case "$cmd" in
   ssh)
     O="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -o ConnectTimeout=5 -p 2222"
     if command -v sshpass >/dev/null; then exec sshpass -p sunshine ssh $O sunshine@127.0.0.1 "$@"; fi
+    echo "sshpass is needed for the tunnel (pacman -S sshpass)"; exit 1 ;;
   push)
     t=$(mktemp -d); tar -C overlay/system -cf "$t/system.tar" .; tar -C overlay/skel -cf "$t/skel.tar" .
     $VB put "$N" "$t/system.tar" >/dev/null; $VB put "$N" "$t/skel.tar" >/dev/null
