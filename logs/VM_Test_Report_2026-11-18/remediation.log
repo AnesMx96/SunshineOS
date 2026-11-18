@@ -426,3 +426,8 @@ sdb     20G
 ├─sdb1   2M 
 └─sdb2  20G btrfs
 INSTALL_PID=6536
+=== prepared post-install injection script @ 2026-11-18T19:54:12+01:00 ===
+-rw------- 1 sunshine sunshine 2677 Nov 18 18:54 /tmp/sunshine-fixes/inject-into-target.sh
+6536 sudo -n env SUNSHINE_AUTO=1 SUNSHINE_DISK=/dev/sdb SUNSHINE_USER=sunshine SUNSHINE_PASS=sunshine SUNSHINE_HOSTNAME=sunshine-os SUNSHINE_TZ=Europe/Madrid SUNSHINE_FS=btrfs /usr/local/bin/sunshine-install
+6538 bash /usr/local/bin/sunshine-install
+6541 tee -a /var/log/sunshine-install.log
