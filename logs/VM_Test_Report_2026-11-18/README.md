@@ -166,4 +166,6 @@ In progress. The following has been done and is recorded in `remediation.log`:
    - Doctor no longer prints `-dc 0-9`; remaining reports are live-ISO false positives plus F13.
    - GTK3/GTK4 now request `Breeze-Dark`, Kvantum user config selects `Sunshine`, and the same settings were copied into `/etc/skel`.
 
-Next steps: repair the package database with a full update, install to `/dev/sda`, reboot from disk, verify tools/theme, and commit each step.
+4. Repaired the package database (F13) with a successful `pacman -Syu --noconfirm --cachedir /tmp/pacman-cache`: 20 packages upgraded, `PACMAN_SYU_RC=0`, `pacman -Dk` reports `No database errors have been found!`, overlay usage 359M/1.0G.
+
+Next steps: install to `/dev/sda`, reboot from disk, verify tools/theme, and commit each step.
