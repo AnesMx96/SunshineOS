@@ -36,7 +36,7 @@ case "$cmd" in
   push)
     t=$(mktemp -d); tar -C overlay/system -cf "$t/system.tar" .; tar -C overlay/skel -cf "$t/skel.tar" .
     $VB put "$N" "$t/system.tar" >/dev/null; $VB put "$N" "$t/skel.tar" >/dev/null
-    $VB run "$N" 'tar -C / -xf /tmp/system.tar --no-same-owner; mkdir -p /etc/skel; tar -C /etc/skel -xf /tmp/skel.tar --no-same-owner; for u in /home/*; do [ -d $u ] || continue; tar -C $u -xf /tmp/skel.tar --no-same-owner --keep-old-files 2>/dev/null; chown -R $(basename $u):$(basename $u) $u/.config 2>/dev/null; done; echo pushed'
+    $VB run "$N" 'tar -C / -xf /tmp/system.tar --no-same-owner --no-overwrite-dir --mode=u+rwX,go+rX,go-w; mkdir -p /etc/skel; tar -C /etc/skel -xf /tmp/skel.tar --no-same-owner --no-overwrite-dir --mode=u+rwX,go+rX,go-w; for u in /home/*; do [ -d $u ] || continue; tar -C $u -xf /tmp/skel.tar --no-same-owner --no-overwrite-dir --mode=u+rwX,go+rX,go-w --keep-old-files 2>/dev/null; chown -R $(basename $u):$(basename $u) $u/.config 2>/dev/null; done; echo pushed'
     rm -rf "$t" ;;
   changed) $VB run "$N" "cd $UP 2>/dev/null && find . -type f | sed 's|^\./||' | grep -v -E '$noise' | sort" ;;
   harvest)
