@@ -25,7 +25,7 @@ case "$cmd" in
     VBoxManage modifyvm "$N" --boot1 dvd --boot2 none
     echo "created $N with the persistent disk $vdi" ;;
   start)   # GUI window for the user, plus the terminal tunnel (ssh via NAT forward 2222 and VBox guest control) for Claude
-    $VB start "$N"; sleep 14; $VB key "$N" down; sleep 1; $VB key "$N" enter
+    $VB start "$N"; sleep 6; $VB key "$N" down; sleep 1; $VB key "$N" enter
     echo "waiting for the guest's sshd on 127.0.0.1:2222 ..."
     for i in $(seq 1 60); do "$0" ssh "$N" true 2>/dev/null && { echo "tunnel up: test/dev-vm.sh ssh $N '<command>'"; exit 0; }; sleep 5; done
     echo "ssh did not come up (guest control still works: test/vbox.sh run $N '<command>')"; exit 1 ;;
