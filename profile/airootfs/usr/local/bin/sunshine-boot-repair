@@ -8,16 +8,18 @@ read -rp "Reinstall GRUB and rebuild the boot files of this system? [y/N] " a; [
 sec "Kernel and initramfs"
 kv=$(ls /usr/lib/modules | head -1)
 [ -f "/usr/lib/modules/$kv/vmlinuz" ] && cp --sparse=never --reflink=never "/usr/lib/modules/$kv/vmlinuz" /boot/vmlinuz-linux && chmod 644 /boot/vmlinuz-linux && echo "$(loc "kernel image rewritten")"
-mkinitcpio -k "$kv" -g /boot/initramfs-linux.img 2>&1 | tail -2
+tmp=$(mktemp /boot/.initramfs.XXXXXX)
+if mkinitcpio -k "$kv" -g "$tmp" >/tmp/sunshine-mkinitcpio.log 2>&1 && [ -s "$tmp" ]; then mv -f "$tmp" /boot/initramfs-linux.img && echo "initramfs rebuilt"
+else rm -f "$tmp"; echo "${R}mkinitcpio failed (the old initramfs is untouched):${N}"; tail -5 /tmp/sunshine-mkinitcpio.log; exit 1; fi
 sec "GRUB"
 if [ -d /sys/firmware/efi ]; then
   mountpoint -q /boot/efi || mount /boot/efi 2>/dev/null || { echo "${R}EFI partition is not mounted at /boot/efi${N}"; exit 1; }
-  grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=SunshineOS --recheck 2>&1 | tail -2
-  grub-install --target=x86_64-efi --efi-directory=/boot/efi --removable --recheck 2>&1 | tail -2
+  grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=SunshineOS --recheck >/tmp/sunshine-grub.log 2>&1 || echo "NVRAM entry could not be written (continuing with the removable path)"
+  grub-install --target=x86_64-efi --efi-directory=/boot/efi --removable --recheck >>/tmp/sunshine-grub.log 2>&1 || { echo "${R}grub-install failed:${N}"; tail -3 /tmp/sunshine-grub.log; exit 1; }
 else
   src=$(findmnt -no SOURCE / | sed 's/\[.*//'); disk=$(lsblk -no PKNAME "$src" 2>/dev/null | head -1)
   [ -n "$disk" ] || { echo "${R}cannot find the boot disk${N}"; exit 1; }
-  grub-install --target=i386-pc --recheck "/dev/$disk" 2>&1 | tail -2
+  grub-install --target=i386-pc --recheck "/dev/$disk" >/tmp/sunshine-grub.log 2>&1 || { echo "${R}grub-install failed:${N}"; tail -3 /tmp/sunshine-grub.log; exit 1; }
 fi
-grub-mkconfig -o /boot/grub/grub.cfg 2>&1 | tail -3
+grub-mkconfig -o /boot/grub/grub.cfg >/tmp/sunshine-grub.log 2>&1 && grep -q menuentry /boot/grub/grub.cfg || { echo "${R}grub-mkconfig failed:${N}"; tail -3 /tmp/sunshine-grub.log; exit 1; }
 printf '\n%sDone. Restart to test the boot menu.%s\n' "$G$B" "$N"

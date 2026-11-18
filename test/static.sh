@@ -11,11 +11,15 @@ n=0; while IFS= read -r f; do
 done < <(git ls-files overlay profile/airootfs profile/grub tools test make-iso.sh build.sh build-aur.sh 2>/dev/null | grep -v -E '\.(png|svg|pf2|json|toml|qml|css|conf|cfg|desktop|service|timer|path|hook|tsv|md|txt|xml|ini|colors|kvconfig)$')
 ok "$n shell scripts parse"
 echo "== python tools start (Qt offscreen, 3 s)"
-for t in sunshine-welcome sunshine-toolbox; do
+for t in sunshine-welcome sunshine-toolbox sunshine-pet sunshine-pods; do
   f=overlay/system/usr/local/bin/$t; [ -f "$f" ] || f=profile/airootfs/usr/local/bin/$t
   out=$(SUNSHINE_I18N="$PWD/overlay/system/usr/share/sunshine/i18n" QT_QPA_PLATFORM=offscreen timeout 3 python3 "$f" 2>&1); rc=$?
   if [ $rc -eq 124 ]; then ok "$t starts"; elif python3 -c 'import PyQt6' 2>/dev/null; then bad "$t exited with $rc: $(printf '%s' "$out" | tail -1)"; else ok "$t skipped (PyQt6 missing)"; fi
 done
+echo "== the store"
+for m in backend index themes windows appimage; do (cd profile/airootfs/usr/lib/sunshine-store && python3 -c "import sys; sys.path.insert(0,'.'); import $m" 2>/tmp/static.err) && ok "store module $m imports" || bad "store module $m: $(tail -1 /tmp/static.err)"; done
+out=$(cd profile/airootfs/usr/lib/sunshine-store && QT_QPA_PLATFORM=offscreen timeout 4 python3 app.py 2>&1); rc=$?
+[ $rc -eq 124 ] && ok "sunshine-store starts" || { python3 -c 'import PyQt6' 2>/dev/null && bad "sunshine-store exited with $rc: $(printf '%s' "$out" | tail -1)" || ok "sunshine-store skipped (PyQt6 missing)"; }
 for f in $(git ls-files 'overlay/**/*.py' 'profile/airootfs/**/*.py' 'tools/*.py'); do python3 -m py_compile "$f" 2>/tmp/static.err && ok "$f" || bad "$f: $(tail -1 /tmp/static.err)"; done
 echo "== the shell library must not shadow system commands"
 shadow=$(bash -c '. overlay/system/usr/local/lib/sunshine/ui.sh; for f in $(declare -F | cut -d" " -f3); do p=$(type -P "$f"); [ -n "$p" ] && echo "$f"; done' 2>/dev/null)

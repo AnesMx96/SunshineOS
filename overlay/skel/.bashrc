@@ -3,7 +3,7 @@
 
 export EDITOR=nano
 export VISUAL=nano
-export BROWSER=zen-browser
+export BROWSER=firefox
 export PATH="$HOME/.local/bin:$HOME/Applications:$PATH"
 HISTSIZE=20000; HISTFILESIZE=40000; HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend checkwinsize autocd 2>/dev/null

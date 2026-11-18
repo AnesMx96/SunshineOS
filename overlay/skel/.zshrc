@@ -1,7 +1,7 @@
 # Sunshine OS zsh configuration
 export EDITOR=nano
 export VISUAL=nano
-export BROWSER=zen-browser
+export BROWSER=firefox
 export PATH="$HOME/.local/bin:$HOME/Applications:$PATH"
 HISTFILE=~/.zsh_history; HISTSIZE=20000; SAVEHIST=40000
 setopt HIST_IGNORE_ALL_DUPS SHARE_HISTORY AUTO_CD INTERACTIVE_COMMENTS

@@ -1,7 +1,7 @@
 # Sunshine OS additions (end-4's config.fish, with the Sunshine patch, already sets up the prompt and the greeting)
 set -gx EDITOR nano
 set -gx VISUAL nano
-set -gx BROWSER (command -sq zen-browser; and echo zen-browser; or echo firefox)
+set -gx BROWSER firefox
 fish_add_path -g $HOME/.local/bin $HOME/Applications
 
 if status is-interactive

@@ -5,7 +5,7 @@ ColorScheme=SunshineDark
 widgetStyle=kvantum
 
 [kdeglobals][Icons]
-Theme=breeze-dark
+Theme=Sunshine-orange-dark
 
 [kwinrc][org.kde.kdecoration2]
 ButtonsOnLeft=

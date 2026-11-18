@@ -26,7 +26,7 @@ rsync -aH --keep-dirlinks "$PAY/root/" "$ROOT/" || echo "WARN: payload copy repo
 { cat "$ROOT/etc/pacman.conf"
   printf '\n[sunshine-hypr]\nSigLevel = Optional TrustAll\nServer = file://%s/repo\n' "$PAY"; } > "$ROOT/tmp/pm-hypr.conf"
 CH() { chroot "$ROOT" "$@"; }
-CH pacman-key --init >/dev/null 2>&1; CH pacman-key --populate archlinux >/dev/null 2>&1
+CH pacman-key --init >/dev/null 2>&1; CH pacman-key --populate >/dev/null 2>&1
 n=0; fails=()
 mapfile -t PKGS < <(grep -v '^\s*#' "$PAY/packages.txt" | grep -v '^\s*$')
 # Fully automatic: no prompts (--noconfirm) and NO package is ever removed or overwritten to make room (no -R, no --overwrite,

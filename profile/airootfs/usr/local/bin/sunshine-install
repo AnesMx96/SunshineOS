@@ -293,7 +293,7 @@ cat > "$MNT/root/.sunshine-chroot.sh" <<EOS
 set -e
 locale-gen
 # microcode: userspace images must live in /boot for GRUB
-pacman-key --init >/dev/null 2>&1 && pacman-key --populate archlinux >/dev/null 2>&1 || true
+pacman-key --init >/dev/null 2>&1 && pacman-key --populate >/dev/null 2>&1 || true
 userdel -r sunshine 2>/dev/null || true
 getent group sunshine >/dev/null && groupdel sunshine 2>/dev/null || true
 useradd -m -G wheel,audio,video,storage,optical,lp,network,power,input,i2c -s /usr/bin/fish "$USERNAME"
