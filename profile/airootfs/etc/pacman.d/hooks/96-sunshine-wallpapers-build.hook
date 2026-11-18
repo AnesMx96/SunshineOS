@@ -1,4 +1,4 @@
-# Image build only (archiso removes it again afterwards): the preloaded Breeze themes get the Sunshine flower wallpaper.
+# Image build only; the line below makes zzzz99 remove from airootfs again: remove from airootfs
 # The installed system uses /usr/share/libalpm/hooks/96-sunshine-wallpapers.hook with the same effect.
 [Trigger]
 Operation = Install
