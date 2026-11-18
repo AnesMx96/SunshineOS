@@ -595,3 +595,136 @@ lrwxrwxrwx 1 root root 36 Nov 18 19:35 /mnt/sunshine-target/etc/systemd/system/m
 lrwxrwxrwx 1 root root 43 Nov 18 19:35 /mnt/sunshine-target/etc/systemd/system/multi-user.target.wants/vboxservice.service -> /usr/lib/systemd/system/vboxservice.service
 INJECT_OK
 /dev/sdb2        20G  9.0G   11G  46% /mnt/sunshine-target
+########## STEP 14: BOOT INSTALLED SYSTEM @ 2026-11-18T20:35:46+01:00 ##########
+AUTOLOGIN_ADDED
+UNMOUNTED
+0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
+VM_STATE=poweroff
+Waiting for VM "SuOS" to power on...
+VM "SuOS" has been successfully started.
+=== first boot verification ===
+GUEST_UP
+ Static hostname: sunshine-os
+       Icon name: computer-vm
+         Chassis: vm 💽
+      Machine ID: 2bef74ca643648d48aa63ad35ae7a21d
+         Boot ID: ec2338171d0843ea848d2164b17a29c1
+  Virtualization: oracle
+Operating System: Sunshine OS
+          Kernel: Linux 7.3.4-arch1-2
+=== root fs ===
+/dev/sda2        20G  9.0G   11G  46% /
+=== disks ===
+NAME   SIZE FSTYPE MOUNTPOINT
+sda     20G        
+├─sda1   2M        
+└─sda2  20G btrfs  /var/log
+zram0  2.7G swap   [SWAP]
+=== services ===
+starting
+active
+active
+active
+active
+########## STEP 15: VERIFY INSTALLED SYSTEM @ 2026-11-18T20:36:25+01:00 ##########
+=== system state ===
+starting
+=== failed units ===
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+=== sessions ===
+ 1 1000 sunshine -     652 manager       -    no -
+ 2  963 sddm     -     698 manager-early -    no -
+c1 1000 sunshine -     549 background    -    no -
+c2  963 sddm     seat0 684 greeter       tty2 no -
+=== pacman sync ===
+
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:
+
+    #1) Respect the privacy of others.
+    #2) Think before you type.
+    #3) With great power comes great responsibility.
+
+sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
+sudo: a password is required
+SYNC_RC=1
+=== db check ===
+
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:
+
+    #1) Respect the privacy of others.
+    #2) Think before you type.
+    #3) With great power comes great responsibility.
+
+sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
+sudo: a password is required
+=== identity ===
+Identity OK: Sunshine OS
+=== doctor ===
+
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:
+
+    #1) Respect the privacy of others.
+    #2) Think before you type.
+    #3) With great power comes great responsibility.
+
+sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
+sudo: a password is required
+=== tools syntax ===
+GUI tools parse OK
+=== theme ===
+gtk-theme-name=Breeze-Dark
+gtk-icon-theme-name=Sunshine-orange-dark
+gtk-cursor-theme-name=breeze_cursors
+[General]
+theme=Sunshine
+=== plasma ===
+/home/sunshine/.config/kdeglobals:widgetStyle=Darkly
+=== fastfetch ===
+    "type": "WMTheme",
+    "error": "WM Theme needs successful WM detection"
+    "type": "Theme",
+      "theme1": "",
+      "theme2": "adw-gtk3-dark [GTK2/3/4]"
+    "type": "Icons",
+      "icons1": "",
+      "icons2": "Sunshine-orange-dark [GTK3/4]"
+########## STEP 16: ENABLE AUTOLOGIN IN INSTALLED SYSTEM @ 2026-11-18T20:37:14+01:00 ##########
+[sudo] password for sunshine: === written ===
+[Autologin]
+User=sunshine
+Session=plasma
+Relogin=false
+[sudo] password for sunshine: SDDM_RESTART_RC=0
+=== sessions ===
+ 1 1000 sunshine -     652 manager    -    no -
+ 3 1000 sunshine seat0 994 user       tty1 no -
+c1 1000 sunshine -     549 background -    no -
+=== state ===
+starting
+=== failed ===
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+########## STEP 17: INSTALLED-SYSTEM TOOL/PACKAGE VERIFICATION @ 2026-11-18T20:38:01+01:00 ##########
+[sudo] password for sunshine: :: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+ sunshine downloading...
+SYNC_RC=0
+=== db check ===
+No database errors have been found!
+=== doctor ===
+[sudo] password for sunshine:   [38;5;220m![0m expected package not installed: hyprland
+
+[32m[1mAll good[0m (1 note(s))
+=== connectivity ===
+
+--- 1.1.1.1 ping statistics ---
+2 packets transmitted, 0 received, 100% packet loss, time 1051ms
+
