@@ -65,7 +65,7 @@ Write the ISO to a USB stick and boot it. Nothing on your computer changes until
    sudo dd if=SunshineOS_<version>_Release_<date>.iso of=/dev/sdX bs=4M status=progress oflag=sync
    ```
 4. **Boot it** (UEFI or legacy BIOS). The live session starts in KDE Plasma and the **Welcome** window opens by itself.
-5. **Choose "Install Sunshine OS"**, pick **btrfs** to get restore points, and optionally tick full-system encryption. Keep the network connected: the Hyprland desktop is installed as a separate step.
+5. **Choose "Install Sunshine OS"** (the target disk needs at least 15 GB: the installed system is the uncompressed image, several times the ISO), pick **btrfs** to get restore points, and optionally tick full-system encryption. Keep the network connected: the Hyprland desktop is installed as a separate step.
 
 ![Install section of the website](docs/screenshots/install.png)
 
@@ -135,6 +135,8 @@ flowchart LR
   K --> L[umount · finished]
 ```
 
+Besides the steps below, the installer notes the install location (`shellprocess@location`, default language of the tools) and registers the shipped `sunshine-base` package with pacman (`shellprocess@ownbase`, so tool updates arrive through normal updates).
+
 | Step | What it does |
 | --- | --- |
 | `shellprocess@cleanup` | `sunshine-post-install` strips the live-session settings from the target system (runs in the chroot, before the user is created) |
@@ -142,6 +144,13 @@ flowchart LR
 | `shellprocess@usershell` | `sunshine-set-shell` gives the new user fish as the login shell |
 | `shellprocess@crypt` | `sunshine-crypt-setup` puts Calamares' `/crypto_keyfile.bin` into the initramfs so the passphrase is asked once, by GRUB |
 | `shellprocess@snapshots` | `sunshine-snapshots-setup` creates the snapper config for `/`, the timeline and cleanup timers, and a first snapshot |
+
+## Editions, repositories and the Plasma desktop
+
+- **Sol** is the main edition; **Sirius** adds the declarative setup (`sunshine-declare`, Nix and its daemon). Nothing else differs. `build.sh` removes Nix for Sol (`SUNSHINE_EDITION`).
+- **Repositories.** `[sunshine]` is signed and first in `/etc/pacman.conf`; `sunshine-repo` keeps it there and adds **Chaotic-AUR** on the first update. `sunshine-update` ranks the mirrors with `rate-mirrors`.
+- **Desktop.** The Plasma session has its own look: a Windows 11 style start menu (`com.sunshineos.startmenu`), a top bar with window buttons, global menu, clock and live NET/DISK/CPU/GPU graphs, a taskbar update widget, the Sunshine Plasma theme, window frame and Kvantum style. Their sources are in `overlay/system/usr/share/`, published to [sunshineos-assets](https://github.com/tak0dan/sunshineos-assets) by `tools/publish-assets.sh`.
+- **Tools UI.** Every shell tool shares `usr/local/lib/sunshine/ui.sh` (friendly messages, ASCII graph while a step runs, the braille sun when it succeeded, Ukrainian word list `uk.tsv`); settings in `/etc/sunshine/tools.conf`.
 
 ## The Sunshine tools
 
@@ -152,10 +161,13 @@ flowchart LR
 | `sunshine-doctor` | Health check of identity, package manager, desktop, boot files, services and restore points. `--fix` repairs what is safe to repair and never removes your packages or files; `--quiet` prints only problems |
 | `sunshine-snapshot` | Restore points (btrfs snapshots) in plain words: list, create, delete |
 | `sunshine-boot-repair` | Rebuilds the initramfs, checks the kernel image, regenerates GRUB and its menu on an installed system |
-| `sunshine-fix-pacman` | Clears stale locks, repairs a broken keyring, refreshes stale mirrors, rebuilds damaged databases |
+| `sunshine-fix-pacman` | Clears stale locks, repairs a broken keyring, ranks mirrors, rebuilds damaged databases, repairs the AUR helper; every step reports what really happened |
 | `sunshine-cleanup` | Frees disk space: old package files, unused packages (asks first), old logs, old restore points |
-| `sunshine-update` | GUI entry point: opens a terminal that runs `sunshine-update-run` under a polkit prompt |
-| `sunshine-update-notifier` | User timer that tells you when updates are available |
+| `sunshine-update` | GUI entry point: opens a terminal that runs `sunshine-update-run` under a polkit prompt: ranks the mirrors (`rate-mirrors`), updates system, AUR, Flatpak (and Nix on Sirius packages) |
+| `sunshine-update-notifier`, `sunshine-update-check` | User timer that checks for updates; the state drives the taskbar update widget (red dot: package updates; download arrow: a new release, Sunshine repository updates or more than 50 packages) |
+| `sunshine-diagnose` | Full system diagnosis written to `~/Sunshine-Diagnostics` (the newest 20 are kept), 10 minutes after each graphical login and after every update |
+| `sunshine-restore-visuals` | Pulls the themes and visual configs from [sunshineos-assets](https://github.com/tak0dan/sunshineos-assets) and applies them; offline it applies the installed ones and says what is missing |
+| `sunshine-declare` | Sirius only: makes the system match `/etc/sunshine/declarative.toml` (pacman packages, Nix packages, services) |
 | `sunshine-identity` | Keeps `os-release`, `lsb-release`, `issue` and `motd` as Sunshine OS; a pacman hook runs it after every update of `filesystem` |
 | `sunshine-info` | System information to paste into a support request |
 | `sunshine-prompt` | Switch the terminal prompt style (`tokyo` or `pastel`) |
@@ -176,7 +188,7 @@ One application for pacman, the AUR and Flatpak. Installed packages are marked a
 
 ## Build it yourself
 
-Needs: Docker (your user in the `docker` group), `git`, `rsync`, about 25 GB of free disk and a network connection. Nothing is installed on or changed in the host.
+Needs: Docker (your user in the `docker` group), `git`, `rsync`, about 30 GB of free disk (a build leaves 15 GB of working data in a Docker volume) and a network connection. Nothing is installed on or changed in the host.
 
 ```sh
 git clone https://github.com/tak0dan/SunshineOS
@@ -233,12 +245,12 @@ SITE_DIR=<clone of the site repo> DOWNLOAD_URL=<Worker URL> JSON_ONLY=1 tools/re
 | `profile/airootfs/usr/local/bin/` | The Sunshine commands and installer steps |
 | `profile/airootfs/etc/calamares/` | Installer configuration, modules and branding |
 | `hyprland/` | Package list of the Hyprland payload |
-| `overlay/` | Files laid over the system: Quickshell config, skel, fastfetch logo |
+| `overlay/` | The source of truth for files laid over the system: `system/` (copied into `profile/airootfs/` on every build), `skel/` (the default user settings), `sirius/` (only for the Sirius edition) |
 | `pkgs/`, `aur/` | `PKGBUILD`s of packages that are not in the official repositories |
 | `branding/` | Logos, icons, wallpapers, GRUB theme sources |
 | `build.sh`, `make-iso.sh`, `build-aur.sh`, `Dockerfile` | The container build |
 | `tools/` | Import, art generation, venv and release scripts |
-| `test/` | QEMU boot, install and smoke tests with throwaway disks |
+| `test/` | `vbox.sh` (a VirtualBox test VM you and the scripts use together: window plus guest control, SSH and shared clipboard), `static.sh` (run before every build: shell syntax, Python apps start, no `tr` shadowing, no `$variables` in Calamares commands, no drift between `overlay/system` and `profile/airootfs`), plus QEMU boot, install and smoke tests with throwaway disks |
 | `worker/` | Cloudflare Worker that serves the ISO as one file |
 
 The website lives in [tak0dan/sunshineos-site](https://github.com/tak0dan/sunshineos-site). The Hyprland configuration comes from [Sunshine_end4_Dots](https://github.com/tak0dan/Sunshine_end4_Dots), based on [end-4's dots-hyprland](https://github.com/end-4/dots-hyprland).

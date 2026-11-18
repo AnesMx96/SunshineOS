@@ -143,6 +143,13 @@ flowchart LR
 | `shellprocess@crypt` | `sunshine-crypt-setup` кладе `/crypto_keyfile.bin` від Calamares в initramfs, щоб парольну фразу запитував лише GRUB, один раз |
 | `shellprocess@snapshots` | `sunshine-snapshots-setup` створює конфігурацію snapper для `/`, таймери знімків і очищення та перший знімок |
 
+## Видання, репозиторії та стільниця Plasma
+
+- **Sol** — основне видання; **Sirius** додає декларативне налаштування (`sunshine-declare`, Nix і його демон). Інших відмінностей немає. `build.sh` прибирає Nix для Sol (`SUNSHINE_EDITION`).
+- **Репозиторії.** `[sunshine]` підписаний і стоїть першим у `/etc/pacman.conf`; `sunshine-repo` тримає його там і додає **Chaotic-AUR** під час першого оновлення. `sunshine-update` ранжує дзеркала через `rate-mirrors`.
+- **Стільниця.** Сеанс Plasma має власний вигляд: меню «Пуск» у стилі Windows 11, верхня панель із кнопками вікна, глобальним меню, годинником і живими графіками мережі, диска, CPU та GPU, віджет оновлень на панелі завдань, тема Plasma, рамка вікна та стиль Kvantum. Джерела — у `overlay/system/usr/share/`, їх публікує в [sunshineos-assets](https://github.com/tak0dan/sunshineos-assets) `tools/publish-assets.sh`.
+- **Інтерфейс інструментів.** Усі shell-інструменти використовують `usr/local/lib/sunshine/ui.sh` (привітні повідомлення, ASCII-графік під час роботи, сонце з символів Брайля після успіху, український словник `uk.tsv`); налаштування — `/etc/sunshine/tools.conf`.
+
 ## Інструменти Sunshine
 
 ![Системні інструменти](docs/screenshots/tools.png)
