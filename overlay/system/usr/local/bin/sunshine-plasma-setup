@@ -27,6 +27,7 @@ qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1
 # Virtual machines (no 3D): turn off the heavy effects so Plasma stays responsive
 if systemd-detect-virt -q 2>/dev/null; then
   kwriteconfig6 --file kwinrc --group Plugins --key blurEnabled false
+  kwriteconfig6 --file kwinrc --group Plugins --key wobblywindowsEnabled false
   kwriteconfig6 --file kwinrc --group Plugins --key contrastEnabled false
   kwriteconfig6 --file kwinrc --group Plugins --key slidingpopupsEnabled false
   kwriteconfig6 --file kdeglobals --group KDE --key AnimationDurationFactor 0
