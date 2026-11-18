@@ -175,10 +175,8 @@ gst-plugins-ugly
 gst-libav
 ffmpeg
 vlc
-power-profiles-daemon
 fwupd
 ufw
-man-db
 bash-completion
 calamares
 yay
@@ -205,7 +203,6 @@ xdg-user-dirs
 imagemagick
 brightnessctl
 cava
-fastfetch
 loupe
 mpv
 nvtop
@@ -213,7 +210,6 @@ gvfs
 gvfs-mtp
 ttf-fantasque-nerd
 ttf-jetbrains-mono-nerd
-dolphin
 yazi
 lua
 inxi
