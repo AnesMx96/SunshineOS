@@ -1,0 +1,38 @@
+00:00:01.076242 Firmware type: BIOS
+00:00:01.190474   Driver <string>  = "HGCM" (cb=5)
+00:00:01.190594 [/Devices/pcbios/] (level 2)
+00:00:01.190595 [/Devices/pcbios/0/] (level 3)
+00:00:01.190597 [/Devices/pcbios/0/Config/] (level 4)
+00:00:01.190599   BootDevice0        <string>  = "FLOPPY" (cb=7)
+00:00:01.190601   FloppyDevice       <string>  = "i82078" (cb=7)
+00:00:01.190609 [/Devices/pcbios/0/Config/NetBoot/] (level 5)
+00:00:01.190610 [/Devices/pcbios/0/Config/NetBoot/0/] (level 6)
+00:00:01.208097 TM: GIP - CPU: iCpuSet=0x0 idCpu=0x0 idApic=0x0 iGipCpu=0x0 i64TSCDelta=0 enmState=3 u64CpuHz=3292358320(*) cErrors=0
+00:00:01.208106 TM: GIP - CPU: iCpuSet=0x1 idCpu=0x1 idApic=0x2 iGipCpu=0x3 i64TSCDelta=0 enmState=3 u64CpuHz=3292358288(*) cErrors=0
+00:00:01.208108 TM: GIP - CPU: iCpuSet=0x2 idCpu=0x2 idApic=0x4 iGipCpu=0x1 i64TSCDelta=0 enmState=3 u64CpuHz=3292357668(*) cErrors=0
+00:00:01.208110 TM: GIP - CPU: iCpuSet=0x3 idCpu=0x3 idApic=0x6 iGipCpu=0x2 i64TSCDelta=0 enmState=3 u64CpuHz=3292356883(*) cErrors=0
+00:00:01.252761 PcBios: [SMP] BIOS with 4 CPUs
+00:00:01.253300 PcBios: Using the 386+ BIOS image.
+00:00:01.254178 PcBios: MPS table at 000e1300
+00:00:01.254714 PcBios: fCheckShutdownStatusForSoftReset=true  fClearShutdownStatusOnHardReset=true
+00:00:01.255498 ERROR [COM]: aRC=VBOX_E_IPRT_ERROR (0x80bb0005) aIID={6ac83d89-6ee7-4e33-8ae6-b257b2e81be8} aComponent={ConsoleWrap} aText={The VBoxGuestPropSvc service call failed with the error VERR_HGCM_SERVICE_NOT_FOUND}, preserve=false aResultDetail=-2900
+00:00:01.299890 VGA: Using the 386+ BIOS image.
+00:00:01.337210 HM:   VM-entry Xcpt error-code optional = false
+00:00:01.344182 PcBios: SATA LUN#0 LCHS=1024/255/63
+00:00:01.350693 VMMDev: Guest Log: BIOS: VirtualBox 7.1.18
+00:00:01.379013 VMMDev: Guest Log: BIOS: AHCI 0-P#0: PCHS=16383/16/63 LCHS=1024/255/63 0x0000000001000000 sectors
+00:00:03.863610 VMMDev: Guest Log: BIOS: Boot : bseqnr=1, bootseq=0231
+00:00:03.863997 VMMDev: Guest Log: BIOS: Boot from Floppy 0 failed
+00:00:03.864442 VMMDev: Guest Log: BIOS: Boot : bseqnr=2, bootseq=0023
+00:00:03.865120 VMMDev: Guest Log: BIOS: Booting from CD-ROM...
+00:00:08.527494 VMMDev: Guest Log: BIOS: KBD: unsupported int 16h function 03
+00:00:08.527656 VMMDev: Guest Log: BIOS: AX=0305 BX=0000 CX=0000 DX=0000 
+00:18:11.184036 VMMDev: Guest Log: 17:46:33.270674 gctl0    Error: Processing requests failed with with rc=VERR_INTERRUPTED
+00:18:40.316666 VMMDev: Guest Log: 17:47:02.403468 gctl0    Error: Processing requests failed with with rc=VERR_INTERRUPTED
+00:23:38.005607 VMMDev: Guest Log: 17:52:00.093189 gctl0    Error: Processing requests failed with with rc=VERR_INTERRUPTED
+00:23:38.019145 VMMDev: Guest Log: 17:52:00.106667 gctls40  Error: Unable to notify guest session process (PID=7720, session ID=1), rc=VERR_NOT_FOUND
+00:24:58.691649 VMMDev: Guest Log: 17:53:20.779156 gctl0    Error: Processing requests failed with with rc=VERR_INTERRUPTED
+00:37:20.645373 VMMDev: Guest Log: 18:05:42.728920 gctl0    Error: Processing requests failed with with rc=VERR_INTERRUPTED
+00:45:34.050870 VMMDev: Guest Log: 18:13:56.129077 main     VbglR3GuestCtrlProcGetStart: 1 - VERR_TOO_MUCH_DATA (retry 0, cbCmd=1024, cbCwd=1024, cbArgs=1024, cbE18:13:56.129742 main     VbglR3GuestCtrlProcGetStart: Returning VERR_TOO_MUCH_DATA (retry 0, cbCmd=1024, cbArgs=1024, cbEnv=10218:13:56.130292 main     Error: Failed to retrieve parameters for process start: VERR_TOO_MUCH_DATA (cParms=13)
+00:45:34.051510 ERROR [COM]: aRC=VBOX_E_IPRT_ERROR (0x80bb0005) aIID={35cf4b3f-4453-4f3e-c9b8-5686939c80b6} aComponent={GuestProcessWrap} aText={Waiting for guest process (flags 0x1) failed: Error VERR_NOT_SUPPORTED for guest process "/bin/bash" occurred
+00:45:34.051847 VMMDev: Guest Log: 18:13:56.131142 main     Error: Error while handling message HOST_MSG_EXEC_CMD (0x64, cParms=13), rc=VERR_TOO_MUCH_DATA

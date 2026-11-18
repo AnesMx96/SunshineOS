@@ -1,0 +1,716 @@
+# SuOS VM test - commands and captured outputs
+# Host helper used for every guest command:
+#   VBoxManage guestcontrol SuOS run --username sunshine --password sunshine --quiet --timeout=... -- /bin/bash -c "<command>"
+# ANSI colour codes stripped from the captured logs.
+
+===== SuOS-repair-test.log =====
+########## SYSTEM REPAIR TEST @ 2026-11-18T19:16:33+01:00 ##########
+Sunshine OS doctor  (check + repair)
+
+☀ Identity
+  ✔ this is Sunshine OS (Sunshine OS)
+
+☀ Package manager
+  ✔ no lock file
+  ✔ package keyring present
+  ✔ package database consistent
+  ✔ no pending .pacnew files
+  ✔ [sunshine] repository is configured
+  ! expected package not installed: hyprland
+
+☀ Desktop
+
+☀ Boot
+  ✘ /boot/vmlinuz-linux missing
+  ✔ initramfs present
+  ✘ /boot/grub/grub.cfg missing
+  ✔ /etc/fstab consistent
+
+☀ System
+  ! failed services: \n  
+/usr/local/bin/sunshine-doctor: line 81: [: -dc 0-9: integer expected
+/usr/local/bin/sunshine-doctor: line 81: [: -dc 0-9: integer expected
+  ✔ root disk -dc 0-9% used
+  ✔ network service running
+  ✔ running kernel matches installed modules
+
+☀ Restore points
+  ✘ Timeshift is not configured
+
+3 problem(s) found
+DOCTOR_FIX_RC=1
+
+===== SuOS-rsync-test.log =====
+########## RSYNC DIAGNOSIS @ 2026-11-18T19:18:09+01:00 ##########
+=== same options as installer ===
+
+            550B   0%       0B/s    0:00:00  
+            550B   0%       0B/s    0:00:00 (xfr#1, to-chk=40/42)
+          1,165B   0%    615KB/s    0:00:00 (xfr#2, to-chk=39/42)
+          8,185B   4%   7.63MB/s    0:00:00 (xfr#3, to-chk=38/42)
+         12,926B   7%   12.4MB/s    0:00:00 (xfr#4, to-chk=37/42)
+         14,590B   8%   14.0MB/s    0:00:00 (xfr#5, to-chk=36/42)
+         16,075B   8%   15.5MB/s    0:00:00 (xfr#6, to-chk=35/42)
+         16,881B   9%   16.3MB/s    0:00:00 (xfr#7, to-chk=34/42)
+         17,658B   9%   4.28MB/s    0:00:00 (xfr#8, to-chk=33/42)
+         20,456B  11%   4.98MB/s    0:00:00 (xfr#9, to-chk=32/42)
+         29,609B  16%   7.26MB/s    0:00:00 (xfr#10, to-chk=31/42)
+         32,687B  18%   8.03MB/s    0:00:00 (xfr#11, to-chk=30/42)
+         37,420B  20%   9.22MB/s    0:00:00 (xfr#12, to-chk=29/42)
+         42,043B  23%   10.4MB/s    0:00:00 (xfr#13, to-chk=28/42)
+         43,683B  24%   10.8MB/s    0:00:00 (xfr#14, to-chk=27/42)
+         45,071B  25%   11.1MB/s    0:00:00 (xfr#15, to-chk=26/42)
+         62,503B  34%   15.5MB/s    0:00:00 (xfr#16, to-chk=25/42)
+         63,391B  35%   12.6MB/s    0:00:00 (xfr#17, to-chk=24/42)
+         64,002B  35%   12.7MB/s    0:00:00 (xfr#18, to-chk=23/42)
+        105,172B  58%   20.9MB/s    0:00:00 (xfr#19, to-chk=22/42)
+        109,293B  61%   21.7MB/s    0:00:00 (xfr#20, to-chk=21/42)
+        121,720B  68%   20.2MB/s    0:00:00 (xfr#21, to-chk=20/42)
+        124,739B  69%   17.7MB/s    0:00:00 (xfr#22, to-chk=19/42)
+        125,092B  69%   17.8MB/s    0:00:00 (xfr#23, to-chk=18/42)
+        127,765B  71%   18.2MB/s    0:00:00 (xfr#24, to-chk=17/42)
+        130,006B  72%   18.5MB/s    0:00:00 (xfr#25, to-chk=16/42)
+        131,471B  73%   18.7MB/s    0:00:00 (xfr#26, to-chk=15/42)
+        131,946B  73%   16.4MB/s    0:00:00 (xfr#27, to-chk=14/42)
+        132,291B  73%   16.5MB/s    0:00:00 (xfr#28, to-chk=13/42)
+        136,763B  76%   17.0MB/s    0:00:00 (xfr#29, to-chk=12/42)
+        141,331B  79%   17.6MB/s    0:00:00 (xfr#30, to-chk=11/42)
+        143,204B  80%   17.8MB/s    0:00:00 (xfr#31, to-chk=10/42)
+        149,861B  83%   18.7MB/s    0:00:00 (xfr#32, to-chk=9/42) 
+        150,964B  84%   18.8MB/s    0:00:00 (xfr#33, to-chk=8/42)
+        151,183B  84%   18.8MB/s    0:00:00 (xfr#34, to-chk=7/42)
+        153,126B  85%   17.0MB/s    0:00:00 (xfr#35, to-chk=6/42)
+        153,658B  85%   17.0MB/s    0:00:00 (xfr#36, to-chk=5/42)
+        157,628B  88%   17.5MB/s    0:00:00 (xfr#37, to-chk=4/42)
+        159,844B  89%   17.7MB/s    0:00:00 (xfr#38, to-chk=3/42)
+        166,945B  93%   18.5MB/s    0:00:00 (xfr#39, to-chk=2/42)
+        178,820B 100%   17.8MB/s    0:00:00 (xfr#40, to-chk=0/42)
+        178,820B 100%   17.8MB/s    0:00:00 (xfr#40, to-chk=0/42)
+        178,820B 100%   16.2MB/s    0:00:00 (xfr#40, to-chk=0/42)
+        178,820B 100%   16.2MB/s    0:00:00 (xfr#40, to-chk=0/42)
+rc=0
+=== without progress2 ===
+rc=0
+=== version ===
+rsync  version 3.5.2-g41bbd895  protocol version 33
+Copyright (C) 1996-2026 by Andrew Tridgell, Wayne Davison, and others.
+
+===== SuOS-test-raw.log =====
+===== TOOL: sunshine-identity check =====
+rc=127
+/bin/bash: line 1: sunshine-identity: command not found
+===== TOOL: sunshine-info =====
+/bin/bash: line 1: sunshine-info: command not found
+rc=127
+===== TOOL: sunshine-repo check =====
+rc=127
+/bin/bash: line 1: sunshine-repo: command not found
+===== TOOL: sunshine-doctor --quiet (read-only) =====
+  ✘ package keyring missing or empty
+  ! expected package not installed: hyprland
+  ✘ /boot/vmlinuz-linux missing
+  ✘ /boot/initramfs-linux.img missing
+  ✘ /boot/grub/grub.cfg missing
+  ! failed services: \n  
+tail: write error: Broken pipe
+/usr/local/bin/sunshine-doctor: line 81: [: -dc 0-9: integer expected
+/usr/local/bin/sunshine-doctor: line 81: [: -dc 0-9: integer expected
+  ✘ Timeshift is not configured
+
+5 problem(s) found — run: sunshine-doctor --fix
+rc=1
+===== identity check =====
+Identity OK: Sunshine OS
+rc=0
+===== sunshine-info =====
+☀ Sunshine OS
+System       Sunshine OS (sunshineos, based on arch, rolling)
+Identity     intact
+Kernel       7.3.4-arch1-2
+Boot         BIOS, overlay root
+Session      none (text console / ssh) 
+Shell        fish
+Packages     1165 installed, 0 from AUR/other
+Snapshots    not available (needs btrfs)
+Last update  
+
+12System:
+  12Kernel 7.3.4-arch1-2 12arch x86_64 12bits 64 12compiler gcc 12v 16.2.1
+  12Console N/A 12Distro Sunshine OS
+12Machine:
+  12Type Virtualbox 12System innotek GmbH 12product VirtualBox 12v 1.2 12serial <superuser required>
+  12Mobo Oracle 12model VirtualBox 12v 1.2 12serial <superuser required> 12Firmware BIOS
+    12vendor innotek GmbH 12v VirtualBox 12date 12/01/2006
+12CPU:
+  12Info quad core 12model Intel Core i5-4590 12bits 64 12type MCP 12arch Haswell 12rev 3 12cache 12L1 256 KiB
+    12L2 1024 KiB 12L3 24 MiB
+  12Speed (MHz) 12avg 3292 12min/max N/A 12cores 121 3292 122 3292 123 3292 124 3292 12bogomips 26338
+  12Flags-basic avx avx2 ht lm nx pae sse sse2 sse3 sse4_1 sse4_2 ssse3
+12Graphics:
+  12Device-1 VMware SVGA II Adapter 12driver vmwgfx 12v 2.21.0.0 12bus-ID 00:02.0
+  12Display unspecified 12server X.org 12v 1.21.1.26 12with Xwayland 12v 24.1.15 12driver 12X
+    12loaded modesetting 12gpu vmwgfx 12tty 80x40
+  12API OpenGL 12Message GL data unavailable in console, glxinfo missing.
+  12Info 12Tools 12de kscreen-console,kscreen-doctor 12x11 xprop
+12Audio:
+  12Device-1 Intel 82801AA AC97 Audio 12vendor Dell 12driver snd_intel8x0 12v kernel 12bus-ID 00:05.0
+  12API ALSA 12v k7.3.4-arch1-2 12status kernel-api
+  12Server-1 sndiod 12v N/A 12status off
+  12Server-2 PipeWire 12v 1.6.11 12status active (process)
+12Network:
+  12Device-1 Intel 82540EM Gigabit Ethernet 12driver e1000 12v kernel 12port d020 12bus-ID 00:03.0
+  12IF enp0s3 12state up 12speed 1000 Mbps 12duplex full 12mac <filter>
+  12Device-2 Intel 82371AB/EB/MB PIIX4 ACPI 12type network bridge 12driver piix4_smbus 12v N/A 12port N/A
+    12bus-ID 00:07.0
+12Drives:
+rc=1
+===== sunshine-repo check =====
+[sunshine] repository OK (https://github.com/tak0dan/sunshineos-repo/releases/download/repo, signed)
+rc=0
+===== pacman keyring =====
+==> ERROR: You do not have sufficient permissions to read the pacman keyring.
+==> Use 'pacman-key --init' to correct the keyring permissions.
+rc=1
+===== pacman db check =====
+warning: Public keyring not found; have you run 'pacman-key --init'?
+error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+error: keyring is not writable
+No database errors have been found!
+rc=0
+===== pacman -Sy (timeout 60) =====
+warning: Public keyring not found; have you run 'pacman-key --init'?
+error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+error: keyring is not writable
+:: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+ sunshine downloading...
+error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+error: keyring is not writable
+error: failed to synchronize all databases (invalid or corrupted database (PGP signature))
+rc=1
+===== checkupdates (timeout 60) =====
+==> ERROR: Cannot fetch updates
+rc=1
+===== sunshine-update-check =====
+{"packages": 0, "sunshine": 0, "distro": false, "release": "", "state": "none", "checked": 1795024026}
+rc=0
+{"packages": 0, "sunshine": 0, "distro": false, "release": "", "state": "none", "checked": 1795024026}
+
+===== SuOS-theme-test.log =====
+########## THEME TEST @ 2026-11-18T19:13:56+01:00 ##########
+VBoxManage: error: Waiting for guest process (flags 0x1) failed: Error VERR_NOT_SUPPORTED for guest process "/bin/bash" occurred
+
+VBoxManage: error: Details: code VBOX_E_IPRT_ERROR (0x80bb0005), component GuestProcessWrap, interface IGuestProcess, callee nsISupports
+VBoxManage: error: Context: "WaitForArray(ComSafeArrayAsInParam(aWaitStartFlags), gctlRunGetRemainingTime(msStart, cMsTimeout), &waitResult)" at line 1420 of file VBoxManageGuestCtrl.cpp
+
+===== SuOS-theme-test2.log =====
+########## THEME RETEST @ 2026-11-18T19:15:29+01:00 ##########
+=== available Sunshine colorschemes ===
+none listed
+=== apply colorscheme ===
+Successfully applied the color scheme SunshineDark to your current Plasma session
+colorscheme_rc=0
+=== apply desktop theme ===
+The current Plasma session's theme has been set to Sunshine
+desktoptheme_rc=0
+=== reapply plasma setup ===
+The requested theme "SunshineDark" is already set as the theme for the current Plasma session.
+The requested theme "Sunshine" is already set as the theme for the current Plasma session.
+plasma_setup_rc=0
+=== restore visuals offline ===
+offline: applying the themes that are already installed
+
+☀ Applying
+✔ ☕ visuals restored
+All done. Have a warm cup of tea and enjoy the sunshine ☀️🍵
+restore_visuals_rc=0
+=== resulting theme config ===
+/home/sunshine/.config/kdeglobals:122:ColorScheme=SunshineDark
+/home/sunshine/.config/kdeglobals:123:ColorSchemeHash=bbe8e64dea516f7a7ce26e4fc52bbb151ece3a71
+/home/sunshine/.config/kdeglobals:126:Theme=Sunshine-orange-dark
+/home/sunshine/.config/kdeglobals:133:widgetStyle=kvantum
+=== gtk configs ===
+-rw-r--r-- 1 sunshine sunshine 389 Nov 18 19:16 /home/sunshine/.gtkrc-2.0
+
+/home/sunshine/.config/gtk-3.0:
+total 20
+drwxr-xr-x 3 sunshine sunshine  140 Nov 18 19:16 .
+drwxr-xr-x 1 sunshine sunshine 1040 Nov 18 19:16 ..
+drwxr-xr-x 2 sunshine sunshine  520 Nov 18 19:15 assets
+-rw-r--r-- 1 sunshine sunshine 4998 Nov 18 19:15 colors.css
+-rw-r--r-- 1 sunshine sunshine   21 Nov 18 19:15 gtk.css
+-rw------- 1 sunshine sunshine  584 Nov 18 19:16 settings.ini
+-rw-r--r-- 1 sunshine sunshine 3895 Nov 18 19:15 window_decorations.css
+
+/home/sunshine/.config/gtk-4.0:
+total 20
+drwxr-xr-x 3 sunshine sunshine  140 Nov 18 19:16 .
+drwxr-xr-x 1 sunshine sunshine 1040 Nov 18 19:16 ..
+drwxr-xr-x 2 sunshine sunshine   40 Nov 18 18:29 assets
+-rw-r--r-- 1 sunshine sunshine 4998 Nov 18 19:15 colors.css
+-rw-r--r-- 1 sunshine sunshine   21 Nov 18 19:15 gtk.css
+-rw------- 1 sunshine sunshine  388 Nov 18 19:16 settings.ini
+-rw-r--r-- 1 sunshine sunshine 3895 Nov 18 19:15 window_decorations.css
+=== available gtk themes ===
+Breeze
+Breeze-Dark
+Default
+Emacs
+=== fastfetch theme line ===
+      "theme2": "Breeze-Dark [GTK2], Breeze [GTK3]"
+    }
+  },
+--
+      "icons2": "Sunshine-orange-dark [GTK2/3/4]"
+    }
+  },
+
+===== SuOS-tools-test.log =====
+########## OS-SPECIFIC TOOLS TEST @ 2026-11-18T19:03:38+01:00 ##########
+===== /usr/local/bin/sunshine-diagnose --print =====
+Sunshine OS diagnosis, Wed Nov 18 19:03:39 CET 2026
+Kernel: 7.3.4-arch1-2   Uptime: up 35 minutes
+
+=== Performance ===
+Load: 0.52 1.70 1.39
+               total        used        free      shared  buff/cache   available
+Mem:           5.3Gi       1.8Gi       833Mi       238Mi       3.3Gi       3.5Gi
+    PID COMMAND         %CPU %MEM
+   8441 ps               100  0.0
+   8432 bash            21.0  0.0
+   8424 VBoxService     17.3  0.0
+   8430 timeout          9.0  0.0
+    839 kwin_wayland     5.9  6.3
+
+=== Temperatures ===
+
+=== Disk space ===
+Filesystem     Type      Size  Used Avail Use% Mounted on
+/dev/sr0       iso9660   2.9G  2.9G     0 100% /run/archiso/bootmnt
+/dev/loop0     squashfs  2.7G  2.7G     0 100% /run/archiso/airootfs
+airootfs       overlay   256M  167M   90M  66% /
+
+airootfs       696443  3622 692821    1% /
+
+=== File system sanity ===
+overlay rw,relatime,lowerdir=/run/archiso/airootfs,upperdir=/run/archiso/cowspace/persistent_/x86_64/upperdir,workdir=/run/archiso/cowspace/persistent_/x86_64/workdir,uuid=on
+
+=== Packages ===
+warning: Public keyring not found; have you run 'pacman-key --init'?
+error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+rc=0
+===== /usr/local/bin/sunshine-snapshot status =====
+File system: overlay  ->  timeshift
+Set up: no
+rc=0
+===== /usr/local/bin/sunshine-snapshot backend =====
+timeshift (overlay)
+rc=0
+===== /usr/local/bin/sunshine-snapshot list =====
+Restore points are not set up. Run: sudo sunshine-doctor --fix
+rc=1
+===== /usr/local/bin/sunshine-apps --help =====
+# Finishes app installs from the Sunshine catalogue. Choosing an app (installer, store or `sudo pacman -S sunshine-app-<id>`) installs its official
+# packages at once and queues the rest here: AUR packages (installed with the AUR helper as your user; third-party binaries are not hosted by us),
+# setup scripts (groups, services, firewall ...) and web-app launchers. Anything that needs the internet stays queued until it is online.
+#   sunshine-apps pending            what is queued
+#   sunshine-apps apply              do the queued work now (root; used at first boot, by a pacman hook, by sunshine-update)
+#   sunshine-apps install ID...      install catalogue apps (pacman -S sunshine-app-ID, then apply)
+#   sunshine-apps first-update       install the apps marked "first update" in the catalogue (once)
+# Log: /var/log/sunshine/apps.log
+PEND=/var/lib/sunshine/pending; META=/usr/share/sunshine/apps.d; SETUP=/usr/share/sunshine/apps-setup; LOG=/var/log/sunshine/apps.log
+cmd=${1:-pending}; shift || true
+[ "$cmd" = pending ] || [ "$(id -u)" -eq 0 ] || exec sudo "$0" "$cmd" "$@"
+rc=2
+===== /usr/local/bin/sunshine-toolbox --help =====
+Traceback (most recent call last):
+  File "/usr/local/bin/sunshine-toolbox", line 2, in <module>
+    sys.path.insert(0, "/usr/local/lib/sunshine/")
+    ^^^
+NameError: name 'sys' is not defined. Did you forget to import 'sys'?
+rc=1
+===== /usr/local/bin/sunshine-welcome --help =====
+Traceback (most recent call last):
+  File "/usr/local/bin/sunshine-welcome", line 2, in <module>
+    sys.path.insert(0, "/usr/local/lib/sunshine/")
+    ^^^
+NameError: name 'sys' is not defined. Did you forget to import 'sys'?
+rc=1
+===== /usr/local/bin/sunshine-webapp --help =====
+# Web services as app windows (Outlook, WhatsApp, Netflix, Notion ...): a launcher in the menu that opens the site in its own window
+# with its own browser profile, so it feels like an app and does not mix with your normal browsing.
+#   sunshine-webapp add ID "Name" URL     create the menu launcher (per user)
+#   sunshine-webapp remove ID             remove it
+#   sunshine-webapp run ID                open it (what the launcher calls)
+#   sunshine-webapp list
+# Uses a Chromium-based browser in app mode (chromium, brave, chrome) when there is one, Firefox in a new window otherwise.
+set -u
+APPS=${XDG_DATA_HOME:-$HOME/.local/share}/applications; DATA=${XDG_DATA_HOME:-$HOME/.local/share}/sunshine/webapps
+rc=2
+===== /usr/local/bin/sunshine-boot-repair --help =====
+Run this on the installed system, not from the live ISO.
+rc=1
+===== /usr/local/bin/sunshine-cleanup --help =====
+
+☀ Old package files
+==> no candidate packages found for pruning
+downloaded files of removed packages cleaned
+
+☀ Unused packages (installed only as dependencies, nothing needs them)
+none
+
+☀ Logs and crash dumps
+Vacuuming done, freed 0B of archived journals from /run/log/journal/8d50c0f62c7b420d9ed552769391c1a6.
+crash dumps removed
+
+Freed about 0 MB.
+rc=0
+===== /usr/local/bin/sunshine-session-notice =====
+rc=0
+===== /usr/local/bin/sunshine-nixos-grub =====
+rc=0
+===== /usr/local/bin/sunshine-fastfetch-patch --help =====
+Sunshine fastfetch config present: stock fastfetch is enough
+rc=0
+===== /usr/local/bin/sunshine-hyprland-install --help =====
+mkdir: unrecognized option '--help/var/log/sunshine'
+Try 'mkdir --help' for more information.
+tee: unrecognized option '--help/var/log/sunshine/hyprland-install.log'
+Try 'tee --help' for more information.
+rc=124
+===== /usr/local/bin/sunshine-store --help =====
+timeout: failed to run command ‘/usr/local/bin/sunshine-store’: No such file or directory
+rc=127
+===== /usr/local/bin/sunshine-update-check --quiet =====
+rc=0
+===== /usr/local/bin/uni detect =====
+timeout: failed to run command ‘/usr/local/bin/uni’: No such file or directory
+rc=127
+===== /usr/local/bin/nix --version =====
+timeout: failed to run command ‘/usr/local/bin/nix’: No such file or directory
+rc=127
+===== sunshine-fix-pacman (repair) =====
+
+☀ Lock file
+✔ ☕ no lock
+
+☀ pacman.conf
+
+☀ Keyring
+rm: cannot remove '/etc/pacman.d/gnupg': Device or resource busy
+✔ ☕ keyring recreated and populated
+
+☀ Mirrors
+✔ ☕ mirrors ranked (reflector)
+
+☀ Sunshine repository
+[sunshine] repository OK
+
+☀ Databases
+ extra downloading...
+ multilib downloading...
+ sunshine downloading...
+
+☀ Interrupted updates and cached packages
+warning: archlinux-keyring-20260909-1 is up to date -- skipping
+ there is nothing to do
+No database errors have been found!
+✔ ☕ package database checked
+
+☀ AUR helper
+✔ ☕ paru works (paru v2.2.0 - libalpm v16.0.1)
+✔ ☕ yay works ( -> Avoid running yay as root/sudo.)
+
+Done. Try the update again.
+FIX_RC=0
+===== post-repair keyring =====
+/etc/pacman.d/gnupg/pubring.gpg
+-------------------------------
+pub   rsa4096 2026-11-18 [SC]
+      111C5FC4142876E9A483773B2105A3840B3646F8
+uid           [ultimate] Pacman Keyring Master Key <pacman@localhost>
+
+pub   rsa2048 2011-08-12 [SC]
+      02FD1C7A934E614545849F19A6234074498E9CEE
+rc=0
+===== post-repair pacman -Sy =====
+:: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+ sunshine downloading...
+rc=0
+===== post-repair checkupdates =====
+alsa-card-profiles 1:1.6.11-1 -> 1:1.6.11-2
+bind 9.20.30-2 -> 9.20.31-1
+firefox 160.0-1 -> 160.0.1-1
+flex 2.6.10-1 -> 2.6.15-1
+gdb 18.1-1 -> 18.1-2
+gdb-common 18.1-1 -> 18.1-2
+gst-libav 1.28.9-2 -> 1.28.9-3
+gst-plugins-bad 1.28.9-2 -> 1.28.9-3
+gst-plugins-bad-libs 1.28.9-2 -> 1.28.9-3
+gst-plugins-base-libs 1.28.9-2 -> 1.28.9-3
+gst-plugins-good 1.28.9-2 -> 1.28.9-3
+gst-plugins-ugly 1.28.9-2 -> 1.28.9-3
+gstreamer 1.28.9-2 -> 1.28.9-3
+libfontenc 1.1.9-1 -> 1.1.10-1
+libgtop 2.41.3-2 -> 2.41.4-1
+libpipewire 1:1.6.11-1 -> 1:1.6.11-2
+libsrtp 1:2.8.1-1 -> 1:2.8.2-1
+libxfont2 2.0.9-1 -> 2.0.10-1
+man-db 2.13.1-2 -> 2.13.3-1
+pcsclite 2.5.3-1 -> 2.5.4-1
+rc=0
+===== post-repair update-check =====
+{"packages": 28, "sunshine": 0, "distro": false, "release": "", "state": "dot", "checked": 1795025142}
+rc=0
+===== sunshine-store --help (correct path) =====
+timeout: the monitored command dumped core
+rc=134
+===== uni detect (correct path) =====
+OS:               Sunshine OS (ID=sunshineos ID_LIKE=arch)
+Native manager:   pacman
+Available:        appimage, aur, flatpak, pacman, paru, yay
+Enabled sources:  pacman(1), flatpak(2), appimage(3)
+Config:           /home/sunshine/.config/uni/config.toml
+rc=0
+===== sunshine-toolbox launch (GUI attempt) =====
+Traceback (most recent call last):
+  File "/usr/local/bin/sunshine-toolbox", line 2, in <module>
+    sys.path.insert(0, "/usr/local/lib/sunshine/")
+    ^^^
+NameError: name 'sys' is not defined. Did you forget to import 'sys'?
+rc=1
+===== sunshine-welcome launch (GUI attempt) =====
+Traceback (most recent call last):
+  File "/usr/local/bin/sunshine-welcome", line 2, in <module>
+    sys.path.insert(0, "/usr/local/lib/sunshine/")
+    ^^^
+NameError: name 'sys' is not defined. Did you forget to import 'sys'?
+rc=1
+
+===== SuOS-update-test.log =====
+########## FULL SYSTEM UPDATE @ 2026-11-18T19:13:23+01:00 ##########
+:: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+ sunshine downloading...
+:: Starting full system upgrade...
+resolving dependencies...
+looking for conflicting packages...
+
+Package (28)                 Old Version  New Version  Net Change  Download Size
+
+extra/alsa-card-profiles     1:1.6.11-1   1:1.6.11-2     0.00 MiB               
+extra/bind                   9.20.30-2    9.20.31-1      0.01 MiB               
+extra/firefox                160.0-1      160.0.1-1     -0.12 MiB      32.80 MiB
+core/flex                    2.6.10-1     2.6.15-1       0.02 MiB               
+extra/gdb                    18.1-1       18.1-2         0.00 MiB               
+extra/gdb-common             18.1-1       18.1-2         0.00 MiB               
+extra/gst-libav              1.28.9-2     1.28.9-3       0.00 MiB               
+extra/gst-plugins-bad        1.28.9-2     1.28.9-3       0.00 MiB               
+extra/gst-plugins-bad-libs   1.28.9-2     1.28.9-3       0.00 MiB               
+extra/gst-plugins-base-libs  1.28.9-2     1.28.9-3       0.00 MiB               
+extra/gst-plugins-good       1.28.9-2     1.28.9-3       0.00 MiB               
+extra/gst-plugins-ugly       1.28.9-2     1.28.9-3       0.00 MiB               
+extra/gstreamer              1.28.9-2     1.28.9-3       0.00 MiB               
+extra/libfontenc             1.1.9-1      1.1.10-1       0.00 MiB               
+extra/libgtop                2.41.3-2     2.41.4-1       0.01 MiB               
+extra/libpipewire            1:1.6.11-1   1:1.6.11-2     0.00 MiB               
+extra/libsrtp                1:2.8.1-1    1:2.8.2-1      0.00 MiB               
+extra/libxfont2              2.0.9-1      2.0.10-1       0.00 MiB               
+core/man-db                  2.13.1-2     2.13.3-1       0.10 MiB               
+extra/pcsclite               2.5.3-1      2.5.4-1        0.00 MiB               
+extra/pipewire               1:1.6.11-1   1:1.6.11-2     0.00 MiB               
+extra/pipewire-alsa          1:1.6.11-1   1:1.6.11-2     0.00 MiB               
+extra/pipewire-audio         1:1.6.11-1   1:1.6.11-2     0.00 MiB               
+extra/pipewire-jack          1:1.6.11-1   1:1.6.11-2     0.00 MiB               
+extra/pipewire-pulse         1:1.6.11-1   1:1.6.11-2     0.00 MiB               
+extra/spandsp                0.0.6-7      3.1.1-1        0.46 MiB               
+extra/xapp                   3.4.0-1      3.4.2-1        0.02 MiB               
+extra/xapp-symbolic-icons    1.1.0-1      1.1.2-1        0.00 MiB               
+
+Total Download Size:    32.80 MiB
+Total Installed Size:  422.64 MiB
+Net Upgrade Size:        0.49 MiB
+
+:: Proceed with installation? [Y/n] 
+:: Retrieving packages...
+ firefox-160.0.1-1-x86_64 downloading...
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from mirrors.logal.dev : HTTP server does not seem to support byte ranges. Cannot resume.
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from fastly.mirror.pkgbuild.com : Failure writing output to destination, passed 1378 returned 1349
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from mirror.theo546.fr : Failure writing output to destination, passed 4735 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from archlinux.mailtunnel.eu : Failure writing output to destination, passed 4735 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from ftp.myrveln.se : Failure writing output to destination, passed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from at.arch.mirror.kescher.at : Failure writing output to destination, passed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from uk.arch.niranjan.co : Failure writing output to destination, passed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from mirrors.uni-plovdiv.net : Failure writing output to destination, passed 16002 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from mirror.alastyr.com : Failure writing output to destination, passed 7820 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from umea.mirror.pkgbuild.com : Failure writing output to destination, passed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from mirror4.givebytes.net : Failure writing output to destination, passed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from mirror2.givebytes.net : Failure writing output to destination, passed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from losangeles.mirror.pkgbuild.com : Failure writing output to destination, passed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from singapore.mirror.pkgbuild.com : Failure writing output to destination, passed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from mirror.trapmaid.org : Failure writing output to destination, passed 5921 returned 0
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from johannesburg.mirror.pkgbuild.com : Failure writing output to destination, passed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from mirror.ufscar.br : Failure writing output to destination, passed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from mirror2.keiminem.com : Failure writing output to destination, passed 1369 returned 1367
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from mirror.givebytes.net : Failure writing output to destination, passed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.zst' from mirror3.givebytes.net : Failure writing output to destination, passed 8192 returned 4096
+warning: failed to retrieve some files
+error: failed to commit transaction (failed to retrieve some files)
+Errors occurred, no packages were upgraded.
+PACMAN_SYU_RC=1
+=== space after ===
+Filesystem      Size  Used Avail Use% Mounted on
+airootfs        256M  256M     0 100% /
+tmpfs           2.7G   26M  2.7G   1% /tmp
+cowspace        256M  256M     0 100% /run/archiso/cowspace
+linux 7.3.4.arch1-2
+
+===== SuOS-update-test2.log =====
+########## FULL SYSTEM UPDATE RETRY (fresh /tmp cache) @ 2026-11-18T19:17:21+01:00 ##########
+:: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+ sunshine downloading...
+:: Starting full system upgrade...
+resolving dependencies...
+looking for conflicting packages...
+
+Package (28)                 Old Version  New Version  Net Change  Download Size
+
+extra/alsa-card-profiles     1:1.6.11-1   1:1.6.11-2     0.00 MiB       0.03 MiB
+extra/bind                   9.20.30-2    9.20.31-1      0.01 MiB       2.15 MiB
+extra/firefox                160.0-1      160.0.1-1     -0.12 MiB      86.90 MiB
+core/flex                    2.6.10-1     2.6.15-1       0.02 MiB       0.36 MiB
+extra/gdb                    18.1-1       18.1-2         0.00 MiB       8.18 MiB
+extra/gdb-common             18.1-1       18.1-2         0.00 MiB       0.12 MiB
+extra/gst-libav              1.28.9-2     1.28.9-3       0.00 MiB       0.10 MiB
+extra/gst-plugins-bad        1.28.9-2     1.28.9-3       0.00 MiB       1.12 MiB
+extra/gst-plugins-bad-libs   1.28.9-2     1.28.9-3       0.00 MiB       3.19 MiB
+extra/gst-plugins-base-libs  1.28.9-2     1.28.9-3       0.00 MiB       2.46 MiB
+extra/gst-plugins-good       1.28.9-2     1.28.9-3       0.00 MiB       2.32 MiB
+extra/gst-plugins-ugly       1.28.9-2     1.28.9-3       0.00 MiB       0.18 MiB
+extra/gstreamer              1.28.9-2     1.28.9-3       0.00 MiB       2.11 MiB
+extra/libfontenc             1.1.9-1      1.1.10-1       0.00 MiB       0.02 MiB
+extra/libgtop                2.41.3-2     2.41.4-1       0.01 MiB       0.19 MiB
+extra/libpipewire            1:1.6.11-1   1:1.6.11-2     0.00 MiB       1.49 MiB
+extra/libsrtp                1:2.8.1-1    1:2.8.2-1      0.00 MiB       0.05 MiB
+extra/libxfont2              2.0.9-1      2.0.10-1       0.00 MiB       0.10 MiB
+core/man-db                  2.13.1-2     2.13.3-1       0.10 MiB       1.22 MiB
+extra/pcsclite               2.5.3-1      2.5.4-1        0.00 MiB       0.10 MiB
+extra/pipewire               1:1.6.11-1   1:1.6.11-2     0.00 MiB       0.27 MiB
+extra/pipewire-alsa          1:1.6.11-1   1:1.6.11-2     0.00 MiB       0.01 MiB
+extra/pipewire-audio         1:1.6.11-1   1:1.6.11-2     0.00 MiB       1.31 MiB
+extra/pipewire-jack          1:1.6.11-1   1:1.6.11-2     0.00 MiB       0.17 MiB
+extra/pipewire-pulse         1:1.6.11-1   1:1.6.11-2     0.00 MiB       0.21 MiB
+extra/spandsp                0.0.6-7      3.1.1-1        0.46 MiB       0.52 MiB
+extra/xapp                   3.4.0-1      3.4.2-1        0.02 MiB       0.25 MiB
+extra/xapp-symbolic-icons    1.1.0-1      1.1.2-1        0.00 MiB       0.16 MiB
+
+Total Download Size:   115.27 MiB
+Total Installed Size:  422.64 MiB
+Net Upgrade Size:        0.49 MiB
+
+:: Proceed with installation? [Y/n] 
+:: Retrieving packages...
+ firefox-160.0.1-1-x86_64 downloading...
+ gdb-18.1-2-x86_64 downloading...
+ gst-plugins-bad-libs-1.28.9-3-x86_64 downloading...
+ gst-plugins-base-libs-1.28.9-3-x86_64 downloading...
+ gst-plugins-good-1.28.9-3-x86_64 downloading...
+ bind-9.20.31-1-x86_64 downloading...
+ gstreamer-1.28.9-3-x86_64 downloading...
+ libpipewire-1:1.6.11-2-x86_64 downloading...
+ pipewire-audio-1:1.6.11-2-x86_64 downloading...
+ man-db-2.13.3-1-x86_64 downloading...
+ gst-plugins-bad-1.28.9-3-x86_64 downloading...
+ spandsp-3.1.1-1-x86_64 downloading...
+ flex-2.6.15-1-x86_64 downloading...
+ pipewire-1:1.6.11-2-x86_64 downloading...
+ xapp-3.4.2-1-x86_64 downloading...
+ pipewire-pulse-1:1.6.11-2-x86_64 downloading...
+ libgtop-2.41.4-1-x86_64 downloading...
+ gst-plugins-ugly-1.28.9-3-x86_64 downloading...
+ pipewire-jack-1:1.6.11-2-x86_64 downloading...
+ xapp-symbolic-icons-1.1.2-1-any downloading...
+ gdb-common-18.1-2-x86_64 downloading...
+ pcsclite-2.5.4-1-x86_64 downloading...
+ gst-libav-1.28.9-3-x86_64 downloading...
+ libxfont2-2.0.10-1-x86_64 downloading...
+ libsrtp-1:2.8.2-1-x86_64 downloading...
+ alsa-card-profiles-1:1.6.11-2-x86_64 downloading...
+ libfontenc-1.1.10-1-x86_64 downloading...
+ pipewire-alsa-1:1.6.11-2-x86_64 downloading...
+checking keyring...
+checking package integrity...
+loading package files...
+checking for file conflicts...
+:: Running pre-transaction hooks...
+(1/2) Restore point before the update (Timeshift systems)...
+(2/2) Performing snapper pre snapshots for the following configurations...
+:: Processing package changes...
+upgrading alsa-card-profiles...
+upgrading bind...
+upgrading libpipewire...
+upgrading pipewire...
+upgrading spandsp...
+upgrading pipewire-audio...
+upgrading pipewire-jack...
+upgrading firefox...
+error: could not extract /usr/lib/firefox/libxul.so (Write failed)
+error: could not extract /usr/lib/firefox/omni.ja (Write failed)
+error: could not extract /usr/lib/firefox/pingsender (Write failed)
+error: could not extract /usr/lib/firefox/platform.ini (Write failed)
+error: could not extract /usr/share/applications/firefox.desktop (Write failed)
+error: could not extract /usr/share/gnome-shell/search-providers/firefox.search-provider.ini (Write failed)
+error: could not extract /usr/share/icons/hicolor/128x128/apps/firefox.png (Write failed)
+error: could not extract /usr/share/icons/hicolor/16x16/apps/firefox.png (Write failed)
+error: could not extract /usr/share/icons/hicolor/192x192/apps/firefox.png (Write failed)
+error: could not extract /usr/share/icons/hicolor/22x22/apps/firefox.png (Write failed)
+error: could not extract /usr/share/icons/hicolor/24x24/apps/firefox.png (Write failed)
+error: could not extract /usr/share/icons/hicolor/256x256/apps/firefox.png (Write failed)
+error: could not extract /usr/share/icons/hicolor/32x32/apps/firefox.png (Write failed)
+error: could not extract /usr/share/icons/hicolor/384x384/apps/firefox.png (Write failed)
+error: could not extract /usr/share/icons/hicolor/48x48/apps/firefox.png (Write failed)
+error: could not extract /usr/share/icons/hicolor/64x64/apps/firefox.png (Write failed)
+error: could not extract /usr/share/icons/hicolor/scalable/apps/firefox.svg (Write failed)
+error: could not extract /usr/share/icons/hicolor/symbolic/apps/firefox-symbolic.svg (Write failed)
+error: could not extract /usr/share/metainfo/org.mozilla.firefox.metainfo.xml (Write failed)
+error: problem occurred while upgrading firefox
+error: could not commit transaction
+error: failed to commit transaction (transaction aborted)
+Errors occurred, no packages were upgraded.
+PACMAN_SYU_RETRY_RC=1
+=== space ===
+airootfs        256M  256M     0 100% /
+tmpfs           2.7G  141M  2.6G   6% /tmp
+
+===== fish history observed inside the VM =====
+paru -Syyu
+sunshine-update
+paru -Syyu
+sunshine-doctor
+sunshine-doctor --fix
+sunshine-identity
+paru -Syyu
+sunshine-update
+
+===== terminal contents visible in screenshot Screenshot_20261118_183701.png (OCR) =====
+paru -Syyu
+:: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+ sunshine downloading...
+warning: Public keyring not found; have you run 'pacman-key --init'?
+error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+error: keyring is not writable
+error: failed to synchronize all databases (invalid or corrupted database (PGP signature))
+[WARN] - (starship::context): Scanning current directory timed out.

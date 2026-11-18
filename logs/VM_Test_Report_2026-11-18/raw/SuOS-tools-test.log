@@ -1,0 +1,223 @@
+########## OS-SPECIFIC TOOLS TEST @ 2026-11-18T19:03:38+01:00 ##########
+===== /usr/local/bin/sunshine-diagnose --print =====
+Sunshine OS diagnosis, Wed Nov 18 19:03:39 CET 2026
+Kernel: 7.3.4-arch1-2   Uptime: up 35 minutes
+
+=== Performance ===
+Load: 0.52 1.70 1.39
+               total        used        free      shared  buff/cache   available
+Mem:           5.3Gi       1.8Gi       833Mi       238Mi       3.3Gi       3.5Gi
+    PID COMMAND         %CPU %MEM
+   8441 ps               100  0.0
+   8432 bash            21.0  0.0
+   8424 VBoxService     17.3  0.0
+   8430 timeout          9.0  0.0
+    839 kwin_wayland     5.9  6.3
+
+=== Temperatures ===
+
+=== Disk space ===
+Filesystem     Type      Size  Used Avail Use% Mounted on
+/dev/sr0       iso9660   2.9G  2.9G     0 100% /run/archiso/bootmnt
+/dev/loop0     squashfs  2.7G  2.7G     0 100% /run/archiso/airootfs
+airootfs       overlay   256M  167M   90M  66% /
+
+airootfs       696443  3622 692821    1% /
+
+=== File system sanity ===
+overlay rw,relatime,lowerdir=/run/archiso/airootfs,upperdir=/run/archiso/cowspace/persistent_/x86_64/upperdir,workdir=/run/archiso/cowspace/persistent_/x86_64/workdir,uuid=on
+
+=== Packages ===
+warning: Public keyring not found; have you run 'pacman-key --init'?
+error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+rc=0
+===== /usr/local/bin/sunshine-snapshot status =====
+File system: overlay  ->  timeshift
+Set up: no
+rc=0
+===== /usr/local/bin/sunshine-snapshot backend =====
+timeshift (overlay)
+rc=0
+===== /usr/local/bin/sunshine-snapshot list =====
+Restore points are not set up. Run: sudo sunshine-doctor --fix
+rc=1
+===== /usr/local/bin/sunshine-apps --help =====
+# Finishes app installs from the Sunshine catalogue. Choosing an app (installer, store or `sudo pacman -S sunshine-app-<id>`) installs its official
+# packages at once and queues the rest here: AUR packages (installed with the AUR helper as your user; third-party binaries are not hosted by us),
+# setup scripts (groups, services, firewall ...) and web-app launchers. Anything that needs the internet stays queued until it is online.
+#   sunshine-apps pending            what is queued
+#   sunshine-apps apply              do the queued work now (root; used at first boot, by a pacman hook, by sunshine-update)
+#   sunshine-apps install ID...      install catalogue apps (pacman -S sunshine-app-ID, then apply)
+#   sunshine-apps first-update       install the apps marked "first update" in the catalogue (once)
+# Log: /var/log/sunshine/apps.log
+PEND=/var/lib/sunshine/pending; META=/usr/share/sunshine/apps.d; SETUP=/usr/share/sunshine/apps-setup; LOG=/var/log/sunshine/apps.log
+cmd=${1:-pending}; shift || true
+[ "$cmd" = pending ] || [ "$(id -u)" -eq 0 ] || exec sudo "$0" "$cmd" "$@"
+rc=2
+===== /usr/local/bin/sunshine-toolbox --help =====
+Traceback (most recent call last):
+  File "/usr/local/bin/sunshine-toolbox", line 2, in <module>
+    sys.path.insert(0, "/usr/local/lib/sunshine/")
+    ^^^
+NameError: name 'sys' is not defined. Did you forget to import 'sys'?
+rc=1
+===== /usr/local/bin/sunshine-welcome --help =====
+Traceback (most recent call last):
+  File "/usr/local/bin/sunshine-welcome", line 2, in <module>
+    sys.path.insert(0, "/usr/local/lib/sunshine/")
+    ^^^
+NameError: name 'sys' is not defined. Did you forget to import 'sys'?
+rc=1
+===== /usr/local/bin/sunshine-webapp --help =====
+# Web services as app windows (Outlook, WhatsApp, Netflix, Notion ...): a launcher in the menu that opens the site in its own window
+# with its own browser profile, so it feels like an app and does not mix with your normal browsing.
+#   sunshine-webapp add ID "Name" URL     create the menu launcher (per user)
+#   sunshine-webapp remove ID             remove it
+#   sunshine-webapp run ID                open it (what the launcher calls)
+#   sunshine-webapp list
+# Uses a Chromium-based browser in app mode (chromium, brave, chrome) when there is one, Firefox in a new window otherwise.
+set -u
+APPS=${XDG_DATA_HOME:-$HOME/.local/share}/applications; DATA=${XDG_DATA_HOME:-$HOME/.local/share}/sunshine/webapps
+rc=2
+===== /usr/local/bin/sunshine-boot-repair --help =====
+Run this on the installed system, not from the live ISO.
+rc=1
+===== /usr/local/bin/sunshine-cleanup --help =====
+
+[38;5;220m[1m☀ Old package files[0m
+==> no candidate packages found for pruning
+downloaded files of removed packages cleaned
+
+[38;5;220m[1m☀ Unused packages (installed only as dependencies, nothing needs them)[0m
+none
+
+[38;5;220m[1m☀ Logs and crash dumps[0m
+Vacuuming done, freed 0B of archived journals from /run/log/journal/8d50c0f62c7b420d9ed552769391c1a6.
+crash dumps removed
+
+[32m[1mFreed about 0 MB.[0m
+rc=0
+===== /usr/local/bin/sunshine-session-notice =====
+rc=0
+===== /usr/local/bin/sunshine-nixos-grub =====
+rc=0
+===== /usr/local/bin/sunshine-fastfetch-patch --help =====
+Sunshine fastfetch config present: stock fastfetch is enough
+rc=0
+===== /usr/local/bin/sunshine-hyprland-install --help =====
+mkdir: unrecognized option '--help/var/log/sunshine'
+Try 'mkdir --help' for more information.
+tee: unrecognized option '--help/var/log/sunshine/hyprland-install.log'
+Try 'tee --help' for more information.
+rc=124
+===== /usr/local/bin/sunshine-store --help =====
+timeout: failed to run command ‘/usr/local/bin/sunshine-store’: No such file or directory
+rc=127
+===== /usr/local/bin/sunshine-update-check --quiet =====
+rc=0
+===== /usr/local/bin/uni detect =====
+timeout: failed to run command ‘/usr/local/bin/uni’: No such file or directory
+rc=127
+===== /usr/local/bin/nix --version =====
+timeout: failed to run command ‘/usr/local/bin/nix’: No such file or directory
+rc=127
+===== sunshine-fix-pacman (repair) =====
+
+[38;5;220m[1m☀ Lock file[0m
+[32m✔ ☕ no lock[0m
+
+[38;5;220m[1m☀ pacman.conf[0m
+
+[38;5;220m[1m☀ Keyring[0m
+rm: cannot remove '/etc/pacman.d/gnupg': Device or resource busy
+[32m✔ ☕ keyring recreated and populated[0m
+
+[38;5;220m[1m☀ Mirrors[0m
+[32m✔ ☕ mirrors ranked (reflector)[0m
+
+[38;5;220m[1m☀ Sunshine repository[0m
+[sunshine] repository OK
+
+[38;5;220m[1m☀ Databases[0m
+ extra downloading...
+ multilib downloading...
+ sunshine downloading...
+
+[38;5;220m[1m☀ Interrupted updates and cached packages[0m
+warning: archlinux-keyring-20260909-1 is up to date -- skipping
+ there is nothing to do
+No database errors have been found!
+[32m✔ ☕ package database checked[0m
+
+[38;5;220m[1m☀ AUR helper[0m
+[32m✔ ☕ paru works (paru v2.2.0 - libalpm v16.0.1)[0m
+[32m✔ ☕ yay works ([1m[33m -> [0m[0mAvoid running yay as root/sudo.)[0m
+
+Done. Try the update again.
+FIX_RC=0
+===== post-repair keyring =====
+/etc/pacman.d/gnupg/pubring.gpg
+-------------------------------
+pub   rsa4096 2026-11-18 [SC]
+      111C5FC4142876E9A483773B2105A3840B3646F8
+uid           [ultimate] Pacman Keyring Master Key <pacman@localhost>
+
+pub   rsa2048 2011-08-12 [SC]
+      02FD1C7A934E614545849F19A6234074498E9CEE
+rc=0
+===== post-repair pacman -Sy =====
+:: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+ sunshine downloading...
+rc=0
+===== post-repair checkupdates =====
+alsa-card-profiles 1:1.6.11-1 -> 1:1.6.11-2
+bind 9.20.30-2 -> 9.20.31-1
+firefox 160.0-1 -> 160.0.1-1
+flex 2.6.10-1 -> 2.6.15-1
+gdb 18.1-1 -> 18.1-2
+gdb-common 18.1-1 -> 18.1-2
+gst-libav 1.28.9-2 -> 1.28.9-3
+gst-plugins-bad 1.28.9-2 -> 1.28.9-3
+gst-plugins-bad-libs 1.28.9-2 -> 1.28.9-3
+gst-plugins-base-libs 1.28.9-2 -> 1.28.9-3
+gst-plugins-good 1.28.9-2 -> 1.28.9-3
+gst-plugins-ugly 1.28.9-2 -> 1.28.9-3
+gstreamer 1.28.9-2 -> 1.28.9-3
+libfontenc 1.1.9-1 -> 1.1.10-1
+libgtop 2.41.3-2 -> 2.41.4-1
+libpipewire 1:1.6.11-1 -> 1:1.6.11-2
+libsrtp 1:2.8.1-1 -> 1:2.8.2-1
+libxfont2 2.0.9-1 -> 2.0.10-1
+man-db 2.13.1-2 -> 2.13.3-1
+pcsclite 2.5.3-1 -> 2.5.4-1
+rc=0
+===== post-repair update-check =====
+{"packages": 28, "sunshine": 0, "distro": false, "release": "", "state": "dot", "checked": 1795025142}
+rc=0
+===== sunshine-store --help (correct path) =====
+timeout: the monitored command dumped core
+rc=134
+===== uni detect (correct path) =====
+OS:               Sunshine OS (ID=sunshineos ID_LIKE=arch)
+Native manager:   pacman
+Available:        appimage, aur, flatpak, pacman, paru, yay
+Enabled sources:  pacman(1), flatpak(2), appimage(3)
+Config:           /home/sunshine/.config/uni/config.toml
+rc=0
+===== sunshine-toolbox launch (GUI attempt) =====
+Traceback (most recent call last):
+  File "/usr/local/bin/sunshine-toolbox", line 2, in <module>
+    sys.path.insert(0, "/usr/local/lib/sunshine/")
+    ^^^
+NameError: name 'sys' is not defined. Did you forget to import 'sys'?
+rc=1
+===== sunshine-welcome launch (GUI attempt) =====
+Traceback (most recent call last):
+  File "/usr/local/bin/sunshine-welcome", line 2, in <module>
+    sys.path.insert(0, "/usr/local/lib/sunshine/")
+    ^^^
+NameError: name 'sys' is not defined. Did you forget to import 'sys'?
+rc=1

@@ -1,0 +1,101 @@
+===== TOOL: sunshine-identity check =====
+rc=127
+/bin/bash: line 1: sunshine-identity: command not found
+===== TOOL: sunshine-info =====
+/bin/bash: line 1: sunshine-info: command not found
+rc=127
+===== TOOL: sunshine-repo check =====
+rc=127
+/bin/bash: line 1: sunshine-repo: command not found
+===== TOOL: sunshine-doctor --quiet (read-only) =====
+  [31m✘[0m package keyring missing or empty
+  [38;5;220m![0m expected package not installed: hyprland
+  [31m✘[0m /boot/vmlinuz-linux missing
+  [31m✘[0m /boot/initramfs-linux.img missing
+  [31m✘[0m /boot/grub/grub.cfg missing
+  [38;5;220m![0m failed services: \n  
+tail: write error: Broken pipe
+/usr/local/bin/sunshine-doctor: line 81: [: -dc 0-9: integer expected
+/usr/local/bin/sunshine-doctor: line 81: [: -dc 0-9: integer expected
+  [31m✘[0m Timeshift is not configured
+
+[31m[1m5 problem(s) found[0m — run: sunshine-doctor --fix
+rc=1
+===== identity check =====
+Identity OK: Sunshine OS
+rc=0
+===== sunshine-info =====
+[38;5;220m[1m☀ Sunshine OS[0m
+[38;5;220mSystem      [0m Sunshine OS (sunshineos, based on arch, rolling)
+[38;5;220mIdentity    [0m intact
+[38;5;220mKernel      [0m 7.3.4-arch1-2
+[38;5;220mBoot        [0m BIOS, overlay root
+[38;5;220mSession     [0m none (text console / ssh) 
+[38;5;220mShell       [0m fish
+[38;5;220mPackages    [0m 1165 installed, 0 from AUR/other
+[38;5;220mSnapshots   [0m not available (needs btrfs)
+[38;5;220mLast update [0m 
+
+12System:
+  12Kernel 7.3.4-arch1-2 12arch x86_64 12bits 64 12compiler gcc 12v 16.2.1
+  12Console N/A 12Distro Sunshine OS
+12Machine:
+  12Type Virtualbox 12System innotek GmbH 12product VirtualBox 12v 1.2 12serial <superuser required>
+  12Mobo Oracle 12model VirtualBox 12v 1.2 12serial <superuser required> 12Firmware BIOS
+    12vendor innotek GmbH 12v VirtualBox 12date 12/01/2006
+12CPU:
+  12Info quad core 12model Intel Core i5-4590 12bits 64 12type MCP 12arch Haswell 12rev 3 12cache 12L1 256 KiB
+    12L2 1024 KiB 12L3 24 MiB
+  12Speed (MHz) 12avg 3292 12min/max N/A 12cores 121 3292 122 3292 123 3292 124 3292 12bogomips 26338
+  12Flags-basic avx avx2 ht lm nx pae sse sse2 sse3 sse4_1 sse4_2 ssse3
+12Graphics:
+  12Device-1 VMware SVGA II Adapter 12driver vmwgfx 12v 2.21.0.0 12bus-ID 00:02.0
+  12Display unspecified 12server X.org 12v 1.21.1.26 12with Xwayland 12v 24.1.15 12driver 12X
+    12loaded modesetting 12gpu vmwgfx 12tty 80x40
+  12API OpenGL 12Message GL data unavailable in console, glxinfo missing.
+  12Info 12Tools 12de kscreen-console,kscreen-doctor 12x11 xprop
+12Audio:
+  12Device-1 Intel 82801AA AC97 Audio 12vendor Dell 12driver snd_intel8x0 12v kernel 12bus-ID 00:05.0
+  12API ALSA 12v k7.3.4-arch1-2 12status kernel-api
+  12Server-1 sndiod 12v N/A 12status off
+  12Server-2 PipeWire 12v 1.6.11 12status active (process)
+12Network:
+  12Device-1 Intel 82540EM Gigabit Ethernet 12driver e1000 12v kernel 12port d020 12bus-ID 00:03.0
+  12IF enp0s3 12state up 12speed 1000 Mbps 12duplex full 12mac <filter>
+  12Device-2 Intel 82371AB/EB/MB PIIX4 ACPI 12type network bridge 12driver piix4_smbus 12v N/A 12port N/A
+    12bus-ID 00:07.0
+12Drives:
+rc=1
+===== sunshine-repo check =====
+[sunshine] repository OK (https://github.com/tak0dan/sunshineos-repo/releases/download/repo, signed)
+rc=0
+===== pacman keyring =====
+==> ERROR: You do not have sufficient permissions to read the pacman keyring.
+==> Use 'pacman-key --init' to correct the keyring permissions.
+rc=1
+===== pacman db check =====
+warning: Public keyring not found; have you run 'pacman-key --init'?
+error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+error: keyring is not writable
+No database errors have been found!
+rc=0
+===== pacman -Sy (timeout 60) =====
+warning: Public keyring not found; have you run 'pacman-key --init'?
+error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+error: keyring is not writable
+:: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+ sunshine downloading...
+error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+error: keyring is not writable
+error: failed to synchronize all databases (invalid or corrupted database (PGP signature))
+rc=1
+===== checkupdates (timeout 60) =====
+==> ERROR: Cannot fetch updates
+rc=1
+===== sunshine-update-check =====
+{"packages": 0, "sunshine": 0, "distro": false, "release": "", "state": "none", "checked": 1795024026}
+rc=0
+{"packages": 0, "sunshine": 0, "distro": false, "release": "", "state": "none", "checked": 1795024026}

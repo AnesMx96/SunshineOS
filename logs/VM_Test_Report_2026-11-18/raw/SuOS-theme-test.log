@@ -1,0 +1,5 @@
+########## THEME TEST @ 2026-11-18T19:13:56+01:00 ##########
+VBoxManage: error: Waiting for guest process (flags 0x1) failed: Error VERR_NOT_SUPPORTED for guest process "/bin/bash" occurred
+
+VBoxManage: error: Details: code VBOX_E_IPRT_ERROR (0x80bb0005), component GuestProcessWrap, interface IGuestProcess, callee nsISupports
+VBoxManage: error: Context: "WaitForArray(ComSafeArrayAsInParam(aWaitStartFlags), gctlRunGetRemainingTime(msStart, cMsTimeout), &waitResult)" at line 1420 of file VBoxManageGuestCtrl.cpp

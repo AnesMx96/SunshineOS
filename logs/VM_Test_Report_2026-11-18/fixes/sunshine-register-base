@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Register the shipped sunshine-base package with pacman. Safe when the glob matches nothing.
+set -u
+for p in /usr/share/sunshine/pkgs/sunshine-base-*.pkg.tar.zst; do
+  [ -f "$p" ] || continue
+  pacman -U --noconfirm --overwrite '*' "$p" || true
+done
+exit 0

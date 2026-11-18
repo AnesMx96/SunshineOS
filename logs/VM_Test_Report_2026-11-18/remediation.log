@@ -1,0 +1,19 @@
+########## REMEDIATION START @ 2026-11-18T19:20:25+01:00 ##########
+=== cowspace before ===
+airootfs        256M  256M     0 100% /
+cowspace        256M  256M     0 100% /run/archiso/cowspace
+=== remount cowspace to 1G ===
+remount_rc=0
+airootfs        1.0G  256M  768M  25% /
+cowspace        1.0G  256M  768M  25% /run/archiso/cowspace
+=== copying patched files into guest ===
+total 68
+-rw------- 1 sunshine sunshine   259 Nov 18 19:21 gtk-settings.ini
+-rw------- 1 sunshine sunshine    25 Nov 18 19:21 kvantum.kvconfig
+-rw------- 1 sunshine sunshine   125 Nov 18 19:21 pacman-init.async.conf
+-rw------- 1 sunshine sunshine   390 Nov 18 19:21 shellprocess-ownbase.conf
+-rw------- 1 sunshine sunshine  9992 Nov 18 19:21 sunshine-doctor
+-rw------- 1 sunshine sunshine 17647 Nov 18 19:21 sunshine-install
+-rw------- 1 sunshine sunshine   278 Nov 18 19:21 sunshine-register-base
+-rw------- 1 sunshine sunshine  6657 Nov 18 19:21 sunshine-toolbox
+-rw------- 1 sunshine sunshine  7101 Nov 18 19:21 sunshine-welcome

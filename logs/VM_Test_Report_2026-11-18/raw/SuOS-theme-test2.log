@@ -1,0 +1,60 @@
+########## THEME RETEST @ 2026-11-18T19:15:29+01:00 ##########
+=== available Sunshine colorschemes ===
+none listed
+=== apply colorscheme ===
+Successfully applied the color scheme SunshineDark to your current Plasma session
+colorscheme_rc=0
+=== apply desktop theme ===
+The current Plasma session's theme has been set to Sunshine
+desktoptheme_rc=0
+=== reapply plasma setup ===
+The requested theme "SunshineDark" is already set as the theme for the current Plasma session.
+The requested theme "Sunshine" is already set as the theme for the current Plasma session.
+plasma_setup_rc=0
+=== restore visuals offline ===
+offline: applying the themes that are already installed
+
+[38;5;220m[1m☀ Applying[0m
+[32m✔ ☕ visuals restored[0m
+[38;5;220mAll done. Have a warm cup of tea and enjoy the sunshine ☀️🍵[0m
+restore_visuals_rc=0
+=== resulting theme config ===
+/home/sunshine/.config/kdeglobals:122:ColorScheme=SunshineDark
+/home/sunshine/.config/kdeglobals:123:ColorSchemeHash=bbe8e64dea516f7a7ce26e4fc52bbb151ece3a71
+/home/sunshine/.config/kdeglobals:126:Theme=Sunshine-orange-dark
+/home/sunshine/.config/kdeglobals:133:widgetStyle=kvantum
+=== gtk configs ===
+-rw-r--r-- 1 sunshine sunshine 389 Nov 18 19:16 /home/sunshine/.gtkrc-2.0
+
+/home/sunshine/.config/gtk-3.0:
+total 20
+drwxr-xr-x 3 sunshine sunshine  140 Nov 18 19:16 .
+drwxr-xr-x 1 sunshine sunshine 1040 Nov 18 19:16 ..
+drwxr-xr-x 2 sunshine sunshine  520 Nov 18 19:15 assets
+-rw-r--r-- 1 sunshine sunshine 4998 Nov 18 19:15 colors.css
+-rw-r--r-- 1 sunshine sunshine   21 Nov 18 19:15 gtk.css
+-rw------- 1 sunshine sunshine  584 Nov 18 19:16 settings.ini
+-rw-r--r-- 1 sunshine sunshine 3895 Nov 18 19:15 window_decorations.css
+
+/home/sunshine/.config/gtk-4.0:
+total 20
+drwxr-xr-x 3 sunshine sunshine  140 Nov 18 19:16 .
+drwxr-xr-x 1 sunshine sunshine 1040 Nov 18 19:16 ..
+drwxr-xr-x 2 sunshine sunshine   40 Nov 18 18:29 assets
+-rw-r--r-- 1 sunshine sunshine 4998 Nov 18 19:15 colors.css
+-rw-r--r-- 1 sunshine sunshine   21 Nov 18 19:15 gtk.css
+-rw------- 1 sunshine sunshine  388 Nov 18 19:16 settings.ini
+-rw-r--r-- 1 sunshine sunshine 3895 Nov 18 19:15 window_decorations.css
+=== available gtk themes ===
+Breeze
+Breeze-Dark
+Default
+Emacs
+=== fastfetch theme line ===
+      "theme2": "Breeze-Dark [GTK2], Breeze [GTK3]"
+    }
+  },
+--
+      "icons2": "Sunshine-orange-dark [GTK2/3/4]"
+    }
+  },

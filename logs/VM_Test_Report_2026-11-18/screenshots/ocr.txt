@@ -1,0 +1,422 @@
+===== Screenshot_20261118_183424.png =====
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+v7. SuOS [Running] - Oracle VirtualBox Ves
+File Machine View Input Devices Help
+18:34 NET Dy ty a (alte L (Jk) =
+Sunshine OS Installer PL ena Be, e
+. y
+1 v
+\ Sunshine OS Installer = a) x 7
+2026-11-18 - 18:33:5@ [6]: . Running QList("udevadm", "settle")
+Install, Sunshine 2026-11-18 - 18:33:5@ [6]: . Running QList("sync") /
+3 Dae 2026-11-18 - 18:33:5@ [2]: WARNING: [PYTHON JOB]: "[Errno 2] No such file or directory: ‘chcon'"
+2026-11-18 - 18:33:5@ [6]: . Running QList("mount", "-o", "bind", "/run/udev", "/tmp/calamares-
+] j root-vc3csytv/run/udev" )
+sei) 2026-11-18 - 18:33:5@ [6]: . Running QList("udevadm", "settle")
+. 2026-11-18 - 18:33:50 [6]: . Running QList("sync") y
+Location 2026-11-18 - 18:33:5@ [2]: WARNING: [PYTHON JOB]: "[Errno 2] No such file or directory: ‘chcon'"
+2026-11-18 - 18:33:5@ [6]: . Running QList("mount", "-t", "sysfs", "-o", "defaults", "sys", "/
+Keyboard tmp/calamares-root-vc3csytv/sys")
+2026-11-18 - 18:33:5@ [6]: . Running QList("udevadm", "settle")
+ate 2026-11-18 - 18:33:50 [6]: . Running QList("sync")
+Partitions
+2026-11-18 - 18:33:5@ [6]: virtual void Calamares: : JobThread: :run() Py
+Users 2026-11-18 - 18:33:5@ [6]: Starting job "unpackfs" ( 10 / 39 ) .
+2026-11-18 - 18:33:5@ [6]: [PYTHON JOB]: Found gettext "en_US" in "/usr/share/locale/en_US"
+Apps 2026-11-18 - 18:33:5@ [6]: . Running QList("mount", "-t", "squashfs", "-o", "loop", "/run/
+archiso/bootmnt/arch/x86_64/airootfs.sfs", "/tmp/tmpb4z415eo0/airootfs")
+salt le 2026-11-18 - 18:33:50 [6]: . Running QList("udevadm", "settle")
+2026-11-18 - 18:33:50 [6]: . Running QList("sync")
+Install 2026-11-18 - 18:33:5@ [6]: . Running QList("unsquashfs", "-1", "/run/archiso/bootmnt/arch/
+x86_64/airootfs.sfs")
+Finish ; ; ;
+2026-11-18 - 18:33:5@ [6]: . Running QList("rsync", "-aHAXSr", "--filter=-x trusted.overlay.*",
+"--exclude", "/proc/", "--exclude", "/sys/", "--exclude", "/dev/", "--exclude", "/run/", "--exclude",
+"/run/udev/", "--progress", "/tmp/tmpb4z415eo0/airootfs/", "/tmp/calamares-root-vc3csytv")
+P z a
+Filling up filesystems.
+ee About © Cancel
+—— I v7
+O9omeBeoaoa © e#e@Qanr 18:34
+‘sie @ 18 11 2026 =
+ee Saw A De ae od + eae
+ 
+===== Screenshot_20261118_183519.png =====
+r)
+ia Le
+Input Devices
+eee tee Ci) 1
+~: fish — Konsole
+SuOS [Running] - Oracle VirtualBox
+Help
+18:35
+18 11 2026
+NET Ey to
+File Edit View Bookmarks Plugins Settings Help Search
+CPU 42%
+foie
+eae
+4
+o
+ 
+B NSE) ae aa OS Td
+[
+ 
+sunshine@sunshineos
+its} Sunshine 0S x86_64
+Kernel Linux 7.3.4-arch1-2
+Uptime mT)
+Packages 1165 (pacman)
+Shell Sisk:
+Desktop KDE Plasma 6.8.3
+WM KWin (Wayland)
+BOTT SunshineDark [Qt], Breeze-Dark [GTK2], Breeze [GTK3]
+Icons Sunshine-orange-dark [Qt], Sunshine-orange-dark [GTK2/3/4]
+O0-Ta Ait) Qo) -10) Ao)
+1 ot] Intel(R) Core(TM) i5-4590 (4) @ 3.29 GHz
+Le) t] VMware SVGA II Adapter [Integrated]
+Memory 1.75 GiB / 5.31 GiB (33%)
+Disk 111.96 MiB / 256.00 MiB (44%) - overlay
+ 
+(D copy ©) Paste Q Find ©)
+ 
+ 
+ee oe ee
+aC 18:35
+OF #OA*~ seit r026 LIE
+OR St A BE ae od + Decca ae
+ 
+===== Screenshot_20261118_183606.png =====
+v7 SuOS [Running] - Oracle VirtualBox Ves
+File Machine View Input Devices Help
+ 
+ 
+ 
+Ns ~: fish — Konsole File Edit View Bookmarks Plugins Settings Help Search eee ead annie a Sep ON VON maiended e
+| ee
+Sunshine window bar
+Window buttons and the title of the active window, for the Copy a} Peat Q Find (S)
+top bar (like Garuda's) .
+ne@sunshineos -
+os Sunshine 0S x86_64 |
+Kernel Linux 7.3.4-arch1-2
+sy oT mL)
+Packages 1165 (pacman)
+Shell bis A: e  )
+Desktop KDE Plasma 6.8.3
+WM KWin (Wayland)
+BTN SunshineDark [Qt], Breeze-Dark [GTK2], Breeze [GTK3]
+Icons Sunshine-orange-dark [Qt], Sunshine-orange-dark [GTK2/3/4]
+Terminal konsole 26.8.3
+ 
+CPU Intel(R) Core(T™M) i5-4590 (4) @ 3.29 GHz
+Le) ot] VMware SVGA II Adapter [Integrated]
+Memory 1.75 GiB / 5.31 GiB (33%)
+Disk 111.96 MiB / 256.00 MiB (44%) - overlay
+: ed ©18:35
+y
+ 
+ 
+oom0 a 6 0 A © 4 CRATE ee)
+TS A Ee ae od + eae
+ 
+===== Screenshot_20261118_183701.png =====
+y SuOS [Running] - Oracle VirtualBox Wares
+File Machine View Input Devices Help
+eee tee Ci) 1 File Edit View Bookmarks Plugins Settings Help Search eee a h setiiedte hk £ is ON ie e
+~: fish — Konsole aad ia) x
+( copy ©) Paste Q Find ©)
+J
+B NSE] ae aa 0 ST
+Packages 1165 (pacman)
+Shell ak)
+Desktop KDE Plasma 6.8.3
+ 
+ry KWin (Wayland)
+Badu) SunshineDark [Qt], Breeze-Dark [GTK2], Breeze [GTK3]
+Icons Sunshine-orange-dark [Qt], Sunshine-orange-dark [GTK2/3/4]
+Terminal konsole 26.8.3
+CPU Intel(R) Core(TM) i5-4590 (4) @ 3.29 GHz
+ie ot] VMware SVGA II Adapter [Integrated]
+Memory 1.75 GiB / 5.31 GiB (33%)
+Disk 111.96 MiB / 256.00 MiB (44%) - overlay
+Orr
+) paru -Syyu
+:: Synchronizing package databases...
+core downloading...
+extra downloading...
+multilib downloading...
+sunshine downloading...
+warning: Public keyring not found; have you run 'pacman-key --init'?
+error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+error: keyring is not writable
+error: failed to synchronize all databases (invalid or corrupted database (PGP signature) )
+[WARN] - (starship::context): Scanning current directory timed out.
+[WARN] - (starship::context): You can set scan_timeout in your config to a higher value to allow longer-running scans to keep executing.
+8 2s ©18:36
+x 1)
+ 
+ 
+(on?) Ll 3) | cS o} wn QO qh we O) aN 18:36 (] I
+18 11 2026
+TS A Ee ae od + Eee ee
+ 
+===== Screenshot_20261118_183758.png =====
+ 
+Home — Dolphin
+ 
+ 
+ 
+ 
+t= Pee dC) lis ane (S)
+Cae eto) - -
++ P).config
++ P) local
+{faim Y--1 ace) e)
+Desktop plore Tana) ) Downloads
+peer es
+Re aero
+Pictures sunshine
+eas vi Wiest arate Projects ye
+= Sr nd :
+Places ; Hidden items: 9 items -
+‘@Home Nee Meee
+ago
+© Desktop au Peers MT 4
+ere ate oes a. PERU Ry ago y
+a a | eter a 1.87 GiB / 5.31 GiB (35%)
+Disk 133.00 MiB / 256.00 MiB (52%) - overlay
+ 
+ 
+ 
+===== Screenshot_20261118_184313.png =====
+File Machine View Input Devices Help
+Error
+Sunshine OS Installer
+ 
+Welcome
+Location
+Keyboard
+Partitions
+a
+OTe
+Apps
+Summary
+Install
+ 
+ee Ns
+ 
+ 
+suOs [Running] - Oracle VirtualBox V4
+18:43 NET A DISK 6% CPU 2% (Ted e =
+18 11 2026 —wq“e nv———~e
+J V
+‘A
+V/s ; ZA
+Error a 0 x
+PUA)
+Could not run command.
+Details:
+MU Reel eM RC) ere eee etre]
+variables are: p,p.
+ 
+ 
+ 
+ 
+iomputer.
+and..
+ 
+ 
+< Back PN as Y Done
+v
+i) -o 18:43
+ORE SOM Raprerinroya ae)
+RT A De ad + Etec ae
+ 
+===== suos-final.png =====
+m New Tab na Split View v
+package keyring present
+package database consistent
+no pending .pacnew files
+[sunshine] repository is configured
+! expected package not installed: hyprland
+a a
+* Desktop
+aL
+/boot/vmlinuz-linux missing
+Pa baa seo) M11-) he
+/boot/grub/grub.cfg missing
+v /etc/fstab consistent
+* System
+! failed services: \n
+/usr/local/bin/sunshine-doctor: line 81: [:
+/usr/local/bin/sunshine-doctor: line 81: [:
+v root disk -dc 0-9% used
+v network service running
+v running kernel matches installed modules
+* Restore points
+Timeshift is not configured
+3 problem(s) found
+Foe 8 1s ©19:12
+x 1 ) sunshine-identity
+Identity OK: Sunshine 0S
+TEED 19:14
+) paru -Syyufj
+-?>
+; i i ee
+i
+~: fish — Konsole
+-dce 0-9: integer expected
+-dce 0-9: integer expected
+nome
+copy [F] Paste QFind =
+@ « shea}
+i a ee eye
+===== suos-live.png =====
+Sa eRes Gre as DISK 6% CPU 0% co as Py
+18:48
+18 11 2026
+ 
+|
+Sunshine graphs .
+Live graphs for network, disk space, CPU and GPU, for the
+Sunshine top bar
+ 
+Sunshine OS Installer
+ 
+™
+‘ Welcome
+ 
+Location
+Keyboard
+Partitions
+Installation Failed
+Users
+Apps Sunshine OS 1.0 has not been installed on your computer.
+The error message was: Could not run command..
+STU lnalaer-1 ay
+Install
+  
+About < Back > Next 7m Yo) a1)
+ 
+ 
+ 
+ 
+y ~
+I y P, ‘
+) -& fo 18:48
+ee ee A © Y * © F~ igi7 s006 =)
+===== suos-store-loaded.png =====
+eee tee Ci) File Edit View Bookmarks Plugins Settings
+~: fish — Konsole
+er STALL fi split View v
+enrop: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.
+tion, passed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.
+ed 5921 returned 0
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.
+ination, passed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.
+8192 returned 4096
+error: failed retrieving file _'firefox-160.0.1-1-x86_64.pkg.tar.
+sed 1369 returned 1367
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.
+sed 8192 returned 4096
+error: failed retrieving file 'firefox-160.0.1-1-x86_64.pkg.tar.
+ssed 8192 returned 4096
+warning: failed to retrieve some files
+error: failed to commit transaction (failed to retrieve
+Errors occurred, no packages were upgraded.
+| oe
+zst' from
+zst' from
+zst' from
+PA) a a)
+zst' from
+zst' from
+zst' from
+some files)
+ee Ee NET A a fae tee P
+a a) x
+a] Paste Q Find S)
+singapore.mirror.pkgbuild.com : Failure writing output to destina
+mirror.trapmaid.org : Failure writing output to destination, pass
+johannesburg.mirror.pkgbuild.com : Failure writing output to dest
+mirror.ufscar.br : Failure writing output to destination, passed
+mirror2.keiminem.com : Failure writing output to destination, pas
+mirror.givebytes.net :
+mirror3.givebytes.net :
+oo” 8 18s ©19:14
+x 1 ) sunshine-update
+kf.config.core: Failed to lock file "/home/sunshine/.local/state/konsolestaterc. lock" with error 3
+kf.config.core: Couldn't lock local file: "/home/sunshine/.local/state/konsolestaterc"
+qt.core.qobject.connect: QObject::disconnect: Unexpected nullptr parameter
+kf.config.core: Failed to lock file "/home/sunshine/.local/state/konsolestaterc.lock" with error 3
+kf.config.core: Couldn't lock local file: "/home/sunshine/.local/state/konsolestaterc"
+kf.config.core: Failed to lock file "/home/sunshine/.config/konsolesshconfig. lock" with error 3
+kf.config.core: Couldn't lock local file: "/home/sunshine/.config/konsolesshconfig"
+kf.config.core: Failed to lock file "/home/sunshine/.config/konsolesshconfig.lock" with error 3
+kf .config.core: Couldn't lock local file: "/home/sunshine/.config/konsolesshconfig"
+10) ~
+8 23s ©19:15
+Failure writing output to destination, pas
+Failure writing output to destination, pa
+ 
+ 
+ah)
+OR AOR" Raereee or
+===== suos-store.png =====
+ 
+ 
+RUS) r ee = alee — San bs ee 4
+SMS ecole) = ia) rs
+* ATT Search apps, games and tools in every source... os
+\ STORE i. rs
+1a
+e
+iT
+i)
+il % Installed
+e
+8] f Windows
+e
+i meme) ole)
+e
+SACRE i113
+e
+Ss
+vi
+e Preparing the app catalog...
+3 This only happens once and takes a few seconds.
+5
+Tal
+Tal
+rn
+Val
+"al
+ki
+k} >
+a)
+"al Lee Bee a)
+@ Flatpak @ Appimage
+@Snap @ Wine
+\ @ Installed | eC
+} Lo
+ 
+ 
+ 
+ 
+ 
+ee@meaees @ ORT Ae Tape a a
+

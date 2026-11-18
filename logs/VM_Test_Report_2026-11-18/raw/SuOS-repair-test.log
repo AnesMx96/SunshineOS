@@ -1,0 +1,35 @@
+########## SYSTEM REPAIR TEST @ 2026-11-18T19:16:33+01:00 ##########
+[38;5;220m[1mSunshine OS doctor[0m  [2m(check + repair)[0m
+
+[38;5;220m[1m☀ Identity[0m
+  [32m✔[0m this is Sunshine OS (Sunshine OS)
+
+[38;5;220m[1m☀ Package manager[0m
+  [32m✔[0m no lock file
+  [32m✔[0m package keyring present
+  [32m✔[0m package database consistent
+  [32m✔[0m no pending .pacnew files
+  [32m✔[0m [sunshine] repository is configured
+  [38;5;220m![0m expected package not installed: hyprland
+
+[38;5;220m[1m☀ Desktop[0m
+
+[38;5;220m[1m☀ Boot[0m
+  [31m✘[0m /boot/vmlinuz-linux missing
+  [32m✔[0m initramfs present
+  [31m✘[0m /boot/grub/grub.cfg missing
+  [32m✔[0m /etc/fstab consistent
+
+[38;5;220m[1m☀ System[0m
+  [38;5;220m![0m failed services: \n  
+/usr/local/bin/sunshine-doctor: line 81: [: -dc 0-9: integer expected
+/usr/local/bin/sunshine-doctor: line 81: [: -dc 0-9: integer expected
+  [32m✔[0m root disk -dc 0-9% used
+  [32m✔[0m network service running
+  [32m✔[0m running kernel matches installed modules
+
+[38;5;220m[1m☀ Restore points[0m
+  [31m✘[0m Timeshift is not configured
+
+[31m[1m3 problem(s) found[0m
+DOCTOR_FIX_RC=1
