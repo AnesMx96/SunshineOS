@@ -2,7 +2,7 @@
 # The Sunshine icon theme: Fluent icon theme (Windows 11 style, GPL-3.0, vinceliuice) in its orange variant, installed as Sunshine-orange(-dark).
 pkgname=sunshine-icon-theme
 pkgver=2026.08.31
-pkgrel=1
+pkgrel=2
 pkgdesc='Sunshine OS icons: Fluent icon theme, orange variant'
 arch=('any')
 url='https://github.com/vinceliuice/Fluent-icon-theme'
@@ -18,6 +18,16 @@ package() {
   install -d "$pkgdir/usr/share/icons"
   bash ./install.sh -d "$pkgdir/usr/share/icons" -n Sunshine orange
   rm -rf "$pkgdir"/usr/share/icons/.Sunshine-light-base 2>/dev/null || true
+  # Fluent ships an icon called "sunshine" (the game-streaming app, a red swirl). KDE falls back from "sunshine-store" to "sunshine", so
+  # every Sunshine OS launcher showed that red icon. Take it out and ship our own icons under their exact names.
+  find "$pkgdir/usr/share/icons" -name 'sunshine.svg' -delete
+  for n in sunshine-menu sunshine-store sunshine-store-theme sunshine-welcome sunshineos; do
+    b64=$(base64 -w0 "$startdir/icons/$n.png")
+    for d in "$pkgdir"/usr/share/icons/Sunshine-orange/scalable/apps "$pkgdir"/usr/share/icons/.Sunshine-base/scalable/apps; do
+      [ -d "$d" ] || continue
+      printf '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="256" height="256" viewBox="0 0 256 256"><image width="256" height="256" xlink:href="data:image/png;base64,%s"/></svg>\n' "$b64" > "$d/$n.svg"
+    done
+  done
   find "$pkgdir" -type d -exec chmod 755 {} +
   find "$pkgdir" -type f -exec chmod 644 {} +
 }
