@@ -3,6 +3,7 @@
 # running system (by command through guest control, or in the VM window), keep what works, harvest it into the sources.
 #   test/dev-vm.sh create NAME ISO [GB]    new VirtualBox VM (window, shared clipboard) + a persistent ext4 disk labelled "sunpersist"; boots the ISO
 #   test/dev-vm.sh start NAME              start it; in the GRUB menu choose "live session with persistent changes" (the script presses it for you)
+#   test/dev-vm.sh ssh NAME [command]     terminal tunnel for Claude: ssh sunshine@127.0.0.1:2222 (NAT forward to the guest sshd; sudo is passwordless in the live session)
 #   test/dev-vm.sh push NAME               copy the working tree (overlay/system, overlay/skel, profile files that matter) into the running VM
 #   test/dev-vm.sh changed NAME            list what differs from the ISO image in the VM (the overlay's upper directory), noise left out
 #   test/dev-vm.sh harvest NAME OUTDIR     copy those changed files out, ready to be merged into overlay/system or overlay/skel
@@ -23,7 +24,14 @@ case "$cmd" in
     VBoxManage storageattach "$N" --storagectl SATA --port 2 --device 0 --type hdd --medium "$PWD/$vdi"
     VBoxManage modifyvm "$N" --boot1 dvd --boot2 none
     echo "created $N with the persistent disk $vdi" ;;
-  start) $VB start "$N"; sleep 14; $VB key "$N" down; sleep 1; $VB key "$N" enter ;;      # second GRUB entry
+  start)   # GUI window for the user, plus the terminal tunnel (ssh via NAT forward 2222 and VBox guest control) for Claude
+    $VB start "$N"; sleep 14; $VB key "$N" down; sleep 1; $VB key "$N" enter
+    echo "waiting for the guest's sshd on 127.0.0.1:2222 ..."
+    for i in $(seq 1 60); do "$0" ssh "$N" true 2>/dev/null && { echo "tunnel up: test/dev-vm.sh ssh $N '<command>'"; exit 0; }; sleep 5; done
+    echo "ssh did not come up (guest control still works: test/vbox.sh run $N '<command>')"; exit 1 ;;
+  ssh)
+    O="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -o ConnectTimeout=5 -p 2222"
+    if command -v sshpass >/dev/null; then exec sshpass -p sunshine ssh $O sunshine@127.0.0.1 "$@"; fi
   push)
     t=$(mktemp -d); tar -C overlay/system -cf "$t/system.tar" .; tar -C overlay/skel -cf "$t/skel.tar" .
     $VB put "$N" "$t/system.tar" >/dev/null; $VB put "$N" "$t/skel.tar" >/dev/null
