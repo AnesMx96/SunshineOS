@@ -566,3 +566,32 @@ Installer result: SUNSHINE_INSTALL_OK
 - ALL 114 optional Hyprland packages skipped: sunshine key unknown, then /tmp/pm-hypr.conf missing.
 - Plasma remains the default session.
 Target disk: /dev/sdb (20G), root subvolume @, home subvolume @home.
+########## STEP 13: INJECT FIXES INTO INSTALLED SYSTEM @ 2026-11-18T20:35:04+01:00 ##########
+=== inject fixes into installed system @ 2026-11-18T19:35:05+00:00 ===
+=== verification ===
+-rwxr-xr-x 1 root root 9992 Nov 18 19:35 /mnt/sunshine-target/usr/local/bin/sunshine-doctor
+-rwxr-xr-x 1 root root 6657 Nov 18 19:35 /mnt/sunshine-target/usr/local/bin/sunshine-toolbox
+-rwxr-xr-x 1 root root 7101 Nov 18 19:35 /mnt/sunshine-target/usr/local/bin/sunshine-welcome
+196:rsync -aHAXx --no-inc-recursive \
+gtk-theme-name=Breeze-Dark
+[General]
+theme=Sunshine
+drwxr-xr-x 1 root root 408 Nov 18 18:50 /mnt/sunshine-target/etc/pacman.d/gnupg
+lrwxrwxrwx 1 root root 36 Nov 18 19:35 /mnt/sunshine-target/etc/systemd/system/multi-user.target.wants/sshd.service -> /usr/lib/systemd/system/sshd.service
+lrwxrwxrwx 1 root root 43 Nov 18 19:35 /mnt/sunshine-target/etc/systemd/system/multi-user.target.wants/vboxservice.service -> /usr/lib/systemd/system/vboxservice.service
+INJECT_OK
+INJECT_SCRIPT_RC=0
+=== inject fixes into installed system @ 2026-11-18T19:35:05+00:00 ===
+=== verification ===
+-rwxr-xr-x 1 root root 9992 Nov 18 19:35 /mnt/sunshine-target/usr/local/bin/sunshine-doctor
+-rwxr-xr-x 1 root root 6657 Nov 18 19:35 /mnt/sunshine-target/usr/local/bin/sunshine-toolbox
+-rwxr-xr-x 1 root root 7101 Nov 18 19:35 /mnt/sunshine-target/usr/local/bin/sunshine-welcome
+196:rsync -aHAXx --no-inc-recursive \
+gtk-theme-name=Breeze-Dark
+[General]
+theme=Sunshine
+drwxr-xr-x 1 root root 408 Nov 18 18:50 /mnt/sunshine-target/etc/pacman.d/gnupg
+lrwxrwxrwx 1 root root 36 Nov 18 19:35 /mnt/sunshine-target/etc/systemd/system/multi-user.target.wants/sshd.service -> /usr/lib/systemd/system/sshd.service
+lrwxrwxrwx 1 root root 43 Nov 18 19:35 /mnt/sunshine-target/etc/systemd/system/multi-user.target.wants/vboxservice.service -> /usr/lib/systemd/system/vboxservice.service
+INJECT_OK
+/dev/sdb2        20G  9.0G   11G  46% /mnt/sunshine-target

@@ -22,6 +22,17 @@ done
 # Calamares config and its helper script (GUI install would otherwise fail again).
 sudo install -m 644 "$F/shellprocess-ownbase.conf" "$T/etc/calamares/modules/shellprocess-ownbase.conf" || echo FAILED_CALAMARES_CONF
 
+# The installer excludes /etc/pacman.d/gnupg; copy the working keyring so the
+# [sunshine] repository is trusted in the installed system.
+sudo rm -rf "$T/etc/pacman.d/gnupg"
+sudo cp -a /etc/pacman.d/gnupg "$T/etc/pacman.d/gnupg" || echo FAILED_KEYRING
+
+# The installer removes the vboxservice wants-link; restore it (and sshd) so
+# the VM remains controllable after reboot.
+sudo mkdir -p "$T/etc/systemd/system/multi-user.target.wants"
+sudo ln -sf /usr/lib/systemd/system/vboxservice.service "$T/etc/systemd/system/multi-user.target.wants/vboxservice.service"
+sudo ln -sf /usr/lib/systemd/system/sshd.service "$T/etc/systemd/system/multi-user.target.wants/sshd.service"
+
 # Theme defaults for future users (skel) and for the already-created user.
 sudo install -d "$T/etc/skel/.config/gtk-3.0" "$T/etc/skel/.config/gtk-4.0" "$T/etc/skel/.config/Kvantum"
 sudo install -m 644 "$F/gtk-settings.ini" "$T/etc/skel/.config/gtk-3.0/settings.ini"
@@ -46,4 +57,5 @@ ls -l "$T/usr/local/bin/sunshine-welcome" "$T/usr/local/bin/sunshine-toolbox" "$
 grep -n 'rsync -aHAXx' "$T/usr/local/bin/sunshine-install"
 grep gtk-theme-name "$T/etc/skel/.config/gtk-3.0/settings.ini"
 cat "$T/etc/skel/.config/Kvantum/kvantum.kvconfig"
+ls -ld "$T/etc/pacman.d/gnupg"; ls -l "$T/etc/systemd/system/multi-user.target.wants/"{vboxservice,sshd}.service
 echo INJECT_OK

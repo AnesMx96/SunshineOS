@@ -62,6 +62,7 @@ These are design/implementation choices that made the system harder to debug or 
 11. **Two copies of several tools exist** (`profile/airootfs/usr/local/bin` and `overlay/system/usr/local/bin`), e.g. `sunshine-fix-pacman`; drift between them is easy and both need the same fixes.
 12. **Starship warns about a scan timeout**, and Calamares config includes `GeoIP style none`, deprecated keys, and missing optional helpers (`chcon`, `os-prober`, `ckbcomp`). These are small but avoidable polish issues (F9).
 13. **The optional Hyprland layer is installed before the repo key is trusted and its failure is swallowed** (`|| true`). A user can get `SUNSHINE_INSTALL_OK` with 114 silently missing packages (F18).
+14. **The installer unconditionally removes `vboxservice.service` from `multi-user.target.wants`**, disabling VirtualBox guest integration on the installed system purely because the live ISO did not need it.
 
 ---
 
@@ -184,3 +185,4 @@ In progress. The following has been done and is recorded in `remediation.log`:
 10. Started the installer against `/dev/sdb` with all live patches reapplied and the keyring working.
 11. Discovered that `sunshine-install` copies from `SRC=/run/archiso/airootfs` (the squashfs), so none of the overlay fixes are included in the installed system. Prepared `fixes/inject-into-target.sh` (copied to the guest at `/tmp/sunshine-fixes/`) to mount the installed `@`/`@home` subvolumes and apply the patched tools, Calamares config, GTK/Kvantum settings and skel defaults before the first boot.
 12. The install on the 20 GiB disk completed: `grub-install` (i386-pc on `/dev/sdb`), `grub.cfg` with Sunshine theme, initramfs generated, and `SUNSHINE_INSTALL_OK`. All 114 Hyprland packages were skipped (F18) but the Plasma desktop remains the default session.
+13. Injected the fixes into the mounted target (`@`/`@home`): patched tools, Calamares config, GTK/Kvantum settings for both skel and the created user, the working pacman keyring (including the Sunshine key), and re-enabled `vboxservice`/`sshd` so the VM stays controllable after reboot. Verification: `INJECT_OK`, target filesystem 9.0G/20G used.
