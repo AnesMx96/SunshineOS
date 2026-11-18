@@ -31,7 +31,7 @@ case "$cmd" in
     echo "ssh did not come up (guest control still works: test/vbox.sh run $N '<command>')"; exit 1 ;;
   ssh)
     O="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -o ConnectTimeout=5 -p 2222"
-    if command -v sshpass >/dev/null; then exec sshpass -p sunshine ssh $O sunshine@127.0.0.1 "$@"; fi
+    if command -v sshpass >/dev/null; then if [ $# -gt 0 ]; then exec sshpass -p sunshine ssh $O sunshine@127.0.0.1 bash -s <<<"$*"; else exec sshpass -p sunshine ssh $O sunshine@127.0.0.1; fi; fi
     echo "sshpass is needed for the tunnel (pacman -S sshpass)"; exit 1 ;;
   push)
     t=$(mktemp -d); tar -C overlay/system -cf "$t/system.tar" .; tar -C overlay/skel -cf "$t/skel.tar" .

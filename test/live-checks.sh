@@ -13,7 +13,7 @@ f=$(systemctl --failed --no-legend 2>/dev/null | awk '{print $2}' | tr '\n' ' ')
 chk "identity is Sunshine OS"                    grep -q '^ID=sunshineos' /etc/os-release
 chk "sunshine-identity check passes"             /usr/local/bin/sunshine-identity check --quiet
 chk "kernel command line: pastel palette"        grep -q 'vt.default_red=' /proc/cmdline
-[ $LIVE = 1 ] && { chk "kernel command line: cow_spacesize=1G" grep -q 'cow_spacesize=1G' /proc/cmdline
+[ $LIVE = 1 ] && { chk "kernel command line: cow_spacesize=1G (or the persistent dev disk)" grep -qE 'cow_spacesize=1G|cow_persistent=P' /proc/cmdline
   sz=$(df -BM --output=size /run/archiso/cowspace 2>/dev/null | tail -1 | tr -dc 0-9); [ "${sz:-0}" -ge 1000 ] && ok "live overlay is ${sz} MiB" || bad "live overlay is ${sz:-?} MiB (want 1024)"; }
 chk "pacman-init / keyring usable"               pacman-key --list-keys
 chk "Sunshine repository key is trusted"         bash -c 'pacman-key --list-keys 8253720323C575207CC781B5DB345EF676CCD13D'

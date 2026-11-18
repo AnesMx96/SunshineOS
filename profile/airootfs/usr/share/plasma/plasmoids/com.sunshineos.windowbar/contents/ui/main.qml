@@ -16,9 +16,22 @@ PlasmoidItem {
         sortMode: TaskManager.TasksModel.SortVirtualDesktop
         groupMode: TaskManager.TasksModel.GroupDisabled
     }
-    readonly property var activeIndex: tasks.activeTask
-    readonly property bool hasActive: activeIndex && activeIndex.valid
-    readonly property string title: hasActive ? String(tasks.data(activeIndex, Qt.DisplayRole)) : "Sunshine OS"
+    // The title comes from the model's own roles through delegates. Calling tasks.data() with a saved index crashed plasmashell
+    // (the index went stale when windows changed).
+    property string title: "Sunshine OS"
+    Repeater {
+        model: tasks
+        delegate: Item {
+            visible: false
+            readonly property bool act: model.IsActive === true
+            readonly property string name: String(model.display)
+            onActChanged: sync()
+            onNameChanged: sync()
+            function sync() { if (act) root.title = name }
+            Component.onCompleted: sync()
+            Component.onDestruction: if (root.title === name) root.title = "Sunshine OS"
+        }
+    }
 
     compactRepresentation: RowLayout {
         spacing: Kirigami.Units.smallSpacing

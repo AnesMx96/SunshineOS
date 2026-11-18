@@ -10,7 +10,7 @@ fi
 count() {
   "$Q" org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.dumpCurrentLayoutJS 2>/dev/null | python3 -c 'import json,sys
 t=sys.stdin.read(); d=json.loads(t[t.index("{"):t.rindex("}")+1])
-print(max([len(p.get("widgets",[])) for p in d.get("panels",[]) if p.get("location")=="top"] or [0]))' 2>/dev/null
+print(max([len(p.get("applets",[])) for p in d.get("panels",[]) if p.get("location")=="top"] or [0]))' 2>/dev/null
 }
 for try in 1 2 3 4; do
   n=$(count); [ "${n:-0}" -ge 6 ] 2>/dev/null && exit 0
