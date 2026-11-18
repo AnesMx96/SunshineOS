@@ -147,6 +147,15 @@ fi
 case "$FS" in ext4|btrfs) ;; *) die "Unsupported filesystem $FS";; esac
 [ -e "/usr/share/zoneinfo/$TZ_" ] || die "Unknown time zone $TZ_"
 
+# ---------- is the disk big enough? ----------
+# The copy is the UNCOMPRESSED system (several times the ISO size). Check before erasing anything and say it plainly.
+need=$(df -B1 --output=used "$SRC" 2>/dev/null | tail -1 | tr -dc 0-9); need=${need:-0}
+have=$(blockdev --getsize64 "$DISK" 2>/dev/null || echo 0)
+want=$(( need + need / 8 + 3 * 1024 * 1024 * 1024 ))      # system + 12% + ESP/boot/free space
+if [ "$have" -gt 0 ] && [ "$need" -gt 0 ] && [ "$have" -lt "$want" ]; then
+  die "$DISK is too small: it holds $(( have / 1073741824 )) GiB, the installed system needs about $(( want / 1073741824 )) GiB ($(( need / 1073741824 )) GiB of files plus working room). Pick a bigger disk."
+fi
+
 # ---------- partition ----------
 info "Partitioning $DISK ($BOOT)"
 swapoff -a 2>/dev/null
@@ -173,9 +182,21 @@ if [ "$ENCRYPT" = yes ]; then
 fi
 
 info "Formatting"
-[ "$BOOT" = uefi ] && { mkfs.fat -F32 -n SUNSHINEESP "$ESP" >/dev/null || die "mkfs.fat failed"; }
-if [ "$FS" = btrfs ]; then mkfs.btrfs -f -L sunshine "$ROOT" >/dev/null || die "mkfs.btrfs failed"; MOPT="noatime"
-else mkfs.ext4 -F -L sunshine "$ROOT" >/dev/null || die "mkfs.ext4 failed"; MOPT="noatime"; fi
+# After a failed attempt the kernel can still hold the old filesystem registered ("Device or resource busy"): release it and try again
+fmt() {
+  local i
+  for i in 1 2 3; do
+    "$@" >/dev/null && return 0
+    echo "formatting failed (try $i of 3): releasing the device and retrying"
+    umount -R "$MNT" 2>/dev/null; swapoff -a 2>/dev/null
+    command -v btrfs >/dev/null && btrfs device scan --forget >/dev/null 2>&1
+    wipefs -af "${@: -1}" >/dev/null 2>&1; blockdev --rereadpt "$DISK" 2>/dev/null; partprobe "$DISK" 2>/dev/null; udevadm settle; sleep 3
+  done
+  return 1
+}
+[ "$BOOT" = uefi ] && { fmt mkfs.fat -F32 -n SUNSHINEESP "$ESP" || die "mkfs.fat failed on $ESP"; }
+if [ "$FS" = btrfs ]; then fmt mkfs.btrfs -f -L sunshine "$ROOT" || die "mkfs.btrfs failed on $ROOT. The disk is still held by the kernel from an earlier attempt: reboot the live session and try again."; MOPT="noatime"
+else fmt mkfs.ext4 -F -L sunshine "$ROOT" || die "mkfs.ext4 failed on $ROOT"; MOPT="noatime"; fi
 
 mkdir -p "$MNT"
 if [ "$FS" = btrfs ]; then
@@ -194,7 +215,10 @@ if [ "$BOOT" = uefi ]; then mkdir -p "$MNT/boot/efi"; mount "$ESP" "$MNT/boot/ef
 # ---------- copy system ----------
 info "Copying system (this takes a few minutes)"
 rsync -aHAXx --info=progress2 --no-inc-recursive \
-  --exclude=/boot/efi --exclude='/etc/pacman.d/gnupg' "$SRC"/ "$MNT"/ || die "rsync failed"
+  --exclude=/boot/efi --exclude='/etc/pacman.d/gnupg' "$SRC"/ "$MNT"/ || {
+  free=$(df -B1 --output=avail "$MNT" 2>/dev/null | tail -1 | tr -dc 0-9)
+  if [ "${free:-1}" -lt 52428800 ]; then die "The disk filled up while copying: it is too small for the installed system. Use a bigger disk."; fi
+  die "Copying the system failed (see $LOG)"; }
 mkdir -p "$MNT"/{dev,proc,sys,run,tmp,mnt,boot/efi}
 chmod 1777 "$MNT/tmp"
 
@@ -281,7 +305,7 @@ systemctl set-default graphical.target
 /usr/local/bin/sunshine-identity apply --quiet
 sed -i 's/^#\?GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="Sunshine OS"/' /etc/default/grub
 sed -i '/^#\?GRUB_THEME=/d;/^#\?GRUB_GFXMODE=/d;/^#\?GRUB_TERMINAL_OUTPUT=/d' /etc/default/grub
-printf '%s\n' 'GRUB_THEME="/usr/share/grub/themes/sunshine/theme.txt"' 'GRUB_GFXMODE=auto' 'GRUB_TERMINAL_OUTPUT=gfxterm' 'GRUB_GFXPAYLOAD_LINUX=keep' 'GRUB_DISABLE_BOOTNEXT=true' >> /etc/default/grub
+printf '%s\n' 'GRUB_DISABLE_OS_PROBER=false' 'GRUB_THEME="/usr/share/grub/themes/sunshine/theme.txt"' 'GRUB_GFXMODE=auto' 'GRUB_TERMINAL_OUTPUT=gfxterm' 'GRUB_GFXPAYLOAD_LINUX=keep' 'GRUB_DISABLE_BOOTNEXT=true' >> /etc/default/grub
 sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash loglevel=3 vt.default_red=11,243,166,249,137,245,148,205,88,243,181,249,137,245,148,239 vt.default_grn=16,139,227,226,180,194,226,184,91,139,240,226,180,194,226,229 vt.default_blu=32,168,161,175,250,231,213,240,112,168,174,175,250,231,213,255"/' /etc/default/grub
 EOS
 echo "$USERNAME:$PASS" | chroot "$MNT" /bin/bash -c 'umask 077; cat > /root/.sunshine-cred'

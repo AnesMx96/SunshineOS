@@ -24,7 +24,7 @@ say "Checking for updates"
 if command -v checkupdates >/dev/null; then
   list=$(sudo -u "${REAL_USER:-nobody}" checkupdates 2>/dev/null || true)
   n=$(printf '%s' "$list" | grep -c . || true)
-  [ "$n" -gt 0 ] && { echo "$n package update(s) available."; } || echo "$(tr "No system package updates right now.")"
+  [ "$n" -gt 0 ] && { echo "$n package update(s) available."; } || echo "$(loc "No system package updates right now.")"
 fi
 
 if [ "$(findmnt -no FSTYPE /)" = btrfs ] && [ -e /etc/snapper/configs/root ]; then
@@ -74,7 +74,7 @@ command -v paccache >/dev/null && paccache -rqk2 && ok "Old package cache cleane
 orph=$(pacman -Qdtq 2>/dev/null || true)
 [ -n "$orph" ] && echo "Unused packages (you can remove later): $(echo $orph | wc -w)"
 pn=$(find /etc -name '*.pacnew' 2>/dev/null | head -5)
-[ -n "$pn" ] && { echo "$(tr "Config updates waiting for review (*.pacnew):")"; echo "$pn"; }
+[ -n "$pn" ] && { echo "$(loc "Config updates waiting for review (*.pacnew):")"; echo "$pn"; }
 if [ -d /usr/lib/modules ] && ! [ -d "/usr/lib/modules/$(uname -r)" ]; then
   printf '\n%sThe kernel was updated. Please restart your computer when convenient.%s\n' "$Y" "$N"
 fi

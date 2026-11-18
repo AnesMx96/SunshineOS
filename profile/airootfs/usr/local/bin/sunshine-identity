@@ -3,10 +3,10 @@
 # "filesystem" or "lsb-release" package would turn it back into "Arch Linux"; a pacman hook calls this afterwards.
 # usage: sunshine-identity check [--fix] | apply   [--quiet]     (check --fix repairs a changed identity)
 SRC=/usr/share/sunshine/identity
-[ -r /usr/local/lib/sunshine/ui.sh ] && . /usr/local/lib/sunshine/ui.sh 2>/dev/null || { tr() { printf "%s" "$*"; }; t() { printf "%s" "${2:-$1}"; }; }
+[ -r /usr/local/lib/sunshine/ui.sh ] && . /usr/local/lib/sunshine/ui.sh 2>/dev/null || { loc() { printf "%s" "$*"; }; t() { printf "%s" "${2:-$1}"; }; }
 mode=${1:-check}; quiet=0; fix=0
 for a in "$@"; do case "$a" in --quiet) quiet=1;; --fix) fix=1;; esac; done
-say() { [ "$quiet" = 1 ] || echo "$(tr "$*")"; }
+say() { [ "$quiet" = 1 ] || echo "$(loc "$*")"; }
 drift=0
 chk() { # chk <wanted file> <installed path>
   if [ -e "$2" ] && cmp -s "$1" "$2"; then return 0; fi
