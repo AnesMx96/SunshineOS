@@ -1,0 +1,466 @@
+== Sunshine Hyprland install into /mnt/sunshine-target (Wed Nov 18 18:57:59 UTC 2026)
+[1/114] hyprland: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[1/114] hyprland: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[1/114] hyprland: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[1/114] hyprland SKIPPED after 3 tries
+[2/114] hypridle: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[2/114] hypridle: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[2/114] hypridle: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[2/114] hypridle SKIPPED after 3 tries
+[3/114] hyprlock: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[3/114] hyprlock: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[3/114] hyprlock: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[3/114] hyprlock SKIPPED after 3 tries
+[4/114] hyprsunset: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[4/114] hyprsunset: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[4/114] hyprsunset: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[4/114] hyprsunset SKIPPED after 3 tries
+[5/114] hyprpolkitagent: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[5/114] hyprpolkitagent: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[5/114] hyprpolkitagent: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[5/114] hyprpolkitagent SKIPPED after 3 tries
+[6/114] hyprland-guiutils: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[6/114] hyprland-guiutils: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[6/114] hyprland-guiutils: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[6/114] hyprland-guiutils SKIPPED after 3 tries
+[7/114] xdg-desktop-portal-hyprland: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[7/114] xdg-desktop-portal-hyprland: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+grep: /tmp/sunshine-hypr-pkg.log: binary file matches
+[7/114] xdg-desktop-portal-hyprland: attempt 3 of 3 failed: 
+[7/114] xdg-desktop-portal-hyprland SKIPPED after 3 tries
+[8/114] quickshell: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[8/114] quickshell: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[8/114] quickshell: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[8/114] quickshell SKIPPED after 3 tries
+[9/114] uwsm: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[9/114] uwsm: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[9/114] uwsm: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[9/114] uwsm SKIPPED after 3 tries
+[10/114] hyprshot: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[10/114] hyprshot: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[10/114] hyprshot: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[10/114] hyprshot SKIPPED after 3 tries
+[11/114] hyprpicker: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[11/114] hyprpicker: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[11/114] hyprpicker: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[11/114] hyprpicker SKIPPED after 3 tries
+[12/114] cliphist: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[12/114] cliphist: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[12/114] cliphist: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[12/114] cliphist SKIPPED after 3 tries
+[13/114] grim: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[13/114] grim: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[13/114] grim: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[13/114] grim SKIPPED after 3 tries
+[14/114] slurp: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[14/114] slurp: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[14/114] slurp: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[14/114] slurp SKIPPED after 3 tries
+[15/114] swappy: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[15/114] swappy: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[15/114] swappy: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[15/114] swappy SKIPPED after 3 tries
+[16/114] wf-recorder: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[16/114] wf-recorder: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[16/114] wf-recorder: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[16/114] wf-recorder SKIPPED after 3 tries
+[17/114] wtype: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[17/114] wtype: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[17/114] wtype: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[17/114] wtype SKIPPED after 3 tries
+[18/114] ydotool: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+grep: /tmp/sunshine-hypr-pkg.log: binary file matches
+[18/114] ydotool: attempt 2 of 3 failed: 
+[18/114] ydotool: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[18/114] ydotool SKIPPED after 3 tries
+[19/114] fuzzel: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+grep: /tmp/sunshine-hypr-pkg.log: binary file matches
+[19/114] fuzzel: attempt 2 of 3 failed: 
+[19/114] fuzzel: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[19/114] fuzzel SKIPPED after 3 tries
+[20/114] foot: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[20/114] foot: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[20/114] foot: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[20/114] foot SKIPPED after 3 tries
+[21/114] btop: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+grep: /tmp/sunshine-hypr-pkg.log: binary file matches
+[21/114] btop: attempt 2 of 3 failed: 
+[21/114] btop: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[21/114] btop SKIPPED after 3 tries
+[22/114] easyeffects: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[22/114] easyeffects: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[22/114] easyeffects: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[22/114] easyeffects SKIPPED after 3 tries
+[23/114] songrec: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[23/114] songrec: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[23/114] songrec: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[23/114] songrec SKIPPED after 3 tries
+[24/114] translate-shell: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[24/114] translate-shell: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[24/114] translate-shell: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[24/114] translate-shell SKIPPED after 3 tries
+[25/114] matugen: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[25/114] matugen: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[25/114] matugen: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[25/114] matugen SKIPPED after 3 tries
+[26/114] geoclue: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[26/114] geoclue: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[26/114] geoclue: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[26/114] geoclue SKIPPED after 3 tries
+[27/114] pavucontrol-qt: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[27/114] pavucontrol-qt: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[27/114] pavucontrol-qt: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[27/114] pavucontrol-qt SKIPPED after 3 tries
+[28/114] libdbusmenu-gtk3: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[28/114] libdbusmenu-gtk3: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[28/114] libdbusmenu-gtk3: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[28/114] libdbusmenu-gtk3 SKIPPED after 3 tries
+[29/114] yq: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[29/114] yq: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[29/114] yq: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[29/114] yq SKIPPED after 3 tries
+[30/114] adw-gtk-theme: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[30/114] adw-gtk-theme: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[30/114] adw-gtk-theme: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[30/114] adw-gtk-theme SKIPPED after 3 tries
+[31/114] tinyxml2: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[31/114] tinyxml2: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[31/114] tinyxml2: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[31/114] tinyxml2 SKIPPED after 3 tries
+[32/114] gtkmm3: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[32/114] gtkmm3: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[32/114] gtkmm3: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[32/114] gtkmm3 SKIPPED after 3 tries
+[33/114] gtksourceviewmm: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[33/114] gtksourceviewmm: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[33/114] gtksourceviewmm: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[33/114] gtksourceviewmm SKIPPED after 3 tries
+[34/114] cairomm: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[34/114] cairomm: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[34/114] cairomm: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[34/114] cairomm SKIPPED after 3 tries
+[35/114] clang: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[35/114] clang: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[35/114] clang: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[35/114] clang SKIPPED after 3 tries
+[36/114] uv: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[36/114] uv: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[36/114] uv: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[36/114] uv SKIPPED after 3 tries
+[37/114] cpptrace: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[37/114] cpptrace: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[37/114] cpptrace: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[37/114] cpptrace SKIPPED after 3 tries
+[38/114] jemalloc: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[38/114] jemalloc: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[38/114] jemalloc: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[38/114] jemalloc SKIPPED after 3 tries
+[39/114] tesseract: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[39/114] tesseract: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[39/114] tesseract: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[39/114] tesseract SKIPPED after 3 tries
+[40/114] tesseract-data-eng: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[40/114] tesseract-data-eng: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[40/114] tesseract-data-eng: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[40/114] tesseract-data-eng SKIPPED after 3 tries
+[41/114] upower: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[41/114] upower: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[41/114] upower: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[41/114] upower SKIPPED after 3 tries
+[42/114] python-numpy: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[42/114] python-numpy: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[42/114] python-numpy: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[42/114] python-numpy SKIPPED after 3 tries
+[43/114] python-pillow: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[43/114] python-pillow: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[43/114] python-pillow: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[43/114] python-pillow SKIPPED after 3 tries
+[44/114] lm_sensors: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+grep: /tmp/sunshine-hypr-pkg.log: binary file matches
+[44/114] lm_sensors: attempt 2 of 3 failed: 
+[44/114] lm_sensors: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[44/114] lm_sensors SKIPPED after 3 tries
+[45/114] libnotify: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[45/114] libnotify: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[45/114] libnotify: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[45/114] libnotify SKIPPED after 3 tries
+[46/114] polkit-gnome: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[46/114] polkit-gnome: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[46/114] polkit-gnome: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[46/114] polkit-gnome SKIPPED after 3 tries
+[47/114] qt5ct: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[47/114] qt5ct: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[47/114] qt5ct: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[47/114] qt5ct SKIPPED after 3 tries
+[48/114] qt6ct: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[48/114] qt6ct: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[48/114] qt6ct: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[48/114] qt6ct SKIPPED after 3 tries
+[49/114] kvantum: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[49/114] kvantum: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[49/114] kvantum: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[49/114] kvantum SKIPPED after 3 tries
+[50/114] kvantum-qt5: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[50/114] kvantum-qt5: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[50/114] kvantum-qt5: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[50/114] kvantum-qt5 SKIPPED after 3 tries
+[51/114] nwg-look: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[51/114] nwg-look: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[51/114] nwg-look: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[51/114] nwg-look SKIPPED after 3 tries
+[52/114] breeze-plus: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[52/114] breeze-plus: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[52/114] breeze-plus: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[52/114] breeze-plus SKIPPED after 3 tries
+[53/114] darkly-bin: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[53/114] darkly-bin: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[53/114] darkly-bin: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[53/114] darkly-bin SKIPPED after 3 tries
+[54/114] ttf-material-symbols-variable: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[54/114] ttf-material-symbols-variable: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[54/114] ttf-material-symbols-variable: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[54/114] ttf-material-symbols-variable SKIPPED after 3 tries
+[55/114] ttf-readex-pro: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[55/114] ttf-readex-pro: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[55/114] ttf-readex-pro: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[55/114] ttf-readex-pro SKIPPED after 3 tries
+[56/114] ttf-rubik-vf: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[56/114] ttf-rubik-vf: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[56/114] ttf-rubik-vf: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[56/114] ttf-rubik-vf SKIPPED after 3 tries
+[57/114] ttf-twemoji: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[57/114] ttf-twemoji: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[57/114] ttf-twemoji: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[57/114] ttf-twemoji SKIPPED after 3 tries
+[58/114] illogical-impulse-microtex-git: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[58/114] illogical-impulse-microtex-git: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[58/114] illogical-impulse-microtex-git: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[58/114] illogical-impulse-microtex-git SKIPPED after 3 tries
+[59/114] illogical-impulse-bibata-modern-classic-bin: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[59/114] illogical-impulse-bibata-modern-classic-bin: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[59/114] illogical-impulse-bibata-modern-classic-bin: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[59/114] illogical-impulse-bibata-modern-classic-bin SKIPPED after 3 tries
+[60/114] wlogout: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[60/114] wlogout: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[60/114] wlogout: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[60/114] wlogout SKIPPED after 3 tries
+[61/114] flat-remix-gtk: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[61/114] flat-remix-gtk: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[61/114] flat-remix-gtk: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[61/114] flat-remix-gtk SKIPPED after 3 tries
+[62/114] bluedevil: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[62/114] bluedevil: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[62/114] bluedevil: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[62/114] bluedevil SKIPPED after 3 tries
+[63/114] gnome-keyring: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[63/114] gnome-keyring: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[63/114] gnome-keyring: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[63/114] gnome-keyring SKIPPED after 3 tries
+[64/114] plasma-nm: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[64/114] plasma-nm: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[64/114] plasma-nm: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[64/114] plasma-nm SKIPPED after 3 tries
+[65/114] polkit-kde-agent: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[65/114] polkit-kde-agent: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[65/114] polkit-kde-agent: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[65/114] polkit-kde-agent SKIPPED after 3 tries
+[66/114] systemsettings: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[66/114] systemsettings: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[66/114] systemsettings: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[66/114] systemsettings SKIPPED after 3 tries
+[67/114] dolphin: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[67/114] dolphin: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[67/114] dolphin: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[67/114] dolphin SKIPPED after 3 tries
+[68/114] wireplumber: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[68/114] wireplumber: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[68/114] wireplumber: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[68/114] wireplumber SKIPPED after 3 tries
+[69/114] pipewire-pulse: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[69/114] pipewire-pulse: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[69/114] pipewire-pulse: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[69/114] pipewire-pulse SKIPPED after 3 tries
+[70/114] playerctl: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[70/114] playerctl: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[70/114] playerctl: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[70/114] playerctl SKIPPED after 3 tries
+[71/114] brightnessctl: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[71/114] brightnessctl: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[71/114] brightnessctl: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[71/114] brightnessctl SKIPPED after 3 tries
+[72/114] ddcutil: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[72/114] ddcutil: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[72/114] ddcutil: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[72/114] ddcutil SKIPPED after 3 tries
+[73/114] bc: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[73/114] bc: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[73/114] bc: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[73/114] bc SKIPPED after 3 tries
+[74/114] cmake: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[74/114] cmake: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[74/114] cmake: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[74/114] cmake SKIPPED after 3 tries
+[75/114] ripgrep: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[75/114] ripgrep: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[75/114] ripgrep: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[75/114] ripgrep SKIPPED after 3 tries
+[76/114] jq: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[76/114] jq: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[76/114] jq: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[76/114] jq SKIPPED after 3 tries
+[77/114] xdg-user-dirs: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[77/114] xdg-user-dirs: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[77/114] xdg-user-dirs: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[77/114] xdg-user-dirs SKIPPED after 3 tries
+[78/114] rsync: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[78/114] rsync: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[78/114] rsync: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[78/114] rsync SKIPPED after 3 tries
+[79/114] fontconfig: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[79/114] fontconfig: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[79/114] fontconfig: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[79/114] fontconfig SKIPPED after 3 tries
+[80/114] breeze: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[80/114] breeze: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[80/114] breeze: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[80/114] breeze SKIPPED after 3 tries
+[81/114] eza: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[81/114] eza: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[81/114] eza: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[81/114] eza SKIPPED after 3 tries
+[82/114] fish: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[82/114] fish: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[82/114] fish: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[82/114] fish SKIPPED after 3 tries
+[83/114] starship: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[83/114] starship: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[83/114] starship: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[83/114] starship SKIPPED after 3 tries
+[84/114] ttf-jetbrains-mono-nerd: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[84/114] ttf-jetbrains-mono-nerd: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[84/114] ttf-jetbrains-mono-nerd: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[84/114] ttf-jetbrains-mono-nerd SKIPPED after 3 tries
+[85/114] wl-clipboard: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[85/114] wl-clipboard: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[85/114] wl-clipboard: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[85/114] wl-clipboard SKIPPED after 3 tries
+[86/114] xdg-desktop-portal: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[86/114] xdg-desktop-portal: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[86/114] xdg-desktop-portal: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[86/114] xdg-desktop-portal SKIPPED after 3 tries
+[87/114] xdg-desktop-portal-kde: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[87/114] xdg-desktop-portal-kde: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[87/114] xdg-desktop-portal-kde: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[87/114] xdg-desktop-portal-kde SKIPPED after 3 tries
+[88/114] xdg-desktop-portal-gtk: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[88/114] xdg-desktop-portal-gtk: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[88/114] xdg-desktop-portal-gtk: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[88/114] xdg-desktop-portal-gtk SKIPPED after 3 tries
+[89/114] gtk4: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[89/114] gtk4: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[89/114] gtk4: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[89/114] gtk4 SKIPPED after 3 tries
+[90/114] libadwaita: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[90/114] libadwaita: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[90/114] libadwaita: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[90/114] libadwaita SKIPPED after 3 tries
+[91/114] libsoup3: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[91/114] libsoup3: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[91/114] libsoup3: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[91/114] libsoup3 SKIPPED after 3 tries
+[92/114] libportal-gtk4: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[92/114] libportal-gtk4: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[92/114] libportal-gtk4: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[92/114] libportal-gtk4 SKIPPED after 3 tries
+[93/114] gobject-introspection: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[93/114] gobject-introspection: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[93/114] gobject-introspection: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[93/114] gobject-introspection SKIPPED after 3 tries
+[94/114] glib2: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[94/114] glib2: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[94/114] glib2: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[94/114] glib2 SKIPPED after 3 tries
+[95/114] imagemagick: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[95/114] imagemagick: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[95/114] imagemagick: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[95/114] imagemagick SKIPPED after 3 tries
+[96/114] qt6-5compat: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[96/114] qt6-5compat: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[96/114] qt6-5compat: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[96/114] qt6-5compat SKIPPED after 3 tries
+[97/114] qt6-imageformats: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[97/114] qt6-imageformats: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[97/114] qt6-imageformats: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[97/114] qt6-imageformats SKIPPED after 3 tries
+[98/114] qt6-multimedia: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[98/114] qt6-multimedia: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[98/114] qt6-multimedia: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[98/114] qt6-multimedia SKIPPED after 3 tries
+[99/114] qt6-positioning: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[99/114] qt6-positioning: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[99/114] qt6-positioning: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[99/114] qt6-positioning SKIPPED after 3 tries
+[100/114] qt6-quicktimeline: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[100/114] qt6-quicktimeline: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[100/114] qt6-quicktimeline: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[100/114] qt6-quicktimeline SKIPPED after 3 tries
+[101/114] qt6-sensors: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[101/114] qt6-sensors: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[101/114] qt6-sensors: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[101/114] qt6-sensors SKIPPED after 3 tries
+[102/114] qt6-translations: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[102/114] qt6-translations: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[102/114] qt6-translations: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[102/114] qt6-translations SKIPPED after 3 tries
+[103/114] qt6-virtualkeyboard: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[103/114] qt6-virtualkeyboard: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[103/114] qt6-virtualkeyboard: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[103/114] qt6-virtualkeyboard SKIPPED after 3 tries
+[104/114] qt6-wayland: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[104/114] qt6-wayland: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[104/114] qt6-wayland: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[104/114] qt6-wayland SKIPPED after 3 tries
+[105/114] qt6-declarative: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[105/114] qt6-declarative: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[105/114] qt6-declarative: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[105/114] qt6-declarative SKIPPED after 3 tries
+[106/114] qt6-svg: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[106/114] qt6-svg: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[106/114] qt6-svg: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[106/114] qt6-svg SKIPPED after 3 tries
+[107/114] qt6-tools: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[107/114] qt6-tools: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[107/114] qt6-tools: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[107/114] qt6-tools SKIPPED after 3 tries
+[108/114] kirigami: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[108/114] kirigami: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[108/114] kirigami: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[108/114] kirigami SKIPPED after 3 tries
+[109/114] kdialog: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[109/114] kdialog: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[109/114] kdialog: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[109/114] kdialog SKIPPED after 3 tries
+[110/114] syntax-highlighting: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[110/114] syntax-highlighting: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[110/114] syntax-highlighting: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[110/114] syntax-highlighting SKIPPED after 3 tries
+[111/114] libqalculate: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[111/114] libqalculate: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[111/114] libqalculate: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[111/114] libqalculate SKIPPED after 3 tries
+[112/114] cava: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[112/114] cava: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[112/114] cava: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[112/114] cava SKIPPED after 3 tries
+[113/114] fastfetch: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[113/114] fastfetch: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[113/114] fastfetch: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[113/114] fastfetch SKIPPED after 3 tries
+[114/114] lsd: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[114/114] lsd: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[114/114] lsd: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[114/114] lsd SKIPPED after 3 tries
+failed packages: hyprland hypridle hyprlock hyprsunset hyprpolkitagent hyprland-guiutils xdg-desktop-portal-hyprland quickshell uwsm hyprshot hyprpicker cliphist grim slurp swappy wf-recorder wtype ydotool fuzzel foot btop easyeffects songrec translate-shell matugen geoclue pavucontrol-qt libdbusmenu-gtk3 yq adw-gtk-theme tinyxml2 gtkmm3 gtksourceviewmm cairomm clang uv cpptrace jemalloc tesseract tesseract-data-eng upower python-numpy python-pillow lm_sensors libnotify polkit-gnome qt5ct qt6ct kvantum kvantum-qt5 nwg-look breeze-plus darkly-bin ttf-material-symbols-variable ttf-readex-pro ttf-rubik-vf ttf-twemoji illogical-impulse-microtex-git illogical-impulse-bibata-modern-classic-bin wlogout flat-remix-gtk bluedevil gnome-keyring plasma-nm polkit-kde-agent systemsettings dolphin wireplumber pipewire-pulse playerctl brightnessctl ddcutil bc cmake ripgrep jq xdg-user-dirs rsync fontconfig breeze eza fish starship ttf-jetbrains-mono-nerd wl-clipboard xdg-desktop-portal xdg-desktop-portal-kde xdg-desktop-portal-gtk gtk4 libadwaita libsoup3 libportal-gtk4 gobject-introspection glib2 imagemagick qt6-5compat qt6-imageformats qt6-multimedia qt6-positioning qt6-quicktimeline qt6-sensors qt6-translations qt6-virtualkeyboard qt6-wayland qt6-declarative qt6-svg qt6-tools kirigami kdialog syntax-highlighting libqalculate cava fastfetch lsd
+Sunshine fastfetch config present: stock fastfetch is enough
+Hyprland could not be fully installed: the system keeps Plasma as its default session.
+== done
