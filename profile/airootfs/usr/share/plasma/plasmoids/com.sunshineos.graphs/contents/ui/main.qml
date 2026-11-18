@@ -29,7 +29,7 @@ PlasmoidItem {
             delegate: Item {
                 id: cell
                 required property var modelData
-                implicitWidth: Kirigami.Units.gridUnit * 6.5
+                implicitWidth: Kirigami.Units.gridUnit * 7.4
                 implicitHeight: Kirigami.Units.gridUnit * 1.6
                 Layout.fillHeight: true
                 property var hist: []

@@ -1,8 +1,8 @@
 {
   "KPlugin": {
     "Id": "com.sunshineos.windowbar",
-    "Name": "Sunshine window bar",
-    "Description": "Window buttons and the title of the active window, for the top bar (like Garuda's)",
+    "Name": "Sunshine window title",
+    "Description": "The title of the active window, for the top bar",
     "Category": "Windows and Tasks",
     "Icon": "window",
     "License": "GPL-3.0-or-later",
