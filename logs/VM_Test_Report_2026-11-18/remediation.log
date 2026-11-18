@@ -17,3 +17,79 @@ total 68
 -rw------- 1 sunshine sunshine   278 Nov 18 19:21 sunshine-register-base
 -rw------- 1 sunshine sunshine  6657 Nov 18 19:21 sunshine-toolbox
 -rw------- 1 sunshine sunshine  7101 Nov 18 19:21 sunshine-welcome
+########## STEP 1: APPLY PATCHES IN LIVE SYSTEM @ 2026-11-18T19:22:50+01:00 ##########
+VBoxManage: error: Waiting for guest process (flags 0x1) failed: Error VERR_NOT_SUPPORTED for guest process "/bin/bash" occurred
+
+VBoxManage: error: Details: code VBOX_E_IPRT_ERROR (0x80bb0005), component GuestProcessWrap, interface IGuestProcess, callee nsISupports
+VBoxManage: error: Context: "WaitForArray(ComSafeArrayAsInParam(aWaitStartFlags), gctlRunGetRemainingTime(msStart, cMsTimeout), &waitResult)" at line 1420 of file VBoxManageGuestCtrl.cpp
+=== verification ===
+pacman-init: inactive
+○ pacman-init.service - Initializes Pacman keyring
+     Loaded: bad-setting (Reason: Unit pacman-init.service has a bad unit file setting.)
+    Drop-In: /etc/systemd/system/pacman-init.service.d
+             └─async.conf
+     Active: inactive (dead)
+=== keyring ===
+/etc/pacman.d/gnupg/pubring.gpg
+-------------------------------
+pub   rsa4096 2026-11-18 [SC]
+      111C5FC4142876E9A483773B2105A3840B3646F8
+uid           [ultimate] Pacman Keyring Master Key <pacman@localhost>
+=== doctor ===
+head: write error: Broken pipe
+  [31m✘[0m package database problem: \n  
+  [38;5;220m![0m expected package not installed: hyprland
+  [31m✘[0m /boot/vmlinuz-linux missing
+  [31m✘[0m /boot/grub/grub.cfg missing
+  [38;5;220m![0m failed services: \n  
+tail: write error: Broken pipe
+/usr/local/bin/sunshine-doctor: line 81: [: -dc 0-9: integer expected
+/usr/local/bin/sunshine-doctor: line 81: [: -dc 0-9: integer expected
+  [31m✘[0m Timeshift is not configured
+
+[31m[1m4 problem(s) found[0m — run: sunshine-doctor --fix
+=== welcome syntax ===
+welcome OK
+=== toolbox syntax ===
+toolbox OK
+=== gtk theme ===
+gtk-theme-name=Breeze
+cat: /home/sunshine/.config/Kvantum/kvantum.kvconfig: No such file or directory
+=== retry step 1 in smaller commands ===
+BACKUP_OK
+SERVICE_PATCH_RC=0
+TOOLS_PATCH_RC=0
+CALAMARES_PATCH_RC=0
+INSTALLER_PATCH_RC=0
+=== theme fixes ===
+GTK_USER_RC=0
+KVANTUM_USER_RC=0
+SKEL_GTK_RC=0
+SKEL_KVANTUM_RC=0
+=== verification ===
+pacman-init=active
+● pacman-init.service - Initializes Pacman keyring
+     Loaded: loaded (/etc/systemd/system/pacman-init.service; enabled; preset: disabled)
+    Drop-In: /etc/systemd/system/pacman-init.service.d
+             └─async.conf
+     Active: active (exited) since Wed 2026-11-18 19:23:06 CET; 13s ago
+ Invocation: 72b1de69c9be41a5a8395984653d1df5
+=== keyring ===
+/etc/pacman.d/gnupg/pubring.gpg
+-------------------------------
+pub   rsa4096 2026-11-18 [SC]
+      111C5FC4142876E9A483773B2105A3840B3646F8
+uid           [ultimate] Pacman Keyring Master Key <pacman@localhost>
+DOCTOR_RC=1
+  [31m✘[0m package database problem: error: missing 'pipewire-audio=1:1.6.11-1' dependency for 'pipewire-alsa' error: missing 'pipewire=1:1.6.11-1' dependency for 'pipewire-alsa' 
+  [38;5;220m![0m expected package not installed: hyprland
+  [31m✘[0m /boot/vmlinuz-linux missing
+  [31m✘[0m /boot/grub/grub.cfg missing
+  [31m✘[0m Timeshift is not configured
+
+[31m[1m4 problem(s) found[0m — run: sunshine-doctor --fix
+welcome syntax OK
+toolbox syntax OK
+gtk-theme-name=Breeze-Dark
+[General]
+theme=Sunshine

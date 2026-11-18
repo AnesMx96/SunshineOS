@@ -34,6 +34,7 @@ Evidence is in this directory:
 | F10 | Low | Host-side VirtualBox log shows `VERR_HGCM_SERVICE_NOT_FOUND`, `BIOS: Boot from Floppy 0 failed`, and several guestcontrol `VERR_INTERRUPTED`/`VERR_TOO_MUCH_DATA` errors. The latter explain a failed long theme-test command: it exceeded the 1024-byte guestcontrol command limit. These are environment/harness issues, not necessarily OS bugs. | `system-logs/vbox-host-errors.log`. |
 | F11 | Low / environment | Repeated `VBoxService pam_loginuid ... Operation not permitted`, `gkr-pam: couldn't unlock the login keyring`, `librepods: BLE scan error ... InputOutputError`, `vmwgfx: Cursor dimensions (64, 64) exceed device max 0`, `virt/tdx: TDX not supported`. | `system-logs/journal-excerpts.log`. |
 | F12 | Info | `sunshine-store` opens (with a real display) and shows the catalogue UI with “Preparing the app catalog…”; `--help` is not implemented and the headless invocation dumps core. `uni detect` works. | `screenshots/suos-store.png`, `screenshots/suos-store-loaded.png`; `raw/SuOS-tools-test.log:200-209`. |
+| F13 | High (introduced by the update test) | The aborted full upgrade left the package database inconsistent: `pacman -Dk` reports `missing 'pipewire-audio=1:1.6.11-1' dependency for 'pipewire-alsa'` and `missing 'pipewire=1:1.6.11-1' dependency for 'pipewire-alsa'`. Caused by the transaction that hit the 256 MiB overlay limit; to be repaired with a complete update now that cowspace is 1 GiB. | `remediation.log` doctor verification after applying patches. |
 
 Working parts confirmed: `systemctl is-system-running` = `running` with no failed units at first boot; `sunshine-identity check` = `Identity OK: Sunshine OS`; `sunshine-snapshot status/backend` work; `sunshine-diagnose --print` runs but repeats the F1 package-key error; `uni detect` reports the correct OS and package sources.
 
@@ -92,6 +93,60 @@ sudo pacman -Syu --noconfirm --cachedir /tmp/pacman-cache
 
 ---
 
+## Design dissection — theme, icons and visual style
+
+### What the design is trying to be
+
+Sunshine OS has a clear, likeable identity: **warm sunlight on dark graphite**. The accent palette is amber/yellow/orange, the backgrounds are near-black/dark charcoal, and the motif is a sun/flower (braille sun animation, flower bloom wallpaper, orange Fluent-derived icon set). The “cozy” copy (`☕`, tea wording, “Have a warm cup of tea…”) gives the tools a friendly, non-corporate voice. That is a distinctive and coherent idea, and most of the first-party Plasma surface follows it.
+
+### Qt / Plasma layer — strongest part
+
+- `SunshineDark` color scheme and `Sunshine` desktop theme are applied by `sunshine-plasma-setup` and `sunshine-restore-visuals`.
+- Window decoration uses Aurorae `Sunshine` with buttons on the **right** (`ButtonsOnRight IAX`), a deliberate Windows-like spatial language rather than stock Plasma.
+- Widget style is Kvantum, with a Sunshine Kvantum theme shipped at `/usr/share/Kvantum/Sunshine`.
+- Icons are `Sunshine-orange-dark` (orange Fluent variant) for Qt and GTK in the stock config; the custom sun/menu icon is used in the panel.
+- The panel is a deliberate Windows 11-style 48 px full-width bar: centered start/apps icons between spacers, tray/clock on the right. Custom plasmoids add the active-window title and live network/disk/CPU/GPU graphs.
+
+Visually this is the most complete part of the distro: wallpaper, colors, icons, decorations and panel all agree with each other.
+
+### GTK layer — the visible break
+
+GTK2 reported `Breeze-Dark`, GTK3 reported `Breeze` in the flagged fastfetch screenshot, while Qt reported `SunshineDark`. There is **no Sunshine GTK theme installed** in `/usr/share/themes` (only `Breeze`, `Breeze-Dark`, `Default`, `Emacs`). `sunshine-restore-visuals --offline` writes custom CSS into `~/.config/gtk-{3,4}.0` but leaves `gtk-theme-name=Breeze` and creates no Kvantum user config. In practice GTK apps inherit dark-ish custom colors but not the Sunshine widget language, and third-party dialogs (Calamares, Firefox, store internals) look like stock desktop GTK. This is the single largest visual inconsistency.
+
+### Installer / dialogs
+
+Calamares branding exists (`/etc/calamares/branding/sunshine`) and the installer dialogs are meant to be dark/yellow. The session log complains about a missing translations file, an unknown branding style `SidebarTextSelect`, and the sidebar being interpreted as a `"widget" left` setting. The failure dialog itself is a bright/default-looking Qt error box (“Installation Failed / Could not run command”), which clashes with the dark branding. Repeated `chcon` warnings and `os-prober cannot start` make the install flow feel unfinished even before the fatal `$p` error.
+
+### Icons and typography
+
+- The orange icon theme is a good differentiator and is applied consistently to Qt and GTK when the config is correct.
+- Noto Sans 10 pt is used in GTK and terminal; the terminal prompt uses fish + starship. Starship emitted `Scanning current directory timed out`, so the prompt can stall in large directories.
+- The doctor warns if `ttf-material-symbols-variable` is replaced, because Hyprland icons then “show as odd letters”. This shows the theme depends on an exact font version rather than a robust fallback.
+- Cursor theme remains `breeze_cursors`; the Sunshine identity stops at the mouse pointer.
+
+### Welcome / Toolbox / Store
+
+- Welcome and Toolbox are intended as friendly first-run hubs with the same warm styling. Both are completely unusable because of the `NameError: sys` bug, so the designed entry points are dead.
+- The Store has a polished dark catalogue shell with a left category rail (Installed, Windows, Web apps, Flatpak/AppImage/Snap/Wine) and a “Preparing the app catalog…” first-run state. It is a good concept, but first load has no progress detail and `--help` opens the GUI/dumps core in headless environments.
+- `sunshine-identity`, `sunshine-info`, `sunshine-diagnose` and `sunshine-snapshot` continue the friendly CLI style and mostly work, but the doctor’s false positives undermine trust.
+
+### Poor or questionable design decisions (visual/UX)
+
+1. **Two theming systems, one set of assets.** Sunshine themes Qt/KDE thoroughly but ships no GTK theme; offline “restore” therefore cannot deliver a coherent desktop.
+2. **Visual restoration depends on an external git repository** (`sunshineos-assets`) only when online, yet reports success offline without local GTK/Kvantum assets.
+3. **Bright, unthemed error dialogs** for critical installer failures break the dark visual language exactly when users are stressed.
+4. **Panel layout lives in one long inline QML `evaluateScript` string.** It is hard to review, version, diff or debug; it is also fragile across Plasma releases.
+5. **Windows 11-style taskbar copied wholesale** (centred icons, right tray, 48 px height) without a documented fallback for Plasma/VM variations; cursor warnings appear under VirtualBox.
+6. **Exact-version icon-font dependency** enforced by a doctor warning instead of a bundled font or fallback glyph mapping.
+7. **Cozy copy paired with hidden failures** (“visuals restored”, “keyring recreated”) is tone-deaf when the underlying step actually failed.
+8. **Branding config contains dead keys** (`SidebarTextSelect`, `GeoIP style none`, deprecated `restartNowEnabled`) instead of being cleaned up.
+9. **Cursor theme not branded**, leaving a stock element in an otherwise custom visual stack.
+10. **Flagged “To_Fix” screenshots committed at the repo root** rather than triaged into the report folder; evidence and product assets are mixed.
+
+Net assessment: the artistic direction is strong and mostly coherent on the Plasma/Qt side. The weak points are not the taste of the design but the **delivery**: missing GTK assets, offline restore overpromising, unthemed error paths, and fragile inline configuration.
+
+---
+
 ## Remediation status
 
 In progress. The following has been done and is recorded in `remediation.log`:
@@ -105,4 +160,10 @@ In progress. The following has been done and is recorded in `remediation.log`:
    - `sunshine-install` — remove `--info=progress2`.
    - `gtk-settings.ini`, `kvantum.kvconfig` — dark GTK theme and Sunshine Kvantum config.
 
-Next steps: apply the patches, run a full update, install to `/dev/sda`, reboot from disk, verify tools/theme, and commit each step.
+3. Applied all prepared patches in the live system (originals backed up under `/root/suos-test-backup/`). Verified:
+   - `pacman-init.service` is now `active (exited)` instead of `bad-setting`.
+   - `sunshine-welcome` and `sunshine-toolbox` parse cleanly (no `NameError`).
+   - Doctor no longer prints `-dc 0-9`; remaining reports are live-ISO false positives plus F13.
+   - GTK3/GTK4 now request `Breeze-Dark`, Kvantum user config selects `Sunshine`, and the same settings were copied into `/etc/skel`.
+
+Next steps: repair the package database with a full update, install to `/dev/sda`, reboot from disk, verify tools/theme, and commit each step.
