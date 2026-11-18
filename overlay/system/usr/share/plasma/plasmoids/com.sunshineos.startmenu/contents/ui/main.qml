@@ -33,7 +33,7 @@ PlasmoidItem {
         id: dlg
         visible: root.open
         location: PlasmaCore.Types.Floating
-        backgroundHints: PlasmaCore.Types.StandardBackground
+        backgroundHints: PlasmaCore.Types.NoBackground
         hideOnWindowDeactivate: true
         x: Screen.virtualX + Math.round((Screen.width - root.menuW) / 2)
         y: Screen.virtualY + Screen.height - root.taskbarH - root.menuH
@@ -116,6 +116,11 @@ PlasmoidItem {
         id: menu
         focus: true
         Keys.onEscapePressed: root.close()
+        Rectangle {     // the menu's own matte glass: drawn here, not by the theme's dialog frame (that one showed up as a ghost rectangle and stayed see-through without blur)
+            anchors.fill: parent; radius: 14
+            color: Qt.rgba(0.082, 0.09, 0.16, 0.9)
+            border.width: 1; border.color: Qt.rgba(0.91, 0.47, 0.2, 0.55)
+        }
         Connections {
             target: root
             function onOpenChanged() { if (root.open) { search.text = ""; root.allApps = false; search.forceActiveFocus() } }
