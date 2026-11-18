@@ -15,7 +15,7 @@ print(sum(len(p.get("applets",[])) for p in d.get("panels",[]) if p.get("locatio
 # Three panels side by side on the top edge: a bar built from one list of widgets puts the clock off-centre whenever the left and the right side
 # differ in width (the global menu changes with every application). Left: global menu. Centre: clock. Right: graphs and the user switcher.
 for try in 1 2 3 4; do
-  [ "${1:-}" = --force ] && [ "$try" = 1 ] || { n=$(count); [ "${n:-0}" -ge 4 ] 2>/dev/null && exit 0; }
+  [ "${1:-}" = --force ] && [ "$try" = 1 ] || { n=$(count); [ "${n:-0}" -ge 3 ] 2>/dev/null && exit 0; }
   "$Q" org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript '
 for (var q of panels()) if (q.location=="top") q.remove();
 function mk(al, ws) { var t = new Panel; t.location = "top"; t.floating = false; t.lengthMode = "fit"; t.alignment = al; t.height = Math.round(gridUnit * 1.9); t.hiding = "none"; for (var w of ws) t.addWidget(w); return t }
@@ -25,6 +25,6 @@ mk("right", ["com.sunshineos.graphs", "org.kde.plasma.userswitcher"]);
 ' >/dev/null 2>&1
   sleep 10
 done
-n=$(count); [ "${n:-0}" -ge 4 ] 2>/dev/null && exit 0
+n=$(count); [ "${n:-0}" -ge 3 ] 2>/dev/null && exit 0
 echo "sunshine-topbar: the top bar could not be filled (plasmashell not ready?)" >&2
 exit 1
