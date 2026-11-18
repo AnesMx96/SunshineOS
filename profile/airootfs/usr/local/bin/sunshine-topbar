@@ -13,11 +13,10 @@ t=sys.stdin.read(); d=json.loads(t[t.index("{"):t.rindex("}")+1])
 print(max([len(p.get("applets",[])) for p in d.get("panels",[]) if p.get("location")=="top"] or [0]))' 2>/dev/null
 }
 for try in 1 2 3 4; do
-  n=$(count); [ "${n:-0}" -ge 6 ] 2>/dev/null && exit 0
+  n=$(count); [ "${n:-0}" -ge 5 ] 2>/dev/null && exit 0
   "$Q" org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript '
 for (var q of panels()) if (q.location=="top") q.remove();
 var t=new Panel; t.location="top"; t.floating=false; t.lengthMode="fill"; t.height=Math.round(gridUnit*1.9); t.hiding="none";
-t.addWidget("com.sunshineos.windowbar");
 t.addWidget("org.kde.plasma.appmenu");
 t.addWidget("org.kde.plasma.panelspacer");
 t.addWidget("org.kde.plasma.digitalclock");
@@ -27,6 +26,6 @@ t.addWidget("org.kde.plasma.userswitcher");
 ' >/dev/null 2>&1
   sleep 10
 done
-n=$(count); [ "${n:-0}" -ge 6 ] 2>/dev/null && exit 0
+n=$(count); [ "${n:-0}" -ge 5 ] 2>/dev/null && exit 0
 echo "sunshine-topbar: the top bar could not be filled (plasmashell not ready?)" >&2
 exit 1

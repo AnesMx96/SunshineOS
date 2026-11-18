@@ -108,7 +108,7 @@ PlasmoidItem {
         Layout.fillWidth: true
         Text { id: h; color: root.amber; font.pixelSize: 15; font.bold: true; Layout.leftMargin: 12 }
         Item { Layout.fillWidth: true }
-        Pill { id: p; onClicked: parent.pillClicked() }
+        Pill { id: p; visible: label.length > 0; onClicked: parent.pillClicked() }
     }
 
 
@@ -200,7 +200,7 @@ PlasmoidItem {
             Rectangle { visible: search.text.length === 0 && !root.allApps; Layout.fillWidth: true; Layout.leftMargin: 16; Layout.rightMargin: 16; Layout.topMargin: 6; height: 1; color: Qt.rgba(1, 1, 1, 0.08) }
 
             // recommended
-            Header { visible: search.text.length === 0 && !root.allApps; title: "Recommended"; pill: "More"; Layout.topMargin: 8; Layout.leftMargin: 16; Layout.rightMargin: 16; onPillClicked: root.run("dolphin recent:/") }
+            Header { visible: search.text.length === 0 && !root.allApps; title: "Recommended"; Layout.topMargin: 8; Layout.leftMargin: 16; Layout.rightMargin: 16 }
             Grid {
                 visible: search.text.length === 0 && !root.allApps
                 Layout.fillWidth: true; Layout.leftMargin: 16; Layout.rightMargin: 16; Layout.topMargin: 4

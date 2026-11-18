@@ -1,0 +1,12 @@
+# Image build only (archiso removes it again afterwards): the preloaded Breeze themes get the Sunshine flower wallpaper.
+# The installed system uses /usr/share/libalpm/hooks/96-sunshine-wallpapers.hook with the same effect.
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = plasma-workspace
+
+[Action]
+Description = Sunshine flower wallpaper in the preloaded Plasma themes...
+When = PostTransaction
+Exec = /usr/bin/bash -c 'for d in /usr/share/plasma/look-and-feel/org.kde.breeze*.desktop/contents/defaults; do [ -f "$d" ] && sed -i "s/^Image=Next$/Image=Sunshine/" "$d"; done; exit 0'

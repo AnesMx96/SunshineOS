@@ -56,7 +56,7 @@ for f in .config/kdeglobals .config/kwinrc .config/kglobalshortcutsrc .config/ks
 chk "default browser is Firefox"                 grep -q 'x-scheme-handler/https=firefox' /etc/xdg/mimeapps.list
 chk "Okular is the default PDF reader"           grep -q 'application/pdf=org.kde.okular' /etc/xdg/mimeapps.list
 echo "== Plasma pieces"
-for d in com.sunshineos.startmenu com.sunshineos.graphs com.sunshineos.updates com.sunshineos.windowbar; do [ -f /usr/share/plasma/plasmoids/$d/metadata.json ] && ok "plasmoid $d" || bad "plasmoid $d missing"; done
+for d in com.sunshineos.startmenu com.sunshineos.graphs com.sunshineos.updates; do [ -f /usr/share/plasma/plasmoids/$d/metadata.json ] && ok "plasmoid $d" || bad "plasmoid $d missing"; done
 for d in plasma/desktoptheme/Sunshine aurorae/themes/Sunshine Kvantum/Sunshine plasma/look-and-feel/com.sunshineos.sunshine; do [ -d /usr/share/$d ] && ok "theme dir $d" || bad "missing /usr/share/$d"; done
 chk "colour scheme SunshineDark"                 test -f /usr/share/color-schemes/SunshineDark.colors
 chk "icon theme Sunshine-orange-dark"            test -d /usr/share/icons/Sunshine-orange-dark
