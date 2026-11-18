@@ -76,6 +76,13 @@ unset FORCE
 # `uni`, the browser ... then exist but do not work); repairs only what is broken and rewrites the repo database
 tools/fix-pkg-modes.sh >"$LOG/pkgmodes.log" 2>&1 || warn "package mode check failed (see $LOG/pkgmodes.log)"; tail -1 "$LOG/pkgmodes.log"; fix_owner
 
+log "3a/4 Overlays"
+# the overlay trees are the source of truth: they go into the profile on every build (a finished payload step must not leave a stale /etc/skel or old tools behind)
+cp -a overlay/system/. profile/airootfs/
+rm -rf profile/airootfs/etc/skel; mkdir -p profile/airootfs/etc/skel; cp -a overlay/skel/. profile/airootfs/etc/skel/
+[ -d "$PAY/root/etc/skel" ] && cp -a overlay/skel/. "$PAY/root/etc/skel/"
+echo "overlay/system and overlay/skel synced into the profile"
+
 log "3/4 Hyprland payload"
 if [ $CLEAN = 1 ] || [ ! -d "$PAY/root/etc/skel" ]; then
   retry $TRIES tools/import-end4.sh >"$LOG/import-end4.log" 2>&1 || { tail -20 "$LOG/import-end4.log"; die "tools/import-end4.sh failed"; }
