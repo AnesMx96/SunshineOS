@@ -177,3 +177,26 @@ No database errors have been found!
 DB_CHECK_RC=0
 airootfs        1.0G  359M  666M  35% /
 tmpfs           2.7G  142M  2.6G   6% /tmp
+########## STEP 3: INSTALL TO DISK @ 2026-11-18T19:26:03+01:00 ##########
+INSTALL_RC=1
+==> Partitioning /dev/sda (bios)
+Creating new GPT entries in memory.
+Warning: The kernel is still using the old partition table.
+The new table will be used at the next reboot or after you
+run partprobe(8) or kpartx(8)
+The operation has completed successfully.
+==> Formatting
+==> Copying system (this takes a few minutes)
+rsync: [sender] write error: Broken pipe (32)
+rsync error: error in socket IO (code 10) at io.c(967) [sender=3.5.2-g41bbd895]
+rsync error: received SIGUSR1 (code 19) at main.c(1691) [generator=3.5.2-g41bbd895]
+ERROR: rsync failed
+=== installer rsync line in guest ===
+196:rsync -aHAXx --no-inc-recursive \
+53:exec > >(tee -a "$LOG") 2>&1
+=== manual rsync from squashfs to target ===
+MANUAL_RSYNC_RC=10
+rsync: [sender] write error: Broken pipe (32)
+rsync error: error in socket IO (code 10) at io.c(967) [sender=3.5.2-g41bbd895]
+rsync error: received SIGUSR1 (code 19) at main.c(1691) [generator=3.5.2-g41bbd895]
+/dev/sda2       8.0G  7.9G     0 100% /mnt/sunshine-target
