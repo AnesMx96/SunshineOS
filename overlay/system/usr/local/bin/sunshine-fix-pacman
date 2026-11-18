@@ -63,7 +63,7 @@ found=0
 for h in paru yay; do
   command -v "$h" >/dev/null || continue
   found=1
-  if "$h" --version >/dev/null 2>&1; then ok "$h works ($("$h" --version | head -1))"
+  if "$h" --version >/dev/null 2>&1; then ok "$h works"
   else
     bad "$h does not start (broken libalpm after an update?): reinstalling"
     if pacman -S --noconfirm "$h" >/dev/null 2>&1 || pacman -S --noconfirm "$h-bin" >/dev/null 2>&1; then "$h" --version >/dev/null 2>&1 && ok "$h reinstalled" || fail "$h still does not start"

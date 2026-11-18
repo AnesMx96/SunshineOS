@@ -43,6 +43,12 @@ case "$cmd" in
   install)
     [ $# -gt 0 ] || { echo "usage: sunshine-apps install ID..."; exit 2; }
     pkgs=(); for i in "$@"; do pkgs+=("sunshine-app-$i"); done
+    # The app packages depend on sunshine-base. On a system where its files are in place but pacman does not own them (the live session,
+    # or an install where the registration step could not run) installing it would stop with "exists in filesystem": take ownership first.
+    if ! pacman -Qq sunshine-base >/dev/null 2>&1; then
+      log "registering sunshine-base with pacman (its files are already in place)"
+      pacman -S --noconfirm --needed --overwrite '*' sunshine-base >> "$LOG" 2>&1 || log "could not register sunshine-base (see $LOG)"
+    fi
     # Steam, Wine and friends need the 32-bit repository
     if ! grep -q '^\[multilib\]' /etc/pacman.conf; then
       sed -i '/^#\[multilib\]/,/^#Include/ s/^#//' /etc/pacman.conf
@@ -51,6 +57,8 @@ case "$cmd" in
     fi
     pacman -S --needed --noconfirm "${pkgs[@]}" && exec "$0" apply ;;
   first-update)
+    # never in the live session: LibreOffice and the rest would fill the 1 GiB RAM overlay and vanish at the next boot
+    [ -d /run/archiso ] && { echo "live session: the first-update apps are installed on the installed system"; exit 0; }
     [ -e /var/lib/sunshine/first-update-done ] && { echo "first-update apps were already handled"; exit 0; }
     ids=$(python3 - <<'PY'
 import tomllib,pathlib
