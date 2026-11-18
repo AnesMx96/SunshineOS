@@ -36,6 +36,7 @@ Evidence is in this directory:
 | F12 | Info | `sunshine-store` opens (with a real display) and shows the catalogue UI with “Preparing the app catalog…”; `--help` is not implemented and the headless invocation dumps core. `uni detect` works. | `screenshots/suos-store.png`, `screenshots/suos-store-loaded.png`; `raw/SuOS-tools-test.log:200-209`. |
 | F13 | High (introduced by the update test) | The aborted full upgrade left the package database inconsistent: `pacman -Dk` reports `missing 'pipewire-audio=1:1.6.11-1' dependency for 'pipewire-alsa'` and `missing 'pipewire=1:1.6.11-1' dependency for 'pipewire-alsa'`. Caused by the transaction that hit the 256 MiB overlay limit; to be repaired with a complete update now that cowspace is 1 GiB. | `remediation.log` doctor verification after applying patches. |
 | F14 | High (configuration/test setup) | The VM's 8 GiB disk cannot hold the uncompressed live system (`du -xhd1 /` reported ~8.5 GiB under `/usr`). The installer fills `/mnt/sunshine-target` to 100% and rsync dies with a broken pipe. The test VM needs a larger virtual disk; real hardware should also be checked against the uncompressed size, not the ISO size. | `remediation.log` step 3, `df -h /mnt/sunshine-target`. |
+| F15 | Medium | Live-session changes do not survive a reboot: the `persistent_` cowspace appears fresh after `VBoxManage` poweroff/start, so `pacman-init`, patched tools and `/tmp/sunshine-fixes` all reverted. Any remediation applied in the live ISO must be reapplied after every boot, or baked into the ISO/target system. This is expected for a live ISO but important for test reproducibility. | `remediation.log` step 5 showed `pacman-init=inactive` and the original `--info=progress2` line after reboot. |
 
 Working parts confirmed: `systemctl is-system-running` = `running` with no failed units at first boot; `sunshine-identity check` = `Identity OK: Sunshine OS`; `sunshine-snapshot status/backend` work; `sunshine-diagnose --print` runs but repeats the F1 package-key error; `uni detect` reports the correct OS and package sources.
 
@@ -171,4 +172,6 @@ In progress. The following has been done and is recorded in `remediation.log`:
 
 5. First install attempt to `/dev/sda` still failed at rsync. Manual copy confirmed the target reached 100% (8 GiB disk vs ~8.5 GiB uncompressed system), so the virtual disk must be enlarged before retrying (F14).
 
-Next steps: enlarge the VM disk, reinstall, reboot from disk, verify tools/theme, and commit each step.
+6. Enlarged the VirtualBox disk from 8192 MB to 20480 MB with `VBoxManage modifymedium disk ... --resize 20480`, powered the VM back on, and re-extended cowspace to 1 GiB. The old 8 GiB partition table remained, as expected; the installer will recreate it using the full 20 GiB.
+
+7. Reapplied all patches after the reboot, reinitialized the keyring and synced package databases. The reinstall then reached partitioning and formatting but failed with `ERROR: unable to open /dev/sda2: Device or resource busy` / `mkfs.btrfs failed`, because a mount/holder from the previous install attempt was still active. Next: release all `/dev/sda` holders and retry.

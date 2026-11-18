@@ -200,3 +200,106 @@ rsync: [sender] write error: Broken pipe (32)
 rsync error: error in socket IO (code 10) at io.c(967) [sender=3.5.2-g41bbd895]
 rsync error: received SIGUSR1 (code 19) at main.c(1691) [generator=3.5.2-g41bbd895]
 /dev/sda2       8.0G  7.9G     0 100% /mnt/sunshine-target
+########## STEP 4: ENLARGE VM DISK @ 2026-11-18T19:32:26+01:00 ##########
+Format variant: dynamic default
+Capacity:       8192 MBytes
+0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
+VM_STATE=poweroff
+0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
+Format variant: dynamic default
+Capacity:       20480 MBytes
+VBoxManage: error: The machine 'SuOS' is already locked by a session (or being locked or unlocked)
+VBoxManage: error: Details: code VBOX_E_INVALID_OBJECT_STATE (0x80bb0007), component MachineWrap, interface IMachine, callee nsISupports
+VBoxManage: error: Context: "LaunchVMProcess(a->session, sessionType.raw(), ComSafeArrayAsInParam(aBstrEnv), progress.asOutParam())" at line 919 of file VBoxManageMisc.cpp
+VBoxManage: error: Machine "SuOS" is not running (currently powered off)!
+=== retry start VM ===
+Waiting for VM "SuOS" to power on...
+VM "SuOS" has been successfully started.
+VMState="running"
+GUEST_UP
+NAME   SIZE FSTYPE
+sda     20G 
+├─sda1   2M btrfs
+└─sda2   8G btrfs
+ 18:34:36 up 0 min,  0 users,  load average: 0.45, 0.10, 0.03
+########## STEP 5: REINSTALL ON 20G DISK @ 2026-11-18T19:34:43+01:00 ##########
+airootfs        1.0G  2.5M 1022M   1% /
+pacman-init=inactive
+196:rsync -aHAXx --info=progress2 --no-inc-recursive \
+########## STEP 6: REAPPLY FIXES AFTER REBOOT @ 2026-11-18T19:50:30+01:00 ##########
+SERVICE_RC=0
+TOOLS_RC=0
+REST_RC=0
+KEYRING_RC=0
+/etc/pacman.d/gnupg/pubring.gpg
+-------------------------------
+pub   rsa4096 2026-11-18 [SC]
+      17D33F7AE9C8F63E91703317EB1D659C0C25FE20
+uid           [ultimate] Pacman Keyring Master Key <pacman@localhost>
+
+warning: database file for 'core' does not exist (use '-Sy' to download)
+warning: database file for 'extra' does not exist (use '-Sy' to download)
+warning: database file for 'multilib' does not exist (use '-Sy' to download)
+warning: database file for 'sunshine' does not exist (use '-Sy' to download)
+No database errors have been found!
+pacman-init=active
+196:rsync -aHAXx --no-inc-recursive \
+########## STEP 7: REINSTALL (BACKGROUND) @ 2026-11-18T19:50:55+01:00 ##########
+:: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+ sunshine downloading...
+SYNC_RC=0
+INSTALL_PID=5838
+=== final installer log tail ===
+==> Partitioning /dev/sda (bios)
+Creating new GPT entries in memory.
+Warning: The kernel is still using the old partition table.
+The new table will be used at the next reboot or after you
+run partprobe(8) or kpartx(8)
+The operation has completed successfully.
+==> Formatting
+ERROR: unable to open /dev/sda2: Device or resource busy
+ERROR: mkfs.btrfs failed
+=== installed log tail ===
+[21/114] btop: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[21/114] btop: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[21/114] btop: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[21/114] btop SKIPPED after 3 tries
+[22/114] easyeffects: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[22/114] easyeffects: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[22/114] easyeffects: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[22/114] easyeffects SKIPPED after 3 tries
+[23/114] songrec: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[23/114] songrec: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[23/114] songrec: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[23/114] songrec SKIPPED after 3 tries
+[24/114] translate-shell: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[24/114] translate-shell: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[24/114] translate-shell: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[24/114] translate-shell SKIPPED after 3 tries
+[25/114] matugen: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[25/114] matugen: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[25/114] matugen: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[25/114] matugen SKIPPED after 3 tries
+[26/114] geoclue: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[26/114] geoclue: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[26/114] geoclue: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[26/114] geoclue SKIPPED after 3 tries
+[27/114] pavucontrol-qt: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[27/114] pavucontrol-qt: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[27/114] pavucontrol-qt: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[27/114] pavucontrol-qt SKIPPED after 3 tries
+[28/114] libdbusmenu-gtk3: attempt 1 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[28/114] libdbusmenu-gtk3: attempt 2 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+[28/114] libdbusmenu-gtk3: attempt 3 of 3 failed: error: sunshine: key "8253720323C575207CC781B5DB345EF676CCD13D" is unknown
+==> Partitioning /dev/sda (bios)
+Creating new GPT entries in memory.
+Warning: The kernel is still using the old partition table.
+The new table will be used at the next reboot or after you
+run partprobe(8) or kpartx(8)
+The operation has completed successfully.
+==> Formatting
+ERROR: unable to open /dev/sda2: Device or resource busy
+ERROR: mkfs.btrfs failed
