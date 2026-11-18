@@ -191,3 +191,20 @@ In progress. The following has been done and is recorded in `remediation.log`:
 15. Enabled SDDM autologin for `sunshine`/`plasma` and restarted SDDM. A real user session started on `seat0`; the Sunshine Welcome app opened on the desktop (screenshot `suos-installed-logged-in.png`).
 16. Verified in the installed system: `pacman -Sy` succeeds, `pacman -Dk` reports no database errors, `sunshine-identity check` = `Identity OK`, both patched Python GUI tools parse, `sunshine-doctor --quiet` = `All good (1 note(s))` (only the missing optional Hyprland package), and fastfetch reports `Sunshine (Dark) [Qt]`, `Sunshine-orange-dark [Qt]`, `Breeze-Dark [GTK2/3/4]`.
 17. Started repair of F18/F19: `fixes/install-hyprland.sh` retries the 114 packages skipped by the original installer now that the keyring is trusted, and masks the stuck `systemd-networkd-wait-online.service`. Running in the guest background; result will be appended to `remediation.log`.
+
+---
+
+## Upstream follow-up (commits received during this test)
+
+While the VM work was in progress, the following source commits landed on `origin/main`. They address most findings from this report; the tested VM still runs the older ISO, so the fixes were injected manually where needed.
+
+| Commit | Addresses |
+|---|---|
+| `5414b97` Live/first-login VM-safe visuals (no blur/wobbly/animations) | F11, design section (VM rendering) |
+| `a22dffc` "Fix the issues of the VM test report" | F1 (drop-in removed), F2 (Calamares `$p`), F3 (import order), F4 (`tr` shadowing, safe initramfs, live-aware doctor), F5/F16 (space check, busy-device retry), F6 (GTK settings in skel / restore), F7 (1 GiB overlay), F8 (honest fix-pacman), F9 (os-prober, Calamares warnings) |
+| `b9c5c5c` Keyring populate for all keyrings, theme colour/icon fixes, Kando/Pamac theming, safer boot-repair | F18 root cause, design section |
+| `f4d536b` README/disk-size guidance and `test/vbox.sh` | F14 |
+| `2cd5b71` Sol 1.5 / Sirius 0.3, installer and tools fixes | F18 (Hyprland keyring population) |
+| `6856c11` Package list without duplicates | Packaging hygiene |
+
+F19 (`systemd-networkd-wait-online` in NAT VMs) and the stale-btrfs-device case F16 are handled locally in this test VM by masking the unit and by the installer's new busy-device retry, respectively.
