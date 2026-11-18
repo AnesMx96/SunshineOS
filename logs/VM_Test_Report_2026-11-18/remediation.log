@@ -431,3 +431,138 @@ INSTALL_PID=6536
 6536 sudo -n env SUNSHINE_AUTO=1 SUNSHINE_DISK=/dev/sdb SUNSHINE_USER=sunshine SUNSHINE_PASS=sunshine SUNSHINE_HOSTNAME=sunshine-os SUNSHINE_TZ=Europe/Madrid SUNSHINE_FS=btrfs /usr/local/bin/sunshine-install
 6538 bash /usr/local/bin/sunshine-install
 6541 tee -a /var/log/sunshine-install.log
+=== final installer log tail ===
+[96/114] qt6-5compat SKIPPED after 3 tries
+[97/114] qt6-imageformats: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[97/114] qt6-imageformats: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[97/114] qt6-imageformats: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[97/114] qt6-imageformats SKIPPED after 3 tries
+[98/114] qt6-multimedia: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[98/114] qt6-multimedia: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[98/114] qt6-multimedia: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[98/114] qt6-multimedia SKIPPED after 3 tries
+[99/114] qt6-positioning: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[99/114] qt6-positioning: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[99/114] qt6-positioning: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[99/114] qt6-positioning SKIPPED after 3 tries
+[100/114] qt6-quicktimeline: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[100/114] qt6-quicktimeline: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[100/114] qt6-quicktimeline: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[100/114] qt6-quicktimeline SKIPPED after 3 tries
+[101/114] qt6-sensors: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[101/114] qt6-sensors: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[101/114] qt6-sensors: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[101/114] qt6-sensors SKIPPED after 3 tries
+[102/114] qt6-translations: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[102/114] qt6-translations: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[102/114] qt6-translations: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[102/114] qt6-translations SKIPPED after 3 tries
+[103/114] qt6-virtualkeyboard: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[103/114] qt6-virtualkeyboard: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[103/114] qt6-virtualkeyboard: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[103/114] qt6-virtualkeyboard SKIPPED after 3 tries
+[104/114] qt6-wayland: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[104/114] qt6-wayland: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[104/114] qt6-wayland: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[104/114] qt6-wayland SKIPPED after 3 tries
+[105/114] qt6-declarative: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[105/114] qt6-declarative: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[105/114] qt6-declarative: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[105/114] qt6-declarative SKIPPED after 3 tries
+[106/114] qt6-svg: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[106/114] qt6-svg: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[106/114] qt6-svg: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[106/114] qt6-svg SKIPPED after 3 tries
+[107/114] qt6-tools: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[107/114] qt6-tools: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[107/114] qt6-tools: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[107/114] qt6-tools SKIPPED after 3 tries
+[108/114] kirigami: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[108/114] kirigami: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[108/114] kirigami: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[108/114] kirigami SKIPPED after 3 tries
+[109/114] kdialog: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[109/114] kdialog: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[109/114] kdialog: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[109/114] kdialog SKIPPED after 3 tries
+[110/114] syntax-highlighting: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[110/114] syntax-highlighting: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[110/114] syntax-highlighting: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[110/114] syntax-highlighting SKIPPED after 3 tries
+[111/114] libqalculate: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[111/114] libqalculate: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[111/114] libqalculate: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[111/114] libqalculate SKIPPED after 3 tries
+[112/114] cava: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[112/114] cava: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[112/114] cava: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[112/114] cava SKIPPED after 3 tries
+[113/114] fastfetch: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[113/114] fastfetch: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[113/114] fastfetch: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[113/114] fastfetch SKIPPED after 3 tries
+[114/114] lsd: attempt 1 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[114/114] lsd: attempt 2 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[114/114] lsd: attempt 3 of 3 failed: error: config file /tmp/pm-hypr.conf could not be read: No such file or directory
+[114/114] lsd SKIPPED after 3 tries
+failed packages: hyprland hypridle hyprlock hyprsunset hyprpolkitagent hyprland-guiutils xdg-desktop-portal-hyprland quickshell uwsm hyprshot hyprpicker cliphist grim slurp swappy wf-recorder wtype ydotool fuzzel foot btop easyeffects songrec translate-shell matugen geoclue pavucontrol-qt libdbusmenu-gtk3 yq adw-gtk-theme tinyxml2 gtkmm3 gtksourceviewmm cairomm clang uv cpptrace jemalloc tesseract tesseract-data-eng upower python-numpy python-pillow lm_sensors libnotify polkit-gnome qt5ct qt6ct kvantum kvantum-qt5 nwg-look breeze-plus darkly-bin ttf-material-symbols-variable ttf-readex-pro ttf-rubik-vf ttf-twemoji illogical-impulse-microtex-git illogical-impulse-bibata-modern-classic-bin wlogout flat-remix-gtk bluedevil gnome-keyring plasma-nm polkit-kde-agent systemsettings dolphin wireplumber pipewire-pulse playerctl brightnessctl ddcutil bc cmake ripgrep jq xdg-user-dirs rsync fontconfig breeze eza fish starship ttf-jetbrains-mono-nerd wl-clipboard xdg-desktop-portal xdg-desktop-portal-kde xdg-desktop-portal-gtk gtk4 libadwaita libsoup3 libportal-gtk4 gobject-introspection glib2 imagemagick qt6-5compat qt6-imageformats qt6-multimedia qt6-positioning qt6-quicktimeline qt6-sensors qt6-translations qt6-virtualkeyboard qt6-wayland qt6-declarative qt6-svg qt6-tools kirigami kdialog syntax-highlighting libqalculate cava fastfetch lsd
+Sunshine fastfetch config present: stock fastfetch is enough
+Hyprland could not be fully installed: the system keeps Plasma as its default session.
+== done
+snapshots: configured (the first restore point is created at first boot)
+Generating locales...
+  en_US.UTF-8... done
+Generation complete.
+==> Using drop-in configuration file: 'sunshine.conf'
+==> Starting build: '7.3.4-arch1-2'
+  -> Running build hook: [base]
+  -> Running build hook: [udev]
+  -> Running build hook: [autodetect]
+  -> Running build hook: [microcode]
+  -> Running build hook: [modconf]
+  -> Running build hook: [kms]
+  -> Running build hook: [keyboard]
+  -> Running build hook: [keymap]
+  -> Running build hook: [consolefont]
+==> WARNING: consolefont: no font found in configuration
+  -> Running build hook: [block]
+  -> Running build hook: [encrypt]
+==> WARNING: Possibly missing firmware for module: 'qat_6xxx'
+  -> Running build hook: [filesystems]
+  -> Running build hook: [fsck]
+  -> Running build hook: [grub-btrfs-overlayfs]
+==> Generating module dependencies
+==> Creating zstd-compressed initcpio image: '/boot/initramfs-linux.img'
+  -> Early uncompressed CPIO image generation successful
+==> Initcpio image generation successful
+Installing for i386-pc platform.
+Installation finished. No error reported.
+Generating grub configuration file ...
+Found theme: /usr/share/grub/themes/sunshine/theme.txt
+Found linux image: /boot/vmlinuz-linux
+Found initrd image: /boot/initramfs-linux.img
+Warning: os-prober will not be executed to detect other bootable partitions.
+Systems on them will not be added to the GRUB boot configuration.
+Check GRUB_DISABLE_OS_PROBER documentation entry.
+Adding boot menu entry for UEFI Firmware Settings ...
+Detecting snapshots ...
+No snapshots found.
+If you think an error has occurred, please file a bug report at "https://github.com/Antynea/grub-btrfs"
+Unmount /tmp/grub-btrfs.LQ6ifhodiL .. Success
+done
+==> Done.
+SUNSHINE_INSTALL_OK
+=== disk ===
+NAME   SIZE FSTYPE MOUNTPOINT
+sdb     20G        
+├─sdb1   2M        
+└─sdb2  20G btrfs  
+
+########## STEP 12: INSTALL COMPLETED @ 2026-11-18T20:00:00+01:00 ##########
+Installer result: SUNSHINE_INSTALL_OK
+- grub-install --target=i386-pc --recheck /dev/sdb: Installation finished. No error reported.
+- grub.cfg: Sunshine theme found, linux + initrd entries generated.
+- initramfs generated successfully with sunshine.conf drop-in.
+- ALL 114 optional Hyprland packages skipped: sunshine key unknown, then /tmp/pm-hypr.conf missing.
+- Plasma remains the default session.
+Target disk: /dev/sdb (20G), root subvolume @, home subvolume @home.
