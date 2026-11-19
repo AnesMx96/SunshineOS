@@ -26,3 +26,13 @@ features taken from EndeavourOS / Garuda / CachyOS, a separate tools repository 
 - 02:24 fast ISO (before the later tools) built; install test on Sol-inst started (test/install-test.sh). Host under load 17 (agents' git snapshots).
 - Lessons: pkill -f kills own shell; sudo -E drops env; VirtualBox NAT guest cannot reach 10.0.2.2 ports (use host LAN IP); opencode free model hit usage limit
   after ~25 min (switch model); shellcheck was missing so earlier lint runs were silent (installed in ~/.local/bin from pip shellcheck-py).
+- 06:11 session resumed after a ~3 h usage-limit pause (host clock 06:11 at the first command; later times below are host clock).
+- 06:15-07:30 Real install test on Sol-inst (fast ISO #1, btrfs, UEFI): installer RC=0, boots to the Sunshine login screen. First real run of sunshine-rescue from the live
+  session on the installed system: list/run/repair OK; deleted initramfs+kernel image restored; GRUB menu rebuilt. Bugs found and fixed: SMART false positive on VM disks,
+  `pacman -Qq a b c` false "missing linux", doctor in the rescue chroot behaved as live (RESCUE mode), sunshine-base not registered by the CLI installer, no VM guest service,
+  partial-upgrade heuristic, snapper in chroot, ssh blocked by UFW (migration 0004, as designed), boot 2m35s because of systemd-networkd-wait-online (fixed -> 34 s),
+  support report sanitizer with empty hostname, tools release modes (644 for tools without owner exec bit), dev-vm push modes, desktops not listed at login (SessionDir).
+  Smoke test of all tools on the installed system: 29/30 (the failing one is toolsync verify after local pushes). Performance (installed, VM, login screen): RAM 556 MB of 3.9 GB used,
+  23 services, 188 processes, BFQ/mq-deadline schedulers; boot 34 s (4.7 kernel + 8.8 initrd + 20.7 userspace).
+- 07:00 VBoxSVC crashed from memory pressure (2 VMs + docker + agents): orphan VirtualBoxVM processes killed by PID; only one VM at a time from now on.
+- 07:20 tak-7a runs the 34 break-repair scenarios on Sol-inst; tak-0 (desktop) has review/docs tasks; repo 0.6 building, then fast ISO #2.
