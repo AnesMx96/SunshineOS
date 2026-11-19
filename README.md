@@ -154,6 +154,8 @@ Besides the steps below, the installer notes the install location (`shellprocess
 
 ## The Sunshine tools
 
+Something wrong? Start with the [first-aid guide](docs/FIRST-AID.md) ([українською](docs/FIRST-AID.uk.md)).
+
 ![System tools](docs/screenshots/tools.png)
 
 | Command | Purpose |
