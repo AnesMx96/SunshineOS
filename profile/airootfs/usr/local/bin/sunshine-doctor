@@ -38,7 +38,7 @@ done
 if [ -n "${dbs_bad:-}" ]; then warn "package databases missing or damaged:$dbs_bad"; [ $FIX = 1 ] && pacman -Sy >/dev/null 2>&1 && fx "package databases downloaded again"; else ok "package databases are intact"; fi
 # a partial upgrade (pacman -Sy, then installing something, without -u) is the classic way to break Arch
 if [ -r /var/log/pacman.log ] && awk '/synchronizing package lists/{sync=1} /starting full system upgrade/{sync=0} /\[ALPM\] (installed|upgraded) /{ if (sync) bad=1 } END{exit !bad}' /var/log/pacman.log; then
-  warn "packages were installed after a database refresh without a full upgrade (partial upgrade): sunshine-update fixes it"; [ $FIX = 1 ] && pacman -Syu --noconfirm >/tmp/sunshine-partial.log 2>&1 && fx "system fully upgraded"
+  warn "packages were installed after a database refresh without a full upgrade (partial upgrade): sunshine-update fixes it"; [ $FIX = 1 ] && echo "    $(loc "not repaired automatically (a full upgrade is big): run sunshine-update now")"
 else ok "no partial upgrade detected"; fi
 # the packages without which the system cannot boot or log in (a broken removal, a bad cleanup): --fix puts them back from the repositories
 core_missing=
