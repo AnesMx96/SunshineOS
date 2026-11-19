@@ -1,0 +1,25 @@
+ profile/airootfs/usr/local/bin/sunshine-update     |  15 +-
+ profile/airootfs/usr/local/bin/sunshine-update-run |   6 +-
+ profile/airootfs/usr/local/lib/sunshine/ui.sh      |  43 ++++++
+ .../usr/share/Kvantum/Sunshine/Sunshine.kvconfig   |   6 +-
+ .../usr/share/grub/themes/sunshine/menu_c.png      | Bin 0 -> 78 bytes
+ .../usr/share/grub/themes/sunshine/menu_e.png      | Bin 0 -> 99 bytes
+ .../usr/share/grub/themes/sunshine/menu_n.png      | Bin 0 -> 109 bytes
+ .../usr/share/grub/themes/sunshine/menu_ne.png     | Bin 0 -> 684 bytes
+ .../usr/share/grub/themes/sunshine/menu_nw.png     | Bin 0 -> 629 bytes
+ .../usr/share/grub/themes/sunshine/menu_s.png      | Bin 0 -> 109 bytes
+ .../usr/share/grub/themes/sunshine/menu_se.png     | Bin 0 -> 643 bytes
+ .../usr/share/grub/themes/sunshine/menu_sw.png     | Bin 0 -> 635 bytes
+ .../usr/share/grub/themes/sunshine/menu_w.png      | Bin 0 -> 100 bytes
+ .../usr/share/grub/themes/sunshine/theme.txt       |  16 +--
+ .../usr/share/grub/themes/sunshine/viewbox.png     | Bin 3575 -> 0 bytes
+ profile/airootfs/usr/share/sunshine/i18n/uk.tsv    |   1 +
+ .../sunshine/migrations/0006-visible-boot-log.sh   |  11 ++
+ .../efiboot/loader/entries/01-archiso-linux.conf   |   2 +-
+ .../loader/entries/01b-archiso-persistent.conf     |   2 +-
+ .../loader/entries/01c-archiso-nomodeset.conf      |   2 +-
+ .../loader/entries/02-archiso-speech-linux.conf    |   2 +-
+ profile/grub/grub.cfg                              |   8 +-
+ profile/grub/loopback.cfg                          |   4 +-
+ profile/syslinux/archiso_sys-linux.cfg             |   6 +-
+ 50 files changed, 379 insertions(+), 67 deletions(-)

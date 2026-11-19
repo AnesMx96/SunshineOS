@@ -1,14 +1,21 @@
-[31m✘ 🫖 the manifest signature is not valid: refusing this release[0m
+[32m✔ ☕ tools updated: 2026.11.19.197 -> 2026.11.19.211 (6 files changed)[0m
 ---
-qt.qpa.xcb: could not connect to display 
-qt.qpa.plugin: From 6.5.0, xcb-cursor0 or libxcb-cursor0 is needed to load the Qt xcb platform plugin.
-qt.qpa.plugin: Could not load the Qt platform plugin "xcb" in "" even though it was found.
-This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
-Available platform plugins are: eglfs, linuxfb, minimal, minimalegl, offscreen, vkkhrdisplay, vnc, wayland-brcm, wayland-egl, wayland, xcb.
+sun_online is a function
+online rc=0 via: HTTPS archlinux.org
+offline rc=1 why=route
+This computer is not connected to a network (no route). Connect to Wi-Fi or a cable and try again.---
+]3008;start=cb3bd0a3491547809b61e513398bc098;user=sunshine;hostname=sunshineos;machineid=3f98c6e812fd489a97765985913322d7;bootid=4643b771c1584e659aba10b2d1e97d90;pid=9349;pidfdid=2428;comm=sudo;targetuser=root;type=session\^@
+☀ Sunshine OS update
+☀ Sunshine tools
+✔ ☕ tools are up to date (2026.11.19.211)
+✔ ☕ Internet reachable (HTTPS archlinux.org)
+☀ Latest Arch Linux news (read if something looks important)
+  • Update to php ≥ 8.5.12 and/or php-legacy ≥ 8.3.36 to prevent remote code execution
+  • Update to ca-certificates-mozilla ≥ 3.131.1-1 to prevent man-in-the-middle attacks
+  • Mkinitcpio &gt;=42 requires manual intervention for TPM2-based unlocking of LUKS devices
+☀ Checking for updates
+9 package update(s) available.
+☀ Refreshing the mirror list
+✔ ☕ arch mirrors ranked
+✔ ☕ chaotic-aur mirrors ranked
 konsole windows before=0 after=0
----
-bash: line 1: sun_online: command not found
-online rc=127 via: 
-bash: line 1: sun_online: command not found
-offline rc=127 why=
-bash: line 1: sun_net_explain: command not found

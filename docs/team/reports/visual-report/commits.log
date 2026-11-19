@@ -1,0 +1,11 @@
+e7acd96 merge origin/main (keep multi-method connectivity check)
+4c7fec5 Installer: light cream content area with dark text (the partition legend is drawn in black by Calamares), dark sidebar, themed tree, check boxes and arrows
+010cb5a Fix update no-internet false negative: use HTTPS instead of ICMP ping
+c48b54c sync overlay to profile
+da295b1 Boot log visible (loglevel 6, no quiet/splash) with migration 0006, top bar panels uniformly opaque, installer legend card, visual report
+8a4979c GRUB theme: keep the 9-slice menu panel in the canonical overlay copy (the sync had restored the old overflowing image panel)
+1c3ecc6 Opaque Sunshine Kvantum style, installer partition legend readable, installer version follows the edition, sunshine-update runs in the current terminal and checks the connection with HTTP first (several fallbacks)
+ab50a1a GRUB: installed theme uses the 9-slice menu panel (the old image panel ran off the screen and broke when scrolling)
+c392ee0 Document live-session baseline and verified ISO checksum for 13.4.7.1.5
+2b84a94 Add VM test plan for latest Sunshine OS release
+9c34df2 Add release info for latest Sunshine OS ISO test
