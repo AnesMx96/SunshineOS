@@ -1,6 +1,6 @@
 --- a/profile/airootfs/usr/local/bin/sunshine-doctor
 +++ b/profile/airootfs/usr/local/bin/sunshine-doctor
-@@ -31,6 +31,21 @@
+@@ -31,6 +31,24 @@
  else bad "package keyring missing or empty"
    [ $FIX = 1 ] && pacman-key --init >/dev/null 2>&1 && pacman-key --populate >/dev/null 2>&1 && fx "keyring initialised"; fi
  if out=$(pacman -Dk 2>&1); then ok "package database consistent"; else bad "package database problem: $(echo "$out" | head -2 | tr '\n' ' ')"; fi
@@ -15,20 +15,23 @@
 +if [ -z "$sync_bad" ]; then ok "sync databases are readable"
 +else bad "sync database missing or damaged:$sync_bad"
 +  if [ $FIX = 1 ]; then
-+    for r in $sync_bad; do rm -f "/var/lib/pacman/sync/$r.db"; done
-+    pacman -Sy --noconfirm >/dev/null 2>&1 && fx "sync databases refreshed" || bad "could not refresh sync databases"
++    # only throw a database away when it can be downloaded again: offline, a damaged file is better than none
++    if curl -fsI --max-time 6 https://archlinux.org >/dev/null 2>&1; then
++      for r in $sync_bad; do rm -f "/var/lib/pacman/sync/$r.db"; done
++      pacman -Sy --noconfirm >/dev/null 2>&1 && fx "sync databases refreshed" || bad "could not refresh sync databases"
++    else warn "offline: the damaged sync databases were left as they are"; fi
 +  fi
 +fi
  for r in $(pacman-conf --repo-list 2>/dev/null); do
    db=/var/lib/pacman/sync/$r.db
    if [ ! -s "$db" ]; then dbs_bad="$dbs_bad $r"; elif ! bsdtar -tf "$db" >/dev/null 2>&1; then dbs_bad="$dbs_bad $r"; rm -f "$db"; fi
-@@ -48,7 +63,25 @@
+@@ -48,7 +66,25 @@
  else bad "core packages missing:$core_missing"
    if [ $FIX = 1 ]; then pacman -S --noconfirm --needed $core_missing >/tmp/sunshine-core.log 2>&1 && fx "reinstalled:$core_missing" || { bad "could not reinstall (see /tmp/sunshine-core.log)"; tail -3 /tmp/sunshine-core.log; }; fi
  fi
 +# the login manager, the network service, sudo and every member of base must be installed
 +need=
-+for p in sddm networkmanager sudo $(pacman -Sgq base 2>/dev/null); do
++for p in sddm networkmanager sudo $(pacman -Qi base 2>/dev/null | sed -n "s/^Depends On *: *//p" | tr " " "\n" | sed "s/[<>=].*//" | grep -vx None); do   # "base" is a package: its dependencies are the base system
 +  pacman -Qq "$p" >/dev/null 2>&1 || case " $need " in *" $p "*) ;; *) need="$need $p";; esac
 +done
 +if [ -z "$need" ]; then ok "required packages are installed"
@@ -48,7 +51,7 @@
  n=$(find /etc -name '*.pacnew' 2>/dev/null | wc -l)
  if [ "$n" -gt 0 ]; then warn "$n config update(s) waiting for review (*.pacnew)"; [ $FIX = 1 ] && [ -x /usr/local/bin/sunshine-pacnew ] && /usr/local/bin/sunshine-pacnew auto 2>/dev/null | sed 's/^/    /' && fx "safe config updates applied (sunshine-pacnew review shows the rest)"; else ok "no pending .pacnew files"; fi
  if /usr/local/bin/sunshine-repo check --quiet; then ok "[sunshine] repository is configured"
-@@ -83,6 +116,7 @@
+@@ -83,6 +119,7 @@
    base=linux; [ -f "$kd/pkgbase" ] && base=$(cat "$kd/pkgbase")
    if [ -f "/boot/vmlinuz-$base" ] && ! cmp -s "$kd/vmlinuz" "/boot/vmlinuz-$base"; then bad "/boot/vmlinuz-$base differs from the installed kernel (damaged or half-copied)"; [ $FIX = 1 ] && cp --sparse=never --reflink=never "$kd/vmlinuz" "/boot/vmlinuz-$base" && chmod 644 "/boot/vmlinuz-$base" && fx "vmlinuz-$base rewritten"; fi
    [ -f "/boot/vmlinuz-$base" ] && ok "kernel image present: $base" || { bad "/boot/vmlinuz-$base missing"; [ $FIX = 1 ] && cp --sparse=never --reflink=never "$kd/vmlinuz" "/boot/vmlinuz-$base" && chmod 644 "/boot/vmlinuz-$base" && fx "vmlinuz-$base restored"; }
@@ -56,7 +59,7 @@
    if [ -s "/boot/initramfs-$base.img" ]; then ok "initramfs present: $base"
    else bad "/boot/initramfs-$base.img missing or empty"
      if [ $FIX = 1 ]; then
-@@ -93,12 +127,24 @@
+@@ -93,12 +130,24 @@
    fi
  done
  [ $nk = 0 ] && bad "no kernel is installed (pacman -S linux)"
@@ -81,7 +84,7 @@
  if [ -d /sys/firmware/efi ]; then
    if [ -f /boot/efi/EFI/BOOT/BOOTX64.EFI ] || [ -f /boot/EFI/BOOT/BOOTX64.EFI ]; then ok "EFI fallback boot file present"
    else bad "EFI fallback boot file (EFI/BOOT/BOOTX64.EFI) is missing: some firmwares will not find the system"; [ $FIX = 1 ] && grub-install --target=x86_64-efi --efi-directory=/boot/efi --removable --recheck >/dev/null 2>&1 && fx "EFI fallback boot file restored"; fi
-@@ -127,6 +173,9 @@
+@@ -127,6 +176,9 @@
      if [ $FIX = 1 ]; then cp --sparse=never --reflink=never /boot/vmlinuz-linux /boot/vmlinuz-linux.dense && mv -f /boot/vmlinuz-linux.dense /boot/vmlinuz-linux && fx "kernel rewritten"; fi; fi
  fi
  if grep -q menuentry /boot/grub/grub.cfg 2>/dev/null; then ok "GRUB menu present"; else bad "/boot/grub/grub.cfg is missing or has no boot entries"; [ $FIX = 1 ] && grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 && grep -q menuentry /boot/grub/grub.cfg && fx "GRUB menu regenerated"; fi
@@ -91,7 +94,7 @@
  if [ -d /sys/firmware/efi ]; then mountpoint -q /boot/efi && ok "EFI partition mounted" || warn "EFI partition not mounted at /boot/efi (kernel/GRUB updates may not reach it)"; fi
  if findmnt --verify >/dev/null 2>&1; then ok "/etc/fstab consistent"; else warn "/etc/fstab has problems (run: findmnt --verify)"; fi
  fi
-@@ -141,13 +190,21 @@
+@@ -141,13 +193,21 @@
  if [ "$(findmnt -no FSTYPE / 2>/dev/null)" = btrfs ]; then
    e=$(btrfs device stats / 2>/dev/null | awk '{s+=$2} END{print s+0}'); [ "${e:-0}" -gt 0 ] && warn "btrfs counted $e device error(s): run sunshine-doctor on a schedule and consider a scrub (sudo btrfs scrub start /)" || ok "btrfs reports no device errors"
  fi
