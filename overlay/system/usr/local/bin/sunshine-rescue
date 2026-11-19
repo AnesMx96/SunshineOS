@@ -215,6 +215,15 @@ case "$cmd" in
   bootloader) line=$(pick "${1:-}") || exit 1; do_mount "$line"; step_boot; do_umount; [ $fails = 0 ] ;;
   repair)
     line=$(pick "${1:-}") || exit 1
+    # a failing drive must be copied, not "repaired": stop before touching anything unless told otherwise
+    if command -v smartctl >/dev/null; then
+      d=$(printf '%s' "$line" | cut -f1); d=${d%%:*}
+      pk=$(lsblk -rno PKNAME "$d" 2>/dev/null | head -1); case "$d" in /dev/mapper/sunshine-luks-*) pk=$(lsblk -rno PKNAME "/dev/${d##*sunshine-luks-}" 2>/dev/null | head -1);; esac
+      if [ -n "$pk" ] && smartctl -H "/dev/$pk" 2>/dev/null | grep -qiE 'FAILED|Status: BAD'; then
+        bad "$(loc "The disk") /dev/$pk $(loc "reports a hardware failure (SMART). Repairs can make a dying disk worse: copy your files first (the live session has ddrescue and rsync). To repair anyway: SUNSHINE_RESCUE_FORCE=1 sunshine-rescue repair")"
+        [ "${SUNSHINE_RESCUE_FORCE:-0}" = 1 ] || exit 1
+      fi
+    fi
     [ "${SUNSHINE_RESCUE_FSCK:-1}" = 1 ] && do_fsck "$line"
     do_mount "$line"
     step_pacman; step_core; step_kernel; step_fstab; step_boot; step_doctor
