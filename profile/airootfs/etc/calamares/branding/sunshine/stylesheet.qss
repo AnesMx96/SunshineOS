@@ -34,4 +34,4 @@ QTextEdit, QPlainTextEdit, QTextBrowser { background-color: #271c31; color: #f6e
 /* last, so they win over the generic QAbstractItemView rule above */
 PartitionBarsView { background: transparent; border: 0; }
 /* the legend paints dark text with a fixed pen: give it a light parchment panel so the text is readable on the dark window */
-PartitionLabelsView { background-color: #e8dcc8; color: #2a1a0e; border: 0; border-radius: 6px; }
+PartitionLabelsView { background-color: #f1e6d4; color: #2a1a0e; border: 0; border-radius: 8px; margin: 0; padding: 0; }
