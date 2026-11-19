@@ -9,13 +9,14 @@
 [ -r /usr/local/lib/sunshine/ui.sh ] && . /usr/local/lib/sunshine/ui.sh || { sec() { echo "* $*"; }; ok() { echo "+ $*"; }; bad() { echo "x $*"; }; loc() { printf '%s' "$*"; }; Y=; G=; R=; B=; N=; }
 REAL_USER=${SUDO_USER:-${PKEXEC_UID:+$(getent passwd "$PKEXEC_UID" | cut -d: -f1)}}
 gpus() { lspci -nn 2>/dev/null | grep -E 'VGA|3D|Display' ; }
-vendor_pkgs() {   # packages by graphics vendor (32-bit libraries are what Steam and Wine need)
-  local g; g=$(gpus)
-  echo "$g" | grep -qi 'nvidia' && {
-    if lspci -nn | grep -i nvidia | grep -qE '\[10de:(1[0-9a-f]{3}|2[0-9a-f]{3})\]' ; then echo "nvidia-open-dkms nvidia-utils lib32-nvidia-utils nvidia-settings"; else echo "nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings"; fi; }
-  echo "$g" | grep -qi -E 'AMD|ATI|Radeon' && echo "mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver"
-  echo "$g" | grep -qi 'intel' && echo "mesa lib32-mesa vulkan-intel lib32-vulkan-intel intel-media-driver"
-  echo "$g" | grep -qi -E 'VMware|VirtualBox|QXL|Virtio|Red Hat' && echo "mesa lib32-mesa vulkan-mesa-layers"
+vendor_pkgs() {   # packages by graphics vendor (32-bit libraries are what Steam and Wine need); PCI vendor ids, not names
+  local ids; ids=$(lspci -nn 2>/dev/null | grep -E 'VGA|3D|Display' | grep -oE '\[[0-9a-f]{4}:[0-9a-f]{4}\]' | tr -d '[]')
+  echo "$ids" | grep -q '^10de:' && {
+    if lspci -nn | grep -i 'nvidia' | grep -qE '\[10de:(2[0-9a-f]{3}|1[ef][0-9a-f]{2}|2[0-9a-f]{3})\]'; then echo "nvidia-open-dkms nvidia-utils lib32-nvidia-utils nvidia-settings"; else echo "nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings"; fi; }
+  echo "$ids" | grep -q '^1002:' && echo "mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver"
+  echo "$ids" | grep -q '^8086:' && echo "mesa lib32-mesa vulkan-intel lib32-vulkan-intel intel-media-driver"
+  echo "$ids" | grep -qE '^(15ad|80ee|1af4|1b36|1234):' && echo "mesa lib32-mesa vulkan-mesa-layers"
+  return 0
 }
 multilib_on() {
   grep -q '^\[multilib\]' /etc/pacman.conf && return 0
