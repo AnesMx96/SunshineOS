@@ -108,7 +108,8 @@ for kd in /usr/lib/modules/*/; do
   fi
 done
 [ $nk = 0 ] && bad "no kernel is installed (pacman -S linux)"
-if [ -e /var/lib/sunshine/initramfs_error ]; then bad "the last package transaction left an incomplete boot setup ($(cat /var/lib/sunshine/initramfs_error))"; [ $FIX = 1 ] && { /usr/local/bin/sunshine-state-hook >/dev/null 2>&1; [ -e /var/lib/sunshine/initramfs_error ] || fx "boot files complete again"; }; fi
+if [ -e /var/lib/sunshine/initramfs_error ] && pgrep -x pacman >/dev/null; then warn "a package transaction is running right now: the boot files are checked after it"
+elif [ -e /var/lib/sunshine/initramfs_error ]; then bad "the last package transaction left an incomplete boot setup ($(cat /var/lib/sunshine/initramfs_error))"; [ $FIX = 1 ] && { /usr/local/bin/sunshine-state-hook >/dev/null 2>&1; [ -e /var/lib/sunshine/initramfs_error ] || fx "boot files complete again"; }; fi
 if [ -f /var/lib/sunshine/last_update ]; then
   age=$(( ($(date +%s) - $(stat -c %Y /var/lib/sunshine/last_update)) / 86400 ))
   [ "$age" -gt 14 ] && warn "the last update was $age days ago (sunshine-update)" || ok "last update: $age day(s) ago"

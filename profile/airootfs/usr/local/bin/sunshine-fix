@@ -25,7 +25,8 @@ fix_network() {
   fi
   gw=$(ip route 2>/dev/null | awk '/^default/{print $3; exit}')
   if [ -n "$gw" ]; then ping -c1 -W2 "$gw" >/dev/null 2>&1 && ok "the router answers ($gw)" || warn "the router does not answer ($gw): check the cable or Wi-Fi signal"; else bad "no default route (not connected)"; return; fi
-  ping -c1 -W3 1.1.1.1 >/dev/null 2>&1 && ok "the internet is reachable" || { bad "no internet beyond the router"; return; }
+  # a web request, not ping: many networks and virtual machines drop ICMP while the internet works
+  { curl -fsI --max-time 8 https://archlinux.org >/dev/null 2>&1 || ping -c1 -W3 1.1.1.1 >/dev/null 2>&1; } && ok "the internet is reachable" || { bad "no internet beyond the router"; return; }
   if getent hosts archlinux.org >/dev/null 2>&1; then ok "names resolve (DNS works)"
   else bad "DNS does not work"
     [ -e /etc/resolv.conf ] || { $SUDO ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && fx "DNS link restored"; }
