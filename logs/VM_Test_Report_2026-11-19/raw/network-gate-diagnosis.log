@@ -1,0 +1,42 @@
+=== ping archlinux.org
+PING archlinux.org (209.126.35.79) 56(84) bytes of data.
+
+--- archlinux.org ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+rc=1
+=== curl https://archlinux.org
+http=200 time=0.312275
+rc=0
+=== ping 1.1.1.1
+PING 1.1.1.1 (1.1.1.1) 56(84) bytes of data.
+
+--- 1.1.1.1 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+rc=1
+=== curl https://1.1.1.1
+curl: (35) Recv failure: Connection reset by peer
+http=000 time=0.027602
+rc=35
+=== ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+
+--- 8.8.8.8 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+rc=1
+=== curl https://8.8.8.8
+curl: (35) Recv failure: Connection reset by peer
+http=000 time=0.071234
+rc=35
+=== ping github.com
+PING github.com (20.208.89.80) 56(84) bytes of data.
+
+--- github.com ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+rc=1
+=== curl https://github.com
+http=200 time=0.657875
+rc=0

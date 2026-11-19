@@ -1,0 +1,79 @@
+=== SUNSHINE UPDATE TEST 2026-11-19T15:17:00+00:00 ===
+
+### network checks
+--- ip addr
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp0s3           UP             10.0.2.15/24 fe80::a00:27ff:fef6:933/64 
+--- ip route
+default via 10.0.2.2 dev enp0s3 proto dhcp src 10.0.2.15 metric 100 
+10.0.2.0/24 dev enp0s3 proto kernel scope link src 10.0.2.15 
+10.0.2.0/24 dev enp0s3 proto kernel scope link src 10.0.2.15 metric 100 
+10.0.2.2 dev enp0s3 proto dhcp scope link src 10.0.2.15 metric 100 
+10.2.1.254 via 10.0.2.2 dev enp0s3 proto dhcp src 10.0.2.15 metric 100 
+--- resolv.conf
+# This is /run/systemd/resolve/stub-resolv.conf managed by man:systemd-resolved(8).
+# Do not edit.
+#
+# This file might be symlinked as /etc/resolv.conf. If you're looking at
+# /etc/resolv.conf and seeing this text, you have followed the symlink.
+#
+# This is a dynamic resolv.conf file for connecting local clients to the
+# internal DNS stub resolver of systemd-resolved. This file lists all
+# configured search domains.
+#
+# Run "resolvectl status" to see details about the uplink DNS servers
+# currently in use.
+#
+# Third party programs should typically not access this file directly, but only
+# through the symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a
+# different way, replace this symlink by a static file or a different symlink.
+#
+# See man:systemd-resolved.service(8) for details about the supported modes of
+# operation for /etc/resolv.conf.
+
+nameserver 127.0.0.53
+options edns0 trust-ad
+search .
+--- getent
+2604:cac0:a104:d::3 archlinux.org
+rc=0
+--- ping archlinux.org
+PING archlinux.org (209.126.35.79) 56(84) bytes of data.
+
+--- archlinux.org ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+rc=1
+--- curl archlinux.org
+http=200 time=0.267942
+rc=0
+--- curl github release
+http=200 time=0.107610
+rc=0
+--- pacman -Sy
+error: you cannot perform this operation unless you are root.
+rc=1
+
+### sunshine-update GUI launcher (as user, no display)
+--- command: /usr/local/bin/sunshine-update
+timeout: the monitored command dumped core
+/tmp/suos-update-test.sh: line 18:  2752 Aborted                    timeout 20 env -u DISPLAY -u WAYLAND_DISPLAY /usr/local/bin/sunshine-update 2>&1
+rc=134
+
+### sunshine-update-run as root, non-interactive
+--- command: sudo -n /usr/local/bin/sunshine-update-run </dev/null
+
+[38;5;220m[1m☀ Sunshine OS update[0m
+
+[38;5;220m[1m☀ Sunshine tools[0m
+[32m✔ ☕ tools updated: none -> 2026.11.19.197 (2 files changed)[0m
+[32m✔ ☕ 0001-topbar-without-window-widget[0m
+[32m✔ ☕ 0002-fewer-login-lockouts: faillock: 10 attempts, 5 minutes[0m
+[32m✔ ☕ 0003-no-obsolete-repositories[0m
+[32m✔ ☕ 0004-firewall-on[0m
+[32m✔ ☕ 0005-faster-boot[0m
+migrations applied: 5
+[31m✘ 🫖 No internet connection. Connect to Wi-Fi or a cable and try again.[0m
+
+rc=1
+=== END 2026-11-19T15:17:19+00:00 ===
