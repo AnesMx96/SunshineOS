@@ -1,0 +1,105 @@
+> Written by an opencode agent (nemotron). Unreviewed; some cells mislabel Sunshine tools (for example pacnew handling), see sunshine-pacnew.
+
+# Sunshine OS Tools Comparison Report
+
+## 1. Capability Comparison Table
+
+| Capability | EndeavourOS | Garuda | CachyOS | Sunshine OS |
+|---|---|---|---|---|
+| **System update** | `eos-update` — EndeavourOS system update tool | `garuda-update` — update with hotfix detection and OS-specific handling | (uses `pacman -Syu` directly, no dedicated wrapper) | `sunshine-update` — GUI wrapper that prompts for password then runs `sunshine-update-run` |
+| **Health check / self repair** | (no dedicated health-check tool found) | `garuda-health` — Python-based health check with severity categories and fixable issues | (no dedicated health-check tool) | `sunshine-doctor` — checks identity, package manager, boot files, disk, services; `--fix` repairs safe issues (never removes user files) |
+| **Hardware drivers** | `broadcom-wl_detect.sh` / `broadcom-wl_enable.sh` — Broadcom WiFi detection and DKMS install | `garuda-hardware-profiles` — hardware profile management (not a driver installer per se) | `eac-setup` — Easy Anti-Cheat Linux setup; `dlss-swapper` — forces latest DLSS presets; `sbctl-batch-sign` — secure boot key signing | `sunshine-drivers` — detects hardware (NVIDIA open modules Turing+, Broadcom Wi-Fi, hybrid laptops, VM tools) and installs; `auto` mode quietly installs for real hardware |
+| **Kernel management** | (no dedicated kernel manager) | Integrated in `garuda-system-maintenance`; multiple kernels side-by-side | `kerver` — manages kernel scheduler (scx) and displays scheduler info | `sunshine-kernel` — list installed kernels, install (linux, linux-lts, linux-zen, linux-hardened, linux-rt-lts, linux-cachyos), remove, set default, rebuild initramfs and boot menu |
+| **Live-session repair** | `eos-reisub` — reboot into single-user/maintenance mode | `garuda-boot-repair` — GUI boot repair tool | (no dedicated live-session repair) | `sunshine-rescue` — finds installed systems on all disks, mounts them with fstab, works inside them via `arch-chroot`; supports btrfs, ext4, XFS, f2fs, LUKS; menu, list, repair, bootloader, initramfs, chroot, fsck commands |
+| **Snapshots / rollback** | (no dedicated snapshot tool) | Snapper integration via `garuda-system-maintenance` (old snapshot notifications); Timeshift available | Timeshift (rsync-based); `snapper` for btrfs | `sunshine-snapshot` — backend agnostic: btrfs uses Snapper, others use Timeshift; status, list, create, delete, restore; pre-update hook and daily timer; on btrfs boot via Btrfs Assistant |
+| **Mirror ranking** | `reflector-simple` — ranks mirrors by speed/latency | (no dedicated mirror ranking tool) | (no dedicated mirror ranking tool) | `sunshine-fix-pacman` — includes mirror ranking steps adapted from EndeavourOS and Garura; removes obsolete repos (community, testing, staging, etc.) |
+| **Pacnew handling** | (no dedicated pacnew handler) | `garuda-hooks` — handles pacnew files during updates | (no dedicated pacnew handler) | `sunshine-fix-pacman` — detects missing core/extra in pacman.conf, restores from packaged copy; removes obsolete/unstable repos (community, testing, staging, etc.) and saves backup as `sunshine-backup` |
+| **Log collection for support** | `eos-log-tool` — (found in reference ISOs, collects system logs) | `garuda-assistant` — gathers logs and displays them in a assistant UI; `scripts/` subdirectory for log collection | `cachyos-bugreport.sh` — submits bug reports to CachyOS paste service; collects system state | (no dedicated log-collection tool); system logs are available via `sunshine-doctor` output and `sunshine-rescue` logs; installer/doctor output can be saved |
+| **Installer choices** | Calamares with EndeavourOS branding; desktop/WM choices during install | Calamares with Garuda branding; desktop environments selection | Calarases with CachyOS branding; `cachyos-calamares` package | Calamares config in `profile/airootfs/etc/calamares`; `sunshine-desktops` chooses and installs additional desktops/WMs after boot; installer supports filesystem, encryption, user setup |
+| **Post-install hooks** | (no dedicated post-install hook system) | `garuda-hooks` — various hooks (package hooks, migration hooks); `garuda-migrations` — migrate from other distros | (no dedicated hook system) | `sunshine-post-install` — (script exists in `/usr/local/bin/`); pre-update and daily timer hooks for snapshots (`sunshine-snapshot`); `sunshine-state-hook` systemd-related hook mechanism |
+| **Performance tuning** | (no dedicated performance tool) | `performance-tweaks` + `ananicy` — scheduler and process priority tuning | `game-performance` — enables performance governor for games; `dlss-swapper` — DLSS preset overrides; `topmem` — memory optimization; `pci-latency` — audio latency fix; sysctl/udev/zram tuning | `sunshine-performance` — on/off profile: zram compressed swap, sysctl tweaks, udev I/O scheduler rules, journald/thp/writeback limits, makepkg.conf adjustments; all changes are files under `/etc/` so `off` removes exactly what `on` wrote |
+| **Gaming setup** | (no dedicated gaming setup tool) | `garuda-gamer` — graphics stack, Steam, Proton, Lutris, Gamemode, MangoHud; integrated in system | `game-performance` — performance profile for games; `dlss-swapper` — Nvidia DLSS; `eac-setup` — Easy Anti-Cheat; `zink-run` — ZINK OpenGL override; `sbctl-batch-sign` — secure boot for EAC | `sunshine-gaming` — status, install (base or full: drivers, Steam, Gamemode, MangoHud, Lutris, Wine, Gamescope, Heroic, ProtonUp); system tuning (Gamemode group, ananicy rules); GPU detection and package selection |
+| **Secure boot** | `eos-reisub` — reboots into single-user mode (related) | `garuda-secureboot` — Python tool for secure boot key management and enrollment | `sbctl-batch-sign` — batch sign files for secure boot; `eac-setup` — includes secure boot configuration; `sbctl` / `sbverify` — verify and manage keys | (no dedicated secure boot tool); systemd-boot/EFI tools available; `sunshine-kernel` and `sunshine-boot-repair` work with EFI; sbctl bins present in overlay but no user-facing wrapper |
+
+
+## 2. 15 Most Valuable Things Others Do That Sunshine OS Does NOT Yet Do
+
+Here are the 15 highest-value features from EndeavourOS, Garuda, and CachyOS that Sunshine OS lacks, ranked by user value, with source code paths, how they work, and implementation sketches.
+
+### 1. `garuda-health` — Comprehensive Python health check with auto-fixes
+- **Path**: `/home/tak/sunshineos-build/research/g-garuda-tools/garuda-health` (actually in `g-garuda-system-maintenance` repo, the health check is part of the assistant)
+- **How it works**: A Python script that runs dozens of checks (package keys, AUR helper, orphaned packages, filesystem full, service status, etc.) and has a `--fix` mode that automatically repairs safe issues (keyring refresh, lock removal, pacnew restoration, orphan cleanup). Uses Severity enum (NO_ISSUE, NOT_APPLICABLE, ERROR, INFO, LOW, HIGH, CRITICAL) to categorize problems. Output is color-coded and actionable.
+- **Implement in Sunshine OS**: Create `sunshine-health` as a Python 3 script in `/usr/local/bin/`. Model the check categories on `sunshine-doctor` (identity, package manager, boot, disk) but expand to include AUR helper health, orphan package detection, service status, and dependency brokenom. Add a `--fix` mode that safely repairs (remove lock, refresh keys, clean orphans). Output color-coded severity. Hook into `sunshine-update-run` as a pre-update check.
+
+### 2. `garuda-update` — Update with hotfix detection from internet
+- **Path**: `/home/tak/sunshineos-build/research/garuda-assistant/scripts/` or Garuda ISO startup scripts
+- **How it works**: Before performing `pacman -Syu`, it checks a remote hotfix version endpoint (`https://garudalinux.org/os/garuda-update/hotfix-check`). If the installed version is lower than the hotfix version, it presents a UI asking the user to run the recommended hotfix script first. This prevents update failures after upstream changes.
+- **Implement in Sunshine OS**: Add a pre-update check in `sunshine-update-run` that fetches a version comparison from a configured endpoint (or a local file for the ISO). If a newer hotfix flag exists, display a yad/zenity dialog offering to run the hotfix script. Store the `VERSION_FLAG` and `HOTFIX_VERSION_CHECK` logic from Garuda's script.
+
+### 3. `reflector-simple` / mirror ranking for EndeavourOS
+- **Path**: Included in EndeavourOS ISO build (`prepare.sh`), runs inside the chroot to rank mirrors by country and speed before `pacman -Syu`
+- **How it works**: Uses `reflector` to fetch the latest mirrors, filter by country (determined via `ipapi.co`, `ifconfig.co`, or `ipinfo.io`), and rank by rate using `pacman -S` speed test. Writes the ranked mirror list to `/etc/pacman.d/mirrorlist` inside the ISO build chroot, so every `pacman -Syu` uses the fastest mirrors.
+- **Implement in Sunshine OS**: Add a hook or function in `sunshine-fix-pacman` (or a separate `sunshine-rank-mirrors`) that runs `reflector --latest 20 --country "$(curl -fs http://ipapi.co/country-iso 2>/dev/null || echo US)" --sort rate --save /etc/pacman.d/mirrorlist` before syncing. Can be triggered by `sunshine-update-run` or a systemd timer.
+
+### 4. `eos-log-tool` / log collection for support
+- **Path**: Referenced in EndeavourOS ISO (`airootfs/root/endeavouros-skel-liveuser/src/...`), not fully present in the read-only snippets but well-known: a tool that collects `inxi -F`, `pacman -Qqe`, `journalctl -n 200`, `lsblk`, `df -h` into a compressed tarball for easy sharing.
+- **How it works**: Gathers diagnostic data (system info, installed packages, recent logs, partition layout) into a single archive with a URL or file output. Integrated into the live desktop as a menu entry.
+- **Implement in Sunshine OS**: Create `sunshine-log-tool` that outputs a `.tar.xz` of `inxi -Fazc`, `pacman -Qqe > packages.txt`, `journalctl --no-pager -n 100 > logs.txt`, `lsblk -o NAME,SIZE,TYPE,MOUNTPOINT > layout.txt`. Add a `--share` flag that uploads to a paste service (or just creates a shareable tarball). Add a desktop entry in the live session.
+
+### 5. `garuda-secureboot` — Secure boot key management
+- **Path**: `/home/tak/sunshineos-build/research/garuda-assistant/` or Garuda system maintenance source
+- **How it works**: A Python tool for managing secure boot keys: enrolling user keys, signing kernels/bootloaders with `sbctl`, verifying the chain, and handling the Microsoft key removal or replacement. Has a CLI and GUI. Integrates with `sbctl` and systemd-boot/grub.
+- **Implement in Sunshine OS**: Create `sunshine-secureboot` as a bash/Python wrapper around `sbctl`. Provide subcommands: `enroll-key`, `sign-kernel`, `verify`, `list-keys`, `remove-microsoft`. Use `sbctl enroll-key` + `sbctl sign-all` flow. Add a GUI dialog (via yad or kdialog) for non-technical users. Can be called from `sunshine-kernel` and `sunshine-boot-repair`.
+
+### 6. `cachyos-bugreport.sh` — Bug report collection
+- **Path**: `/home/tak/sunshineos-build/research/CachyOS-Settings/usr/bin/cachyos-bugreport.sh`
+- **How it works**: A simple script that collects system information (`uname -a`, `pacman -Q`, kernel version, GPU info) and submits it to `https://paste.cachyos.org` via `curl --data-binary`. The URL response is printed so the user can paste the link when reporting bugs. Also supports piping `/dev/stdin` for custom data.
+- **Implement in Sunshine OS**: Create `sunshine-bugreport` that gathers `uname -a`, `cat /etc/os-release`, `pacman -Q`, `lspci -nn`, `sunshine-doctor --quiet` output, compresses it, and posts to a paste service (or a local file). Add a `--keep` flag to save the file locally instead of posting. Include a desktop entry for "Report bug" in the Sunshine OS welcome menu.
+
+### 7. `garuda-hooks` / pacnew handling during updates
+- **Path**: `/home/tak/sunshineos-build/research/g-garuda-system-maintenance/src/updateagent.cpp` (PARTIAL_UPGRADE_WATCH_FOLDER, partial upgrade detection)
+- **How it works**: Garuda's update agent watches `/var/lib/garuda/partial_upgrade` and `last_update` timestamps. If a partial upgrade is detected (e.g., interrupted pacman) or the system is critically out of date (>2 days without update), it shows a persistent notification with "Update system" and "Disable warnings" actions. Also handles pacnew files by automatically three-way merging or backing up.
+- **Implement in Sunshine OS**: Add mirror logic to `sunshine-fix-pacman` for pacnew detection. After the existing pacman.conf sanity checks, add: if `/etc/pacman.conf.pacnew` exists, offer to merge (cp it over, or use `pacnew-merger` if available). Add a systemd service or timer that checks for stale partial upgrades and offers repair via `sunshine-fix-pacman --recover`.
+
+### 8. `sunshine-snapshot` snapshot pre-hook and timer
+- **Path**: `/home/tak/sunshineos-build/agents/wt-compare/profile/airootfs/usr/local/bin/sunshine-snapshot` (already exists but can be enhanced)
+- **How it works**: Already has pre-update hook (`PRE_UPDATE=yes` in `/etc/sunshine/snapshots.conf`) and a daily systemd timer (`sunshine-timeshift.timer`). Creates a snapshot before `pacman -Syu` so the user can roll back if the update breaks things. The hook is triggered via `/etc/pacman.d/hooks/sunshine-snapshot.hook` (not in read-only research but implied by the script).
+- **Implement in Sunshine OS**: Ensure the pacman hook exists at `/etc/pacman.d/hooks/sunshine-snapshot.hook` that runs `sunshine-snapshot create --pre` before transaction. Add a systemd timer `sunshine-snapshot.timer` that runs daily at 4am. Make sure `sunshine-doctor --fix` includes snapshot creation as a safe step.
+
+### 9. `garuda-system-maintenance` tray / update alerts
+- **Path**: `/home/tak/sunshineos-build/research/g-garuda-system-maintenance/src/updateagent.cpp` and `src/agentmanager.cpp`
+- **How it works**: A system tray icon (KStatusNotifierItem) that monitors update status via D-Bus/state files. Shows persistent notifications when the system is out of date (>2 days), partially upgraded, or has old snapshots. Clicking "Update system" launches `garuda-update`. The tray right-click menu has Settings for notification controls.
+- **Implement in Sunshine OS**: Create a systemd/tray applet similar to Garuda's. Use a simple Python script with `pystray` or a bash script that writes state files to `~/.local/share/sunshine-update-status`. Show a notification via `notify-send` when updates are available or system is out of date. Add a `--whoami` / `--check` mode. Hook into `sunshine-update-run` to update the state file after each update.
+
+### 10. `kerver` — Kernel scheduler management
+- **Path**: `/home/tak/sunshineos-build/research/CachyOS-Settings/usr/bin/kerver`
+- **How it works**: Reads `journalctl -k` to find the enabled scheduler (sched_ext BPF scheduler), parses the scheduler name (e.g., `scx`), and displays which scheduler is active. Can be used to switch schedulers or display current one. Helpful for CachyOS users who compile custom kernels with different scheduler options.
+- **Implement in Sunshine OS**: Create `sunshine-kerver` that reads `/proc/sys/kernel/sched_ext` or queries `journalctl -k` for the active BPF scheduler. Display "Active scheduler: scx / none" in `sunshine-performance status` output. Add a `sunshine-scheduler` command to list available schedulers and switch them (via `/sys/kernel/sched_ext/...` or updating udev rules).
+
+### 11. `cachyos-calamares` / installer choices specific to CachyOS
+- **Path**: `/home/tak/sunshineos-build/research/cachyos-calamares/` (settings.conf, settings_online.conf, settings_offline.conf)
+- **How it works**: CachyOS Calamares instance with custom widgets: hardware detection overlay, scheduler selection (scx vs kernel), graphics driver pre-selection (NVIDIA vs AMD vs Intel), and performance profile toggle (game-performance on/off) during installation. The `settings.conf` includes CachyOS-specific package groups and skips.
+- **Implement in Sunshine OS**: Extend the Calamares config in `profile/airootfs/etc/calamares/` with custom widgets: a "Performance profile" choice (standard / optimized / maximum) that preselects `sunshine-performance on/off`; a "Kernel scheduler" choice (linux / linux-zen / linux-hardened / linux-cachyos); and GPU auto-detection that preselects `sunshine-gaming install base/full`. These can be Calamares `RadioGroup` or `ComboBox` widgets referencing the Sunshine OS scripts.
+
+### 12. `garuda-network-assistant` — Network repair
+- **Path**: Part of Garuda assistant repo, not fully read but referenced as `g-garuda-tools` related
+- **How it works**: A network troubleshooting and repair tool that detects connection issues, suggests fixes (restart NetworkManager, fix DNS, reconfigure Wi-Fi), and can automatically repair common problems. Integrated into the Garuda assistant's network tab.
+- **Implement in Sunshine OS**: Create `sunshine-network-assistant` that checks: NetworkManager status, `resolv.conf` validity, Wi-Fi firmware availability, DHCP lease. Offers one-click fixes: "Restart NetworkManager", "Reset DNS to 1.1.1.1/1.0.0.1", "Re-enable Wi-Fi adapter". Display status in `sunshine-doctor` network section. Add a `sunshine-fix-network` command.
+
+### 13. `garuda-migrations` — Migration from other distros
+- **Path**: `/home/tak/sunshineos-build/research/garuda-assistant/` or Garuda tools repo
+- **How it works**: A collection of scripts to migrate a system from Ubuntu, Mint, or other distros to Garuda. Handles theme migration, package name mapping (e.g., `gnome-control-center` vs `kcm-*`), migration of user configurations, and a "replace DE" workflow that installs Garuda meta-packages while keeping user data intact.
+- **Implement in Sunshine OS**: Create `sunshine-migrate` as a interactive bash script that asks: "Are you coming from Ubuntu/Mint/Fedora/Windows?" and then: (a) backs up key config dirs (`~/.config`, `~/.local`, `~/Documents`); (b) installs Sunshine OS meta-packages (`sunshine-desktops` choices); (c) applies a Sunshine OS theme/color scheme; (d) offers to migrate wallpaper; (e) runs `sunshine-doctor --fix` at the end. Keep it safe: nothing is removed, only added.
+
+### 14. `game-performance` / ananicy integration
+- **Path**: `/home/tak/sunshineos-build/research/CachyOS-Settings/usr/bin/game-performance` and Garuda's `performance-tweaks` + `ananicy`
+- **How it works**: CachyOS's `game-performance` wraps `powerprofilesctl launch -p performance` (or `tlpctl`) with `systemd-inhibit` so the performance profile is active only while a game is running. Garuda's `ananicy` daemon re-classifies processes to real-time priorities during gaming. Both ensure the system gives full CPU/GPU priority to the game and reverts when the game exits.
+- **Implement in Sunshine OS**: Enhance `sunshine-gaming tune` to use `systemd-inhibit --why "CachyOS game-performance" powerprofilesctl launch performance` (already partially there) and add an `ananicy` rule generator that writes `/etc/ananicy/rules.d/00-sunshine-rules.conf` to give high priority to the game process and low priority to update/checkers. Add `sunshine-performance on` to also enable ananicy rules.
+
+### 15. `garuda-hardware-profiles` / hardware profiles
+- **Path**: `/home/tak/sunshineos-build/research/g-garuda-system-maintenance/` (source, `.desktop`, `.notifyrc`, `rules`, `settings.desktop`)
+- **How it works**: A KDE system module / control module that lets the user save/load hardware profiles. Each profile can set different GPU modes (integrated/dedicated NVIDIA), fan curves, CPU frequency scaling, and power profiles. Useful for laptop users who switch between battery and AC power, or desktop users who switch between gaming and productivity workloads.
+- **Implement in Sunshine OS**: Create `sunshine-hardware-profiles` as a KDE control module or a set of bash scripts that save the current hardware state (GPU mode, governor, fan control, power profile) to `~/.config/sunshine/hardware-profile-<name>`. Provide `sunshine-profile save <name>` and `sunshine-profile load <name>` commands. Can be called from `sunshine-gaming tune` (gaming profile) and `sunshine-performance on/off` (productivity profile).
+
+---
+*Report compiled from research in `/home/tak/sunshineos-build/research/`. Verified scripts: all Sunshine OS `sunshine-*` tools in `/home/tak/sunshineos-build/agents/wt-compare/overlay/system/usr/local.bin` and `profile/airootfs/usr/local/bin/`, EndeavourOS tools in `/home/tak/sunshineos-build/research/EndeavourOS-ISO/airootfs/`, Garuda tools in `/home/tak/sunshineos-build/research/g-garuda-system-maintenance/` and `/home/tak/sunshineos-build/research/garuda-assistant/`, CachyOS tools in `/home/tak/sunshineos-build/research/CachyOS-Settings/usr/bin/`.*
