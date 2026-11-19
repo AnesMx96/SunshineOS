@@ -1,0 +1,876 @@
+=== LIVE TEST START 2026-11-19T15:13:42+00:00 ===
+--- identity/environment ---
+
+### id
+uid=1000(sunshine) gid=1000(sunshine) groups=1000(sunshine),3(sys),4(adm),10(wheel),19(log),90(network),94(floppy),96(scanner),98(power),850(rfkill),969(autologin),971(audio),972(lp),973(optical),974(storage),975(video),985(users)
+[rc=0]
+
+### uname -a
+Linux sunshineos 7.3.4-arch1-2 #1 SMP PREEMPT_DYNAMIC Thu, 12 Nov 2026 20:11:37 +0000 x86_64 GNU/Linux
+[rc=0]
+
+### hostnamectl
+ Static hostname: sunshineos
+       Icon name: computer-vm
+         Chassis: vm 💽
+      Machine ID: 6cda86dcf24a4f50b527a9fcc2e808e1
+         Boot ID: 3caa0234e8ee499f8ae3b7c571a062c5
+  Virtualization: oracle
+Operating System: Sunshine OS
+          Kernel: Linux 7.3.4-arch1-2
+    Architecture: x86-64
+ Hardware Vendor: innotek GmbH
+  Hardware Model: VirtualBox
+Hardware Version: 1.2
+Firmware Version: VirtualBox
+   Firmware Date: Fri 2006-12-01
+    Firmware Age: 19y 11month 2w 5d
+[rc=0]
+
+### bash -c cat /etc/os-release
+NAME="Sunshine OS"
+PRETTY_NAME="Sunshine OS"
+ID=sunshineos
+ID_LIKE=arch
+BUILD_ID=rolling
+ANSI_COLOR="38;2;255;196;61"
+HOME_URL="https://tak0dan.github.io/sunshineos-site/"
+DOCUMENTATION_URL="https://wiki.archlinux.org/"
+SUPPORT_URL="https://github.com/tak0dan"
+BUG_REPORT_URL="https://github.com/tak0dan"
+LOGO=sunshineos
+[rc=0]
+
+### bash -c echo DISPLAY=$DISPLAY WAYLAND_DISPLAY=$WAYLAND_DISPLAY XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR DBUS=$DBUS_SESSION_BUS_ADDRESS
+DISPLAY= WAYLAND_DISPLAY= XDG_RUNTIME_DIR= DBUS=
+[rc=0]
+
+### date -Is
+2026-11-19T15:13:42+00:00
+[rc=0]
+
+### uptime
+ 15:13:42 up 1 min,  1 user,  load average: 3.20, 1.42, 0.53
+[rc=0]
+
+### locale
+LANG=C.UTF-8
+LC_CTYPE="C.UTF-8"
+LC_NUMERIC="C.UTF-8"
+LC_TIME="C.UTF-8"
+LC_COLLATE="C.UTF-8"
+LC_MONETARY="C.UTF-8"
+LC_MESSAGES="C.UTF-8"
+LC_PAPER="C.UTF-8"
+LC_NAME="C.UTF-8"
+LC_ADDRESS="C.UTF-8"
+LC_TELEPHONE="C.UTF-8"
+LC_MEASUREMENT="C.UTF-8"
+LC_IDENTIFICATION="C.UTF-8"
+LC_ALL=
+[rc=0]
+--- storage/live overlay ---
+
+### lsblk -a
+NAME  MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS
+loop0   7:0    0 3.1G  1 loop /run/archiso/airootfs
+sda     8:0    0  20G  0 disk 
+sr0    11:0    1 3.3G  1 rom  /run/archiso/bootmnt
+zram0 253:0    0 2.4G  0 disk [SWAP]
+[rc=0]
+
+### findmnt -R /
+TARGET                                        SOURCE     FSTYPE          OPTIONS
+/                                             airootfs   overlay         rw,relatime,lowerdir=/run/archiso/airootfs,upperdir=/run/archiso/cowspace/persistent_/x86_64/upperdir,workdir=/run/archiso/cowspace/persistent_/x86_64/workdir,uuid=on
+├─/proc                                       proc       proc            rw,nosuid,nodev,noexec,relatime
+│ └─/proc/sys/fs/binfmt_misc                  systemd-1  autofs          rw,relatime,fd=44,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=474
+├─/sys                                        sys        sysfs           rw,nosuid,nodev,noexec,relatime
+│ ├─/sys/kernel/security                      securityfs securityfs      rw,nosuid,nodev,noexec,relatime
+│ ├─/sys/fs/cgroup                            cgroup2    cgroup2         rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot,memory_hugetlb_accounting
+│ ├─/sys/fs/pstore                            none       pstore          rw,nosuid,nodev,noexec,relatime
+│ ├─/sys/fs/bpf                               bpf        bpf             rw,nosuid,nodev,noexec,relatime,mode=700
+│ ├─/sys/kernel/tracing                       tracefs    tracefs         rw,nosuid,nodev,noexec,relatime
+│ ├─/sys/kernel/debug                         debugfs    debugfs         rw,nosuid,nodev,noexec,relatime
+│ ├─/sys/kernel/config                        configfs   configfs        rw,nosuid,nodev,noexec,relatime
+│ └─/sys/fs/fuse/connections                  fusectl    fusectl         rw,nosuid,nodev,noexec,relatime
+├─/dev                                        dev        devtmpfs        rw,nosuid,relatime,size=2468776k,nr_inodes=617194,mode=755,inode64,huge=advise
+│ ├─/dev/shm                                  tmpfs      tmpfs           rw,nosuid,nodev,inode64,huge=advise,usrquota
+│ ├─/dev/pts                                  devpts     devpts          rw,nosuid,noexec,relatime,gid=5,mode=600,ptmxmode=000
+│ ├─/dev/mqueue                               mqueue     mqueue          rw,nosuid,nodev,noexec,relatime
+│ └─/dev/hugepages                            hugetlbfs  hugetlbfs       rw,nosuid,nodev,relatime,pagesize=2M
+├─/run                                        run        tmpfs           rw,nosuid,nodev,relatime,mode=755,inode64,huge=advise
+│ ├─/run/archiso/bootmnt                      /dev/sr0   iso9660         ro,relatime,nojoliet,check=s,map=n,blocksize=2048,iocharset=utf8
+│ ├─/run/archiso/cowspace                     cowspace   tmpfs           rw,relatime,size=4194304k,mode=755,inode64,huge=advise
+│ ├─/run/archiso/airootfs                     /dev/loop0 squashfs        ro,relatime,errors=continue,threads=single
+│ ├─/run/credentials/systemd-journald.service none       tmpfs           ro,nosuid,nodev,noexec,relatime,nosymfollow,size=1024k,nr_inodes=1024,mode=700,inode64,huge=advise,noswap
+│ ├─/run/credentials/systemd-resolved.service none       tmpfs           ro,nosuid,nodev,noexec,relatime,nosymfollow,size=1024k,nr_inodes=1024,mode=700,inode64,huge=advise,noswap
+│ ├─/run/credentials/systemd-networkd.service none       tmpfs           ro,nosuid,nodev,noexec,relatime,nosymfollow,size=1024k,nr_inodes=1024,mode=700,inode64,huge=advise,noswap
+│ └─/run/user/1000                            tmpfs      tmpfs           rw,nosuid,nodev,relatime,size=502576k,nr_inodes=125644,mode=700,uid=1000,gid=1000,inode64,huge=advise
+│   ├─/run/user/1000/gvfs                     gvfsd-fuse fuse.gvfsd-fuse rw,nosuid,nodev,relatime,user_id=1000,group_id=1000
+│   └─/run/user/1000/doc                      portal     fuse.portal     rw,nosuid,nodev,relatime,user_id=1000,group_id=1000
+├─/etc/pacman.d/gnupg                         tmpfs      tmpfs           rw,relatime,mode=755,inode64,huge=advise,noswap
+└─/tmp                                        tmpfs      tmpfs           rw,nosuid,nodev,size=2512884k,nr_inodes=1048576,inode64,huge=advise,usrquota
+[rc=0]
+
+### df -h
+Filesystem      Size  Used Avail Use% Mounted on
+dev             2.4G     0  2.4G   0% /dev
+run             2.4G  9.1M  2.4G   1% /run
+/dev/sr0        3.3G  3.3G     0 100% /run/archiso/bootmnt
+cowspace        4.0G   47M  4.0G   2% /run/archiso/cowspace
+/dev/loop0      3.2G  3.2G     0 100% /run/archiso/airootfs
+airootfs        4.0G   47M  4.0G   2% /
+tmpfs           2.4G     0  2.4G   0% /dev/shm
+none            1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none            1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+none            1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+tmpfs           2.4G  2.8M  2.4G   1% /etc/pacman.d/gnupg
+tmpfs           2.4G   20K  2.4G   1% /tmp
+tmpfs           491M   92K  491M   1% /run/user/1000
+[rc=0]
+
+### bash -c grep -E "cowspace|airootfs|overlay" /proc/mounts
+cowspace /run/archiso/cowspace tmpfs rw,relatime,size=4194304k,mode=755,inode64,huge=advise 0 0
+/dev/loop0 /run/archiso/airootfs squashfs ro,relatime,errors=continue,threads=single 0 0
+airootfs / overlay rw,relatime,lowerdir=/run/archiso/airootfs,upperdir=/run/archiso/cowspace/persistent_/x86_64/upperdir,workdir=/run/archiso/cowspace/persistent_/x86_64/workdir,uuid=on 0 0
+[rc=0]
+
+### bash -c du -xhd1 / 2>/dev/null | sort -h | tail -12
+0	/boot
+0	/mnt
+0	/opt
+0	/root
+0	/srv
+4.1M	/etc
+28M	/home
+40M	/var
+8.5G	/
+8.5G	/usr
+[rc=0]
+--- services ---
+
+### bash -c systemctl is-system-running; echo SYSRC=$?
+running
+SYSRC=0
+[rc=0]
+
+### systemctl --failed --no-pager
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+[rc=0]
+
+### systemctl status pacman-init.service --no-pager
+● pacman-init.service - Initializes Pacman keyring
+     Loaded: loaded (/etc/systemd/system/pacman-init.service; enabled; preset: disabled)
+     Active: active (exited) since Thu 2026-11-19 15:12:58 UTC; 50s ago
+ Invocation: f24bd9a4fdb449899c9f479d01b3bd86
+    Process: 733 ExecStart=/usr/bin/pacman-key --init (code=exited, status=0/SUCCESS)
+    Process: 888 ExecStart=/usr/bin/pacman-key --populate (code=exited, status=0/SUCCESS)
+   Main PID: 888 (code=exited, status=0/SUCCESS)
+   Mem peak: 20.4M
+        CPU: 5.887s
+
+Nov 19 15:12:58 sunshineos pacman-key[888]:   -> Disabled 38 keys.
+Nov 19 15:12:58 sunshineos pacman-key[888]: ==> Updating trust database...
+Nov 19 15:12:58 sunshineos pacman-key[1317]: gpg: Note: third-party key signatures using the SHA1 algorithm are rejected
+Nov 19 15:12:58 sunshineos pacman-key[1317]: gpg: (use option "--allow-weak-key-signatures" to override)
+Nov 19 15:12:58 sunshineos pacman-key[1317]: gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+Nov 19 15:12:58 sunshineos pacman-key[1317]: gpg: depth: 0  valid:   1  signed:   6  trust: 0-, 0q, 0n, 0m, 0f, 1u
+Nov 19 15:12:58 sunshineos pacman-key[1317]: gpg: depth: 1  valid:   6  signed:  88  trust: 0-, 0q, 0n, 6m, 0f, 0u
+Nov 19 15:12:58 sunshineos pacman-key[1317]: gpg: depth: 2  valid:  78  signed:  18  trust: 78-, 0q, 0n, 0m, 0f, 0u
+Nov 19 15:12:58 sunshineos pacman-key[1317]: gpg: next trustdb check due at 2026-12-31
+Nov 19 15:12:58 sunshineos systemd[1]: Finished Initializes Pacman keyring.
+[rc=0]
+
+### bash -c systemctl list-units --type=service --state=failed --no-legend --no-pager
+[rc=0]
+
+### bash -c systemctl --user --failed --no-pager 2>&1 || true
+Failed to connect to user scope bus via local transport: $DBUS_SESSION_BUS_ADDRESS and $XDG_RUNTIME_DIR not defined (consider using --machine=<user>@.host --user to connect to bus of other user)
+[rc=0]
+--- packages/keyring ---
+
+### bash -c pacman -Q | grep -Ei "sunshine|calamares|hyprland|plasma|kde|kvantum|gtk|firefox|starship" | sort || true
+warning: database file for 'sunshine' does not exist (use '-Sy' to download)
+warning: database file for 'core' does not exist (use '-Sy' to download)
+warning: database file for 'extra' does not exist (use '-Sy' to download)
+warning: database file for 'multilib' does not exist (use '-Sy' to download)
+breeze-gtk 6.8.3-1
+calamares 3.4.2-2
+firefox 160.0.1-1
+gtk-layer-shell 0.10.1-1
+gtk-update-icon-cache 1:4.24.1-1
+gtk3 1:3.24.52-2
+gtk4 1:4.24.1-1
+gtkmm-4.0 4.24.0-1
+gtksourceview4 4.8.4-2
+kde-cli-tools 6.8.3-1
+kde-gtk-config 6.8.3-1
+kdeclarative 6.32.0-1
+kdeconnect 26.08.3-2
+kdecoration 6.8.3-1
+kded 6.32.0-1
+kdesu 6.32.0-1
+kvantum 1.1.9-1
+libblockdev 3.6.0-1
+libblockdev-crypto 3.6.0-1
+libblockdev-fs 3.6.0-1
+libblockdev-loop 3.6.0-1
+libblockdev-mdraid 3.6.0-1
+libblockdev-nvme 3.6.0-1
+libblockdev-part 3.6.0-1
+libblockdev-smart 3.6.0-1
+libblockdev-swap 3.6.0-1
+libdbusmenu-gtk3 18.10.20180917-2
+libplasma 6.8.3-1
+libportal-gtk4 0.11.0-1
+librepods 1.0.0.sunshine1-1
+plasma-activities 6.8.3-1
+plasma-activities-stats 6.8.3-1
+plasma-desktop 6.8.3-1
+plasma-firewall 6.8.3-1
+plasma-integration 6.8.3-1
+plasma-nm 6.8.3-1
+plasma-pa 6.8.3-1
+plasma-systemmonitor 6.8.3-1
+plasma-workspace 6.8.3-1
+plasma5support 6.8.3-1
+polkit-kde-agent 6.8.3-1
+qalculate-gtk 5.13.0-1
+qt5-base 5.15.19+kde+r97-1
+qt5-declarative 5.15.19+kde+r23-1
+qt5-quickcontrols2 5.15.19+kde+r5-1
+qt5-svg 5.15.19+kde+r5-1
+qt5-wayland 5.15.19+kde+r55-1
+starship 1.27.0-1
+sunshine-icon-theme 2026.08.31-2
+xdg-desktop-portal-gtk 1.15.3-2
+xdg-desktop-portal-kde 6.8.3-1
+[rc=0]
+
+### bash -c sudo -n pacman -Dk 2>&1 || true
+warning: database file for 'sunshine' does not exist (use '-Sy' to download)
+warning: database file for 'core' does not exist (use '-Sy' to download)
+warning: database file for 'extra' does not exist (use '-Sy' to download)
+warning: database file for 'multilib' does not exist (use '-Sy' to download)
+No database errors have been found!
+[rc=0]
+
+### bash -c sudo -n pacman-key --list-keys 2>&1 | tail -20
+uid           [ unknown] Tom Gundersen <tomegun@archlinux.org>
+
+pub   rsa4096 2019-09-04 [C] [expired: 2024-06-29]
+      *** This key has been disabled
+      FE2E6249201CA54A4FB90D066E80CA1446879D04
+uid           [ expired] Jonas Witschel <jonas.witschel@diabonas.de>
+uid           [ expired] Jonas Witschel <diabonas@archlinux.org>
+uid           [ expired] Jonas Witschel <diabonas@gmx.de>
+uid           [ expired] Jonas Witschel <git@diabonas.de>
+
+pub   ed25519 2020-11-15 [SC] [expires: 2027-09-10]
+      FE5AFA6D5DE0070ADFA21BC5E074B83653CBB7BA
+uid           [  full  ] Tim Meusel <bastelfreak@archlinux.org>
+sub   rsa4096 2020-11-16 [S] [expires: 2027-09-10]
+sub   cv25519 2020-11-15 [E] [expires: 2027-09-10]
+
+pub   ed25519 2026-11-17 [SC]
+      8253720323C575207CC781B5DB345EF676CCD13D
+uid           [  full  ] Sunshine OS Repository <repo@sunshineos.invalid>
+
+[rc=0]
+
+### bash -c cat /etc/pacman.conf | grep -A8 -E "\[sunshine\]|\[sunshine-testing\]" || true
+[sunshine]
+SigLevel = PackageRequired DatabaseOptional
+Server = https://github.com/tak0dan/sunshineos-repo/releases/download/repo
+
+[core]
+Include = /etc/pacman.d/mirrorlist
+
+#[extra-testing]
+#Include = /etc/pacman.d/mirrorlist
+[rc=0]
+--- first-party files ---
+
+### bash -c ls -l /usr/local/bin/sunshine* /usr/local/bin/uni 2>&1
+ls: cannot access '/usr/local/bin/uni': No such file or directory
+-rwxr-xr-x 1 root root  6542 Nov 19 08:41 /usr/local/bin/sunshine-apps
+-rwxr-xr-x 1 root root  4373 Nov 19 08:41 /usr/local/bin/sunshine-backup
+-rwxr-xr-x 1 root root  2366 Nov 19 08:41 /usr/local/bin/sunshine-boot-repair
+-rwxr-xr-x 1 root root  1491 Nov 19 08:41 /usr/local/bin/sunshine-cleanup
+-rwxr-xr-x 1 root root   806 Nov 19 08:41 /usr/local/bin/sunshine-crypt-setup
+-rwxr-xr-x 1 root root  7730 Nov 19 08:41 /usr/local/bin/sunshine-desktops
+-rwxr-xr-x 1 root root   777 Nov 19 08:41 /usr/local/bin/sunshine-detect-location
+-rwxr-xr-x 1 root root  3024 Nov 19 08:41 /usr/local/bin/sunshine-diagnose
+-rwxr-xr-x 1 root root 26286 Nov 19 08:41 /usr/local/bin/sunshine-doctor
+-rwxr-xr-x 1 root root  8024 Nov 19 08:41 /usr/local/bin/sunshine-drivers
+-rwxr-xr-x 1 root root  3078 Nov 19 08:41 /usr/local/bin/sunshine-fastfetch-patch
+-rwxr-xr-x 1 root root  8685 Nov 19 08:41 /usr/local/bin/sunshine-fix
+-rwxr-xr-x 1 root root  6867 Nov 19 08:41 /usr/local/bin/sunshine-fix-pacman
+-rwxr-xr-x 1 root root   804 Nov 19 08:41 /usr/local/bin/sunshine-game-run
+-rwxr-xr-x 1 root root  5345 Nov 19 08:41 /usr/local/bin/sunshine-gaming
+-rwxr-xr-x 1 root root   828 Nov 19 08:41 /usr/local/bin/sunshine-health-scan
+-rwxr-xr-x 1 root root  4613 Nov 19 08:41 /usr/local/bin/sunshine-hyprland-install
+-rwxr-xr-x 1 root root  1965 Nov 19 08:41 /usr/local/bin/sunshine-identity
+-rwxr-xr-x 1 root root  1388 Nov 19 08:41 /usr/local/bin/sunshine-info
+-rwxr-xr-x 1 root root 20599 Nov 19 08:41 /usr/local/bin/sunshine-install
+-rwxr-xr-x 1 root root  5715 Nov 19 08:41 /usr/local/bin/sunshine-kernel
+-rwxr-xr-x 1 root root  1285 Nov 19 08:41 /usr/local/bin/sunshine-live-setup
+-rwxr-xr-x 1 root root  2044 Nov 19 08:41 /usr/local/bin/sunshine-migrate
+-rwxr-xr-x 1 root root   611 Nov 19 08:41 /usr/local/bin/sunshine-nixos-grub
+-rwxr-xr-x 1 root root  3658 Nov 19 08:41 /usr/local/bin/sunshine-pacnew
+-rwxr-xr-x 1 root root 11315 Nov 19 08:41 /usr/local/bin/sunshine-performance
+-rwxr-xr-x 1 root root 41170 Nov 19 08:41 /usr/local/bin/sunshine-pet
+-rwxr-xr-x 1 root root  4200 Nov 19 08:41 /usr/local/bin/sunshine-plasma-setup
+-rwxr-xr-x 1 root root 12427 Nov 19 08:41 /usr/local/bin/sunshine-pods
+-rwxr-xr-x 1 root root  3999 Nov 19 08:41 /usr/local/bin/sunshine-post-install
+-rwxr-xr-x 1 root root   353 Nov 19 08:41 /usr/local/bin/sunshine-prompt
+-rwxr-xr-x 1 root root   654 Nov 19 08:41 /usr/local/bin/sunshine-register-base
+-rwxr-xr-x 1 root root  5352 Nov 19 08:41 /usr/local/bin/sunshine-repo
+-rwxr-xr-x 1 root root 20334 Nov 19 08:41 /usr/local/bin/sunshine-rescue
+-rwxr-xr-x 1 root root  2211 Nov 19 08:41 /usr/local/bin/sunshine-reset-plasma
+-rwxr-xr-x 1 root root  3420 Nov 19 08:41 /usr/local/bin/sunshine-restore-visuals
+-rwxr-xr-x 1 root root  1561 Nov 19 08:41 /usr/local/bin/sunshine-secureboot
+-rwxr-xr-x 1 root root  1465 Nov 19 08:41 /usr/local/bin/sunshine-session
+-rwxr-xr-x 1 root root   475 Nov 19 08:41 /usr/local/bin/sunshine-session-notice
+-rwxr-xr-x 1 root root   345 Nov 19 08:41 /usr/local/bin/sunshine-set-shell
+-rwxr-xr-x 1 root root  4472 Nov 19 08:41 /usr/local/bin/sunshine-snapshot
+-rwxr-xr-x 1 root root  4568 Nov 19 08:41 /usr/local/bin/sunshine-snapshots-setup
+-rwxr-xr-x 1 root root  1028 Nov 19 08:41 /usr/local/bin/sunshine-state-hook
+-rwxr-xr-x 1 root root  3397 Nov 19 08:41 /usr/local/bin/sunshine-support
+-rwxr-xr-x 1 root root  1873 Nov 19 08:41 /usr/local/bin/sunshine-term
+-rwxr-xr-x 1 root root   667 Nov 19 08:41 /usr/local/bin/sunshine-theme-wallpapers
+-rwxr-xr-x 1 root root  9027 Nov 19 08:41 /usr/local/bin/sunshine-toolbox
+-rwxr-xr-x 1 root root  7657 Nov 19 08:41 /usr/local/bin/sunshine-toolsync
+-rwxr-xr-x 1 root root  2209 Nov 19 08:41 /usr/local/bin/sunshine-topbar
+-rwxr-xr-x 1 root root   219 Nov 19 08:41 /usr/local/bin/sunshine-update
+-rwxr-xr-x 1 root root  1943 Nov 19 08:41 /usr/local/bin/sunshine-update-check
+-rwxr-xr-x 1 root root   532 Nov 19 08:41 /usr/local/bin/sunshine-update-notifier
+-rwxr-xr-x 1 root root 11160 Nov 19 08:41 /usr/local/bin/sunshine-update-run
+-rwxr-xr-x 1 root root  2216 Nov 19 08:41 /usr/local/bin/sunshine-webapp
+-rwxr-xr-x 1 root root  7309 Nov 19 08:41 /usr/local/bin/sunshine-welcome
+[rc=2]
+
+### bash -c find /usr/local/lib/sunshine /usr/share/sunshine -maxdepth 2 -type f 2>/dev/null | sort | head -80
+/usr/local/lib/sunshine/__pycache__/i18n.cpython-314.pyc
+/usr/local/lib/sunshine/i18n.py
+/usr/local/lib/sunshine/ui.sh
+/usr/share/sunshine/apps-setup/blackarch.sh
+/usr/share/sunshine/apps-setup/default-viewer.sh
+/usr/share/sunshine/apps-setup/kando-theme.sh
+/usr/share/sunshine/apps-setup/kernel-menu.sh
+/usr/share/sunshine/apps-setup/libvirt-group.sh
+/usr/share/sunshine/apps-setup/mariadb-user.sh
+/usr/share/sunshine/apps-setup/pamac-theme.sh
+/usr/share/sunshine/apps-setup/printing.sh
+/usr/share/sunshine/apps-setup/tor-firewall.sh
+/usr/share/sunshine/apps-setup/vbox-group.sh
+/usr/share/sunshine/catalogue.toml
+/usr/share/sunshine/fastfetch/sunshine-logos.patch
+/usr/share/sunshine/fastfetch/sunshine.txt
+/usr/share/sunshine/fastfetch/sunshine_os.txt
+/usr/share/sunshine/hyprland/packages.txt
+/usr/share/sunshine/i18n/uk.tsv
+/usr/share/sunshine/identity/issue
+/usr/share/sunshine/identity/lsb-release
+/usr/share/sunshine/identity/motd
+/usr/share/sunshine/identity/os-release
+/usr/share/sunshine/login.png
+/usr/share/sunshine/logo-anim/README.md
+/usr/share/sunshine/logo-anim/loop-lite.png
+/usr/share/sunshine/logo-anim/play.py
+/usr/share/sunshine/logo-anim/sprite-lite.json
+/usr/share/sunshine/logo-anim/sprite-lite.png
+/usr/share/sunshine/logo.png
+/usr/share/sunshine/logos/chatgpt-r1-1.png
+/usr/share/sunshine/logos/chatgpt-r1-2.png
+/usr/share/sunshine/logos/chatgpt-r1-3.png
+/usr/share/sunshine/logos/chatgpt-r1-4.png
+/usr/share/sunshine/logos/chatgpt-r1-5.png
+/usr/share/sunshine/logos/chatgpt-r1-6.png
+/usr/share/sunshine/logos/chatgpt-r2-1.png
+/usr/share/sunshine/logos/chatgpt-r2-2.png
+/usr/share/sunshine/logos/chatgpt-r2-3.png
+/usr/share/sunshine/logos/chatgpt-r2-4.png
+/usr/share/sunshine/logos/chatgpt-r2-5.png
+/usr/share/sunshine/logos/chatgpt-r2-6.png
+/usr/share/sunshine/logos/chatgpt-r3-1.png
+/usr/share/sunshine/logos/chatgpt-r3-2.png
+/usr/share/sunshine/logos/chatgpt-r3-3.png
+/usr/share/sunshine/logos/chatgpt-r3-4.png
+/usr/share/sunshine/logos/chatgpt-r3-5.png
+/usr/share/sunshine/logos/chatgpt-r3-6.png
+/usr/share/sunshine/logos/grok-r1-1.png
+/usr/share/sunshine/logos/grok-r1-2.png
+/usr/share/sunshine/logos/grok-r1-3.png
+/usr/share/sunshine/logos/grok-r1-4.png
+/usr/share/sunshine/logos/grok-r1-5.png
+/usr/share/sunshine/logos/grok-r1-6.png
+/usr/share/sunshine/logos/grub-icon.png
+/usr/share/sunshine/logos/main.png
+/usr/share/sunshine/logos/menu.png
+/usr/share/sunshine/logos/pet.png
+/usr/share/sunshine/logos/store-basic.png
+/usr/share/sunshine/logos/store-theme.png
+/usr/share/sunshine/logos/welcome.png
+/usr/share/sunshine/migrations/0001-topbar-without-window-widget.sh
+/usr/share/sunshine/migrations/0002-fewer-login-lockouts.sh
+/usr/share/sunshine/migrations/0003-no-obsolete-repositories.sh
+/usr/share/sunshine/migrations/0004-firewall-on.sh
+/usr/share/sunshine/migrations/0005-faster-boot.sh
+/usr/share/sunshine/netinstall.yaml
+/usr/share/sunshine/pkgs/sunshine-base-0.6-1-any.pkg.tar.zst
+/usr/share/sunshine/pkgs/sunshine-base-0.6-1-any.pkg.tar.zst.sig
+/usr/share/sunshine/wallpaper.png
+/usr/share/sunshine/wayland-sessions/plasma.desktop
+/usr/share/sunshine/xsessions/.keep
+[rc=0]
+
+### bash -c grep -RIn "sys.path.insert" /usr/local/bin/sunshine-welcome /usr/local/bin/sunshine-toolbox 2>/dev/null | head -10
+/usr/local/bin/sunshine-welcome:13:sys.path.insert(0, "/usr/local/lib/sunshine/")
+/usr/local/bin/sunshine-toolbox:13:sys.path.insert(0, "/usr/local/lib/sunshine/")
+[rc=0]
+
+### bash -c grep -RInE "^tr\(\)|function tr\(|tr\(\)" /usr/local/lib/sunshine/ui.sh 2>/dev/null | head -10
+[rc=0]
+
+### bash -c grep -RIn "Missing variables are" /etc/calamares /usr/share/calamares 2>/dev/null | head -10
+[rc=0]
+
+### bash -c grep -RIn -- "--info=progress2" /usr/local/bin/sunshine-install /etc/calamares 2>/dev/null | head -10
+/usr/local/bin/sunshine-install:217:rsync -aHAXx --info=progress2 --no-inc-recursive \
+[rc=0]
+--- tool smoke tests (no GUI) ---
+
+### TOOL sunshine-identity --help
+usage: sunshine-identity check [--fix] | apply   [--quiet]
+[rc=2]
+
+### TOOL sunshine-info --help
+[38;5;220m[1m☀ Sunshine OS[0m
+[38;5;220mSystem      [0m Sunshine OS (sunshineos, based on arch, rolling)
+[38;5;220mIdentity    [0m intact
+[38;5;220mKernel      [0m 7.3.4-arch1-2
+[38;5;220mBoot        [0m BIOS, overlay root
+[38;5;220mSession     [0m none (text console / ssh) 
+[38;5;220mShell       [0m fish
+[38;5;220mPackages    [0m 1206 installed, 1206 from AUR/other
+[38;5;220mSnapshots   [0m not available (needs btrfs)
+[38;5;220mLast update [0m 
+
+12System:
+  12Kernel 7.3.4-arch1-2 12arch x86_64 12bits 64 12compiler gcc 12v 16.2.1
+  12Console N/A 12Distro Sunshine OS
+12Machine:
+  12Type Virtualbox 12System innotek GmbH 12product VirtualBox 12v 1.2 12serial <superuser required>
+  12Mobo Oracle 12model VirtualBox 12v 1.2 12serial <superuser required> 12Firmware BIOS
+    12vendor innotek GmbH 12v VirtualBox 12date 12/01/2006
+12CPU:
+  12Info quad core 12model Intel Core i5-4590 12bits 64 12type MCP 12arch Haswell 12rev 3 12cache 12L1 256 KiB
+    12L2 1024 KiB 12L3 24 MiB
+  12Speed (MHz) 12avg 3292 12min/max N/A 12cores 121 3292 122 3292 123 3292 124 3292 12bogomips 26339
+  12Flags-basic avx avx2 ht lm nx pae sse sse2 sse3 sse4_1 sse4_2 ssse3
+12Graphics:
+  12Device-1 InnoTek Systemberatung GmbH VirtualBox Graphics Adapter 12vendor VMware 12driver vboxvideo
+    12v kernel 12bus-ID 00:02.0
+  12Display unspecified 12server X.org 12v 1.21.1.26 12with Xwayland 12v 24.1.15 12driver 12X
+    12loaded modesetting 12gpu vboxvideo 12tty 80x40 12resolution 1024x768
+  12API OpenGL 12Message GL data unavailable in console, glxinfo missing.
+  12Info 12Tools 12de kscreen-console,kscreen-doctor 12x11 xprop
+12Audio:
+  12Device-1 Intel 82801AA AC97 Audio 12driver snd_intel8x0 12v kernel 12bus-ID 00:05.0
+  12API ALSA 12v k7.3.4-arch1-2 12status kernel-api
+  12Server-1 sndiod 12v N/A 12status off
+  12Server-2 PipeWire 12v 1.6.11 12status active (process)
+12Network:
+  12Device-1 Intel 82540EM Gigabit Ethernet 12driver e1000 12v kernel 12port d020 12bus-ID 00:03.0
+  12IF enp0s3 12state up 12speed 1000 Mbps 12duplex full 12mac <filter>
+  12Device-2 Intel 82371AB/EB/MB PIIX4 ACPI 12type network bridge 12driver piix4_smbus 12v N/A 12port N/A
+    12bus-ID 00:07.0
+12Drives:
+  12Local Storage 12total 20 GiB 12used 0 KiB (0.0%)
+  12ID-1 /dev/sda 12vendor VirtualBox 12model VBOX HARDDISK 12size 20 GiB
+12Partition:
+  12ID-1 / 12size 4 GiB 12used 46.1 MiB (1.1%) 12fs overlay 12source ERR-102
+12Swap:
+  12ID-1 swap-1 12type zram 12size 2.4 GiB 12used 0 KiB (0.0%) 12dev /dev/zram0
+12Sensors:
+  12Src lm-sensors+/sys 12Message No sensor data found using /sys/class/hwmon or lm-sensors.
+12Info:
+  12Memory 12total 5 GiB 12available 4.79 GiB 12used 1.59 GiB (33.2%)
+  12Processes 291 12Uptime 1m 12Init systemd
+  12Packages 1206 12Compilers 12clang 23.1.5 12gcc 16.2.1 12Client Unknown Client: timeout 12inxi 3.3.41
+[rc=0]
+
+### TOOL sunshine-diagnose --help
+/home/sunshine/Sunshine-Diagnostics/diagnosis-2026-11-19_151351-help.log
+[rc=0]
+
+### TOOL sunshine-doctor --help
+# Sunshine OS health check: identity, package manager, boot files, disk, services, snapshots.
+#   sunshine-doctor          check and report
+#   sunshine-doctor --fix    also repair what is safe to repair (never removes packages or files of yours)
+#   sunshine-doctor --quiet  only print problems
+FIX=0; Q=0
+[rc=0]
+
+### TOOL sunshine-snapshot --help
+# Restore points in plain words. Works on every file system: btrfs uses Snapper, everything else uses Timeshift (rsync).
+#   sunshine-snapshot status            which backend, is it set up, how many restore points
+#   sunshine-snapshot list              show restore points
+#   sunshine-snapshot create ["text"]   make one now
+#   sunshine-snapshot delete ID         remove one (Snapper: number, Timeshift: name from the list)
+#   sunshine-snapshot changes A B       files changed between two points (btrfs only)
+#   sunshine-snapshot restore           open the graphical restore tool
+# On btrfs: to go back after something broke, pick "Sunshine OS snapshots" in the boot menu, boot it, then restore from Btrfs Assistant.
+# On other file systems: open "Restore points" (Timeshift) in the running system, or from the live USB: sunshine-snapshot restore.
+# Internal: pre-hook (pacman, before an update), timeline (daily timer).
+cmd=${1:-list}; shift || true
+[rc=2]
+
+### TOOL sunshine-fix-pacman --help
+
+[38;5;220m[1m☀ Lock file[0m
+[32m✔ ☕ no lock[0m
+
+[38;5;220m[1m☀ pacman.conf[0m
+[32m✔ ☕ pacman.conf has core and extra[0m
+
+[38;5;220m[1m☀ Keyring[0m
+[32m✔ ☕ keyring populated[0m
+
+[38;5;220m[1m☀ Mirrors[0m
+[rc=124]
+
+### TOOL sunshine-install --help
+
+cannot open tty-output
+[rc=130]
+
+### TOOL sunshine-restore-visuals --help
+
+[38;5;220m[1m☀ Pulling the latest themes and configs[0m
+[32m✔ ☕ pulled into /home/sunshine/.local/share/sunshine/visuals/20261119-151406 (replaced configs are in /home/sunshine/.local/share/sunshine/visuals/20261119-151406/backup)[0m
+
+[38;5;220m[1m☀ Applying[0m
+[rc=124]
+
+### TOOL sunshine-hyprland-install --help
+mkdir: unrecognized option '--help/var/log/sunshine'
+Try 'mkdir --help' for more information.
+tee: unrecognized option '--help/var/log/sunshine/hyprland-install.log'
+Try 'tee --help' for more information.
+[rc=0]
+
+### TOOL uni --help
+env: ‘/usr/local/bin/uni’: No such file or directory
+[rc=127]
+--- GUI tool startup syntax ---
+
+### PY COMPILE sunshine-welcome
+[Errno 13] Permission denied: '/usr/local/bin/__pycache__'[rc=1]
+
+### PY COMPILE sunshine-toolbox
+[Errno 13] Permission denied: '/usr/local/bin/__pycache__'[rc=1]
+
+### PY COMPILE sunshine-store
+[Errno 2] No such file or directory: '/usr/local/bin/sunshine-store'[rc=1]
+--- theme state ---
+
+### bash -c fastfetch --format json 2>/dev/null | grep -Ei "theme|icon|cursor|font|shell|wm|de" | head -30 || true
+      "userShell": "/usr/bin/fish",
+      "codename": "",
+    "type": "Shell",
+    "type": "DE",
+      "processName": "plasmashell",
+      "prettyName": "KDE Plasma",
+    "type": "WM",
+    "type": "Theme",
+      "theme1": "Sunshine (Dark) [Qt]",
+      "theme2": "Breeze-Dark [GTK2/3/4]"
+    "type": "Icons",
+      "icons1": "breeze-dark [Qt]",
+      "icons2": "Sunshine-orange-dark [GTK2/3/4]"
+      "numaNodes": 1,
+      "codeName": "Core i5 (Haswell)",
+        "index": null,
+          "dedicated": {
+        "driver": "vboxvideo",
+        "deviceId": 16,
+[rc=0]
+
+### bash -c ls -1 /usr/share/themes /usr/share/icons | head -80
+/usr/share/icons:
+Adwaita
+AdwaitaLegacy
+Breeze_Light
+Sunshine-orange
+Sunshine-orange-dark
+Sunshine-orange-light
+breeze
+breeze-dark
+breeze_cursors
+default
+hicolor
+locolor
+
+/usr/share/themes:
+Breeze
+Breeze-Dark
+Default
+Emacs
+[rc=0]
+
+### bash -c ls -1 /usr/share/Kvantum 2>/dev/null | head -40
+KvAdapta
+KvAdaptaDark
+KvAmbiance
+KvAmbience
+KvArc
+KvArcDark
+KvBeige
+KvBlender
+KvBrown
+KvCurves
+KvCurves3d
+KvCurves3d1
+KvCurvesLight
+KvCurvesLight1
+KvCyan
+KvDark
+KvDarkRed
+KvFlat
+KvFlatLight
+KvFlatRed
+KvGnome
+KvGnomeAlt
+KvGnomeDark
+KvGnomish
+KvGray
+KvMojave
+KvMojaveLight
+KvMojaveMixed
+KvMojaveMixed1
+KvOxygen
+KvRoughGlass
+KvSimplicity
+KvSimplicityDark
+KvSimplicityDarkLight
+KvSimplicityTurquoise
+KvYaru
+KvantumAlt
+Sunshine
+[rc=0]
+
+### bash -c for f in ~/.config/gtk-2.0/gtkrc ~/.config/gtk-3.0/settings.ini ~/.config/gtk-4.0/settings.ini ~/.config/Kvantum/kvantum.kvconfig; do echo "=== $f"; cat "$f" 2>&1; done
+=== /home/sunshine/.config/gtk-2.0/gtkrc
+cat: /home/sunshine/.config/gtk-2.0/gtkrc: No such file or directory
+=== /home/sunshine/.config/gtk-3.0/settings.ini
+[Settings]
+gtk-application-prefer-dark-theme=true
+gtk-button-images=true
+gtk-cursor-blink=true
+gtk-cursor-blink-time=1000
+gtk-cursor-theme-name=breeze_cursors
+gtk-cursor-theme-size=24
+gtk-decoration-layout=:minimize,maximize,close
+gtk-enable-animations=false
+gtk-font-name=Noto Sans,  10
+gtk-icon-theme-name=Sunshine-orange-dark
+gtk-menu-images=true
+gtk-modules=colorreload-gtk-module:appmenu-gtk-module
+gtk-primary-button-warps-slider=true
+gtk-shell-shows-menubar=1
+gtk-sound-theme-name=ocean
+gtk-theme-name=Breeze-Dark
+gtk-toolbar-style=3
+gtk-xft-dpi=98304
+=== /home/sunshine/.config/gtk-4.0/settings.ini
+[Settings]
+gtk-application-prefer-dark-theme=true
+gtk-cursor-blink=true
+gtk-cursor-blink-time=1000
+gtk-cursor-theme-name=breeze_cursors
+gtk-cursor-theme-size=24
+gtk-decoration-layout=:minimize,maximize,close
+gtk-enable-animations=false
+gtk-font-name=Noto Sans,  10
+gtk-icon-theme-name=Sunshine-orange-dark
+gtk-primary-button-warps-slider=true
+gtk-sound-theme-name=ocean
+gtk-theme-name=Breeze-Dark
+gtk-xft-dpi=98304
+=== /home/sunshine/.config/Kvantum/kvantum.kvconfig
+[General]
+theme=Sunshine
+[rc=0]
+
+### bash -c for f in /etc/skel/.config/gtk-3.0/settings.ini /etc/skel/.config/gtk-4.0/settings.ini /etc/skel/.config/Kvantum/kvantum.kvconfig; do echo "=== $f"; cat "$f" 2>&1; done
+=== /etc/skel/.config/gtk-3.0/settings.ini
+[Settings]
+gtk-application-prefer-dark-theme=true
+gtk-theme-name=Breeze-Dark
+gtk-icon-theme-name=Sunshine-orange-dark
+gtk-cursor-theme-name=breeze_cursors
+gtk-font-name=Noto Sans,  10
+gtk-decoration-layout=:minimize,maximize,close
+gtk-enable-animations=false
+=== /etc/skel/.config/gtk-4.0/settings.ini
+[Settings]
+gtk-application-prefer-dark-theme=true
+gtk-theme-name=Breeze-Dark
+gtk-icon-theme-name=Sunshine-orange-dark
+gtk-cursor-theme-name=breeze_cursors
+gtk-font-name=Noto Sans,  10
+gtk-decoration-layout=:minimize,maximize,close
+gtk-enable-animations=false
+=== /etc/skel/.config/Kvantum/kvantum.kvconfig
+[General]
+theme=Sunshine
+[rc=0]
+
+### bash -c grep -RIn "gtk-theme-name\|Kvantum" /usr/local/bin/sunshine-restore-visuals /usr/local/lib/sunshine 2>/dev/null | head -40
+/usr/local/bin/sunshine-restore-visuals:17:    [ -d "$HOME/.config/Kvantum/Sunshine" ] || { mkdir -p "$HOME/.config/Kvantum"; cp -a "$NEW/src/share/Kvantum/." "$HOME/.config/Kvantum/" 2>/dev/null; }
+/usr/local/bin/sunshine-restore-visuals:23:# GTK and Kvantum settings: the defaults every new user gets (/etc/skel) are used when the files are missing, so offline restore still covers GTK apps
+/usr/local/bin/sunshine-restore-visuals:24:for f in gtk-3.0/settings.ini gtk-4.0/settings.ini gtk-3.0/gtk.css gtk-4.0/gtk.css Kvantum/kvantum.kvconfig; do
+/usr/local/bin/sunshine-restore-visuals:38:{ have_dir Kvantum/Sunshine || [ -d "$HOME/.config/Kvantum/Sunshine" ]; } || missing+=("Kvantum style")
+/usr/local/bin/sunshine-restore-visuals:40:grep -q '^gtk-theme-name' "$HOME/.config/gtk-3.0/settings.ini" 2>/dev/null || missing+=("GTK settings")
+[rc=0]
+--- desktop processes / display ---
+
+### bash -c ps aux | grep -Ei "Xorg|Xwayland|kwin|plasmashell|sddm|vboxservice|gnome|calamares" | grep -v grep | head -40
+root         765  0.9  0.1 291808  6296 ?        Ssl  15:12   0:00 /usr/bin/VBoxService -f
+root         858  0.0  0.4 159928 23424 ?        Ssl  15:12   0:00 /usr/bin/sddm
+root         862  0.5  2.0 815616 104504 tty2    Ssl+ 15:12   0:00 /usr/lib/Xorg -nolisten tcp -background none -seat seat0 vt2 -auth /run/sddm/xauth_BTahaI -noreset -displayfd 16
+root         877  0.0  0.5  89828 25156 ?        S    15:12   0:00 /usr/lib/sddm/sddm-helper --socket /tmp/sddm-auth-64c770c0-f5f0-415e-a0db-d42cbf65e167 --id 1 --start /usr/lib/plasma-dbus-run-session-if-needed /usr/bin/startplasma-wayland --user sunshine --autologin
+sunshine     905  0.0  0.1 179548  9388 ?        Ssl  15:12   0:00 /usr/bin/gnome-keyring-daemon --foreground --components=pkcs11,secrets --control-directory=/run/user/1000/keyring
+sunshine     957  0.0  0.3 158872 19748 ?        Ssl  15:12   0:00 /usr/bin/kwin_wayland_wrapper --xwayland
+sunshine     960 12.6  8.5 1686244 428084 ?      Sl   15:12   0:10 /usr/bin/kwin_wayland --wayland-fd 7 --socket wayland-1 --xwayland-fd 8 --xwayland-fd 9 --xwayland-display :1 --xwayland-initfd 11 --xwayland-init-display :2 --xwayland-xauthority /run/user/1000/xauth_IRNGkn --xwayland
+sunshine     967  8.4 13.6 2090016 684860 ?      Ssl  15:12   0:07 /usr/bin/plasmashell --no-respawn
+sunshine    1106  0.0  0.7 289604 37140 ?        S    15:12   0:00 /usr/bin/Xwayland :1 -auth /run/user/1000/xauth_IRNGkn -listenfd 8 -listenfd 9 -displayfd 86 -wm 88 -initfd 11 -rootless
+sunshine    1263  0.0  0.1 168024  7580 ?        Ssl  15:12   0:00 /usr/lib/at-spi2-registryd --use-gnome-session
+sunshine    1639  0.0  0.5 250708 28252 ?        Sl   15:13   0:00 /usr/lib/kf6/kioworker /usr/lib/qt6/plugins/kf6/kio/desktop.so desktop  local:/run/user/1000/plasmashellgdRpcf.1.kioworker.socket
+sunshine    1779 16.0  0.0 144688  3096 ?        Rl   15:13   0:05 /usr/bin/VBoxService --utf8-argv guestsession --session-id=1 --session-proto=2 --user sunshine
+[rc=0]
+
+### bash -c DISPLAY=:0 xrandr 2>&1 | head -20 || true
+bash: line 1: xrandr: command not found
+[rc=0]
+
+### bash -c DISPLAY=:1 xrandr 2>&1 | head -20 || true
+bash: line 1: xrandr: command not found
+[rc=0]
+--- journal / calamares ---
+
+### bash -c journalctl -p err -b --no-pager -n 80 2>&1 || true
+Nov 19 15:12:57 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:57 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:57 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:57 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:57 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:57 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:57 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:57 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:57 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:12:58 sunshineos kwin_wayland[960]: Modeset failed: Invalid argument
+Nov 19 15:13:00 sunshineos librepods[1463]:  BLE scan error occurred: QBluetoothDeviceDiscoveryAgent::InputOutputError 
+Nov 19 15:13:18 sunshineos VBoxService[765]: pam_loginuid(login:session): Error writing /proc/self/loginuid: Operation not permitted
+Nov 19 15:13:18 sunshineos VBoxService[765]: pam_loginuid(login:session): set_loginuid failed
+Nov 19 15:13:42 sunshineos VBoxService[765]: pam_loginuid(login:session): Error writing /proc/self/loginuid: Operation not permitted
+Nov 19 15:13:42 sunshineos VBoxService[765]: pam_loginuid(login:session): set_loginuid failed
+Nov 19 15:13:42 sunshineos VBoxService[765]: pam_loginuid(login:session): Error writing /proc/self/loginuid: Operation not permitted
+Nov 19 15:13:42 sunshineos VBoxService[765]: pam_loginuid(login:session): set_loginuid failed
+Nov 19 15:13:42 sunshineos VBoxService[765]: pam_loginuid(login:session): Error writing /proc/self/loginuid: Operation not permitted
+Nov 19 15:13:42 sunshineos VBoxService[765]: pam_loginuid(login:session): set_loginuid failed
+Nov 19 15:14:18 sunshineos plasma-apply-colorscheme[2372]: This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+                                                           
+                                                           Available platform plugins are: eglfs, linuxfb, minimal, minimalegl, offscreen, vkkhrdisplay, vnc, wayland-brcm, wayland-egl, wayland, xcb.
+Nov 19 15:14:18 sunshineos (coredump-worker)[2373]: Process 2372 (plasma-apply-co) of user 1000 dumped core.
+                                                    
+                                                    Stack trace of thread 2372:
+                                                    #0  0x00007fb553d9011c n/a (libc.so.6 + 0x9a11c)
+                                                    #1  0x00007fb553d345d0 raise (libc.so.6 + 0x3e5d0)
+                                                    #2  0x00007fb553d1b685 abort (libc.so.6 + 0x25685)
+                                                    #3  0x00007fb5543bebfe n/a (libQt6Core.so.6 + 0x99bfe)
+                                                    #4  0x00007fb5543bf369 _ZNK14QMessageLogger5fatalEPKcz (libQt6Core.so.6 + 0x9a369)
+                                                    #5  0x00007fb554dec28b _ZN22QGuiApplicationPrivate25createPlatformIntegrationEv (libQt6Gui.so.6 + 0x1b228b)
+                                                    #6  0x00007fb554ded8c8 _ZN22QGuiApplicationPrivate21createEventDispatcherEv (libQt6Gui.so.6 + 0x1b38c8)
+                                                    #7  0x00007fb5544b3ed5 _ZN23QCoreApplicationPrivate4initEv (libQt6Core.so.6 + 0x18eed5)
+                                                    #8  0x00007fb554ded9cb _ZN22QGuiApplicationPrivate4initEv (libQt6Gui.so.6 + 0x1b39cb)
+                                                    #9  0x00007fb554de32ae _ZN15QGuiApplicationC2ERiPPci (libQt6Gui.so.6 + 0x1a92ae)
+                                                    #10 0x000056085276532b n/a (plasma-apply-colorscheme + 0x832b)
+                                                    #11 0x00007fb553d1d781 n/a (libc.so.6 + 0x27781)
+                                                    #12 0x00007fb553d1d8b9 __libc_start_main (libc.so.6 + 0x278b9)
+                                                    #13 0x0000560852767165 n/a (plasma-apply-colorscheme + 0xa165)
+                                                    ELF object binary architecture: AMD x86-64
+[rc=0]
+
+### bash -c tail -80 ~/.cache/calamares/session.log 2>&1 || true
+tail: cannot open '/home/sunshine/.cache/calamares/session.log' for reading: No such file or directory
+[rc=0]
+
+### bash -c tail -80 /var/log/sunshine-install.log 2>&1 || true
+
+cannot open tty-output
+[rc=0]
+=== LIVE TEST END 2026-11-19T15:14:19+00:00 ===

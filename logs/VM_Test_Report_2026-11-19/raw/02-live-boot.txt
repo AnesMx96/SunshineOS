@@ -1,0 +1,11 @@
+uid=1000(sunshine) gid=1000(sunshine) groups=1000(sunshine),3(sys),4(adm),10(wheel),19(log),90(network),94(floppy),96(scanner),98(power),850(rfkill),969(autologin),971(audio),972(lp),973(optical),974(storage),975(video),985(users)
+Linux sunshineos 7.3.4-arch1-2 #1 SMP PREEMPT_DYNAMIC Thu, 12 Nov 2026 20:11:37 +0000 x86_64 GNU/Linux
+NAME="Sunshine OS"
+PRETTY_NAME="Sunshine OS"
+ID=sunshineos
+ID_LIKE=arch
+BUILD_ID=rolling
+ANSI_COLOR="38;2;255;196;61"
+HOME_URL="https://tak0dan.github.io/sunshineos-site/"
+DOCUMENTATION_URL="https://wiki.archlinux.org/"
+DISPLAY= WAYLAND_DISPLAY=

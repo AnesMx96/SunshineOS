@@ -12,6 +12,13 @@
 | `.iso.part2` | 1,522,565,120 B | `aef64ac6478129ce660d9f931ad2179f758ba9bd244f1bf650787a8333451593` |
 | `.iso.sha256` | 111 B | `e603570a56e082f8007b10c8d12dd4e4d5ff8cbb9f9a9f1107976c2c1900a4f7` |
 
+The two-part download finished at 16:11 on 2026-11-19 and the joined ISO verified OK:
+
+```text
+9cb5bc4c9353bac04f3ed867600752e9dd21e2c83d5bb75a91ad4b87be44a7a5  SunshineOS_13.4.7.1.5_Release_2026-11-19.iso
+SunshineOS_13.4.7.1.5_Release_2026-11-19.iso: OK
+```
+
 Join/check commands:
 
 ```bash
