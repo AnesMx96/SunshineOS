@@ -122,3 +122,61 @@ Show this window at startup	Показувати це вікно під час �
 Close	Закрити
 You are running the live session. Nothing is changed on your computer until you install.	Ви працюєте в живому сеансі. Нічого на вашому комп'ютері не змінюється, доки ви не встановите систему.
 Everything is up to date ☀	Усе актуально ☀
+Sunshine tools	Інструменти Sunshine
+Package keyring is current	Ключі пакунків актуальні
+Final health check	Остаточна перевірка стану
+Less than 1.5 GB is free on the system disk: the update could fail halfway. Free some space first (sunshine-cleanup).	На системному диску вільно менше 1,5 ГБ: оновлення може обірватися. Спершу звільніть місце (sunshine-cleanup).
+installed tools version	встановлена версія інструментів
+repository offers	у сховищі доступно
+tools are up to date	інструменти актуальні
+tools updated	інструменти оновлено
+files changed	файлів змінено
+refused	відхилено
+the manifest signature is not valid: refusing this release	підпис маніфесту недійсний: цей випуск відхилено
+tools repository not reachable: keeping the installed tools	сховище інструментів недоступне: лишаю встановлені
+previous tools put back	попередні інструменти повернено
+No installed Linux system was found.	Встановленої системи Linux не знайдено.
+No installed Linux system was found. If the disk is encrypted, run this in a terminal or set SUNSHINE_LUKS_PASS.	Встановленої системи Linux не знайдено. Якщо диск зашифровано, запустіть у терміналі або задайте SUNSHINE_LUKS_PASS.
+Repair everything (recommended)	Виправити все (рекомендовано)
+Reinstall the boot loader	Перевстановити завантажувач
+Rebuild the initramfs	Перебудувати initramfs
+Reset a user password	Скинути пароль користувача
+Check the file system	Перевірити файлову систему
+Open a shell inside the installed system	Відкрити термінал усередині встановленої системи
+Quit	Вийти
+User name: 	Ім’я користувача: 
+Which one? number: 	Яку саме? номер: 
+mounted at	змонтовано в
+Package database	База даних пакунків
+Kernel and initramfs	Ядро та initramfs
+Boot loader	Завантажувач
+Sunshine doctor	Лікар Sunshine
+package database is consistent	база пакунків узгоджена
+the package database is damaged	базу пакунків пошкоджено
+keyring recreated	ключі створено заново
+initramfs rebuilt for every kernel	initramfs перебудовано для кожного ядра
+boot menu rebuilt	меню завантаження перебудовано
+every fstab entry points to an existing partition	кожен запис fstab вказує на наявний розділ
+file system is clean or was repaired	файлову систему перевірено або виправлено
+Repair finished. Restart and remove the live medium.	Відновлення завершено. Перезавантажте комп’ютер і вийміть живий носій.
+You are inside the installed system. Type exit to leave.	Ви всередині встановленої системи. Введіть exit, щоб вийти.
+Installed kernels	Встановлені ядра
+running now	працює зараз
+Default boot entry	Запис завантаження за замовчуванням
+Kernels in the enabled repositories	Ядра в увімкнених сховищах
+that is the last kernel; the system would not boot	це останнє ядро; система не завантажилась би
+this is the running kernel: boot another one first	це працююче ядро: спершу завантажтеся з іншого
+Hardware	Обладнання
+Would install	Буде встановлено
+Everything this computer needs is already installed.	Усе потрібне для цього комп’ютера вже встановлено.
+Drivers installed.	Драйвери встановлено.
+Restart to use the NVIDIA driver.	Перезавантажте, щоб використовувати драйвер NVIDIA.
+Graphics	Графіка
+Gaming software	Ігрове програмне забезпечення
+Tuning for games	Налаштування для ігор
+Desktops and window managers	Робочі середовища та віконні менеджери
+is already installed	уже встановлено
+installed: pick it at the login screen (the session menu)	встановлено: оберіть його на екрані входу (меню сеансу)
+performance numbers	показники продуктивності
+profile is on	профіль увімкнено
+profile removed (zram swap and the installed packages stay)	профіль вимкнено (zram-своп і встановлені пакунки залишаються)
