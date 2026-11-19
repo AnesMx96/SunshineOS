@@ -45,6 +45,13 @@ if [ -n "${dbs_bad:-}" ]; then warn "package databases missing or damaged:$dbs_b
 if [ -r /var/log/pacman.log ] && awk '/synchronizing package lists/{sync=1} /starting full system upgrade/{sync=0} /\[ALPM\] upgraded /{ if (sync) bad=1 } END{exit !bad}' /var/log/pacman.log; then
   warn "packages were installed after a database refresh without a full upgrade (partial upgrade): sunshine-update fixes it"; [ $FIX = 1 ] && echo "    $(loc "not repaired automatically (a full upgrade is big): run sunshine-update now")"
 else ok "no partial upgrade detected"; fi
+if [ $RESCUE = 0 ] && command -v zstd >/dev/null; then
+  badpk=; for f in $(ls -t /var/cache/pacman/pkg/*.pkg.tar.zst 2>/dev/null | head -40); do zstd -tq "$f" >/dev/null 2>&1 || badpk="$badpk $(basename "$f")"; done
+  if [ -z "$badpk" ]; then ok "recent cached packages are intact"
+  else warn "damaged package file(s) in the cache:$badpk (an update would fail on them)"
+    if [ $FIX = 1 ]; then for f in $badpk; do rm -f "/var/cache/pacman/pkg/$f" "/var/cache/pacman/pkg/$f.sig"; done; fx "damaged cached packages removed (they download again)"; fi
+  fi
+fi
 # the packages without which the system cannot boot or log in (a broken removal, a bad cleanup): --fix puts them back from the repositories
 core_missing=
 for p in base linux-firmware mkinitcpio grub sudo networkmanager sddm plasma-desktop pipewire pacman sunshine-base; do pacman -Qq "$p" >/dev/null 2>&1 || core_missing="$core_missing $p"; done
@@ -207,7 +214,7 @@ if [ $LIVE = 0 ]; then
       fi
     fi
   fi
-[ $RESCUE = 1 ] || { [ "$(timedatectl show -p NTPSynchronized --value 2>/dev/null)" = yes ] || { [ $FIX = 1 ] && timedatectl set-ntp true >/dev/null 2>&1 && systemctl restart systemd-timesyncd >/dev/null 2>&1 && fx "time synchronisation switched on"; } ; }
+[ $RESCUE = 1 ] || { [ "$(timedatectl show -p NTPSynchronized --value 2>/dev/null)" = yes ] || { [ $FIX = 1 ] && timedatectl set-ntp true >/dev/null 2>&1 && systemctl restart systemd-timesyncd >/dev/null 2>&1 && { for _ in 1 2 3 4 5 6 7 8 9 10; do [ "$(timedatectl show -p NTPSynchronized --value 2>/dev/null)" = yes ] && break; sleep 2; done; fx "time synchronisation switched on"; }; } ; }
   ru=$(df --output=pcent / | tail -1 | tr -dc 0-9); if [ "${ru:-0}" -ge 95 ] && [ $FIX = 1 ] && [ -x /usr/local/bin/sunshine-fix ]; then /usr/local/bin/sunshine-fix storage >/dev/null 2>&1; [ "$(df --output=pcent / | tail -1 | tr -dc 0-9)" -lt "$ru" ] && fx "space freed (old package files, logs, thumbnails)"; fi
 fi
 
