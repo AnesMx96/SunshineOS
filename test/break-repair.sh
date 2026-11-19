@@ -47,15 +47,32 @@ bad_count() { printf '%s\n' "$1" | grep -c '✘'; }
 export -f vm vmr vm_su 2>/dev/null; export SSH_PORT SSH_USER SSH_PASS
 vbox() { VBoxManage "$@" >>"$LOG" 2>&1; }
 vm_state() { VBoxManage showvminfo "$NAME" --machinereadable 2>/dev/null | sed -n 's/^VMState="\(.*\)"/\1/p'; }
-power_off() { [ "$(vm_state)" = running ] && vbox controlvm "$NAME" poweroff; local i; for i in 1 2 3 4 5 6 7 8 9 10; do [ "$(vm_state)" = running ] || return 0; sleep 2; done; }
-power_on() { vbox startvm "$NAME" --type gui; }
+power_off() {   # wait until the VM really is powered off (the session lock is released a moment later)
+  local i st; st=$(vm_state)
+  [ "$st" = poweroff ] || [ "$st" = aborted ] || vbox controlvm "$NAME" poweroff
+  for ((i=0; i<40; i++)); do st=$(vm_state); { [ "$st" = poweroff ] || [ "$st" = aborted ]; } && { sleep 3; return 0; }; sleep 2; done
+  return 1
+}
+desktop_env() {   # a VM window needs the desktop session's variables (a shell started over ssh has none)
+  [ -n "${WAYLAND_DISPLAY:-}${DISPLAY:-}" ] && return 0
+  local pid; pid=$(pgrep -u "$(id -u)" -x Hyprland | head -1); [ -n "$pid" ] || pid=$(pgrep -u "$(id -u)" -x plasmashell | head -1)
+  [ -n "$pid" ] || return 1
+  # shellcheck disable=SC2163
+  while IFS= read -r kv; do export "$kv"; done < <(tr '\0' '\n' < "/proc/$pid/environ" | grep -E '^(WAYLAND_DISPLAY|DISPLAY|XDG_RUNTIME_DIR|XDG_SESSION_TYPE|DBUS_SESSION_BUS_ADDRESS|HYPRLAND_INSTANCE_SIGNATURE)=')
+}
+power_on() { desktop_env; local i; for ((i=0; i<10; i++)); do vbox startvm "$NAME" --type gui && return 0; sleep 4; done; return 1; }
 
 for t in sshpass VBoxManage; do command -v "$t" >/dev/null || { echo "missing: $t"; exit 2; }; done
 VBoxManage showvminfo "$NAME" >/dev/null 2>&1 || { echo "no such VM: $NAME"; exit 2; }
 vm_up || { echo "cannot reach $NAME over ssh on port $SSH_PORT (is it running and installed?)"; exit 2; }
 
 # ---- snapshots --------------------------------------------------------------------------------------------------------------------
-snap_take() { [ "${NO_SNAPSHOT:-0}" = 1 ] && return 0; VBoxManage snapshot "$NAME" list 2>/dev/null | grep -q "$SNAP" || vbox snapshot "$NAME" take "$SNAP" --live; }
+snap_take() {   # powered off: small snapshot, and every restore is a clean cold boot
+  [ "${NO_SNAPSHOT:-0}" = 1 ] && return 0
+  VBoxManage snapshot "$NAME" list 2>/dev/null | grep -q "$SNAP" && return 0
+  power_off; vbox snapshot "$NAME" take "$SNAP" || return 1
+  power_on; wait_vm || { say "!! the VM did not boot after taking the snapshot"; return 1; }
+}
 snap_restore() {
   [ "${NO_SNAPSHOT:-0}" = 1 ] && return 0
   power_off; vbox snapshot "$NAME" restore "$SNAP"; power_on; wait_vm || { say "!! the VM did not come back after the rollback"; return 1; }
@@ -63,13 +80,20 @@ snap_restore() {
 snap_drop() { [ "${NO_SNAPSHOT:-0}" = 1 ] && return 0; vbox snapshot "$NAME" delete "$SNAP"; }
 
 # ---- the live ISO repair path -----------------------------------------------------------------------------------------------------
+LIVE_ISO=${LIVE_ISO:-$HOME/sunshineos-build/src/out/fast/sunshineos-2026.11.19-x86_64.iso}
+push_tools() { ( cd "${TOOLS_TREE:-$HOME/sunshineos-build/src}" && SSH_PORT=$SSH_PORT test/dev-vm.sh push "$NAME" ); }   # the newest tools into the live session (the ISO predates them)
 live_repair() {   # reboot into the live ISO, run the rescue tool on the installed disk, reboot into the installed system
-  power_off; vbox modifyvm "$NAME" --boot1 dvd --boot2 disk; power_on
-  wait_vm || { say "!! live ISO did not come up"; vbox modifyvm "$NAME" --boot1 disk --boot2 dvd; return 1; }
-  vm 'test -d /run/archiso' || say "!! this is not the live session (is the ISO attached and first in the boot order?)"
+  [ -f "$LIVE_ISO" ] || { say "!! live ISO not found: $LIVE_ISO"; return 1; }
+  power_off
+  rm -f "$HOME/VirtualBox VMs/$NAME/$NAME.nvram"            # otherwise the firmware keeps booting the installed disk first
+  vbox storageattach "$NAME" --storagectl SATA --port 0 --device 0 --type dvddrive --medium "$LIVE_ISO"
+  power_on
+  if ! wait_vm; then say "!! live ISO did not come up"; vbox storageattach "$NAME" --storagectl SATA --port 0 --device 0 --type dvddrive --medium emptydrive; return 1; fi
+  vm 'test -d /run/archiso' || say "!! this is not the live session"
+  push_tools >>"$LOG" 2>&1 || say "!! could not push the newest tools into the live session"
   local out; out=$(vmr "${LIVE_CMD:-sunshine-rescue repair} 2>&1" 2>&1 | sed "$ANSI")
   log "---- live repair output"; log "$out"
-  power_off; vbox modifyvm "$NAME" --boot1 disk --boot2 dvd; power_on
+  power_off; vbox storageattach "$NAME" --storagectl SATA --port 0 --device 0 --type dvddrive --medium emptydrive; power_on
   wait_vm || { say "!! the installed system did not boot after the repair"; return 1; }
   return 0
 }
