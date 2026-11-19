@@ -303,7 +303,7 @@ mkinitcpio -k "$KVER" -g /boot/initramfs-linux.img
 systemctl enable NetworkManager.service sddm.service bluetooth.service cups.socket power-profiles-daemon.service systemd-timesyncd.service systemd-resolved.service fstrim.timer >/dev/null 2>&1
 systemctl set-default graphical.target
 # the login screen starts on Plasma (the main desktop; Hyprland stays one click away in the session menu)
-mkdir -p /var/lib/sddm; printf '[Last]\nSession=/usr/share/wayland-sessions/plasma.desktop\nUser=%s\n' "$USERNAME" > /var/lib/sddm/state.conf; chown -R sddm:sddm /var/lib/sddm 2>/dev/null || true
+mkdir -p /var/lib/sddm; printf '[Last]\nSession=/usr/share/sunshine/wayland-sessions/plasma.desktop\nUser=%s\n' "$USERNAME" > /var/lib/sddm/state.conf; chown -R sddm:sddm /var/lib/sddm 2>/dev/null || true
 # the live image runs systemd-networkd next to NetworkManager; on the installed system that only blocks the boot (its wait-online unit times out after 2 minutes)
 systemctl disable systemd-networkd.service systemd-networkd.socket systemd-networkd-wait-online.service NetworkManager-wait-online.service >/dev/null 2>&1
 systemctl mask systemd-networkd-wait-online.service >/dev/null 2>&1
