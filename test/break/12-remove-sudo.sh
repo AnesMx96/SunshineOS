@@ -3,5 +3,5 @@
 TITLE="sudo removed (pacman -Rdd sudo): no root access for the user"
 LIVE=1
 break() { vmr 'pacman -Rdd --noconfirm sudo >/dev/null 2>&1; true'; }
-expect_detect() { echo 'sudo'; }
+expect_detect() { echo 'required packages missing.*sudo|sudo is not installed'; }
 verify() { vm 'command -v sudo >/dev/null && test -f /etc/sudoers'; }

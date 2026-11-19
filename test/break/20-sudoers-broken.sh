@@ -3,5 +3,5 @@
 TITLE="broken file in /etc/sudoers.d (sudo refuses to run for everyone)"
 LIVE=1
 break() { vmr 'printf "this is not valid sudoers syntax\n" > /etc/sudoers.d/99-broken; chmod 440 /etc/sudoers.d/99-broken; true'; }
-expect_detect() { echo 'sudoers'; }
+expect_detect() { echo 'sudo configuration has a syntax error'; }
 verify() { vmr 'visudo -c >/dev/null 2>&1'; }
