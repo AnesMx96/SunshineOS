@@ -55,7 +55,12 @@ VBoxManage showvminfo "$NAME" >/dev/null 2>&1 || { echo "no such VM: $NAME"; exi
 vm_up || { echo "cannot reach $NAME over ssh on port $SSH_PORT (is it running and installed?)"; exit 2; }
 
 # ---- snapshots --------------------------------------------------------------------------------------------------------------------
-snap_take() { [ "${NO_SNAPSHOT:-0}" = 1 ] && return 0; VBoxManage snapshot "$NAME" list 2>/dev/null | grep -q "$SNAP" || vbox snapshot "$NAME" take "$SNAP" --live; }
+snap_take() {   # powered off: small snapshot, and every restore is a clean cold boot
+  [ "${NO_SNAPSHOT:-0}" = 1 ] && return 0
+  VBoxManage snapshot "$NAME" list 2>/dev/null | grep -q "$SNAP" && return 0
+  power_off; vbox snapshot "$NAME" take "$SNAP" || return 1
+  power_on; wait_vm || { say "!! the VM did not boot after taking the snapshot"; return 1; }
+}
 snap_restore() {
   [ "${NO_SNAPSHOT:-0}" = 1 ] && return 0
   power_off; vbox snapshot "$NAME" restore "$SNAP"; power_on; wait_vm || { say "!! the VM did not come back after the rollback"; return 1; }
@@ -63,13 +68,20 @@ snap_restore() {
 snap_drop() { [ "${NO_SNAPSHOT:-0}" = 1 ] && return 0; vbox snapshot "$NAME" delete "$SNAP"; }
 
 # ---- the live ISO repair path -----------------------------------------------------------------------------------------------------
+LIVE_ISO=${LIVE_ISO:-$HOME/sunshineos-build/src/out/fast/sunshineos-2026.11.19-x86_64.iso}
+push_tools() { ( cd "${TOOLS_TREE:-$HOME/sunshineos-build/src}" && SSH_PORT=$SSH_PORT test/dev-vm.sh push "$NAME" ); }   # the newest tools into the live session (the ISO predates them)
 live_repair() {   # reboot into the live ISO, run the rescue tool on the installed disk, reboot into the installed system
-  power_off; vbox modifyvm "$NAME" --boot1 dvd --boot2 disk; power_on
-  wait_vm || { say "!! live ISO did not come up"; vbox modifyvm "$NAME" --boot1 disk --boot2 dvd; return 1; }
-  vm 'test -d /run/archiso' || say "!! this is not the live session (is the ISO attached and first in the boot order?)"
+  [ -f "$LIVE_ISO" ] || { say "!! live ISO not found: $LIVE_ISO"; return 1; }
+  power_off
+  rm -f "$HOME/VirtualBox VMs/$NAME/$NAME.nvram"            # otherwise the firmware keeps booting the installed disk first
+  vbox storageattach "$NAME" --storagectl SATA --port 0 --device 0 --type dvddrive --medium "$LIVE_ISO"
+  power_on
+  if ! wait_vm; then say "!! live ISO did not come up"; vbox storageattach "$NAME" --storagectl SATA --port 0 --device 0 --type dvddrive --medium emptydrive; return 1; fi
+  vm 'test -d /run/archiso' || say "!! this is not the live session"
+  push_tools >>"$LOG" 2>&1 || say "!! could not push the newest tools into the live session"
   local out; out=$(vmr "${LIVE_CMD:-sunshine-rescue repair} 2>&1" 2>&1 | sed "$ANSI")
   log "---- live repair output"; log "$out"
-  power_off; vbox modifyvm "$NAME" --boot1 disk --boot2 dvd; power_on
+  power_off; vbox storageattach "$NAME" --storagectl SATA --port 0 --device 0 --type dvddrive --medium emptydrive; power_on
   wait_vm || { say "!! the installed system did not boot after the repair"; return 1; }
   return 0
 }
