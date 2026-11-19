@@ -60,7 +60,7 @@ for p,v in sorted(m["files"].items()): print("%s\t%s\t%s" % (p, v["sha256"], v.g
     echo "$new" > "$VERFILE"; cp "$T/manifest.json" "$STATE/tools-manifest.json"
     [ -d "$BK" ] && ln -sfn "$BK" "$STATE/tools-backup/latest"
     ok "$(loc "tools updated"): $cur -> $new ($n $(loc "files changed"), $skipped $(loc "refused"))"
-    # a new plasmoid or look-and-feel needs the shell to notice: nothing to do now, it loads at the next login
+    [ -x /usr/local/bin/sunshine-migrate ] && /usr/local/bin/sunshine-migrate run
     ;;
   rollback)
     BK=$(readlink -f "$STATE/tools-backup/latest" 2>/dev/null); [ -d "$BK" ] || die "$(loc "nothing to roll back")"

@@ -15,7 +15,7 @@ S=$(mktemp -d); trap 'rm -rf "$S"' EXIT; mkdir -p "$S/files"
 for root in profile/airootfs overlay/system; do
   for sub in usr/local/bin usr/local/lib/sunshine usr/share/sunshine/i18n usr/share/libalpm/hooks usr/share/applications; do
     [ -d "$root/$sub" ] || continue
-    (cd "$root" && find "$sub" -type f \( -path 'usr/local/bin/sunshine-*' -o -path 'usr/local/lib/sunshine/*' -o -path 'usr/share/sunshine/i18n/*' -o -path 'usr/share/libalpm/hooks/*sunshine-*' -o -path 'usr/share/applications/sunshine-*.desktop' \) ! -name '*.pyc' ! -path '*__pycache__*') | while read -r f; do
+    (cd "$root" && find "$sub" -type f \( -path 'usr/local/bin/sunshine-*' -o -path 'usr/local/lib/sunshine/*' -o -path 'usr/share/sunshine/i18n/*' -o -path 'usr/share/sunshine/migrations/*' -o -path 'usr/share/libalpm/hooks/*sunshine-*' -o -path 'usr/share/applications/sunshine-*.desktop' \) ! -name '*.pyc' ! -path '*__pycache__*') | while read -r f; do
       mkdir -p "$S/files/$(dirname "$f")"; cp -p "$root/$f" "$S/files/$f"
     done
   done
