@@ -8,3 +8,4 @@ Append-only. Real clock times (date), evidence paths.
 - 02:25 AI-comparison task (ChatGPT/Gemini/Grok via the owner's browser): my session's permission check denied sending a message on the owner's behalf; I did not work around it; tak-2f runs it itself with the owner's go-ahead. Gemini was not logged in. Desktop restored.
 - 02:40 breakage catalogue (45 ways an Arch desktop breaks, detect/repair/risk): docs/team/breakage-catalogue.md
 - 02:55 test/break-repair.sh + 27 scenarios in test/break/ written, `bash -n` and shellcheck clean; not yet run (no VM until tak-2f says Sol-inst is clean).
+- 03:20 research notes: docs/team/research/tak-7a-NOTES.md (also ~/sunshineos-build/research/NOTES-tak-7a.md): per-scenario comparison with Garuda (garuda-health, hooks-runner, pacdiff-merge, main-update, boot-repair), EndeavourOS (eos-update), CachyOS (bugreport, sbctl-batch-sign); 14 things to adopt in priority order; 7 more scenarios proposed.
