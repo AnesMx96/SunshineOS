@@ -19,6 +19,7 @@ Every command below exists in Sunshine OS and was run in a virtual machine. Star
 
 ## Good to know
 - `sudo sunshine-doctor --fix` takes a restore point first (btrfs), repairs only what is safe and never removes your files.
+- Ukrainian: [FIRST-AID.uk.md](FIRST-AID.uk.md)
 - Tools update themselves: `sunshine-update` first pulls the newest signed tools. `sudo sunshine-toolsync status` shows the version, `rollback` undoes the last tool update.
 - The firewall is on (incoming connections denied, KDE Connect and discovery allowed). Open a port with `sudo ufw allow PORT`; turn it off for good with `sudo touch /etc/sunshine/no-firewall`.
 - A repair that cannot be done safely stops and says so; it never guesses a partition or overwrites `fstab` blindly.

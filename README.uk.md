@@ -35,6 +35,7 @@
 <a href="#що-всередині">Що всередині</a> ·
 <a href="#як-працює-інсталятор">Інсталятор</a> ·
 <a href="#інструменти-sunshine">Інструменти</a> ·
+<a href="#що-робити-якщо-щось-зламалося">Якщо зламалося</a> ·
 <a href="#зберіть-самі">Збірка</a> ·
 <a href="#публікація">Публікація</a> ·
 <a href="#структура-репозиторію">Структура</a> ·
@@ -157,6 +158,13 @@ flowchart LR
 | Команда | Призначення |
 | --- | --- |
 | `sunshine-doctor` | Перевірка ідентичності, менеджера пакетів, середовища, файлів завантаження, служб і точок відновлення. `--fix` виправляє те, що безпечно виправляти, і ніколи не видаляє ваших пакетів чи файлів; `--quiet` показує лише проблеми |
+| `sunshine-rescue` | З живого сеансу: знаходить встановлену систему (LUKS, btrfs `@`, ext4, XFS), монтує її так, як fstab, і лагодить базу пакетів, ядро, initramfs, GRUB, fstab; скидання пароля, fsck, chroot |
+| `sunshine-toolsync` | Отримує найновіші інструменти з [sunshine-tools](https://github.com/tak0dan/sunshine-tools) (підписаний маніфест, SHA-256 для кожного файлу, відкат); `sunshine-update` запускає його першим |
+| `sunshine-kernel` | Декілька ядр одночасно (linux, lts, zen, hardened, CachyOS ...): встановлення, видалення, типовий пункт завантаження |
+| `sunshine-performance` | Один перемикач для zram, sysctl, планувальників вводу/виводу, earlyoom, ananicy, TRIM, обмежень журналу; `bench` показує числа |
+| `sunshine-gaming` | Графічний стек для виявленої GPU, Steam, Proton, Lutris, Gamemode, MangoHud, Gamescope та налаштування продуктивності |
+| `sunshine-drivers` | Виявляє обладнання й встановлює драйвери: NVIDIA (відкриті модулі, DKMS для кожного ядра, налаштування Wayland, PRIME), Wi-Fi Broadcom, допоміжні програми для ноутбуків, інструменти для гостьових систем |
+| `sunshine-desktops` | Встановлює GNOME, Xfce, Cinnamon, MATE, Budgie, LXQt, COSMIC, i3, Sway, Hyprland, niri, Openbox, Qtile, bspwm чи Awesome поруч із Plasma |
 | `sunshine-snapshot` | Точки відновлення (знімки btrfs) простими словами: перегляд, створення, видалення |
 | `sunshine-boot-repair` | Перебудовує initramfs, перевіряє образ ядра, відновлює GRUB і його меню на встановленій системі |
 | `sunshine-fix-pacman` | Прибирає застарілі блокування, лагодить в’язку ключів, оновлює застарілі дзеркала, відбудовує пошкоджені бази |
@@ -180,6 +188,32 @@ flowchart LR
 ### Sunshine Store
 
 Одна програма для pacman, AUR і Flatpak. Встановлені пакети позначені, а джерела розрізняються кольором. Код: [tak0dan/sunshine-store](https://github.com/tak0dan/sunshine-store).
+
+## Що робити, якщо щось зламалося
+
+Усі наведені нижче команди існують у Sunshine OS і були перевірені у віртуальній машині. Починайте з першого рядка й зупиніться, коли проблему усунено.
+
+| Ситуація | Що робити |
+| --- | --- |
+| **Комп’ютер не вмикається** (чорний екран, помилка GRUB, «no initramfs») | Завантажтеся з флешки Sunshine OS, оберіть «живий сеанс». Відкрийте вікно Welcome й натисніть **Відремонтувати встановлену систему** (або виконайте `sudo sunshine-rescue repair`). Він знайде вашу систему, перевірить диск, відбудує файли ядра та меню завантаження й збереже журнал у `/var/log/sunshine/` на вашій системі. Перезавантажтеся без флешки. |
+| **Чорний екран одразу після логотипу** | У меню завантаження оберіть **безпечну графіку (nomodeset)**. Потім виконайте `sudo sunshine-drivers detect`; власники NVIDIA: `sudo sunshine-drivers install`. |
+| **Забув пароль** | У живому сеансі: `sudo sunshine-rescue passwd YOURNAME`. |
+| **Оновлення щось зламало** | У меню завантаження оберіть точку відновлення (системи з btrfs) або виконайте `sunshine-snapshot list` і відновіться. Потім `sudo sunshine-doctor --fix`. |
+| **Оновлення зупиняється з помилками ключів чи бази даних** | `sudo sunshine-fix-pacman`, потім знову `sunshine-update`. |
+| **Вигляд середовища змінився** (немає значків, панелі, кольори не ті) | `sunshine-reset-plasma` (спочатку ваші налаштування зберігаються; `--undo` повертає їх). |
+| **Немає звуку / немає мережі / немає зображення на другому моніторі / повільна графіка / диск заповнений** | `sunshine-fix audio`, `sunshine-fix network`, `sunshine-fix display`, `sunshine-fix gpu`, `sunshine-fix storage` (або `sunshine-fix all`). |
+| **Я не знаю, що зламалося** | `sudo sunshine-doctor` (перевірка без змін) і `sunshine-support` (створить звіт без ваших особистих даних, щоб надіслати тому, хто допомагає). |
+| **Завантажується не те ядро / я хочу інше ядро** | `sudo sunshine-kernel list`, `sudo sunshine-kernel install linux-lts`, `sudo sunshine-kernel default linux-lts`. |
+| **Ігри працюють погано** | `sudo sunshine-gaming install`, `sudo sunshine-performance on`; у параметрах запуску Steam: `sunshine-game-run %command%`. |
+| **Я хочу інше середовище** | `sudo sunshine-desktops list`, `sudo sunshine-desktops install gnome`; оберіть його на екрані входу. |
+| **Я хочу захистити свої файли** | `sunshine-backup init /path/to/backup-folder`, потім `sunshine-backup run`; `sunshine-backup schedule on` — для щоденної копії. |
+
+### Добре знати
+
+- `sudo sunshine-doctor --fix` спочатку створює точку відновлення (btrfs), виправляє лише те, що безпечно, і ніколи не видаляє ваші файли.
+- Інструменти оновлюються самі: `sunshine-update` спочатку завантажує найновіші підписані інструменти. `sudo sunshine-toolsync status` показує версію, а `rollback` скасовує останнє оновлення інструментів.
+- Файрвол увімкнено (вхідні з’єднання заборонені, KDE Connect і виявлення дозволені). Відкрийте порт через `sudo ufw allow PORT`; вимкніть його остаточно за допомогою `sudo touch /etc/sunshine/no-firewall`.
+- Якщо ремонт неможливо виконати безпечно, він зупиняється й повідомляє про це; він не вгадує розділ і не перезаписує `fstab` навмання.
 
 ## Зберіть самі
 
