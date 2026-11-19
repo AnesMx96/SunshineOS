@@ -18,6 +18,9 @@ fx()   { fixed=$((fixed+1)); printf '  %s↺ fixed:%s %s\n' "$G" "$N" "$*"; }
 sec()  { [ "$Q" = 1 ] || printf '\n%s☀ %s%s\n' "$Y$B" "$(loc "$*")" "$N"; }
 [ "$Q" = 1 ] || printf '%sSunshine OS doctor%s  %s(%s)%s\n' "$Y$B" "$N" "$D" "$( [ $FIX = 1 ] && echo 'check + repair' || echo 'check only; add --fix to repair')" "$N"
 
+if [ $FIX = 1 ] && [ $LIVE = 0 ] && [ -z "${SUNSHINE_IN_RESCUE:-}" ] && [ "$(findmnt -no FSTYPE / 2>/dev/null)" = btrfs ] && command -v snapper >/dev/null && [ -e /etc/snapper/configs/root ]; then
+  snapper -c root create -d "before sunshine-doctor --fix" >/dev/null 2>&1 && printf '  %s\n' "$(loc "restore point made before repairing (undo from the boot menu or sunshine-snapshot)")"
+fi
 sec "Identity"
 if /usr/local/bin/sunshine-identity check --quiet; then ok "this is Sunshine OS ($(. /etc/os-release; echo "$PRETTY_NAME"))"
 else bad "system identity was changed (an update replaced os-release/issue)"
