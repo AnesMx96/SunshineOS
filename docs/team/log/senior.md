@@ -1,4 +1,4 @@
-# Dev log 2026-11-19 (night run, until 12:00)
+# Dev log: senior developer (night run 2026-11-19)
 
 Goal from the owner: Sunshine OS good enough that professionals pick it over EndeavourOS, gamers over Garuda, ordinary users over Ubuntu.
 Work: real-user tests (install, packages, modifications, tools), deliberate breakage and repair with sunshine-doctor, performance,
@@ -14,3 +14,4 @@ features taken from EndeavourOS / Garuda / CachyOS, a separate tools repository 
   package groups (xfce4, mate, lxqt, cosmic) -> one repo listing + group expansion. pkill -f killed my own shell again (use PIDs).
 - 01:45-02:00 New tools written: sunshine-rescue (live repair of installed systems), sunshine-kernel, sunshine-performance, sunshine-gaming, sunshine-desktops, sunshine-toolsync (+ tools/publish-tools.sh, signed releases; verified against a local server incl. tamper tests). sunshine-base 0.5 published (no window-title applet).
 - 02:00 fastfetch logo for upstream prepared locally (scratch/fastfetch-pr, branch logo-sunshineos, ASCII '#' from the repo's own logo). Upstream needs a Logo Request issue first and a stable release: submit after the replacement Sol release is out.
+- 02:19 moved to branch team/night-run; shared layout docs/team/ created (owner order, relayed).
