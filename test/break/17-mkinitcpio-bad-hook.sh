@@ -3,4 +3,4 @@
 TITLE="mkinitcpio.conf with a hook that does not exist (next kernel update would fail)"
 break() { vmr "sed -i 's/^HOOKS=(/HOOKS=(nonexistenthook /' /etc/mkinitcpio.conf; grep -c nonexistenthook /etc/mkinitcpio.conf"; }
 expect_detect() { echo 'mkinitcpio|hook'; }
-verify() { vmr 'mkinitcpio -k "$(ls /usr/lib/modules | tail -1)" -g /tmp/break-test.img >/dev/null 2>&1; rc=$?; rm -f /tmp/break-test.img; exit $rc'; }
+verify() { vmr '! grep -q nonexistenthook /etc/mkinitcpio.conf'; }   # mkinitcpio itself only warns about a missing hook and still builds, so look at the config
