@@ -33,7 +33,7 @@ for d, _, fs in os.walk(base):
     for f in fs:
         p = os.path.join(d, f); rel = os.path.relpath(p, base)
         if os.path.islink(p): continue
-        files[rel] = {"sha256": hashlib.sha256(open(p, "rb").read()).hexdigest(), "mode": "755" if os.access(p, os.X_OK) else "644"}
+        files[rel] = {"sha256": hashlib.sha256(open(p, "rb").read()).hexdigest(), "mode": "755" if (os.access(p, os.X_OK) or rel.startswith("usr/local/bin/") or rel.startswith("usr/share/sunshine/migrations/")) else "644"}
 json.dump({"version": version, "files": files}, open(os.path.join(root, "manifest.json"), "w"), indent=1, sort_keys=True)
 print(len(files), "files")
 EOF
