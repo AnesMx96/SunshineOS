@@ -91,7 +91,7 @@ fix_storage() {
   du -sh "$HOME/.cache" 2>/dev/null | sed 's/^/  cache: /'
   u=$(df --output=pcent / | tail -1 | tr -dc 0-9)
   if [ "${u:-0}" -ge 80 ]; then
-    command -v paccache >/dev/null && $SUDO paccache -rqk1 && fx "old package files removed (the newest copy is kept)"
+    command -v paccache >/dev/null && { $SUDO paccache -rquk0; $SUDO paccache -rqk1; } && fx "old package files removed (packages no longer installed, and all but the newest copy of the rest)"
     $SUDO journalctl --vacuum-size=200M >/dev/null 2>&1 && fx "system log trimmed to 200 MB"
     [ -d "$HOME/.cache/thumbnails" ] && rm -rf "$HOME/.cache/thumbnails"/* && fx "thumbnail cache emptied (it rebuilds itself)"
     command -v flatpak >/dev/null && flatpak list --unused 2>/dev/null | grep -q . && warn "unused Flatpak runtimes: flatpak uninstall --unused"
