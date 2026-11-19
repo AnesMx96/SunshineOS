@@ -31,6 +31,15 @@ if [ -d /etc/pacman.d/gnupg ] && pacman-key --list-keys 2>/dev/null | grep -qi '
 else bad "package keyring missing or empty"
   [ $FIX = 1 ] && pacman-key --init >/dev/null 2>&1 && pacman-key --populate >/dev/null 2>&1 && fx "keyring initialised"; fi
 if out=$(pacman -Dk 2>&1); then ok "package database consistent"; else bad "package database problem: $(echo "$out" | head -2 | tr '\n' ' ')"; fi
+# the packages without which the system cannot boot or log in (a broken removal, a bad cleanup): --fix puts them back from the repositories
+core_missing=
+for p in base linux-firmware mkinitcpio grub sudo networkmanager sddm plasma-desktop pipewire pacman sunshine-base; do pacman -Qq "$p" >/dev/null 2>&1 || core_missing="$core_missing $p"; done
+pacman -Qq linux linux-lts linux-zen linux-hardened linux-cachyos >/dev/null 2>&1 || core_missing="$core_missing linux"
+if [ -z "$core_missing" ]; then ok "core packages are installed"
+else bad "core packages missing:$core_missing"
+  if [ $FIX = 1 ]; then pacman -S --noconfirm --needed $core_missing >/tmp/sunshine-core.log 2>&1 && fx "reinstalled:$core_missing" || { bad "could not reinstall (see /tmp/sunshine-core.log)"; tail -3 /tmp/sunshine-core.log; }; fi
+fi
+for r in community testing staging extra-testing core-testing multilib-testing; do grep -q "^\[$r\]" /etc/pacman.conf 2>/dev/null && { bad "pacman.conf has the obsolete or unstable repository [$r]"; [ $FIX = 1 ] && /usr/local/bin/sunshine-fix-pacman >/dev/null 2>&1 && fx "obsolete repositories removed"; }; done
 n=$(find /etc -name '*.pacnew' 2>/dev/null | wc -l); [ "$n" -gt 0 ] && warn "$n config update(s) waiting for review (*.pacnew)" || ok "no pending .pacnew files"
 if /usr/local/bin/sunshine-repo check --quiet; then ok "[sunshine] repository is configured"
 else bad "the [sunshine] package repository is missing or wrong in /etc/pacman.conf"
@@ -73,6 +82,16 @@ for kd in /usr/lib/modules/*/; do
   fi
 done
 [ $nk = 0 ] && bad "no kernel is installed (pacman -S linux)"
+if [ -e /var/lib/sunshine/initramfs_error ]; then bad "the last package transaction left an incomplete boot setup ($(cat /var/lib/sunshine/initramfs_error))"; [ $FIX = 1 ] && { /usr/local/bin/sunshine-state-hook >/dev/null 2>&1; [ -e /var/lib/sunshine/initramfs_error ] || fx "boot files complete again"; }; fi
+if [ -f /var/lib/sunshine/last_update ]; then
+  age=$(( ($(date +%s) - $(stat -c %Y /var/lib/sunshine/last_update)) / 86400 ))
+  [ "$age" -gt 14 ] && warn "the last update was $age days ago (sunshine-update)" || ok "last update: $age day(s) ago"
+  [ "$(stat -c %Y /var/lib/sunshine/last_update)" -gt "$(awk '/^btime/{print $2}' /proc/stat)" ] && warn "an update was applied since the last restart: restart to use it"
+fi
+if [ -d /sys/firmware/efi ]; then
+  if [ -f /boot/efi/EFI/BOOT/BOOTX64.EFI ] || [ -f /boot/EFI/BOOT/BOOTX64.EFI ]; then ok "EFI fallback boot file present"
+  else bad "EFI fallback boot file (EFI/BOOT/BOOTX64.EFI) is missing: some firmwares will not find the system"; [ $FIX = 1 ] && grub-install --target=x86_64-efi --efi-directory=/boot/efi --removable --recheck >/dev/null 2>&1 && fx "EFI fallback boot file restored"; fi
+fi
 bf=$(df --output=avail -BM /boot | tail -1 | tr -dc 0-9); [ "${bf:-999}" -lt 100 ] && warn "/boot has only ${bf} MB free (kernel updates may fail: remove old kernels with sunshine-kernel remove)" || ok "/boot has ${bf} MB free"
 if [ -d /sys/firmware/efi ] && mountpoint -q /boot/efi; then ef=$(df --output=avail -BM /boot/efi | tail -1 | tr -dc 0-9); [ "${ef:-99}" -lt 5 ] && warn "EFI partition has only ${ef} MB free"; fi
 case "$(grep -m1 vendor_id /proc/cpuinfo | awk '{print $3}')" in
