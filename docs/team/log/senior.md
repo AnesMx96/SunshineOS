@@ -36,3 +36,4 @@ features taken from EndeavourOS / Garuda / CachyOS, a separate tools repository 
   23 services, 188 processes, BFQ/mq-deadline schedulers; boot 34 s (4.7 kernel + 8.8 initrd + 20.7 userspace).
 - 07:00 VBoxSVC crashed from memory pressure (2 VMs + docker + agents): orphan VirtualBoxVM processes killed by PID; only one VM at a time from now on.
 - 07:20 tak-7a runs the 34 break-repair scenarios on Sol-inst; tak-0 (desktop) has review/docs tasks; repo 0.6 building, then fast ISO #2.
+- 09:40 FREEZE eedf0ba; final Sol build started (zstd 15)
