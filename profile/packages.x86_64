@@ -158,11 +158,9 @@ htop
 fastfetch
 dialog
 zram-generator
-
 # --- start-up animation of the terminal (sunshine-term / sunshine-session) ---
 python-pillow
 python-numpy
-
 # --- Sunshine OS: tools for a smooth start ---
 python-pyqt6
 flatpak
@@ -185,7 +183,6 @@ libjxl
 inter-font
 ttf-cormorant
 archlinux-appstream-data
-
 xdg-desktop-portal-gtk
 qt5-declarative
 qt5-quickcontrols2
@@ -303,5 +300,4 @@ ghostscript
 gutenprint
 ipp-usb
 hplip
-plasma-firewall
 flatpak-kcm
