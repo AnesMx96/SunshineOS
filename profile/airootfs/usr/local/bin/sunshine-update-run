@@ -17,7 +17,9 @@ if [ -e /var/lib/pacman/db.lck ]; then
   bad "A stale lock file was found (no package manager is running); removing it."
   rm -f /var/lib/pacman/db.lck
 fi
-ping -c1 -W3 archlinux.org >/dev/null 2>&1 || { bad "No internet connection. Connect to Wi-Fi or a cable and try again."; finish 1; }
+# ICMP is often blocked by NAT/corporate networks even when HTTPS works. Test the
+# same transport the update uses (pacman, news, toolsync, release check): TCP/443.
+curl -fsS --max-time 8 -o /dev/null https://archlinux.org/feeds/news/ >/dev/null 2>&1 || { bad "No HTTPS access to the Arch repositories. Check the network/proxy and try again."; finish 1; }
 
 say "Latest Arch Linux news (read if something looks important)"
 curl -fsS --max-time 8 https://archlinux.org/feeds/news/ 2>/dev/null \

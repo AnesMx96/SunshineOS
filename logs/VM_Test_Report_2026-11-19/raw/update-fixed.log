@@ -1,0 +1,39 @@
+=== PATCHED SUNSHINE UPDATE RUN 2026-11-19T15:18:57+00:00 ===
+patch line: 22:curl -fsS --max-time 8 -o /dev/null https://archlinux.org/feeds/news/ >/dev/null 2>&1 || { bad "No HTTPS access to the Arch repositories. Check the network/proxy and try again."; finish 1; }
+
+[38;5;220m[1m☀ Sunshine OS update[0m
+
+[38;5;220m[1m☀ Sunshine tools[0m
+[32m✔ ☕ tools are up to date (2026.11.19.197)[0m
+
+[38;5;220m[1m☀ Latest Arch Linux news (read if something looks important)[0m
+  • Update to php ≥ 8.5.12 and/or php-legacy ≥ 8.3.36 to prevent remote code execution
+  • Update to ca-certificates-mozilla ≥ 3.131.1-1 to prevent man-in-the-middle attacks
+  • Mkinitcpio &gt;=42 requires manual intervention for TPM2-based unlocking of LUKS devices
+
+[38;5;220m[1m☀ Checking for updates[0m
+9 package update(s) available.
+
+[38;5;220m[1m☀ Refreshing the mirror list[0m
+[32m✔ ☕ arch mirrors ranked[0m
+[32m✔ ☕ chaotic-aur mirrors ranked[0m
+
+[38;5;220m[1m☀ Updating system packages[0m
+[32m✔ ☕ Package keyring is current[0m
+[?25l[1;34m::[0;1m Starting full system upgrade...
+[0mresolving dependencies...
+looking for conflicting packages...
+
+[1;33mwarning: [0minsufficient columns available for table display
+[0;1mPackages (9)[0m exfatprogs[38;5;243m-1.4.5-1[0m  libxslt[38;5;243m-1.1.45-3[0m  linux[38;5;243m-7.3.5.arch1-1[0m
+             mesa[38;5;243m-1:26.3.1-1[0m  nspr[38;5;243m-4.41-1[0m  vulkan-intel[38;5;243m-1:26.3.1-1[0m
+             vulkan-mesa-implicit-layers[38;5;243m-1:26.3.1-1[0m
+             vulkan-mesa-layers[38;5;243m-1:26.3.1-1[0m  vulkan-radeon[38;5;243m-1:26.3.1-1[0m
+
+[0;1mTotal Download Size: [0m  174.88 MiB
+[0;1mTotal Installed Size:[0m  272.06 MiB
+[0;1mNet Upgrade Size:    [0m   -0.21 MiB
+
+[1;34m::[0;1m Proceed with installation? [Y/n] [0m[?25hUPDATE_RC=124
+patch still present: 1
+=== END 2026-11-19T15:33:57+00:00 ===
