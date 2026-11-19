@@ -33,10 +33,12 @@ case "$cmd" in
     O="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -o ConnectTimeout=5 -p ${SSH_PORT:-2222}"
     if command -v sshpass >/dev/null; then if [ $# -gt 0 ]; then exec sshpass -p sunshine ssh $O sunshine@127.0.0.1 bash -s <<<"$*"; else exec sshpass -p sunshine ssh $O sunshine@127.0.0.1; fi; fi
     echo "sshpass is needed for the tunnel (pacman -S sshpass)"; exit 1 ;;
-  push)
-    t=$(mktemp -d); tar -C overlay/system -cf "$t/system.tar" .; tar -C overlay/skel -cf "$t/skel.tar" .
-    $VB put "$N" "$t/system.tar" >/dev/null; $VB put "$N" "$t/skel.tar" >/dev/null
-    $VB run "$N" 'tar -C / -xf /tmp/system.tar --no-same-owner  --no-overwrite-dir; mkdir -p /etc/skel; tar -C /etc/skel -xf /tmp/skel.tar --no-same-owner  --no-overwrite-dir; for u in /home/*; do [ -d $u ] || continue; tar -C $u -xf /tmp/skel.tar --no-same-owner  --no-overwrite-dir --keep-old-files 2>/dev/null; chown -R $(basename $u):$(basename $u) $u/.config 2>/dev/null; done; tar -tf /tmp/system.tar | sed "s|^\\./|/|" | grep -v "^/$" | tr "\\n" "\\0" | xargs -0 -r chmod go+rX,go-w 2>/dev/null; find /usr /etc /home /opt -xdev -type d -perm -2000 -exec chmod g-s {} + 2>/dev/null; chmod 755 / 2>/dev/null; echo pushed'
+  push)   # over ssh (user sunshine, sudo): works in the live session and in an installed system
+    t=$(mktemp -d); tar -C overlay/system -cf "$t/system.tar" . ; ( cd profile/airootfs && tar -rf "$t/system.tar" usr/local/bin usr/share/libalpm/hooks usr/lib/systemd/system/sunshine-health.service usr/lib/systemd/system/sunshine-health.timer usr/share/applications/sunshine-rescue.desktop 2>/dev/null )
+    tar -C overlay/skel -cf "$t/skel.tar" .
+    O="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -p ${SSH_PORT:-2222}"
+    for f in system skel; do sshpass -p sunshine scp -q ${O//-p /-P } "$t/$f.tar" sunshine@127.0.0.1:/tmp/dev-$f.tar; done
+    "$0" ssh "$N" 'sudo tar -C / -xf /tmp/dev-system.tar --no-same-owner --no-overwrite-dir; sudo mkdir -p /etc/skel; sudo tar -C /etc/skel -xf /tmp/dev-skel.tar --no-same-owner --no-overwrite-dir; tar -tf /tmp/dev-system.tar | sed "s|^\./|/|" | grep -v "^/$" | tr "\n" "\0" | sudo xargs -0 -r chmod go+rX,go-w 2>/dev/null; sudo find /usr/local/bin -maxdepth 1 -type f -exec chmod 755 {} + 2>/dev/null; sudo find /usr/share/sunshine/migrations -type f -exec chmod 755 {} + 2>/dev/null; sudo find /usr /etc /opt -xdev -type d -perm -2000 -exec chmod g-s {} + 2>/dev/null; sudo chmod 755 / 2>/dev/null; echo pushed'
     rm -rf "$t" ;;
   changed) $VB run "$N" "cd $UP 2>/dev/null && find . -type f | sed 's|^\./||' | grep -v -E '$noise' | sort" ;;
   harvest)
