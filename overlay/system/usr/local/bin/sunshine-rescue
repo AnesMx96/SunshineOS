@@ -17,6 +17,7 @@
 # DEV is the root partition (for example /dev/sda2); without it the only installed system is used, or you are asked.
 # Environment for scripts: SUNSHINE_LUKS_PASS (passphrase of the encrypted disk), SUNSHINE_NEW_PASS (for passwd), SUNSHINE_RESCUE_FSCK=0 (skip the check).
 [ "$(id -u)" -eq 0 ] || exec sudo "$0" "$@"
+# shellcheck disable=SC2034 # fallback colour names mirror ui.sh even when one is unused here
 [ -r /usr/local/lib/sunshine/ui.sh ] && . /usr/local/lib/sunshine/ui.sh || { sec() { echo "* $*"; }; ok() { echo "+ $*"; }; bad() { echo "x $*"; }; loc() { printf '%s' "$*"; }; t() { printf '%s' "${2:-$1}"; }; Y=; G=; R=; B=; N=; }
 M=${SUNSHINE_RESCUE_MNT:-/mnt/sunshine-rescue}
 STATE=/run/sunshine-rescue; mkdir -p "$STATE"
@@ -50,6 +51,7 @@ scan() {
     elif [ "$fs" = btrfs ]; then
       for sub in @ root rootfs; do
         if [ -f "$tmp/$sub/etc/os-release" ]; then
+          # shellcheck disable=SC1090 # the os-release path is discovered at runtime
           printf '%s\t%s\t%s\n' "$dev:$sub" "$fs" "$(. "$tmp/$sub/etc/os-release"; echo "${PRETTY_NAME:-Linux}")"; break
         fi
       done
@@ -113,7 +115,7 @@ step_pacman() {
 }
 step_kernel() {
   sec "Kernel and initramfs"
-  local k kv base any=0
+  local k base any=0
   for k in "$M"/usr/lib/modules/*/; do
     [ -d "$k" ] || continue; any=1
     base=linux; [ -f "$k/pkgbase" ] && base=$(cat "$k/pkgbase")

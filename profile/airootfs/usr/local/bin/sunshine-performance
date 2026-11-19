@@ -20,7 +20,6 @@ F_WB=/etc/udev/rules.d/61-sunshine-writeback.rules
 F_NTSYNC=/etc/modules-load.d/sunshine-ntsync.conf
 F_NOFILE=/etc/systemd/system.conf.d/60-sunshine-limits.conf
 F_NTP=/etc/systemd/timesyncd.conf.d/10-sunshine.conf
-mem_gb=$(awk '/MemTotal/{printf "%d", $2/1048576+0.5}' /proc/meminfo)
 
 on() {
   sec "Memory and swap"
@@ -84,6 +83,7 @@ EOT
   ok "$(loc "journal capped, quick service stop, builds and package compression use all cores")"
   ok "$(loc "watchdogs off, NTSync for Wine, writeback caps for USB sticks and HDDs, sane time servers")"
   if pacman -Si ananicy-cpp >/dev/null 2>&1; then
+    # shellcheck disable=SC2046 # intentionally empty when the optional rules package is absent
     pacman -S --noconfirm --needed ananicy-cpp $(pacman -Si cachyos-ananicy-rules >/dev/null 2>&1 && echo cachyos-ananicy-rules) >/dev/null 2>&1 && systemctl enable --now ananicy-cpp.service >/dev/null 2>&1 && ok "$(loc "ananicy-cpp gives games and the desktop priority over background work")"
   else echo "$(loc "ananicy-cpp is not in the enabled repositories (Chaotic-AUR has it): skipped")"; fi
   ok "$(loc "profile is on")"; echo "$(loc "A restart applies everything; check the numbers with: sunshine-performance bench")"
