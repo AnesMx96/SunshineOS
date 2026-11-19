@@ -50,7 +50,11 @@ refresh_mirrors() {   # rate-mirrors ranks the mirrors by speed; the old list is
 refresh_mirrors
 
 say "Updating system packages"
-if pacman -Syu; then ok "System packages are up to date"
+free_mb=$(df --output=avail -BM / | tail -1 | tr -dc 0-9)
+if [ "${free_mb:-9999}" -lt 1500 ]; then bad "Less than 1.5 GB is free on the system disk: the update could fail halfway. Free some space first (sunshine-cleanup)."; finish 1; fi
+# the keyring first: a system that was off for months cannot verify new packages with its old keyring (what garuda-update does)
+pacman -Sy --noconfirm --needed archlinux-keyring >/dev/null 2>&1 && ok "Package keyring is current"
+if pacman -Su; then ok "System packages are up to date"
   # a new sunshine-base may bring new repositories (Chaotic-AUR): add them now and update once more
   rm -f /run/sunshine-repo-changed; /usr/local/bin/sunshine-repo ensure --quiet; [ -e /run/sunshine-repo-changed ] && { say "New repository added: updating again"; pacman -Syu --noconfirm; }
   command -v rate-mirrors >/dev/null || { pacman -S --noconfirm --needed rate-mirrors >/dev/null 2>&1 && refresh_mirrors; }
@@ -71,6 +75,7 @@ if [ -n "$aurh" ] && [ -n "${REAL_USER:-}" ]; then
   say "Updating AUR (community) packages"; sudo -u "$REAL_USER" "$aurh" -Sua --noconfirm --needed || true
 fi
 
+if [ -x /usr/local/bin/sunshine-doctor ]; then say "Final health check"; /usr/local/bin/sunshine-doctor --quiet --fix || true; fi
 say "Tidying up"
 command -v paccache >/dev/null && paccache -rqk2 && ok "Old package cache cleaned"
 orph=$(pacman -Qdtq 2>/dev/null || true)
