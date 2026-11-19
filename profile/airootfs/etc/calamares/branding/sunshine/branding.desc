@@ -10,10 +10,10 @@ navigation: widget
 strings:
   productName: Sunshine OS
   shortProductName: Sunshine
-  version: "1.0"
-  shortVersion: "1.0"
-  versionedName: Sunshine OS 1.0
-  shortVersionedName: Sunshine 1.0
+  version: "1.5"
+  shortVersion: "1.5"
+  versionedName: Sunshine OS 1.5
+  shortVersionedName: Sunshine 1.5
   bootloaderEntryName: Sunshine OS
   productUrl: https://github.com/tak0dan
   supportUrl: https://wiki.archlinux.org/

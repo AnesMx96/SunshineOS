@@ -19,3 +19,19 @@ QScrollBar::handle:horizontal { background: #5a4262; border-radius: 5px; min-wid
 QScrollBar::add-line, QScrollBar::sub-line { width: 0; height: 0; }
 QToolTip { background-color: #33253f; color: #f6ead6; border: 1px solid #ffb86b; }
 #sidebarApp, #mainApp { background-color: #1d1526; }
+
+/* custom-drawn widgets (the partition bars and their legend) take their colours from here: without it the legend text was dark on dark */
+QAbstractItemView { background-color: #271c31; color: #f6ead6; alternate-background-color: #2d2037; selection-background-color: #ffb86b; selection-color: #2a1a0e; }
+QAbstractItemView::item { color: #f6ead6; }
+QDialog, QMessageBox, QInputDialog { background-color: #1d1526; color: #f6ead6; }
+QTabWidget::pane { background-color: #1d1526; border: 1px solid #5a4262; }
+QTabBar::tab { background-color: #33253f; color: #f6ead6; padding: 6px 12px; }
+QTabBar::tab:selected { background-color: #4a3659; }
+QMenu { background-color: #271c31; color: #f6ead6; border: 1px solid #5a4262; }
+QMenu::item:selected { background-color: #ffb86b; color: #2a1a0e; }
+QTextEdit, QPlainTextEdit, QTextBrowser { background-color: #271c31; color: #f6ead6; }
+
+/* last, so they win over the generic QAbstractItemView rule above */
+PartitionBarsView { background: transparent; border: 0; }
+/* the legend paints dark text with a fixed pen: give it a light parchment panel so the text is readable on the dark window */
+PartitionLabelsView { background-color: #e8dcc8; color: #2a1a0e; border: 0; border-radius: 6px; }
