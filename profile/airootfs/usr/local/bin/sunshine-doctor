@@ -57,14 +57,31 @@ if [ -n "$(ls /usr/share/wayland-sessions/hyprland*.desktop 2>/dev/null)" ] && !
 sec "Boot"
 if [ $LIVE = 1 ]; then ok "live session: boot files are checked on the installed system"
 else
-[ -f /boot/vmlinuz-linux ] && ok "kernel image present" || bad "/boot/vmlinuz-linux missing"
-if [ -s /boot/initramfs-linux.img ]; then ok "initramfs present"
-else bad "/boot/initramfs-linux.img missing or empty"
-  if [ $FIX = 1 ]; then
-    kv=$(ls /usr/lib/modules | head -1); tmp=$(mktemp /boot/.initramfs.XXXXXX)
-    if mkinitcpio -k "$kv" -g "$tmp" >/tmp/sunshine-mkinitcpio.log 2>&1 && [ -s "$tmp" ]; then mv -f "$tmp" /boot/initramfs-linux.img && fx "initramfs rebuilt"
-    else rm -f "$tmp"; bad "mkinitcpio failed (kept nothing half-written); see /tmp/sunshine-mkinitcpio.log"; tail -3 /tmp/sunshine-mkinitcpio.log; fi
+# every installed kernel (linux, linux-lts, linux-zen ...) needs its image and its initramfs
+nk=0
+for kd in /usr/lib/modules/*/; do
+  [ -f "$kd/vmlinuz" ] || continue; nk=$((nk+1))
+  base=linux; [ -f "$kd/pkgbase" ] && base=$(cat "$kd/pkgbase")
+  [ -f "/boot/vmlinuz-$base" ] && ok "kernel image present: $base" || { bad "/boot/vmlinuz-$base missing"; [ $FIX = 1 ] && cp --sparse=never --reflink=never "$kd/vmlinuz" "/boot/vmlinuz-$base" && chmod 644 "/boot/vmlinuz-$base" && fx "vmlinuz-$base restored"; }
+  if [ -s "/boot/initramfs-$base.img" ]; then ok "initramfs present: $base"
+  else bad "/boot/initramfs-$base.img missing or empty"
+    if [ $FIX = 1 ]; then
+      kv=$(basename "$kd"); tmp=$(mktemp /boot/.initramfs.XXXXXX)
+      if mkinitcpio -k "$kv" -g "$tmp" >/tmp/sunshine-mkinitcpio.log 2>&1 && [ -s "$tmp" ]; then mv -f "$tmp" "/boot/initramfs-$base.img" && chmod 600 "/boot/initramfs-$base.img" && fx "initramfs rebuilt: $base"
+      else rm -f "$tmp"; bad "mkinitcpio failed (kept nothing half-written); see /tmp/sunshine-mkinitcpio.log"; tail -3 /tmp/sunshine-mkinitcpio.log; fi
+    fi
   fi
+done
+[ $nk = 0 ] && bad "no kernel is installed (pacman -S linux)"
+bf=$(df --output=avail -BM /boot | tail -1 | tr -dc 0-9); [ "${bf:-999}" -lt 100 ] && warn "/boot has only ${bf} MB free (kernel updates may fail: remove old kernels with sunshine-kernel remove)" || ok "/boot has ${bf} MB free"
+if [ -d /sys/firmware/efi ] && mountpoint -q /boot/efi; then ef=$(df --output=avail -BM /boot/efi | tail -1 | tr -dc 0-9); [ "${ef:-99}" -lt 5 ] && warn "EFI partition has only ${ef} MB free"; fi
+case "$(grep -m1 vendor_id /proc/cpuinfo | awk '{print $3}')" in
+  GenuineIntel) pacman -Qq intel-ucode >/dev/null 2>&1 && ok "Intel microcode installed" || { warn "intel-ucode is not installed (CPU security fixes)"; [ $FIX = 1 ] && pacman -S --noconfirm --needed intel-ucode >/dev/null 2>&1 && fx "intel-ucode installed"; };;
+  AuthenticAMD) pacman -Qq amd-ucode >/dev/null 2>&1 && ok "AMD microcode installed" || { warn "amd-ucode is not installed (CPU security fixes)"; [ $FIX = 1 ] && pacman -S --noconfirm --needed amd-ucode >/dev/null 2>&1 && fx "amd-ucode installed"; };;
+esac
+if command -v dkms >/dev/null && [ -n "$(dkms status 2>/dev/null)" ]; then
+  if dkms status 2>/dev/null | grep -v installed | grep -q .; then warn "a DKMS module (NVIDIA, VirtualBox ...) is not built for a kernel"; [ $FIX = 1 ] && dkms autoinstall >/dev/null 2>&1 && fx "DKMS modules built"
+  else ok "DKMS modules are built"; fi
 fi
 if [ -f /boot/vmlinuz-linux ] && [ "$(findmnt -no FSTYPE /boot 2>/dev/null || findmnt -no FSTYPE /)" = btrfs ]; then
   # GRUB cannot read btrfs files that end in a hole ("premature end of file")
@@ -85,6 +102,17 @@ if findmnt --verify >/dev/null 2>&1; then ok "/etc/fstab consistent"; else warn 
 fi
 
 sec "System"
+if command -v smartctl >/dev/null; then
+  for d in $(lsblk -dno NAME,TYPE | awk '$2=="disk" && $1!~/^(zram|loop|sr|ram)/{print $1}'); do
+    r=$(smartctl -H "/dev/$d" 2>/dev/null | grep -iE 'overall-health|SMART Health Status' | head -1)
+    case "$r" in *PASSED*|*OK*) ok "disk $d health: passed";; *FAIL*) bad "disk $d reports SMART FAILURE: back up your data now";; esac
+  done
+fi
+if [ "$(findmnt -no FSTYPE / 2>/dev/null)" = btrfs ]; then
+  e=$(btrfs device stats / 2>/dev/null | awk '{s+=$2} END{print s+0}'); [ "${e:-0}" -gt 0 ] && warn "btrfs counted $e device error(s): run sunshine-doctor on a schedule and consider a scrub (sudo btrfs scrub start /)" || ok "btrfs reports no device errors"
+fi
+[ "$(timedatectl show -p NTPSynchronized --value 2>/dev/null)" = yes ] && ok "clock is synchronised" || warn "clock is not synchronised (certificates and updates can fail)"
+swapon --noheadings 2>/dev/null | grep -q . && ok "swap is active" || warn "no swap is active (zram swap normally is: sunshine-performance on)"
 fu=$(systemctl --failed --no-legend 2>/dev/null | awk '{print $2}' | tr '\n' ' ')
 [ -z "${fu// }" ] && ok "no failed services" || warn "failed services: $fu"
 use=$(df --output=pcent / | tail -1 | tr -dc 0-9)
