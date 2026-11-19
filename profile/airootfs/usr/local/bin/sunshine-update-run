@@ -102,6 +102,7 @@ say "Tidying up"
 command -v paccache >/dev/null && paccache -rqk2 && ok "Old package cache cleaned"
 orph=$(pacman -Qdtq 2>/dev/null || true)
 [ -n "$orph" ] && echo "Unused packages (you can remove later): $(echo $orph | wc -w)"
+[ -x /usr/local/bin/sunshine-pacnew ] && /usr/local/bin/sunshine-pacnew auto 2>/dev/null | sed 's/^/  /'
 pn=$(find /etc -name '*.pacnew' 2>/dev/null | head -5)
 [ -n "$pn" ] && { echo "$(loc "Config updates waiting for review (*.pacnew):")"; echo "$pn"; }
 if [ -d /usr/lib/modules ] && ! [ -d "/usr/lib/modules/$(uname -r)" ]; then
