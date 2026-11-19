@@ -26,5 +26,13 @@ Boot before fix: 2 min 35 s (userspace 2 min 26 s). After: 34 s (kernel 4.7 + in
 senior (tak-2f), tak-7a (break-repair harness with 34 scenarios, reviews, research, site cards), tak-0 (desktop PC: review/docs tasks), opencode workers (lint, translate, docs draft, comparison, secure-boot design, README.uk),
 ChatGPT and Grok answered the same 5-part design prompt (Gemini was not logged in); comparison in docs/team/research/ai-comparison.md.
 
-## Open / not done
-Secure Boot tool (design only), break-repair results (running), second ISO test, final compressed ISOs and the Sol 1.4 replacement release (see TASKS.md for status).
+## Releases and final verification
+- **Sol 1.5** (13.4.7.1.5, Release, 2026-11-19, zstd-15 image 3.5 GB, sha256 9cb5bc4c...): installed in a VM (btrfs), booted (47 s with another VM competing, 0 failed units), smoke test 28/30 (the 2 are stale-marker and ICMP findings, both fixed in tools delivered by `sunshine-update`),
+  then a real update `sunshine-base` 0.6 -> 0.7 through normal pacman. The ISO before it (ext4 install) also passed; installer fixes verified on both. Published; the website shows it; Sol 1.4 marked superseded.
+- **Sirius 0.3** (Testing): live session 69/69 checks, Nix and `sunshine-declare` present. Published as a Testing release.
+- `[sunshine]` repository: sunshine-base 0.7 with all new tools (signed), desktops metapackages; tools repository version 2026.11.19.197.
+- Break-and-repair harness (tak-7a): 24 of 34 scenarios run before the host disk ran out: 17 pass; gaps found were fixed afterwards (EFI mount, cache cleanup, corrupt cache package, clock wait); scenarios 25-34 not run (docs/team/reports/break-repair-results.md).
+
+## Known limits / next steps
+Secure Boot tool (design only), Calamares GUI install was not clicked through (CLI installer tested; GUI config changed only by "ask before installing" and the shared post-install fixes), USB/Ventoy boot of the final ISOs not re-tested tonight,
+the 12 installer proposals (docs/team/reports/installer-proposals), 10 break scenarios not run, fastfetch/hyfetch logo PRs prepared but not submitted (need the owner's go), the host disk is nearly full (VM disks were deleted; old ISOs in ~/sunshineos-build/isos left untouched).
