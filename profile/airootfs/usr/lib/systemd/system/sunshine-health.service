@@ -1,0 +1,9 @@
+[Unit]
+Description=Sunshine OS silent health check
+ConditionPathExists=!/run/archiso
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sunshine-health-scan
+Nice=19
+IOSchedulingClass=idle

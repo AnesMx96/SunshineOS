@@ -1,0 +1,11 @@
+[Unit]
+Description=Sunshine OS health check, weekly and after boot
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=1week
+RandomizedDelaySec=30min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
