@@ -24,6 +24,7 @@ file_permissions=(
   ["/home/sunshine"]="1000:1000:750"
   ["/home/sunshine/Desktop"]="1000:1000:755"
   ["/home/sunshine/Desktop/sunshine-install.desktop"]="1000:1000:755"
+  ["/home/sunshine/Desktop/sunshine-rescue.desktop"]="1000:1000:755"
   ["/usr/local/bin/choose-mirror"]="0:0:755"
   ["/usr/local/bin/livecd-sound"]="0:0:755"
   ["/usr/local/bin/sunshine-install"]="0:0:755"
