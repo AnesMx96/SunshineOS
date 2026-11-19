@@ -1,0 +1,5 @@
+bash: line 1: sun_online: command not found
+rc=127 method=
+bash: line 1: sun_online: command not found
+rc=127 why=
+bash: line 1: sun_net_explain: command not found
