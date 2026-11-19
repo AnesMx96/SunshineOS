@@ -26,12 +26,20 @@ plan() {   # prints the packages to install, one per line, with the reason after
     return
   fi
   if [ $HAS_NV = 1 ]; then
-    if nv_generation_ok; then echo -e "nvidia-open-dkms\tNVIDIA (Turing or newer)"; else
-      if pacman -Si nvidia-580xx-dkms >/dev/null 2>&1; then echo -e "nvidia-580xx-dkms\tNVIDIA (older card: legacy driver)"; else echo -e "nvidia-dkms\tNVIDIA"; fi; fi
+    # Prebuilt modules (what EndeavourOS does) for the stock kernels: nothing is compiled during an update, so a kernel update can never leave the screen black.
+    # DKMS only for kernels that have no prebuilt package (zen, hardened ...). Cards before Turing need the legacy driver.
+    if nv_generation_ok; then
+      kk=$(pacman -Qq | grep -E '^linux(-lts|-zen|-hardened|-cachyos[a-z-]*)?$')
+      pre=0; dk=0
+      for k in $kk; do case "$k" in linux) echo -e "nvidia-open\tNVIDIA open modules for linux"; pre=1;; linux-lts) echo -e "nvidia-open-lts\tNVIDIA open modules for linux-lts"; pre=1;; *) dk=1;; esac; done
+      [ $dk = 1 ] && echo -e "nvidia-open-dkms\tNVIDIA modules built for the other kernels (DKMS)"
+    else
+      if pacman -Si nvidia-580xx-dkms >/dev/null 2>&1; then echo -e "nvidia-580xx-dkms\tNVIDIA (older card: legacy driver)"; else echo -e "nvidia-dkms\tNVIDIA"; fi
+    fi
     echo -e "nvidia-utils\tNVIDIA"; echo -e "nvidia-settings\tNVIDIA"
     grep -q '^\[multilib\]' /etc/pacman.conf && echo -e "lib32-nvidia-utils\tNVIDIA 32-bit (Steam, Wine)"
     [ $HAS_IGPU = 1 ] && echo -e "nvidia-prime\tHybrid graphics: prime-run starts a program on the NVIDIA card"
-    for k in $(pacman -Qq | grep -E '^linux(-lts|-zen|-hardened)?$'); do echo -e "$k-headers\tneeded to build the NVIDIA module for $k"; done
+    for k in $(pacman -Qq | grep -E '^linux(-lts|-zen|-hardened)?$'); do case "$k" in linux|linux-lts) ;; *) echo -e "$k-headers\tneeded to build the NVIDIA module for $k";; esac; done
   fi
   printf '%s\n' "$PCI" | grep -E 'Network|Wireless' | grep -qi 'broadcom' && echo -e "broadcom-wl-dkms\tBroadcom Wi-Fi"
   if [ $LAPTOP = 1 ]; then

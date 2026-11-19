@@ -22,6 +22,19 @@ say "Latest Arch Linux news (read if something looks important)"
 curl -fsS --max-time 8 https://archlinux.org/feeds/news/ 2>/dev/null \
   | grep -o '<title>[^<]*</title>' | sed -n '2,4p' | sed 's/<[^>]*>//g;s/^/  • /' || true
 
+# Arch announces breaking changes in the news ("manual intervention required"): if a recent item says so, stop and make the user read it
+news=$(curl -fsS --max-time 8 https://archlinux.org/feeds/news/ 2>/dev/null | python3 -c '
+import sys,re,datetime,email.utils
+x=sys.stdin.read()
+for it in re.findall(r"<item>(.*?)</item>",x,re.S)[:4]:
+    t=re.search(r"<title>(.*?)</title>",it,re.S); d=re.search(r"<pubDate>(.*?)</pubDate>",it,re.S); b=re.search(r"<description>(.*?)</description>",it,re.S)
+    if not (t and d): continue
+    age=(datetime.datetime.now(datetime.timezone.utc)-email.utils.parsedate_to_datetime(d.group(1))).days
+    if age<=21 and re.search(r"intervention|manual|requires? (manual|action)|before (you )?upgrad",t.group(1)+(b.group(1) if b else ""),re.I): print(t.group(1))' 2>/dev/null)
+if [ -n "$news" ]; then
+  printf '\n%sArch Linux announced a change that may need your action before updating:%s\n  %s\n  https://archlinux.org/news/\n' "$Y$B" "$N" "$news"
+  read -rp "Have you read it and want to continue anyway? [y/N] " a; [ "${a,,}" = y ] || finish 0
+fi
 say "Checking for updates"
 if command -v checkupdates >/dev/null; then
   list=$(sudo -u "${REAL_USER:-nobody}" checkupdates 2>/dev/null || true)
@@ -29,6 +42,15 @@ if command -v checkupdates >/dev/null; then
   [ "$n" -gt 0 ] && { echo "$n package update(s) available."; } || echo "$(loc "No system package updates right now.")"
 fi
 
+# a kernel update without the matching NVIDIA module (prebuilt packages move together) would boot to a black screen
+if command -v checkupdates >/dev/null && pacman -Qq nvidia-open nvidia-open-lts >/dev/null 2>&1; then
+  ups=$(sudo -u "${REAL_USER:-nobody}" checkupdates 2>/dev/null | awk '{print $1}')
+  for pair in linux:nvidia-open linux-lts:nvidia-open-lts; do k=${pair%%:*}; n=${pair##*:}
+    if grep -qx "$k" <<<"$ups" && pacman -Qq "$n" >/dev/null 2>&1 && ! grep -qx "$n" <<<"$ups"; then
+      bad "The update has a new $k but not yet a matching $n: the NVIDIA driver would not load. Try again in a few hours (the mirrors are still syncing)."; finish 1; fi
+  done
+fi
+if command -v faillock >/dev/null && [ -n "${REAL_USER:-}" ] && faillock --user "$REAL_USER" 2>/dev/null | grep -q '^[0-9]'; then faillock --user "$REAL_USER" --reset && ok "Login lock of $REAL_USER cleared (too many wrong passwords earlier)"; fi
 if [ "$(findmnt -no FSTYPE /)" = btrfs ] && [ -e /etc/snapper/configs/root ]; then
   ok "Restore points are made automatically before and after the update (go back from the boot menu if anything breaks)"
 fi
