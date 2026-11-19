@@ -1,0 +1,118 @@
+--- a/profile/airootfs/usr/local/bin/sunshine-doctor
++++ b/profile/airootfs/usr/local/bin/sunshine-doctor
+@@ -31,6 +31,21 @@
+ else bad "package keyring missing or empty"
+   [ $FIX = 1 ] && pacman-key --init >/dev/null 2>&1 && pacman-key --populate >/dev/null 2>&1 && fx "keyring initialised"; fi
+ if out=$(pacman -Dk 2>&1); then ok "package database consistent"; else bad "package database problem: $(echo "$out" | head -2 | tr '\n' ' ')"; fi
++# every configured repository needs a sync database that is a readable archive
++sync_bad=; seen=
++for r in $(pacman-conf --repo-list 2>/dev/null) $(find /var/lib/pacman/sync -maxdepth 1 -name '*.db' -printf '%f\n' 2>/dev/null | sed 's/\.db$//'); do
++  case " $seen " in *" $r "*) continue;; esac
++  seen="$seen $r"
++  f="/var/lib/pacman/sync/$r.db"
++  [ -f "$f" ] && bsdtar -tf "$f" >/dev/null 2>&1 || sync_bad="$sync_bad $r"
++done
++if [ -z "$sync_bad" ]; then ok "sync databases are readable"
++else bad "sync database missing or damaged:$sync_bad"
++  if [ $FIX = 1 ]; then
++    for r in $sync_bad; do rm -f "/var/lib/pacman/sync/$r.db"; done
++    pacman -Sy --noconfirm >/dev/null 2>&1 && fx "sync databases refreshed" || bad "could not refresh sync databases"
++  fi
++fi
+ for r in $(pacman-conf --repo-list 2>/dev/null); do
+   db=/var/lib/pacman/sync/$r.db
+   if [ ! -s "$db" ]; then dbs_bad="$dbs_bad $r"; elif ! bsdtar -tf "$db" >/dev/null 2>&1; then dbs_bad="$dbs_bad $r"; rm -f "$db"; fi
+@@ -48,7 +63,25 @@
+ else bad "core packages missing:$core_missing"
+   if [ $FIX = 1 ]; then pacman -S --noconfirm --needed $core_missing >/tmp/sunshine-core.log 2>&1 && fx "reinstalled:$core_missing" || { bad "could not reinstall (see /tmp/sunshine-core.log)"; tail -3 /tmp/sunshine-core.log; }; fi
+ fi
++# the login manager, the network service, sudo and every member of base must be installed
++need=
++for p in sddm networkmanager sudo $(pacman -Sgq base 2>/dev/null); do
++  pacman -Qq "$p" >/dev/null 2>&1 || case " $need " in *" $p "*) ;; *) need="$need $p";; esac
++done
++if [ -z "$need" ]; then ok "required packages are installed"
++else bad "required packages missing:$need (login manager, network service, sudo, base)"
++  if [ $FIX = 1 ]; then pacman -S --needed --noconfirm $need >/dev/null 2>&1 && fx "required packages installed:$need" || bad "could not install required packages"; fi
++fi
+ for r in community testing staging extra-testing core-testing multilib-testing; do grep -q "^\[$r\]" /etc/pacman.conf 2>/dev/null && { bad "pacman.conf has the obsolete or unstable repository [$r]"; [ $FIX = 1 ] && /usr/local/bin/sunshine-fix-pacman >/dev/null 2>&1 && fx "obsolete repositories removed"; }; done
++# core and extra are required; report (never remove) any repository we do not know
++for r in core extra; do grep -q "^\[$r\]" /etc/pacman.conf 2>/dev/null || bad "pacman.conf does not list [$r] repository"; done
++for r in $(sed -n 's/^[[:space:]]*\[\([^]]*\)\].*/\1/p' /etc/pacman.conf 2>/dev/null); do
++  [ "$r" = options ] && continue
++  case " $r " in
++    " core "|" extra "|" multilib "|" sunshine "|" chaotic-aur ") ;;
++    *) warn "unknown repository [$r] in pacman.conf (checked, not removed)";;
++  esac
++done
+ n=$(find /etc -name '*.pacnew' 2>/dev/null | wc -l)
+ if [ "$n" -gt 0 ]; then warn "$n config update(s) waiting for review (*.pacnew)"; [ $FIX = 1 ] && [ -x /usr/local/bin/sunshine-pacnew ] && /usr/local/bin/sunshine-pacnew auto 2>/dev/null | sed 's/^/    /' && fx "safe config updates applied (sunshine-pacnew review shows the rest)"; else ok "no pending .pacnew files"; fi
+ if /usr/local/bin/sunshine-repo check --quiet; then ok "[sunshine] repository is configured"
+@@ -83,6 +116,7 @@
+   base=linux; [ -f "$kd/pkgbase" ] && base=$(cat "$kd/pkgbase")
+   if [ -f "/boot/vmlinuz-$base" ] && ! cmp -s "$kd/vmlinuz" "/boot/vmlinuz-$base"; then bad "/boot/vmlinuz-$base differs from the installed kernel (damaged or half-copied)"; [ $FIX = 1 ] && cp --sparse=never --reflink=never "$kd/vmlinuz" "/boot/vmlinuz-$base" && chmod 644 "/boot/vmlinuz-$base" && fx "vmlinuz-$base rewritten"; fi
+   [ -f "/boot/vmlinuz-$base" ] && ok "kernel image present: $base" || { bad "/boot/vmlinuz-$base missing"; [ $FIX = 1 ] && cp --sparse=never --reflink=never "$kd/vmlinuz" "/boot/vmlinuz-$base" && chmod 644 "/boot/vmlinuz-$base" && fx "vmlinuz-$base restored"; }
++  [ -f "/boot/vmlinuz-$base" ] && { cmp -s "/boot/vmlinuz-$base" "$kd/vmlinuz" && ok "kernel image matches module: $base" || { bad "/boot/vmlinuz-$base differs from the installed kernel"; [ $FIX = 1 ] && cp --sparse=never --reflink=never "$kd/vmlinuz" "/boot/vmlinuz-$base" && chmod 644 "/boot/vmlinuz-$base" && fx "vmlinuz-$base restored from module"; }; }
+   if [ -s "/boot/initramfs-$base.img" ]; then ok "initramfs present: $base"
+   else bad "/boot/initramfs-$base.img missing or empty"
+     if [ $FIX = 1 ]; then
+@@ -93,12 +127,24 @@
+   fi
+ done
+ [ $nk = 0 ] && bad "no kernel is installed (pacman -S linux)"
++# a HOOKS name without an install file makes the next mkinitcpio build fail; report it, never edit
++hooks=$(sed -n 's/^[[:space:]]*HOOKS=(\([^)]*\)).*/\1/p' /etc/mkinitcpio.conf 2>/dev/null)
++if [ -n "$hooks" ]; then
++  badhook=
++  for h in $hooks; do [ -f "/usr/lib/initcpio/install/$h" ] || [ -f "/etc/initcpio/install/$h" ] || badhook="$badhook $h"; done
++  if [ -z "$badhook" ]; then ok "mkinitcpio hooks have install files"; else
++    for h in $badhook; do warn "mkinitcpio hook $h has no install file"; done
++  fi
++fi
+ if [ -e /var/lib/sunshine/initramfs_error ]; then bad "the last package transaction left an incomplete boot setup ($(cat /var/lib/sunshine/initramfs_error))"; [ $FIX = 1 ] && { /usr/local/bin/sunshine-state-hook >/dev/null 2>&1; [ -e /var/lib/sunshine/initramfs_error ] || fx "boot files complete again"; }; fi
+ if [ -f /var/lib/sunshine/last_update ]; then
+   age=$(( ($(date +%s) - $(stat -c %Y /var/lib/sunshine/last_update)) / 86400 ))
+   [ "$age" -gt 14 ] && warn "the last update was $age days ago (sunshine-update)" || ok "last update: $age day(s) ago"
+   [ "$(stat -c %Y /var/lib/sunshine/last_update)" -gt "$(awk '/^btime/{print $2}' /proc/stat)" ] && warn "an update was applied since the last restart: restart to use it"
+ fi
++if [ -e /var/lib/sunshine/partial_upgrade ]; then bad "partial upgrade detected: a full upgrade is needed"
++  if [ $FIX = 1 ]; then pacman -Syu --noconfirm >/dev/null 2>&1 && { rm -f /var/lib/sunshine/partial_upgrade; fx "full upgrade applied"; } || bad "could not apply a full upgrade"; fi
++else ok "no partial upgrade pending"; fi
+ if [ -d /sys/firmware/efi ]; then
+   if [ -f /boot/efi/EFI/BOOT/BOOTX64.EFI ] || [ -f /boot/EFI/BOOT/BOOTX64.EFI ]; then ok "EFI fallback boot file present"
+   else bad "EFI fallback boot file (EFI/BOOT/BOOTX64.EFI) is missing: some firmwares will not find the system"; [ $FIX = 1 ] && grub-install --target=x86_64-efi --efi-directory=/boot/efi --removable --recheck >/dev/null 2>&1 && fx "EFI fallback boot file restored"; fi
+@@ -127,6 +173,9 @@
+     if [ $FIX = 1 ]; then cp --sparse=never --reflink=never /boot/vmlinuz-linux /boot/vmlinuz-linux.dense && mv -f /boot/vmlinuz-linux.dense /boot/vmlinuz-linux && fx "kernel rewritten"; fi; fi
+ fi
+ if grep -q menuentry /boot/grub/grub.cfg 2>/dev/null; then ok "GRUB menu present"; else bad "/boot/grub/grub.cfg is missing or has no boot entries"; [ $FIX = 1 ] && grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 && grep -q menuentry /boot/grub/grub.cfg && fx "GRUB menu regenerated"; fi
++if [ -f /boot/grub/grub.cfg ]; then
++  grep -q menuentry /boot/grub/grub.cfg 2>/dev/null && ok "GRUB menu has entries" || { bad "/boot/grub/grub.cfg has no menu entries"; [ $FIX = 1 ] && grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 && fx "GRUB menu rebuilt"; }
++fi
+ if [ -d /sys/firmware/efi ]; then mountpoint -q /boot/efi && ok "EFI partition mounted" || warn "EFI partition not mounted at /boot/efi (kernel/GRUB updates may not reach it)"; fi
+ if findmnt --verify >/dev/null 2>&1; then ok "/etc/fstab consistent"; else warn "/etc/fstab has problems (run: findmnt --verify)"; fi
+ fi
+@@ -141,13 +190,21 @@
+ if [ "$(findmnt -no FSTYPE / 2>/dev/null)" = btrfs ]; then
+   e=$(btrfs device stats / 2>/dev/null | awk '{s+=$2} END{print s+0}'); [ "${e:-0}" -gt 0 ] && warn "btrfs counted $e device error(s): run sunshine-doctor on a schedule and consider a scrub (sudo btrfs scrub start /)" || ok "btrfs reports no device errors"
+ fi
+-[ "$(timedatectl show -p NTPSynchronized --value 2>/dev/null)" = yes ] && ok "clock is synchronised" || warn "clock is not synchronised (certificates and updates can fail)"
++[ "$(timedatectl show -p NTPSynchronized --value 2>/dev/null)" = yes ] && ok "clock is synchronised" || { warn "clock is not synchronised (certificates and updates can fail)"; [ $FIX = 1 ] && timedatectl set-ntp true >/dev/null 2>&1 && fx "network time enabled"; }
+ swapon --noheadings 2>/dev/null | grep -q . && ok "swap is active" || warn "no swap is active (zram swap normally is: sunshine-performance on)"
+ fu=$(systemctl --failed --no-legend 2>/dev/null | awk '{print $2}' | tr '\n' ' ')
+ [ -z "${fu// }" ] && ok "no failed services" || warn "failed services: $fu"
+ use=$(df --output=pcent / | tail -1 | tr -dc 0-9)
+-if [ "${use:-0}" -ge 95 ]; then bad "root disk ${use}% full"; elif [ "${use:-0}" -ge 85 ]; then warn "root disk ${use}% full"; else ok "root disk ${use}% used"; fi
+-[ "$(systemctl is-active NetworkManager 2>/dev/null)" = active ] && ok "network service running" || warn "NetworkManager is not running"
++if [ "${use:-0}" -ge 95 ]; then bad "root disk ${use}% full"
++  if [ $FIX = 1 ]; then
++    before=$(df --output=avail -B1 / | tail -1 | tr -dc 0-9)
++    paccache -rk1 >/dev/null 2>&1; journalctl --vacuum-size=200M >/dev/null 2>&1
++    after=$(df --output=avail -B1 / | tail -1 | tr -dc 0-9)
++    freed=$(( (after - before) / 1048576 )); [ "$freed" -lt 0 ] && freed=0
++    fx "freed $freed MB"
++  fi
++elif [ "${use:-0}" -ge 85 ]; then warn "root disk ${use}% full"; else ok "root disk ${use}% used"; fi
++[ "$(systemctl is-active NetworkManager 2>/dev/null)" = active ] && ok "network service running" || { warn "NetworkManager is not running"; [ $FIX = 1 ] && systemctl enable --now NetworkManager >/dev/null 2>&1 && fx "network service started"; }
+ [ -d "/usr/lib/modules/$(uname -r)" ] && ok "running kernel matches installed modules" || warn "kernel was updated: restart to use it"
+ 
+ if [ $LIVE = 0 ]; then
