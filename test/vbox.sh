@@ -17,7 +17,7 @@ case "$cmd" in
     src=${1:?ISO or raw-disk VMDK}; gb=${2:-24}
     VBoxManage createvm --name "$N" --ostype ArchLinux_64 --register >/dev/null
     VBoxManage modifyvm "$N" --memory 4096 --cpus 4 --vram 128 --graphicscontroller vmsvga --firmware efi64 --ioapic on --nic1 nat --audio-enabled off \
-      --clipboard-mode bidirectional --draganddrop bidirectional --natpf1 "ssh,tcp,127.0.0.1,2222,,22" --usbxhci off --rtcuseutc on
+      --clipboard-mode bidirectional --draganddrop bidirectional --natpf1 "ssh,tcp,127.0.0.1,${SSHPORT:-2222},,22" --usbxhci off --rtcuseutc on
     VBoxManage storagectl "$N" --name SATA --add sata --controller IntelAhci --portcount 4
     case "$src" in
       *.vmdk) VBoxManage storageattach "$N" --storagectl SATA --port 0 --device 0 --type hdd --medium "$src" ;;

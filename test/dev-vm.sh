@@ -30,7 +30,7 @@ case "$cmd" in
     for i in $(seq 1 60); do "$0" ssh "$N" true 2>/dev/null && { echo "tunnel up: test/dev-vm.sh ssh $N '<command>'"; exit 0; }; sleep 5; done
     echo "ssh did not come up (guest control still works: test/vbox.sh run $N '<command>')"; exit 1 ;;
   ssh)
-    O="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -o ConnectTimeout=5 -p 2222"
+    O="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -o ConnectTimeout=5 -p ${SSH_PORT:-2222}"
     if command -v sshpass >/dev/null; then if [ $# -gt 0 ]; then exec sshpass -p sunshine ssh $O sunshine@127.0.0.1 bash -s <<<"$*"; else exec sshpass -p sunshine ssh $O sunshine@127.0.0.1; fi; fi
     echo "sshpass is needed for the tunnel (pacman -S sshpass)"; exit 1 ;;
   push)

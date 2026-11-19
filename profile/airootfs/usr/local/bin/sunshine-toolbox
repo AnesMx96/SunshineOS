@@ -70,6 +70,7 @@ SECTIONS = [
     (tr("Make it yours"), [
         (tr("🎮  Gaming setup"), tr("Drivers for your card, Steam, Proton, Gamemode, MangoHud"), lambda: term("sunshine-gaming install", "Gaming"), have("sunshine-gaming") and not LIVE),
         (tr("🐧  Kernels"), tr("Install and choose zen, LTS, hardened and other kernels"), lambda: term("sunshine-kernel list; echo; sunshine-kernel available", "Kernels"), have("sunshine-kernel") and not LIVE),
+        (tr("🔌  Drivers"), tr("Detect the hardware and install what it needs (NVIDIA, Wi-Fi, laptop helpers)"), lambda: term("sunshine-drivers detect; echo; sunshine-drivers install", "Drivers"), have("sunshine-drivers") and not LIVE),
         (tr("⚡  Performance profile"), tr("Faster desktop and games: memory, disk, network tuning"), lambda: term("sunshine-performance on; sunshine-performance status", "Performance"), have("sunshine-performance") and not LIVE),
         (tr("🖥  More desktops"), tr("GNOME, Xfce, Cinnamon, i3, Sway, Hyprland and more next to Plasma"), lambda: term("sunshine-desktops list", "Desktops"), have("sunshine-desktops") and not LIVE),
     ]),
