@@ -1,74 +1,59 @@
-/* Sunshine OS installer: dark sidebar, warm cream content area with dark text.
-   Calamares paints some of its own widgets (the partition legend) with a hard-coded black pen, so the content area is light:
-   everything that is drawn there, including those widgets, then agrees with the theme. */
-QWidget { background-color: #f4ead9; color: #2a1a0e; }
-QLabel, QCheckBox, QRadioButton, QGroupBox { background: transparent; color: #2a1a0e; }
-QLineEdit, QComboBox, QSpinBox, QPlainTextEdit, QTextEdit, QTextBrowser, QListView, QTreeView, QTableView, QAbstractItemView {
-    background-color: #fffaf1; color: #2a1a0e; border: 1px solid #d9c3a0; border-radius: 6px;
-    alternate-background-color: #f7edda; selection-background-color: #ffb86b; selection-color: #2a1a0e; }
-QAbstractItemView::item, QTreeView::item, QListView::item, QTableView::item { color: #2a1a0e; background: transparent; }
+/* Sunshine OS installer: one dark-warm palette on every page (dark window, light text, orange accents).
+   Stock Calamares paints the partition legend with a hard-coded black pen; the Sunshine build of Calamares patches that to the theme's text colour. */
+QWidget { background-color: #1d1526; color: #f6ead6; }
+QLabel, QCheckBox, QRadioButton, QGroupBox { background: transparent; color: #f6ead6; }
+QLineEdit, QSpinBox, QPlainTextEdit, QTextEdit, QTextBrowser, QListView, QTreeView, QTableView, QAbstractItemView {
+    background-color: #271c31; color: #f6ead6; border: 1px solid #5a4262; border-radius: 6px;
+    alternate-background-color: #2d2037; selection-background-color: #ffb86b; selection-color: #2a1a0e; }
+QAbstractItemView::item, QTreeView::item, QListView::item, QTableView::item { color: #f6ead6; background: transparent; }
 QAbstractItemView::item:selected, QTreeView::item:selected, QListView::item:selected, QTableView::item:selected { background-color: #ffb86b; color: #2a1a0e; }
-QAbstractItemView::item:hover { background-color: #ffe6bf; color: #2a1a0e; }
-QTreeView { color: #2a1a0e; }
-QComboBox QAbstractItemView { background-color: #fffaf1; color: #2a1a0e; selection-background-color: #ffb86b; selection-color: #2a1a0e; }
-QHeaderView::section { background-color: #3a2a47; color: #f6ead6; border: 0; padding: 4px; }
-QPushButton { background-color: #ffe6bf; color: #2a1a0e; border: 1px solid #e0a85f; border-radius: 6px; padding: 6px 16px; }
-QPushButton:hover { background-color: #ffd699; }
-QPushButton:default, QPushButton:focus { border-color: #d9822b; }
-QPushButton:disabled { background-color: #ece1cf; color: #a39482; border-color: #ddcfb8; }
-QCheckBox::indicator, QRadioButton::indicator { background-color: #fffaf1; border: 1px solid #c9a56e; }
+QAbstractItemView::item:hover { background-color: #3a2a47; color: #f6ead6; }
+QHeaderView, QHeaderView::section { background-color: #3a2a47; color: #f6ead6; border: 0; padding: 4px; }
+QPushButton { background-color: #3a2a47; color: #f6ead6; border: 1px solid #6a4f74; border-radius: 6px; padding: 6px 16px; }
+QPushButton:hover { background-color: #4a3659; }
+QPushButton:default, QPushButton:focus { border-color: #ffb86b; }
+QPushButton:disabled { background-color: #2a2033; color: #8b7a8f; border-color: #3d2f48; }
+QCheckBox::indicator, QRadioButton::indicator { background-color: #271c31; border: 1px solid #6a4f74; }
 QCheckBox::indicator { border-radius: 3px; width: 14px; height: 14px; }
 QRadioButton::indicator { border-radius: 8px; width: 14px; height: 14px; }
-QCheckBox::indicator:checked, QRadioButton::indicator:checked { background-color: #ffb86b; border-color: #d9822b; }
-QProgressBar { background-color: #fffaf1; border: 1px solid #d9c3a0; border-radius: 6px; text-align: center; color: #2a1a0e; }
+QCheckBox::indicator:checked, QRadioButton::indicator:checked { background-color: #ffb86b; border-color: #ffd699; }
+QProgressBar { background-color: #271c31; border: 1px solid #5a4262; border-radius: 6px; text-align: center; color: #f6ead6; }
 QProgressBar::chunk { background-color: #ffb86b; border-radius: 5px; }
-QScrollBar:vertical { background: #f4ead9; width: 12px; }
-QScrollBar::handle:vertical { background: #d9c3a0; border-radius: 5px; min-height: 24px; }
-QScrollBar:horizontal { background: #f4ead9; height: 12px; }
-QScrollBar::handle:horizontal { background: #d9c3a0; border-radius: 5px; min-width: 24px; }
+QScrollBar:vertical { background: #1d1526; width: 12px; }
+QScrollBar::handle:vertical { background: #5a4262; border-radius: 5px; min-height: 24px; }
+QScrollBar:horizontal { background: #1d1526; height: 12px; }
+QScrollBar::handle:horizontal { background: #5a4262; border-radius: 5px; min-width: 24px; }
 QScrollBar::add-line, QScrollBar::sub-line { width: 0; height: 0; }
-QToolTip { background-color: #fffaf1; color: #2a1a0e; border: 1px solid #ffb86b; }
-QDialog, QMessageBox, QInputDialog { background-color: #f4ead9; color: #2a1a0e; }
-QTabWidget::pane { background-color: #f4ead9; border: 1px solid #d9c3a0; }
-QTabBar::tab { background-color: #ead9bc; color: #2a1a0e; padding: 6px 12px; }
-QTabBar::tab:selected { background-color: #ffb86b; }
-QMenu { background-color: #fffaf1; color: #2a1a0e; border: 1px solid #d9c3a0; }
+QToolTip { background-color: #33253f; color: #f6ead6; border: 1px solid #ffb86b; }
+QDialog, QMessageBox, QInputDialog { background-color: #1d1526; color: #f6ead6; }
+QTabWidget::pane { background-color: #1d1526; border: 1px solid #5a4262; }
+QTabBar::tab { background-color: #33253f; color: #f6ead6; padding: 6px 12px; }
+QTabBar::tab:selected { background-color: #ffb86b; color: #2a1a0e; }
+QMenu { background-color: #271c31; color: #f6ead6; border: 1px solid #5a4262; }
 QMenu::item:selected { background-color: #ffb86b; color: #2a1a0e; }
 QScrollArea { background: transparent; border: 0; }
 QScrollArea > QWidget > QWidget { background: transparent; }
 
-/* the partition bar and its legend sit directly on the cream page */
-PartitionBarsView { background: transparent; border: 0; }
-PartitionLabelsView { background-color: #f4ead9; color: #2a1a0e; border: 0; }
-
-/* the sidebar stays dark */
-#sidebarApp, #sidebarApp QWidget { background-color: #1d1526; color: #f6ead6; }
-#sidebarApp QLabel { background: transparent; color: #f6ead6; }
-#sidebarApp QPushButton { background-color: #3a2a47; color: #f6ead6; border: 1px solid #6a4f74; }
-#sidebarApp QPushButton:hover { background-color: #4a3659; }
-
-/* the Apps tree: header, check boxes and expand arrows (a styled QTreeView loses the native ones) */
-QHeaderView, QHeaderView::section { background-color: #3a2a47; color: #f6ead6; border: 0; padding: 4px; }
-QTreeView::indicator { width: 16px; height: 16px; border: 1px solid #c9a56e; border-radius: 3px; background-color: #fffaf1; }
-QTreeView::indicator:checked { background-color: #ffb86b; border-color: #d9822b; }
-QTreeView::indicator:indeterminate { background-color: #ffe0b0; border-color: #d9822b; }
+/* tree (Apps page): expand arrows and check boxes */
+QTreeView::indicator { width: 16px; height: 16px; border: 1px solid #6a4f74; border-radius: 3px; background-color: #271c31; }
+QTreeView::indicator:checked { background-color: #ffb86b; border-color: #ffd699; }
+QTreeView::indicator:indeterminate { background-color: #8a6a45; border-color: #ffd699; }
 QTreeView::branch { background: transparent; }
 QTreeView::branch:has-children:closed { image: url(/etc/calamares/branding/sunshine/arrow-right.svg); }
 QTreeView::branch:has-children:open { image: url(/etc/calamares/branding/sunshine/arrow-down.svg); }
 
-/* combo boxes: padded, with our own arrow; the drop-down list is dark with light text (the style paints list text pale whatever the sheet says) */
-QComboBox { background-color: #fffaf1; color: #2a1a0e; border: 1px solid #d9c3a0; border-radius: 6px; padding: 3px 26px 3px 8px; min-height: 24px; }
-QComboBox:hover, QComboBox:focus { border-color: #d9822b; }
+/* combo boxes: padded, own arrow, plain opaque list popup */
+QComboBox { background-color: #271c31; color: #f6ead6; border: 1px solid #5a4262; border-radius: 6px; padding: 3px 26px 3px 8px; min-height: 24px; combobox-popup: 0; }
+QComboBox:hover, QComboBox:focus { border-color: #ffb86b; }
 QComboBox::drop-down { border: 0; width: 24px; background: transparent; }
 QComboBox::down-arrow { image: url(/etc/calamares/branding/sunshine/arrow-down.svg); width: 12px; height: 12px; }
-QComboBox QAbstractItemView { background-color: #3a2a47; color: #f6ead6; border: 1px solid #6a4f74; selection-background-color: #ffb86b; selection-color: #2a1a0e; outline: 0; padding: 2px; }
+QComboBoxPrivateContainer, QComboBoxPrivateContainer QFrame { background-color: #271c31; border: 1px solid #6a4f74; }
+QComboBox QAbstractItemView, QComboBoxPrivateContainer QAbstractItemView { background-color: #271c31; color: #f6ead6; border: 0; selection-background-color: #ffb86b; selection-color: #2a1a0e; outline: 0; padding: 2px; }
 QComboBox QAbstractItemView::item { min-height: 26px; padding-left: 8px; color: #f6ead6; background: transparent; }
 QComboBox QAbstractItemView::item:selected, QComboBox QAbstractItemView::item:hover { background-color: #ffb86b; color: #2a1a0e; }
 
-/* Summary page: dark with light text. Its partition legend (black text, see above) is hidden here; the text lines below list the same facts. */
-SummaryPage, SummaryPage QWidget, SummaryPage QScrollArea, SummaryPage QScrollArea > QWidget > QWidget { background-color: #1d1526; color: #f6ead6; }
-SummaryPage QLabel { background: transparent; color: #f6ead6; }
-SummaryPage PartitionLabelsView { max-height: 0px; min-height: 0px; background: transparent; }
-QComboBoxPrivateContainer, QComboBoxPrivateContainer QFrame, QComboBoxPrivateContainer QAbstractItemView { background-color: #3a2a47; border: 1px solid #6a4f74; }
-QComboBoxPrivateContainer QAbstractItemView { color: #f6ead6; selection-background-color: #ffb86b; selection-color: #2a1a0e; }
-QComboBox { combobox-popup: 0; }
+/* partition bar and its legend (the patched Calamares paints the legend in the theme's text colours) sit directly on the dark page */
+PartitionBarsView, PartitionLabelsView { background: transparent; border: 0; }
+
+#sidebarApp, #mainApp { background-color: #1d1526; }
+#sidebarApp QWidget { background-color: #1d1526; color: #f6ead6; }

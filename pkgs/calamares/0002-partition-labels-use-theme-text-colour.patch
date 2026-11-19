@@ -1,0 +1,29 @@
+--- a/src/modules/partition/gui/PartitionLabelsView.cpp	2026-11-19 17:41:51.204047666 +0100
++++ b/src/modules/partition/gui/PartitionLabelsView.cpp	2026-11-19 17:41:51.239715667 +0100
+@@ -373,7 +373,7 @@
+                                 const QPoint& pos,
+                                 bool selected )
+ {
+-    painter->setPen( Qt::black );
++    painter->setPen( QPalette().color( QPalette::WindowText ) );
+     int vertOffset = 0;
+     int width = 0;
+     for ( const QString& textLine : text )
+@@ -382,7 +382,7 @@
+         painter->drawText(
+             pos.x() + LABEL_PARTITION_SQUARE_MARGIN, pos.y() + vertOffset + textSize.height() / 2, textLine );
+         vertOffset += textSize.height();
+-        painter->setPen( Qt::gray );
++        painter->setPen( QPalette().color( QPalette::PlaceholderText ) );
+         width = qMax( width, textSize.width() );
+     }
+ 
+@@ -395,7 +395,7 @@
+         drawSelectionSquare( painter, partitionSquareRect.adjusted( 2, 2, -2, -2 ), color );
+     }
+ 
+-    painter->setPen( Qt::black );
++    painter->setPen( QPalette().color( QPalette::WindowText ) );
+ }
+ 
+ QModelIndex
