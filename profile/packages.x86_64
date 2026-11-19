@@ -293,3 +293,5 @@ btop
 ncdu
 lm_sensors
 thermald
+restic
+libsecret

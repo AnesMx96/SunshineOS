@@ -57,6 +57,10 @@ SECTIONS = [
         (tr("🧹  Clean up"), tr("Free disk space: old downloads, unused packages, logs"), lambda: term("sunshine-cleanup", "Clean up"), True),
         (tr("📦  Fix the package manager"), tr("Lock file, keyring, mirrors, databases"), lambda: term("sunshine-fix-pacman", "Fix pacman"), True),
     ]),
+    (tr("Protect my files"), [
+        (tr("💾  Back up my files"), tr("Encrypted backup of your home folder to a disk or folder you choose (first time: sunshine-backup init PATH)"),
+         lambda: term("sunshine-backup run || (echo; echo 'First time? Run: sunshine-backup init /path/to/backup-folder')", "Backup"), have("sunshine-backup") and not LIVE),
+    ]),
     (tr("Go back in time"), [
         (tr("🛟  Restore points"), tr("Browse, restore or delete snapshots (Btrfs Assistant)"),
          lambda: run(["btrfs-assistant-launcher"]), ON_BTRFS and have("btrfs-assistant-launcher")),
