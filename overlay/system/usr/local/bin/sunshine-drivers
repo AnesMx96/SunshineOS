@@ -88,6 +88,7 @@ install_() {
     grep -q 'mdns_minimal' /etc/nsswitch.conf || sed -i '/^hosts:/ s/resolve/mdns_minimal [NOTFOUND=return] resolve/' /etc/nsswitch.conf
   fi
   printf '%s\n' "${avail[@]}" | grep -q '^thermald$' && systemctl enable --now thermald.service >/dev/null 2>&1
+  case "$VIRT" in oracle) systemctl enable --now vboxservice.service >/dev/null 2>&1;; vmware) systemctl enable --now vmtoolsd.service >/dev/null 2>&1;; kvm|qemu) systemctl enable --now qemu-guest-agent.service >/dev/null 2>&1;; esac
   printf '%s\n' "${avail[@]}" | grep -q '^fprintd$' && true
   ok "$(loc "Drivers installed.") $(printf '%s\n' "${avail[@]}" | grep -q '^nvidia' && loc "Restart to use the NVIDIA driver.")"
 }

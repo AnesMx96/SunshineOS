@@ -130,7 +130,7 @@ do_mount() {     # do_mount "dev[:subvol]<TAB>fs<TAB>name"
   echo "$line" > "$STATE/system"
   ok "$(loc "mounted at") $M ($(printf '%s' "$line" | cut -f3))"
 }
-inchroot() { arch-chroot "$M" "$@"; }
+inchroot() { SUNSHINE_IN_RESCUE=1 arch-chroot "$M" "$@"; }
 
 # ---------------------------------------------------------------- repairs (each prints what really happened)
 fails=0
@@ -148,7 +148,7 @@ step_core() {
   sec "Core packages"
   local missing=() p
   for p in base linux-firmware mkinitcpio grub sudo networkmanager sddm pipewire pacman; do inchroot pacman -Qq "$p" >/dev/null 2>&1 || missing+=("$p"); done
-  inchroot pacman -Qq linux linux-lts linux-zen linux-hardened linux-cachyos >/dev/null 2>&1 || missing+=(linux)
+  inchroot pacman -Qq 2>/dev/null | grep -qE '^linux(-lts|-zen|-hardened|-rt|-rt-lts|-cachyos[a-z-]*)?$' || missing+=(linux)
   if [ ${#missing[@]} -eq 0 ]; then ok "$(loc "core packages are installed")"; return; fi
   echo "$(loc "missing"): ${missing[*]}"
   if inchroot pacman -S --noconfirm --needed "${missing[@]}" >>"$LOG" 2>&1; then ok "$(loc "reinstalled"): ${missing[*]}"; else fail "$(loc "could not reinstall (no network? see") $LOG)"; fi
@@ -212,8 +212,12 @@ step_boot() {
 }
 step_doctor() {
   sec "Sunshine doctor"
-  if [ -x "$M/usr/local/bin/sunshine-doctor" ] || [ -x "$M/usr/bin/sunshine-doctor" ]; then
-    if inchroot sunshine-doctor --fix >"$LOG.doctor" 2>&1; then tail -40 "$LOG.doctor" | sed 's/^/  /'; else fail "sunshine-doctor --fix: $(tail -2 "$LOG.doctor" | tr '\n' ' ')"; fi
+  # the live medium's doctor is the newest one: run that inside the installed system (its own copy may be old or the thing that is broken)
+  if [ -x /usr/local/bin/sunshine-doctor ]; then
+    install -m755 /usr/local/bin/sunshine-doctor "$M/tmp/sunshine-doctor-rescue"
+    inchroot /tmp/sunshine-doctor-rescue --fix 2>&1 | sed 's/^/  /' | tail -60
+    rm -f "$M/tmp/sunshine-doctor-rescue"
+  elif [ -x "$M/usr/local/bin/sunshine-doctor" ] || [ -x "$M/usr/bin/sunshine-doctor" ]; then inchroot sunshine-doctor --fix 2>&1 | sed 's/^/  /' | tail -40
   else echo "$(loc "sunshine-doctor is not installed in that system")"; fi
 }
 do_fsck() {
@@ -265,7 +269,7 @@ case "$cmd" in
     if command -v smartctl >/dev/null; then
       d=$(printf '%s' "$line" | cut -f1); d=${d%%:*}
       pk=$(lsblk -rno PKNAME "$d" 2>/dev/null | head -1); case "$d" in /dev/mapper/sunshine-luks-*) pk=$(lsblk -rno PKNAME "/dev/${d##*sunshine-luks-}" 2>/dev/null | head -1);; esac
-      if [ -n "$pk" ] && smartctl -H "/dev/$pk" 2>/dev/null | grep -qiE 'FAILED|Status: BAD'; then
+      if [ -n "$pk" ] && smartctl -H "/dev/$pk" 2>/dev/null | grep -qiE 'test result: *FAILED|Health Status: *(FAIL|BAD)'; then
         bad "$(loc "The disk") /dev/$pk $(loc "reports a hardware failure (SMART). Repairs can make a dying disk worse: copy your files first (the live session has ddrescue and rsync). To repair anyway: SUNSHINE_RESCUE_FORCE=1 sunshine-rescue repair")"
         [ "${SUNSHINE_RESCUE_FORCE:-0}" = 1 ] || exit 1
       fi
