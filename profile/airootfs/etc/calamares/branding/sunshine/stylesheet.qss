@@ -55,3 +55,20 @@ QTreeView::indicator:indeterminate { background-color: #ffe0b0; border-color: #d
 QTreeView::branch { background: transparent; }
 QTreeView::branch:has-children:closed { image: url(/etc/calamares/branding/sunshine/arrow-right.svg); }
 QTreeView::branch:has-children:open { image: url(/etc/calamares/branding/sunshine/arrow-down.svg); }
+
+/* combo boxes: padded, with our own arrow; the drop-down list is dark with light text (the style paints list text pale whatever the sheet says) */
+QComboBox { background-color: #fffaf1; color: #2a1a0e; border: 1px solid #d9c3a0; border-radius: 6px; padding: 3px 26px 3px 8px; min-height: 24px; }
+QComboBox:hover, QComboBox:focus { border-color: #d9822b; }
+QComboBox::drop-down { border: 0; width: 24px; background: transparent; }
+QComboBox::down-arrow { image: url(/etc/calamares/branding/sunshine/arrow-down.svg); width: 12px; height: 12px; }
+QComboBox QAbstractItemView { background-color: #3a2a47; color: #f6ead6; border: 1px solid #6a4f74; selection-background-color: #ffb86b; selection-color: #2a1a0e; outline: 0; padding: 2px; }
+QComboBox QAbstractItemView::item { min-height: 26px; padding-left: 8px; color: #f6ead6; background: transparent; }
+QComboBox QAbstractItemView::item:selected, QComboBox QAbstractItemView::item:hover { background-color: #ffb86b; color: #2a1a0e; }
+
+/* Summary page: dark with light text. Its partition legend (black text, see above) is hidden here; the text lines below list the same facts. */
+SummaryPage, SummaryPage QWidget, SummaryPage QScrollArea, SummaryPage QScrollArea > QWidget > QWidget { background-color: #1d1526; color: #f6ead6; }
+SummaryPage QLabel { background: transparent; color: #f6ead6; }
+SummaryPage PartitionLabelsView { max-height: 0px; min-height: 0px; background: transparent; }
+QComboBoxPrivateContainer, QComboBoxPrivateContainer QFrame, QComboBoxPrivateContainer QAbstractItemView { background-color: #3a2a47; border: 1px solid #6a4f74; }
+QComboBoxPrivateContainer QAbstractItemView { color: #f6ead6; selection-background-color: #ffb86b; selection-color: #2a1a0e; }
+QComboBox { combobox-popup: 0; }
