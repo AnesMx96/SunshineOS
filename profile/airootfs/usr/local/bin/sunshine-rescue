@@ -214,9 +214,9 @@ step_doctor() {
   sec "Sunshine doctor"
   # the live medium's doctor is the newest one: run that inside the installed system (its own copy may be old or the thing that is broken)
   if [ -x /usr/local/bin/sunshine-doctor ]; then
-    install -m755 /usr/local/bin/sunshine-doctor "$M/tmp/sunshine-doctor-rescue"
-    inchroot /tmp/sunshine-doctor-rescue --fix 2>&1 | sed 's/^/  /' | tail -60
-    rm -f "$M/tmp/sunshine-doctor-rescue"
+    install -m755 /usr/local/bin/sunshine-doctor "$M/root/.sunshine-doctor-rescue"
+    inchroot /root/.sunshine-doctor-rescue --fix 2>&1 | sed 's/^/  /' | tail -60
+    rm -f "$M/root/.sunshine-doctor-rescue"
   elif [ -x "$M/usr/local/bin/sunshine-doctor" ] || [ -x "$M/usr/bin/sunshine-doctor" ]; then inchroot sunshine-doctor --fix 2>&1 | sed 's/^/  /' | tail -40
   else echo "$(loc "sunshine-doctor is not installed in that system")"; fi
 }
