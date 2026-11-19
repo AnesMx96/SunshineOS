@@ -15,3 +15,4 @@ features taken from EndeavourOS / Garuda / CachyOS, a separate tools repository 
 - 01:45-02:00 New tools written: sunshine-rescue (live repair of installed systems), sunshine-kernel, sunshine-performance, sunshine-gaming, sunshine-desktops, sunshine-toolsync (+ tools/publish-tools.sh, signed releases; verified against a local server incl. tamper tests). sunshine-base 0.5 published (no window-title applet).
 - 02:00 fastfetch logo for upstream prepared locally (scratch/fastfetch-pr, branch logo-sunshineos, ASCII '#' from the repo's own logo). Upstream needs a Logo Request issue first and a stable release: submit after the replacement Sol release is out.
 - 02:19 moved to branch team/night-run; shared layout docs/team/ created (owner order, relayed).
+- 02:21 merged agent/lint and agent/translate (reviewed).
