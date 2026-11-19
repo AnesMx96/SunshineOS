@@ -1,0 +1,4250 @@
+
+You are a senior Linux distribution engineer. I maintain Sunshine OS, a desktop distribution based on Arch Linux (KDE Plasma 6 on Wayland, SDDM, GRUB, mkinitcpio, btrfs with snapper and grub-btrfs or ext4 with Timeshift, NetworkManager, PipeWire, Calamares installer, live ISO built with archiso). Its goal is to be more reliable and easier than EndeavourOS, Garuda Linux and CachyOS, so that professionals, gamers and ordinary users choose it over those and over Ubuntu. I already have these shell tools: a doctor (health check with --fix), a pacman repair tool, a boot repair tool, an updater that runs pacman/AUR/Flatpak, a rescue tool that works from the LIVE session (finds the installed system on any disk including LUKS and btrfs subvolumes, mounts it as fstab does, arch-chroot, reinstalls GRUB, rebuilds the initramfs, checks fstab UUIDs, resets passwords, runs fsck), a kernel manager, a performance profile (zram, sysctl, I/O schedulers, earlyoom), a gaming setup, a driver installer (NVIDIA open modules, Broadcom, laptop helpers), a desktop installer, pacman hooks that record "last update" and "incomplete initramfs", and idempotent migration scripts. Tools are updated independently of the ISO through a signed manifest.
+
+Please answer in these exact parts, as detailed and concrete as you can, with exact commands:
+
+PART 1. A catalogue of the 40 most likely ways an Arch-based desktop installation breaks or becomes unusable in real life (boot failures, update failures, driver failures, disk and filesystem problems, login and display problems, network problems, package database problems, user mistakes such as removing a core package or editing fstab wrongly). For each: a short name, how to DETECT it automatically and safely (exact command or file check), how to REPAIR it automatically (exact commands, in which environment: running system, or live session with chroot), the risk of the repair, and what must never be done automatically.
+
+PART 2. The order of operations for a complete one-command repair from the live session ("repair everything") and for a "doctor --fix" on a running system, with the reason for the order and where to stop and ask the user.
+
+PART 3. Which existing tools from other distributions (name the distribution, the package or script name and what exactly it does) are the best to copy or adapt for each of: system update safety, health checking, hardware driver detection (especially NVIDIA and hybrid graphics laptops), kernel management, snapshot and rollback, mirror ranking, pacnew merging, log collection for support requests, secure boot, performance tuning, gaming setup. Rank them and say which one you would pick for each and why.
+
+PART 4. The 15 features a new Arch-based distribution needs to be chosen by (a) professionals, (b) gamers, (c) ordinary users, in priority order, with one sentence on how to implement each as a small testable shell tool or pacman hook.
+
+PART 5. A test plan: how to test all the repairs in virtual machines automatically (break the system on purpose in each of the ways from part 1, run the repair, verify).
+
+Be specific, use numbered lists and code blocks, avoid generic advice.
+\u2026
+Sunshine OS: Distribution reliability and recovery engineering blueprint
+
+The central engineering decision should be to treat Sunshine OS as a recoverable operating system, not merely an Arch installation with a collection of repair scripts.
+
+Your existing tooling already covers a substantial part of the problem. The next step is to turn it into a coordinated reliability architecture with three distinct layers:
+
+    Detection: identify what is broken, establish confidence, and determine the affected subsystem.
+
+    Repair: execute the smallest reversible operation that addresses the actual failure.
+
+    Verification: prove that the repair worked before declaring success or proceeding to another subsystem.
+
+There is one particularly important distinction: a system that fails to boot, a system that boots but has a broken desktop, and a system with a damaged package database must not receive the same generic repair sequence.
+
+I would establish these non-negotiable rules across all Sunshine OS utilities:
+
+    Never automatically format, repartition, or recreate a filesystem.
+
+    Never automatically delete user data, snapshots, or package caches to free space.
+
+    Never automatically downgrade arbitrary packages or perform an unrestricted partial upgrade.
+
+    Never blindly overwrite fstab, GRUB configuration, initramfs configuration, or user configuration.
+
+    Never run fsck against a mounted filesystem.
+
+    Never assume that the root filesystem is /dev/sda, /dev/nvme0n1p2, or even a conventional partition.
+
+    Never mount a discovered filesystem read-write until its identity and intended role have been established.
+
+    Every repair must produce a structured log, return a meaningful exit status, and be safe to retry where possible.
+
+    Every destructive operation must require explicit authorization.
+
+    A successful command is not proof of a successful repair: verify the resulting system state.
+
+I would also introduce a repair classification shared by every utility:
+
+Level
+	
+
+Classification
+	
+
+Behaviour
+
+0
+	
+
+Informational
+	
+
+Report only
+
+1
+	
+
+Safe automatic
+	
+
+Read-only checks and non-destructive fixes
+
+2
+	
+
+Reversible
+	
+
+Backup first, then repair
+
+3
+	
+
+Conditional
+	
+
+Repair only after validating specific conditions
+
+4
+	
+
+Destructive
+	
+
+Explicit user authorization required
+
+5
+	
+
+Unsupported
+	
+
+Explain the problem and stop
+
+The following is a proposed engineering specification. Commands are written for a conventional Arch-based installation; Sunshine OS should wrap them with filesystem, bootloader, encryption, and hardware detection rather than blindly executing them.
+PART 1. Catalogue of the 40 most likely installation failures
+1.1 Bootloader, firmware and boot configuration
+
+The rescue environment should identify the boot architecture before attempting any bootloader repair.
+
+Establish the environment:
+
+# Identify firmware mode
+if [[ -d /sys/firmware/efi ]]; then
+    echo UEFI
+else
+    echo BIOS
+fi
+
+# Identify disks, filesystems, UUIDs and partition types
+lsblk -e7 -o NAME,PATH,SIZE,FSTYPE,FSVER,UUID,PARTUUID,PARTTYPE,MOUNTPOINTS
+
+# Inspect firmware boot entries
+efibootmgr -v
+
+# Inspect boot files
+findmnt /boot
+findmnt /efi
+findmnt /boot/efi
+
+In the examples below:
+
+    LIVE means commands run in the Sunshine OS live environment.
+
+    CHROOT means commands run inside the installed system using arch-chroot /mnt.
+
+    /mnt is the verified installed root.
+
+    /mnt/boot and /mnt/boot/efi are examples; actual mountpoints must come from the installation's boot configuration.
+
+Do not assume that all installations use the same EFI mountpoint.
+A. Boot failures
+
+1. GRUB configuration missing or corrupted
+
+- Detect (LIVE):
+
+test -f /mnt/boot/grub/grub.cfg
+grub-script-check /mnt/boot/grub/grub.cfg
+
+The second command returns a nonzero status if GRUB configuration syntax is invalid.
+
+- Repair (CHROOT):
+
+grub-mkconfig -o /boot/grub/grub.cfg
+grub-script-check /boot/grub/grub.cfg
+
+    Risk: Low to medium. An incorrect GRUB configuration can make every installed operating system inaccessible through that boot entry.
+
+    Never: Generate configuration before confirming that the real boot partition is mounted. Otherwise, you might write a perfectly valid configuration into an ordinary directory on the root filesystem.
+
+2. GRUB EFI executable missing or damaged
+
+- Detect (LIVE):
+
+find /mnt/boot /mnt/boot/efi /mnt/efi \
+    -type f -iname 'grubx64.efi' 2>/dev/null
+
+Also inspect the NVRAM entries:
+
+efibootmgr -v
+
+- Repair (CHROOT, UEFI):
+
+grub-install \
+    --target=x86_64-efi \
+    --efi-directory=/boot/efi \
+    --bootloader-id=SunshineOS \
+    --recheck
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+Replace /boot/efi with the actual ESP mountpoint.
+
+    Risk: Medium. Firmware entries can be altered, and an incorrectly mounted ESP can receive files in the wrong location.
+
+    Never: Automatically install a UEFI bootloader when the machine is actually using BIOS, or format the EFI System Partition.
+
+3. GRUB firmware entry missing
+
+- Detect (LIVE):
+
+efibootmgr -v
+
+Compare the existing entries with the EFI executable actually installed on the ESP.
+
+- Repair (CHROOT):
+
+If the EFI executable is valid but its NVRAM entry is missing:
+
+grub-install \
+    --target=x86_64-efi \
+    --efi-directory=/boot/efi \
+    --bootloader-id=SunshineOS \
+    --recheck
+
+Then verify:
+
+efibootmgr -v
+
+    Risk: Medium. Some firmware implementations reject or silently reorder boot entries.
+
+    Never: Delete existing Windows Boot Manager or other Linux entries automatically. Never assume the firmware supports NVRAM writes.
+
+4. Initramfs missing or corrupted
+
+- Detect (CHROOT):
+
+ls -lh /boot/initramfs*
+mkinitcpio -M
+
+Check installed kernel packages and their associated presets:
+
+ls -l /etc/mkinitcpio.d/
+pacman -Q | grep -E '^linux'
+
+- Repair (CHROOT):
+
+mkinitcpio -P
+
+    Risk: Medium. Incorrect presets or kernel-module configuration can produce another unusable initramfs.
+
+    Never: Generate an initramfs before checking whether /boot is mounted and whether the kernel packages and module trees match.
+
+5. Kernel installed but its modules are missing
+
+- Detect (CHROOT):
+
+pacman -Q linux
+ls -ld /usr/lib/modules/*
+find /usr/lib/modules -maxdepth 2 -name modules.dep
+
+Compare the installed kernel version against the module directory.
+
+- Repair (CHROOT):
+
+pacman -S linux linux-headers
+mkinitcpio -P
+
+This is an example for the standard Arch kernel. The actual package must match the selected kernel.
+
+    Risk: Medium. Replacing a kernel may affect proprietary DKMS modules.
+
+    Never: Remove the last known-working kernel before confirming that another kernel boots.
+
+6. Incorrect kernel command-line parameters
+
+- Detect:
+
+cat /proc/cmdline
+
+For the installed GRUB configuration:
+
+grep -nE 'GRUB_CMDLINE_LINUX' /etc/default/grub
+grep -n 'linux.*root=' /boot/grub/grub.cfg
+
+- Repair (CHROOT):
+
+Only remove a parameter identified as invalid against the actual hardware and configuration.
+
+cp -a /etc/default/grub \
+    /etc/default/grub.sunshine-backup
+
+# After a validated configuration change:
+grub-mkconfig -o /boot/grub/grub.cfg
+
+    Risk: Medium to high. Removing cryptdevice, rootflags, or resume parameters can prevent booting.
+
+    Never: Replace the entire kernel command line with a generic Sunshine OS default.
+
+7. Wrong root UUID in boot configuration
+
+- Detect:
+
+blkid
+cat /etc/fstab
+cat /proc/cmdline
+
+Compare the UUID used by the boot configuration against the UUID of the actual root filesystem.
+
+- Repair (CHROOT):
+
+Only after identifying the correct root partition:
+
+cp -a /etc/default/grub /etc/default/grub.sunshine-backup
+
+Update the incorrect reference and regenerate:
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+    Risk: High if the root filesystem or encrypted mapping is misidentified.
+
+    Never: Substitute the first UUID found by blkid.
+
+8. Incorrect Btrfs root subvolume
+
+- Detect (LIVE):
+
+btrfs subvolume list /mnt
+findmnt -R /mnt
+
+Compare the actual root subvolume with the rootflags=subvol= argument and the mount options in fstab.
+
+- Repair (CHROOT):
+
+Back up the configuration, correct the identified subvolume reference, and rebuild the boot configuration:
+
+cp -a /etc/default/grub /etc/default/grub.sunshine-backup
+grub-mkconfig -o /boot/grub/grub.cfg
+
+    Risk: High. The wrong subvolume may boot an outdated or incomplete system.
+
+    Never: Automatically change the default Btrfs subvolume or delete snapshots to make the configuration appear consistent.
+
+B. Filesystem and storage failures
+
+9. Root filesystem mounted read-only
+
+- Detect (RUNNING):
+
+findmnt -no SOURCE,FSTYPE,OPTIONS /
+dmesg -T | grep -iE 'read-only|I/O error|filesystem error|btrfs'
+
+- Repair:
+
+For a confirmed transient read-only mount, with no underlying hardware or filesystem errors:
+
+mount -o remount,rw /
+
+    Risk: High if the kernel remounted the filesystem read-only because of corruption or hardware failure.
+
+    Never: Force read-write mounting after serious filesystem errors without investigating the underlying cause.
+
+10. Btrfs filesystem errors
+
+- Detect (RUNNING):
+
+btrfs device stats /
+btrfs scrub status /
+dmesg -T | grep -iE 'BTRFS.*(error|corrupt|csum|checksum)'
+
+- Repair (RUNNING):
+
+For a healthy, mounted filesystem, schedule a scrub:
+
+btrfs scrub start /
+
+Inspect the result:
+
+btrfs scrub status /
+btrfs device stats /
+
+    Risk: Low to medium for a scrub. Scrub can repair checksum errors only when a valid redundant copy exists.
+
+    Never: Run btrfs check --repair automatically. It is not a routine repair command.
+
+11. Ext4 filesystem errors
+
+- Detect (RUNNING):
+
+findmnt -no SOURCE,FSTYPE /
+dmesg -T | grep -iE 'EXT4-fs error|journal.*abort'
+
+- Repair (LIVE, unmounted partition):
+
+First identify the exact device:
+
+lsblk -f
+
+Then perform a read-only check:
+
+e2fsck -fn /dev/VERIFIED_ROOT_PARTITION
+
+If the report confirms repairable errors, request approval before:
+
+e2fsck -f /dev/VERIFIED_ROOT_PARTITION
+
+    Risk: High. Filesystem repair can alter directory structures and move damaged files into lost+found.
+
+    Never: Run repairing e2fsck on a mounted root filesystem.
+
+12. Root partition full
+
+- Detect (RUNNING):
+
+df -hT /
+df -ih /
+du -xhd1 /var /home /tmp 2>/dev/null
+
+For Btrfs:
+
+btrfs filesystem usage /
+btrfs qgroup show -reF /
+
+The last command is useful when quotas are enabled.
+
+- Repair (RUNNING):
+
+Remove only uninstalled package versions from the cache:
+
+paccache -r
+
+Clean expired journal entries:
+
+journalctl --vacuum-time=14d
+
+These are separate operations and should each be reported.
+
+    Risk: Low to medium. Logs and cached packages may be useful for troubleshooting or rollback.
+
+    Never: Automatically delete /home, snapshots, arbitrary files in /var, or all package caches.
+
+13. Inodes exhausted
+
+- Detect (RUNNING):
+
+df -i /
+
+Find directories containing excessive file counts:
+
+find /var -xdev -type f 2>/dev/null |
+    awk -F/ '{print $1"/"$2"/"$3"/"$4}' |
+    sort | uniq -c | sort -nr | head
+
+    Repair: Identify the offending application and use its own cache-cleaning mechanism.
+
+    Risk: Medium.
+
+    Never: Automatically delete files based solely on file count or age.
+
+14. NVMe or SATA device reporting hardware errors
+
+- Detect (RUNNING):
+
+smartctl -a /dev/nvme0
+nvme smart-log /dev/nvme0
+journalctl -k -b | grep -iE 'nvme|ata|I/O error|medium error'
+
+The appropriate device path must be discovered rather than assumed.
+
+    Repair: No automatic filesystem repair. Notify the user, collect diagnostic information and recommend backing up data.
+
+    Risk: High. Continued writes may worsen a failing device.
+
+    Never: Run a write-intensive repair, filesystem rebuild or automatic disk replacement procedure.
+
+15. Btrfs out of metadata space or unbalanced allocation
+
+- Detect (RUNNING):
+
+btrfs filesystem usage /
+btrfs filesystem df /
+
+- Repair (RUNNING):
+
+For a confirmed metadata-space issue, and only after verifying free space:
+
+btrfs balance start -musage=50 /
+
+This is a potentially expensive maintenance operation, not a universal fix.
+
+    Risk: Medium to high, depending on free space, device health and workload.
+
+    Never: Start an unrestricted full balance automatically.
+
+16. Swap configuration broken
+
+- Detect (RUNNING):
+
+swapon --show
+free -h
+cat /etc/fstab
+
+- Repair (RUNNING):
+
+If a configured swap file exists and its filesystem supports it:
+
+swapon /swapfile
+
+If the swap device is missing, identify the correct UUID and repair its configuration only after confirmation.
+
+    Risk: Medium. Incorrect swap configuration can cause boot delays or failures.
+
+    Never: Create a new swap partition, overwrite a partition or regenerate a swap file automatically.
+
+C. Package manager and update failures
+
+17. Pacman database lock appears stale
+
+- Detect (RUNNING):
+
+test -e /var/lib/pacman/db.lck
+pgrep -a pacman
+pgrep -a yay
+pgrep -a paru
+
+- Repair (RUNNING):
+
+Only if no package manager or associated transaction is running:
+
+rm -f /var/lib/pacman/db.lck
+
+    Risk: Medium.
+
+    Never: Delete the lock while an installation, upgrade, hook or package transaction is active.
+
+18. Package database corruption
+
+- Detect (RUNNING):
+
+pacman -Dk
+pacman -Q
+
+Inspect the transaction log:
+
+tail -n 200 /var/log/pacman.log
+
+- Repair (RUNNING):
+
+For an ordinary missing or inconsistent package installation:
+
+pacman -Syu
+pacman -S VERIFIED_PACKAGE_NAME
+
+If the local database itself is structurally damaged, stop and use a dedicated database-recovery procedure with a verified backup.
+
+    Risk: Medium to high.
+
+    Never: Delete /var/lib/pacman/local or recreate the local package database automatically.
+
+19. Signature verification or keyring failure
+
+- Detect (RUNNING):
+
+pacman-key --list-keys
+pacman -Sy
+
+Inspect the resulting signature errors.
+
+- Repair (RUNNING):
+
+If the official Arch keyring is demonstrably outdated:
+
+pacman -Sy --needed archlinux-keyring
+pacman -Su
+
+Use this as a controlled keyring recovery exception, not a general update strategy. Sunshine OS should use its own trusted repository keyring where appropriate.
+
+    Risk: High if trust is incorrectly established.
+
+    Never: Use SigLevel = Never, disable package signature verification, or import arbitrary keys from an error message.
+
+20. Mirror synchronization failure
+
+- Detect (RUNNING):
+
+pacman -Syy
+
+Inspect the HTTP errors and mirror availability.
+
+- Repair (RUNNING):
+
+reflector \
+    --country Spain,France,Germany \
+    --protocol https \
+    --latest 20 \
+    --sort rate \
+    --save /tmp/sunshine-mirrorlist
+
+After validating the candidate list:
+
+cp -a /etc/pacman.d/mirrorlist \
+    /etc/pacman.d/mirrorlist.sunshine-backup
+
+install -m 644 /tmp/sunshine-mirrorlist \
+    /etc/pacman.d/mirrorlist
+
+    Risk: Low to medium.
+
+    Never: Replace the existing mirrorlist with an empty or unvalidated list.
+
+21. Partial upgrade or mixed package versions
+
+- Detect (RUNNING):
+
+pacman -Qm
+pacman -Qu
+grep -nE '\[.*\]|IgnorePkg|HoldPkg' /etc/pacman.conf
+
+Also inspect /var/log/pacman.log for interrupted or incomplete transactions.
+
+- Repair (RUNNING):
+
+pacman -Syu
+
+Resolve repository conflicts through a controlled transaction.
+
+    Risk: Medium to high.
+
+    Never: Perform pacman -Sy package-name as an automatic fix or downgrade arbitrary packages to make version numbers match.
+
+22. Missing dependencies
+
+- Detect (RUNNING):
+
+pacman -Dk
+
+- Repair (RUNNING):
+
+pacman -Syu
+
+If a particular package is missing:
+
+pacman -S VERIFIED_PACKAGE_NAME
+
+    Risk: Medium.
+
+    Never: Use pacman -Rdd to bypass dependency checks as a general recovery strategy.
+
+23. Core packages accidentally removed
+
+- Detect (RUNNING or LIVE):
+
+pacman -Q base systemd glibc filesystem linux linux-firmware
+
+The expected package list should come from a Sunshine OS installation profile, not from an assumption that every installation has exactly the same packages.
+
+- Repair (CHROOT):
+
+pacman -Syu
+pacman -S base systemd glibc filesystem linux linux-firmware
+
+Install only the packages appropriate to the selected installation profile.
+
+    Risk: High. Some package replacements require configuration changes.
+
+    Never: Reinstall every package on the system blindly or force removal/reinstallation of critical dependencies.
+
+24. AUR package build or update failure
+
+- Detect (RUNNING):
+
+pacman -Qm
+grep -iE 'error:|failed|conflict|not found' \
+    /var/log/pacman.log | tail -n 100
+
+- Repair (RUNNING):
+
+Separate repository updates from AUR updates:
+
+pacman -Syu
+paru -Sua
+
+For a failed package, inspect its PKGBUILD and build logs before attempting a rebuild.
+
+    Risk: Medium to high. AUR packages are not official Arch repository packages.
+
+    Never: Execute an unreviewed PKGBUILD with root privileges or automatically trust a modified build script.
+
+25. .pacnew and .pacsave files left unresolved
+
+- Detect (RUNNING):
+
+find /etc -type f \
+    \( -name '*.pacnew' -o -name '*.pacsave' -o -name '*.pacorig' \)
+
+- Repair (RUNNING):
+
+pacdiff -s
+
+Provide a merge interface and allow the user to compare the old and new configuration.
+
+    Risk: Medium to high.
+
+    Never: Automatically replace all /etc configuration files with their .pacnew versions.
+
+D. Graphics, drivers and desktop failures
+
+26. NVIDIA kernel module missing or mismatched
+
+- Detect (RUNNING):
+
+lspci -nnk | grep -A4 -i 'VGA\|3D\|Display'
+nvidia-smi
+modinfo nvidia
+dkms status
+
+Also compare the running kernel with the installed driver modules.
+
+- Repair (RUNNING):
+
+For the appropriate official package combination:
+
+pacman -Syu
+
+Then reinstall the correct NVIDIA package selected by Sunshine OS's hardware profile and rebuild the initramfs:
+
+mkinitcpio -P
+
+For a DKMS installation, make sure matching kernel headers are installed before rebuilding.
+
+    Risk: High. The wrong NVIDIA driver branch can prevent graphical startup.
+
+    Never: Install nvidia-open solely because an NVIDIA GPU exists. GPU architecture and driver support must be checked first.
+
+27. Hybrid graphics configuration broken
+
+- Detect (RUNNING):
+
+lspci -nnk | grep -A4 -iE 'VGA|3D'
+ls -l /dev/dri/
+glxinfo -B
+
+For NVIDIA PRIME:
+
+nvidia-smi
+
+- Repair (RUNNING):
+
+For an NVIDIA PRIME setup, use the selected supported driver and its appropriate PRIME configuration. Verify the offload path before changing the default renderer.
+
+    Risk: Medium to high.
+
+    Never: Force the discrete GPU as the primary renderer on every laptop or blacklist the integrated GPU automatically.
+
+28. Broadcom Wi-Fi driver missing
+
+- Detect (RUNNING):
+
+lspci -nnk | grep -A4 -i network
+rfkill list
+nmcli device status
+
+- Repair (RUNNING):
+
+Install the appropriate driver package only after identifying the exact PCI device and supported kernel module.
+
+modprobe VERIFIED_MODULE_NAME
+
+    Risk: Low to medium.
+
+    Never: Install a random Broadcom DKMS package based solely on the manufacturer name.
+
+29. Audio stack broken
+
+- Detect (RUNNING):
+
+systemctl --user status pipewire pipewire-pulse wireplumber
+wpctl status
+pactl info
+
+- Repair (RUNNING):
+
+systemctl --user restart pipewire pipewire-pulse wireplumber
+
+If a package is missing, reinstall the appropriate PipeWire components.
+
+    Risk: Low.
+
+    Never: Delete the user's entire ~/.config directory or reset all audio device configurations automatically.
+
+30. SDDM fails to start
+
+- Detect (RUNNING):
+
+systemctl status sddm
+journalctl -b -u sddm --no-pager
+
+Check available sessions:
+
+ls -la /usr/share/wayland-sessions/
+ls -la /usr/share/xsessions/
+
+- Repair (RUNNING, TTY):
+
+systemctl restart sddm
+
+If the configuration is invalid, restore a known-good backed-up SDDM configuration rather than replacing arbitrary settings.
+
+    Risk: Medium. Restarting SDDM terminates graphical sessions.
+
+    Never: Automatically delete SDDM configuration or change the default desktop session without user consent.
+
+31. KDE Plasma session crashes or fails to load
+
+- Detect (RUNNING, TTY):
+
+journalctl -b --user --no-pager |
+    grep -iE 'plasmashell|kwin|kded|crash|segfault'
+
+Check package integrity:
+
+pacman -Q plasma-workspace kwin
+
+- Repair (RUNNING):
+
+Test a fresh user account first. If the fresh account works, the problem is likely user-specific configuration.
+
+Reinstalling a damaged Plasma package can be appropriate:
+
+pacman -S plasma-workspace kwin
+
+    Risk: Medium.
+
+    Never: Reset the entire user's Plasma configuration automatically. It can destroy their panel layouts, shortcuts, widgets and desktop customizations.
+
+32. Wayland compositor or KWin failure
+
+- Detect (RUNNING, TTY):
+
+journalctl -b --no-pager |
+    grep -iE 'kwin_wayland|drm|gbm|egl|gpu'
+
+echo "$XDG_SESSION_TYPE"
+
+- Repair:
+
+Restore the last known-good driver and compositor configuration. If a known-good alternative session is installed, offer it as a temporary recovery path.
+
+    Risk: Medium to high.
+
+    Never: Disable Wayland globally or force X11 simply because one GPU configuration failed.
+
+E. Networking and services
+
+33. NetworkManager service disabled or broken
+
+- Detect (RUNNING):
+
+systemctl status NetworkManager
+nmcli general status
+nmcli device status
+
+- Repair (RUNNING):
+
+systemctl enable --now NetworkManager
+
+    Risk: Low, although enabling NetworkManager may conflict with another network manager.
+
+    Never: Enable multiple competing network managers automatically.
+
+34. Wi-Fi disabled or blocked
+
+- Detect (RUNNING):
+
+rfkill list all
+nmcli radio all
+
+- Repair (RUNNING):
+
+If software-blocked:
+
+rfkill unblock wifi
+nmcli radio wifi on
+
+    Risk: Low.
+
+    Never: Attempt to override a hardware radio switch or firmware-enforced block.
+
+35. DNS resolution broken
+
+- Detect (RUNNING):
+
+ip route
+getent hosts archlinux.org
+resolvectl status
+
+- Repair (RUNNING):
+
+If NetworkManager's DNS integration is broken, restore the appropriate configuration and restart NetworkManager:
+
+systemctl restart NetworkManager
+
+    Risk: Medium.
+
+    Never: Replace /etc/resolv.conf with a hardcoded public DNS server without checking VPN, enterprise DNS and local network requirements.
+
+36. Essential system service failed
+
+- Detect (RUNNING):
+
+systemctl --failed
+systemctl list-units --state=failed
+
+- Repair (RUNNING):
+
+Restart only a service whose failure is understood:
+
+systemctl restart VERIFIED_SERVICE.service
+
+    Risk: Depends on the service.
+
+    Never: Automatically restart every failed unit. Some failures are deliberate, optional or security-related.
+
+F. Configuration and user mistakes
+
+37. Incorrect /etc/fstab entries
+
+- Detect (RUNNING):
+
+findmnt --verify --verbose
+
+Inspect:
+
+cat /etc/fstab
+blkid
+
+- Repair (CHROOT):
+
+Back up first:
+
+cp -a /etc/fstab /etc/fstab.sunshine-backup
+
+Correct only verified UUIDs and mountpoints.
+
+Validate:
+
+findmnt --verify --verbose --tab-file /etc/fstab
+
+    Risk: High. Incorrect root, EFI or home mounts can cause boot failures or data to appear missing.
+
+    Never: Automatically remove unknown mount entries or rewrite the complete file.
+
+38. Incorrect permissions on essential system paths
+
+- Detect (RUNNING):
+
+stat -c '%a %U:%G %n' \
+    / /etc /usr /var /tmp /boot
+
+Compare against known package and filesystem expectations.
+
+- Repair:
+
+Use package-owned metadata to identify specific incorrect permissions. Repair only validated paths.
+
+For /tmp, if its permissions are confirmed incorrect:
+
+chmod 1777 /tmp
+
+    Risk: High for broad permission changes.
+
+    Never: Run chmod -R 777, recursively chown /usr, or recursively reset /home.
+
+39. System clock incorrect
+
+- Detect (RUNNING):
+
+timedatectl status
+timedatectl show -p NTPSynchronized -p TimeUSec
+
+- Repair (RUNNING):
+
+timedatectl set-ntp true
+
+    Risk: Low.
+
+    Never: Change the hardware clock, timezone or dual-boot clock interpretation automatically without understanding the intended configuration.
+
+40. Essential package configuration or repository configuration accidentally modified
+
+- Detect (RUNNING):
+
+pacman-conf
+pacman -Qkk pacman filesystem systemd
+
+Check the Sunshine OS signed configuration manifest against the installed configuration files.
+
+- Repair:
+
+Restore only files whose intended contents can be verified against the signed Sunshine OS release configuration.
+
+Back up the existing file first:
+
+cp -a /etc/pacman.conf /etc/pacman.conf.sunshine-backup
+
+Then restore the validated configuration and run:
+
+pacman -Dk
+
+    Risk: Medium to high.
+
+    Never: Replace the entire /etc tree with distribution defaults or overwrite user-managed repository settings without approval.
+
+1.2 Important engineering observations
+
+There are several failure modes that deserve more attention than their apparent simplicity suggests.
+
+First: the filesystem repair tools are not interchangeable.
+
+Filesystem
+	
+
+Routine diagnostic
+	
+
+Repair approach
+
+Btrfs
+	
+
+btrfs scrub
+	
+
+Redundancy-aware scrub; specialist recovery for structural corruption
+
+Ext4
+	
+
+e2fsck -fn
+	
+
+Offline e2fsck
+
+FAT32 / ESP
+	
+
+fsck.fat -n
+	
+
+Offline FAT repair with approval
+
+XFS, if supported
+	
+
+xfs_repair -n
+	
+
+Offline xfs_repair
+
+Second: a successful package installation does not prove that the system will boot.
+
+Your updater should verify:
+
+    The transaction completed.
+
+    The initramfs was generated.
+
+    Every installed kernel has a corresponding initramfs.
+
+    The actual boot filesystem was mounted during generation.
+
+    The bootloader configuration is syntactically valid.
+
+    The required GPU modules are available.
+
+    No incomplete transaction marker remains.
+
+Third: recovery must preserve data outside the OS installation.
+
+Your rescue tool should distinguish between:
+
+    System root.
+
+    Separate home filesystem.
+
+    EFI System Partition.
+
+    User-managed data partitions.
+
+    Snapshot subvolumes.
+
+    Encrypted containers.
+
+A discovered partition is not automatically a repair target.
+
+In particular, a separate data volume must never be reformatted, recreated or included in an indiscriminate cleanup operation simply because it is mounted alongside the OS.
+PART 2. Repair orchestration
+
+I would not implement repair everything as 40 independent scripts executed sequentially.
+
+That would be dangerous.
+
+Instead, create a central orchestrator that builds a dependency graph, determines the installation state, and executes only the repairs whose prerequisites have been satisfied.
+2.1 One-command live recovery
+
+Suggested command:
+
+sunshine-rescue --repair-all
+
+Internally, it should follow this order.
+
+PHASE 0   Establish recovery environment
+PHASE 1   Identify disks, partitions, encryption and filesystems
+PHASE 2   Check hardware health and storage integrity
+PHASE 3   Identify and mount the installed system
+PHASE 4   Validate fstab, root subvolume and mount hierarchy
+PHASE 5   Check filesystem and available disk space
+PHASE 6   Inspect pacman database and package state
+PHASE 7   Repair repository and package infrastructure
+PHASE 8   Restore missing essential packages
+PHASE 9   Repair kernel and kernel modules
+PHASE 10  Rebuild initramfs
+PHASE 11  Repair bootloader and boot configuration
+PHASE 12  Verify graphics and essential drivers
+PHASE 13  Verify essential services and configuration
+PHASE 14  Generate recovery report
+PHASE 15  Ask for reboot
+Phase 0: establish the recovery environment
+
+id
+uname -a
+test -d /sys/firmware/efi && echo UEFI || echo BIOS
+timedatectl status
+ip link
+
+Check whether the live environment has sufficient tools:
+
+command -v lsblk
+command -v cryptsetup
+command -v btrfs
+command -v arch-chroot
+command -v pacman
+command -v smartctl
+
+If required recovery tools are unavailable, stop rather than attempting incomplete recovery.
+
+Create a recovery log:
+
+mkdir -p /var/log/sunshine-rescue
+
+Use a unique session identifier and record all commands, exit codes and results.
+Phase 1: discover storage
+
+lsblk -J -o NAME,PATH,TYPE,SIZE,FSTYPE,UUID,PARTUUID,PARTTYPE,MOUNTPOINTS
+blkid
+
+Detect LUKS:
+
+blkid -t TYPE=crypto_LUKS
+
+Do not unlock every encrypted volume automatically.
+
+Ask the user to unlock the intended installation when necessary:
+
+cryptsetup open /dev/VERIFIED_LUKS_DEVICE sunshine-root
+
+For Btrfs, discover subvolumes:
+
+btrfs subvolume list /path/to/mounted-btrfs
+
+Phase 2: assess device health
+
+smartctl -a /dev/VERIFIED_DEVICE
+
+For NVMe:
+
+nvme smart-log /dev/VERIFIED_NVME
+
+If the drive reports critical hardware failure, stop automatic repair and prioritize data preservation.
+Phase 3: mount the installation
+
+Example Btrfs layout:
+
+mount -o subvol=@ /dev/VERIFIED_ROOT /mnt
+
+Example ext4 layout:
+
+mount /dev/VERIFIED_ROOT /mnt
+
+Mount the other filesystems according to the actual installation:
+
+mount /dev/VERIFIED_EFI /mnt/boot/efi
+
+The mountpoint above is illustrative, not universal.
+
+Use a mount manifest generated from the discovered installation and validated against fstab.
+
+Do not blindly run mount -a against the live system's own filesystem configuration.
+Phase 4: validate mount hierarchy
+
+findmnt -R /mnt
+cat /mnt/etc/fstab
+blkid
+
+Check the root filesystem UUID, ESP UUID and configured mountpoints.
+
+The rescue tool must confirm that:
+
+    /mnt is the intended installation.
+
+    The expected boot partition is mounted.
+
+    Separate filesystems are mounted at the correct paths.
+
+    No mount operation has hidden an existing directory containing important files.
+
+    The root subvolume is correct.
+
+If these conditions cannot be proven, stop.
+Phase 5: filesystem verification
+
+For Btrfs:
+
+btrfs filesystem usage /mnt
+btrfs device stats /mnt
+
+For ext4, unmount the filesystem before checking:
+
+umount /mnt
+e2fsck -fn /dev/VERIFIED_ROOT
+
+If the check is clean, remount it.
+
+If repair is needed, ask for approval.
+
+A rescue tool must not run destructive filesystem repair while the system is still mounted or while the drive is reporting hardware errors.
+Phase 6: inspect package state
+
+arch-chroot /mnt pacman -Dk
+arch-chroot /mnt pacman -Q
+
+Inspect:
+
+tail -n 200 /mnt/var/log/pacman.log
+
+Check for interrupted transactions and the Sunshine OS incomplete-initramfs marker.
+Phase 7: repair package infrastructure
+
+Check repository configuration:
+
+arch-chroot /mnt pacman-conf
+
+Validate the system clock and keyring state in the recovery environment.
+
+Do not automatically replace repository configuration unless the signed Sunshine OS manifest confirms the intended version.
+
+Once the package manager is healthy and repositories are trusted:
+
+arch-chroot /mnt pacman -Syu
+
+If repository configuration or signatures cannot be validated, stop.
+Phase 8: restore essential packages
+
+Use an installation-profile manifest, for example:
+profiles/
+\u251c\u2500\u2500 base.json
+\u251c\u2500\u2500 plasma.json
+\u251c\u2500\u2500 gaming.json
+\u251c\u2500\u2500 laptop.json
+\u2514\u2500\u2500 nvidia.json
+
+The manifest should define mandatory and optional packages separately.
+
+Example:
+
+arch-chroot /mnt pacman -S \
+    base \
+    systemd \
+    glibc \
+    filesystem \
+    linux \
+    linux-firmware
+
+Do not install NVIDIA, laptop-specific or gaming packages unless the hardware and profile require them.
+Phase 9: repair kernel and modules
+
+Check the installed kernels and their module directories:
+
+ls /mnt/usr/lib/modules/
+ls /mnt/etc/mkinitcpio.d/
+
+Confirm that the kernel packages, headers and driver modules are compatible.
+
+Do not remove a fallback kernel during recovery.
+Phase 10: rebuild initramfs
+
+Before rebuilding:
+
+findmnt -R /mnt
+df -h /mnt/boot
+
+Then:
+
+arch-chroot /mnt mkinitcpio -P
+
+Check the result:
+
+ls -lh /mnt/boot/initramfs*
+
+Verify that all required presets completed successfully.
+Phase 11: repair GRUB
+
+First establish UEFI versus BIOS.
+
+For UEFI:
+
+arch-chroot /mnt grub-install \
+    --target=x86_64-efi \
+    --efi-directory=/boot/efi \
+    --bootloader-id=SunshineOS \
+    --recheck
+
+For legacy BIOS, after explicitly identifying the correct whole disk:
+
+arch-chroot /mnt grub-install \
+    --target=i386-pc \
+    /dev/VERIFIED_DISK
+
+Then:
+
+arch-chroot /mnt grub-mkconfig \
+    -o /boot/grub/grub.cfg
+
+Do not run both installation procedures indiscriminately.
+Phase 12: validate graphics
+
+Inspect PCI devices:
+
+lspci -nnk
+
+For NVIDIA:
+
+arch-chroot /mnt pacman -Q | grep -i nvidia
+
+Do not attempt to prove that the driver works by running nvidia-smi inside the chroot. The chroot does not automatically provide the installed system's running kernel, loaded modules or GPU device environment.
+
+Instead, verify installed package consistency and module availability. Runtime verification happens after reboot.
+Phase 13: configuration and service validation
+
+arch-chroot /mnt findmnt --verify --verbose \
+    --tab-file /etc/fstab
+
+arch-chroot /mnt systemctl --failed
+arch-chroot /mnt pacman -Dk
+
+The service inspection must be interpreted carefully: offline systemctl checks are not equivalent to checking the actual running installed system.
+Phase 14: report
+
+Generate a report containing:
+
+    Detected hardware.
+
+    Root filesystem and mount layout.
+
+    Encryption status.
+
+    Package database status.
+
+    Installed kernels.
+
+    Initramfs generation results.
+
+    GRUB installation status.
+
+    Configuration errors.
+
+    Repairs performed.
+
+    Repairs skipped.
+
+    User decisions required.
+
+Phase 15: reboot
+
+Only after unmounting cleanly:
+
+sync
+umount -R /mnt
+
+Close encrypted mappings only after all dependent mounts are gone:
+
+cryptsetup close sunshine-root
+
+Then:
+
+systemctl reboot
+
+Recovery principle
+
+The rescue tool should be able to say: "I repaired the package database and initramfs, but I did not touch your filesystem because the disk reported hardware errors."
+
+That is a successful recovery decision, even if the operating system remains unusable.
+2.2 Running-system doctor --fix
+
+A running system has a major advantage: it can inspect active services, loaded modules, active mounts and the actual hardware configuration.
+
+It also has a major disadvantage: some repairs can interrupt the desktop or damage a running package transaction.
+
+Suggested implementation:
+
+sunshine-doctor --fix
+
+Execution order:
+
+Order
+	
+
+Check
+	
+
+Automatic action
+
+1
+	
+
+Root privileges
+	
+
+Request elevation if necessary
+
+2
+	
+
+Active package transactions
+	
+
+Stop if one is running
+
+3
+	
+
+Disk health
+	
+
+Diagnose, never destructively repair
+
+4
+	
+
+Filesystem state
+	
+
+Check mount options and errors
+
+5
+	
+
+Disk space
+	
+
+Safe cache cleanup if authorized
+
+6
+	
+
+Pacman lock
+	
+
+Remove only a confirmed stale lock
+
+7
+	
+
+Package database
+	
+
+Repair verified package inconsistencies
+
+8
+	
+
+Partial upgrade
+	
+
+Offer complete upgrade, never partial
+
+9
+	
+
+Missing essential packages
+	
+
+Reinstall from trusted repositories
+
+10
+	
+
+Initramfs state
+	
+
+Rebuild if required
+
+11
+	
+
+Boot configuration
+	
+
+Validate and repair backed-up configuration
+
+12
+	
+
+NVIDIA and other drivers
+	
+
+Repair only identified mismatches
+
+13
+	
+
+NetworkManager
+	
+
+Repair service state
+
+14
+	
+
+PipeWire
+	
+
+Restart affected user services
+
+15
+	
+
+SDDM and Plasma
+	
+
+Diagnose; avoid terminating active sessions
+
+16
+	
+
+Configuration files
+	
+
+Identify .pacnew and .pacsave
+
+17
+	
+
+Final verification
+	
+
+Repeat relevant health checks
+
+Example implementation of the general pattern:
+
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+LOG="/var/log/sunshine-doctor.log"
+
+exec 3>&1
+exec > >(tee -a "$LOG") 2>&1
+
+echo "Sunshine OS Doctor"
+echo "Started: $(date --iso-8601=seconds)"
+
+if [[ $EUID -ne 0 ]]; then
+    echo "Run with sudo."
+    exit 1
+fi
+
+if pgrep -x pacman >/dev/null ||
+   pgrep -x yay >/dev/null ||
+   pgrep -x paru >/dev/null; then
+    echo "Package manager is active. Aborting."
+    exit 2
+fi
+
+echo "[1/8] Checking filesystem"
+findmnt -no SOURCE,FSTYPE,OPTIONS /
+
+echo "[2/8] Checking storage"
+df -h /
+df -i /
+
+echo "[3/8] Checking failed services"
+systemctl --failed --no-pager
+
+echo "[4/8] Checking package database"
+pacman -Dk
+
+echo "[5/8] Checking installed kernels"
+pacman -Q | grep -E '^linux'
+
+echo "[6/8] Checking initramfs"
+ls -lh /boot/initramfs*
+
+echo "[7/8] Checking network"
+nmcli general status
+
+echo "[8/8] Checking unresolved configuration"
+find /etc -type f \
+    \( -name '*.pacnew' -o -name '*.pacsave' \)
+
+echo "Doctor completed."
+
+This is a diagnostic skeleton, not yet a complete repair implementation. Each repair should be a separately tested function with explicit preconditions.
+2.3 Where to stop and ask the user
+
+These conditions should be hard stops:
+
+Condition
+	
+
+Required action
+
+SMART reports critical failure
+	
+
+Stop writes; prioritize backup
+
+Root filesystem cannot be identified uniquely
+	
+
+Ask user
+
+Multiple candidate Sunshine installations
+	
+
+Ask user
+
+LUKS credentials unavailable
+	
+
+Ask user
+
+Root subvolume ambiguous
+	
+
+Ask user
+
+Filesystem structural corruption
+	
+
+Ask user
+
+EFI partition ambiguous
+	
+
+Ask user
+
+Secure Boot key enrollment required
+	
+
+Ask user
+
+GRUB target disk ambiguous
+	
+
+Ask user
+
+Core package replacement requires manual intervention
+	
+
+Ask user
+
+User data or separate home filesystem needs modification
+	
+
+Ask user
+
+.pacnew conflicts with existing customization
+	
+
+Ask user
+
+NVIDIA driver branch uncertain
+	
+
+Ask user
+
+Snapshot rollback would discard newer system changes
+	
+
+Ask user
+PART 3. Existing distribution tools worth adapting
+
+I would not copy entire distributions' maintenance systems. I would study their individual components, extract the engineering ideas, and implement Sunshine-native equivalents.
+
+Your advantage is that you control the entire stack: installer, package profiles, kernel manager, updater, rescue environment and diagnostic tools.
+3.1 System update safety
+My pick: Garuda Update + Cachy-Update
+
+1. Garuda Linux \u2014 garuda-update
+Pamac updates broken without explanation - Unsupported Software (AUR & Other) - Garuda Linux Forum
+
+What to adapt:
+
+    Self-update its maintenance utility.
+
+    Refresh mirrors.
+
+    Update keyrings before normal package transactions when required.
+
+    Resolve known package conflicts.
+
+    Check disk space, including Btrfs snapshot consumption.
+
+    Display package changes before confirmation.
+
+    Show update notices.
+
+    Run a health check after the update.
+
+Garuda's implementation combines update orchestration with health checking and recovery facilities. 
+Garuda Linux Wiki+1
+
+2. CachyOS \u2014 cachy-update
+
+What to adapt:
+
+    Update notifications.
+
+    Recent Arch Linux news.
+
+    Orphan detection.
+
+    Package cache management.
+
+    Pending reboot detection.
+
+    Services requiring restart.
+
+    Optional AUR and Flatpak updates.
+
+It is particularly interesting because it separates update awareness from the actual package transaction. 
+GitHub+1
+
+3. Arch Linux \u2014 checkupdates
+
+Package:
+
+pacman -S pacman-contrib
+
+Command:
+
+checkupdates
+
+It checks for available updates using a separate synchronization database instead of modifying the system's normal pacman database. This is an excellent model for a safe update checker. 
+Arch manual pages+1
+
+My implementation:
+
+sunshine-update check
+sunshine-update preview
+sunshine-update apply
+sunshine-update verify
+
+The updater should have a transaction state machine:
+IDLE
+  |
+  v
+PREFLIGHT
+  |
+  v
+SNAPSHOT
+  |
+  v
+SYNC
+  |
+  v
+TRANSACTION
+  |
+  v
+INITRAMFS
+  |
+  v
+VERIFY
+  |
+  v
+COMPLETE
+
+Any failure should transition to FAILED, record the failure stage and preserve the recovery information.
+
+I would also implement a reboot-required detector that compares:
+
+uname -r
+
+against the installed kernel and checks for other reboot-sensitive package updates.
+3.2 Health checking
+My pick: Garuda Health
+
+1. Garuda \u2014 garuda-health
+Dr460nized theme change - KDE - Garuda Linux Forum
+
+Its checks include:
+
+    Core packages.
+
+    Update state.
+
+    Initramfs.
+
+    Kernel files.
+
+    Bootloader.
+
+    NVIDIA drivers.
+
+    Audio.
+
+    Btrfs free space.
+
+    Snapper.
+
+    Failed services.
+
+    SMART health.
+
+    Memory.
+
+It also distinguishes detection from repair. 
+Garuda Linux Wiki+1
+
+2. Arch Linux \u2014 pacman-contrib
+
+Particularly useful components:
+
+Tool
+	
+
+Purpose
+
+checkupdates
+	
+
+Safe update discovery
+
+pacdiff
+	
+
+Configuration file maintenance
+
+paccache
+	
+
+Package cache cleanup
+
+pactree
+	
+
+Dependency analysis
+
+paclog-pkglist
+	
+
+Reconstruct installed package lists
+
+pacscripts
+	
+
+Inspect package installation scripts
+
+paclist
+	
+
+Inspect repository-installed packages
+GitHub+1
+
+3. EndeavourOS \u2014 inxi and diagnostic tooling
+
+Use its emphasis on collecting hardware and system information for support requests.
+
+My implementation:
+
+sunshine-doctor
+sunshine-doctor --json
+sunshine-doctor --fix
+sunshine-doctor --explain
+
+The JSON output should be a stable public interface:
+
+{
+  "schema": 1,
+  "distribution": "Sunshine OS",
+  "status": "warning",
+  "checks": [
+    {
+      "id": "initramfs.default",
+      "status": "failed",
+      "severity": "critical",
+      "repairable": true,
+      "repair_level": 2
+    }
+  ]
+}
+
+Do not make the human-readable terminal output the machine-readable interface. Keep those two outputs separate.
+3.3 Hardware and driver detection
+My pick: Manjaro MHWD concepts + a Sunshine hardware database
+
+1. Manjaro Linux \u2014 mhwd
+Setting manager
+
+This is one of the most interesting tools to study.
+
+It provides:
+
+    Hardware enumeration.
+
+    Driver profiles.
+
+    Free and proprietary driver selection.
+
+    Installed driver detection.
+
+    Driver removal and installation.
+
+    Hybrid graphics support.
+
+Commands include:
+
+mhwd -lh -d
+mhwd -li -d
+mhwd -l --pci
+
+Manjaro also has mhwd-kernel for kernel installation and management. 
+Manjaro+2
+
+2. Garuda \u2014 Hardware Tool
+
+Study its hardware detection and NVIDIA installation workflows. Its advantage is integration with the rest of the distribution's maintenance system. 
+Garuda Linux Wiki+1
+
+3. Fedora \u2014 akmods
+
+This is especially interesting for proprietary NVIDIA drivers.
+
+akmods builds kernel modules for installed kernels. The concept is useful when designing DKMS recovery and post-kernel-update verification.
+
+However, do not copy Fedora's package workflow directly into Arch.
+
+My implementation: sunshine-hardware
+
+Build a hardware database:
+hardware/
+\u251c\u2500\u2500 pci/
+\u2502   \u251c\u2500\u2500 graphics/
+\u2502   \u2502   \u251c\u2500\u2500 intel.json
+\u2502   \u2502   \u251c\u2500\u2500 amd.json
+\u2502   \u2502   \u2514\u2500\u2500 nvidia.json
+\u2502   \u251c\u2500\u2500 network/
+\u2502   \u2502   \u251c\u2500\u2500 broadcom.json
+\u2502   \u2502   \u251c\u2500\u2500 intel.json
+\u2502   \u2502   \u2514\u2500\u2500 realtek.json
+\u2502   \u2514\u2500\u2500 storage/
+\u251c\u2500\u2500 laptop/
+\u2502   \u251c\u2500\u2500 thinkpad.json
+\u2502   \u251c\u2500\u2500 framework.json
+\u2502   \u2514\u2500\u2500 generic.json
+\u2514\u2500\u2500 profiles/
+    \u251c\u2500\u2500 desktop.json
+    \u251c\u2500\u2500 hybrid-nvidia.json
+    \u2514\u2500\u2500 gaming.json
+
+Detect hardware:
+
+lspci -nn
+lsusb
+udevadm info --export-db
+
+For graphics, classify devices using PCI vendor/device IDs, not merely manufacturer names.
+
+A hybrid laptop should be identified as a combination of devices and their capabilities:
+GPU 0: Intel integrated
+GPU 1: NVIDIA discrete
+Mode: Hybrid
+Primary renderer: Intel
+Offload renderer: NVIDIA
+
+For NVIDIA, your decision engine must distinguish:
+
+    GPU architecture.
+
+    Supported driver branch.
+
+    Open versus proprietary kernel modules.
+
+    Kernel package.
+
+    DKMS availability.
+
+    Secure Boot signing requirements.
+
+    Wayland compatibility.
+
+    PRIME configuration.
+
+Do not automatically install a proprietary driver on every machine containing an NVIDIA GPU.
+3.4 Kernel management
+My pick: CachyOS Kernel Manager
+
+1. CachyOS \u2014 Kernel Manager
+Managing Linux Kernels & Sched-ext framework with the CachyOS Kernel Manager | CachyOS
+
+Study:
+
+    Installing multiple kernels.
+
+    Removing obsolete kernels.
+
+    Kernel configuration presets.
+
+    Scheduler selection.
+
+    Tick frequency.
+
+    Preemption configuration.
+
+    CPU architecture optimizations.
+
+    LTO.
+
+    NVIDIA module options.
+
+    Custom kernel building.
+
+It also supports kernel configuration and builds for CachyOS-specific variants. Do not assume its custom build workflow is directly compatible with standard Arch kernels. 
+CachyOS+1
+
+2. Manjaro \u2014 mhwd-kernel
+
+Its most important design decision is keeping the old kernel when installing a new one unless the user explicitly requests removal. 
+Manjaro
+
+3. Arch Linux \u2014 kernel packages and DKMS
+
+Keep the underlying package model simple and transparent.
+
+My implementation:
+
+sunshine-kernel list
+sunshine-kernel install linux
+sunshine-kernel install linux-lts
+sunshine-kernel set-default linux-lts
+sunshine-kernel remove linux
+sunshine-kernel verify
+
+Rules:
+
+    At least one known-working kernel must remain installed.
+
+    The default kernel must have a valid initramfs.
+
+    DKMS modules must be built for every installed DKMS-managed kernel.
+
+    GRUB entries must be regenerated after kernel changes.
+
+    Kernel removal must check dependent modules and boot entries.
+
+    A new kernel should not become the only boot option until successfully tested.
+
+3.5 Snapshots and rollback
+My pick: openSUSE Snapper + Garuda Snapper Tools
+
+1. openSUSE \u2014 snapper
+How Do I roll back to previous image? - Install/Boot/Login - openSUSE Forums
+
+Study:
+
+    Pre/post snapshots.
+
+    Timeline snapshots.
+
+    Cleanup algorithms.
+
+    Configuration per filesystem.
+
+    Rollback.
+
+    Snapshot comparisons.
+
+2. Garuda \u2014 Snapper Tools and Btrfs Assistant
+
+Garuda provides a particularly useful user experience:
+
+    Automatically create snapshots around package changes.
+
+    Display them in GRUB.
+
+    Boot into an older snapshot.
+
+    Restore the selected snapshot.
+
+    Keep the failed installation as a backup.
+
+Garuda Linux Wiki+1
+
+3. Fedora Silverblue \u2014 OSTree deployments
+
+Study the concept of retaining a known-working system deployment and switching back to it.
+
+This is architecturally different from Btrfs snapshots but provides an excellent model for transactional updates and rollback. 
+ccn.web.tr+1
+
+My implementation:
+
+sunshine-snapshot create --reason "before-update"
+sunshine-snapshot list
+sunshine-snapshot compare 120 121
+sunshine-snapshot boot 120
+sunshine-snapshot restore 120
+sunshine-snapshot cleanup
+
+For Btrfs, use Snapper as the snapshot backend.
+
+For ext4, integrate Timeshift or provide a separate snapshot implementation with clearly defined limitations.
+
+Crucially, do not promise equivalent recovery guarantees between the two filesystems.
+
+Snapshots also do not replace backups. They cannot protect against all forms of disk failure, accidental partition destruction or ransomware.
+3.6 Mirror ranking
+My pick: Reflector
+
+1. Arch Linux \u2014 reflector
+
+reflector \
+    --country Spain,France,Germany \
+    --protocol https \
+    --latest 20 \
+    --sort rate
+
+It retrieves mirror information, filters mirrors by freshness and ranks them by speed. 
+ArchWiki
+
+2. Arch Linux \u2014 rankmirrors
+
+Part of pacman-contrib.
+
+It ranks existing mirror URLs by connection and opening speed. 
+GitHub
+
+My implementation:
+
+sunshine-mirrors test
+sunshine-mirrors rank
+sunshine-mirrors apply
+sunshine-mirrors restore
+
+Do not rank only by download speed.
+
+Use a combined score:
+S=w1F+w2T+w3R+w4E
+S=w1\u200bF+w2\u200bT+w3\u200bR+w4\u200bE
+
+Where:
+
+    F
+    F: mirror freshness.
+
+    T
+    T: connection and transfer performance.
+
+    R
+    R: reliability over repeated tests.
+
+    E
+    E: HTTPS and repository availability.
+
+Freshness should have a minimum acceptance threshold. A fast mirror serving outdated packages is worse than a slower synchronized mirror.
+3.7 .pacnew merging
+My pick: Arch Linux pacdiff
+
+Package:
+
+pacman -S pacman-contrib
+
+Command:
+
+pacdiff -s
+
+It detects .pacnew, .pacsave and .pacorig files and provides comparison, merge, overwrite and removal options. 
+Arch manual pages+1
+
+My implementation:
+
+sunshine-config list
+sunshine-config diff
+sunshine-config merge
+sunshine-config verify
+
+Use a three-way merge wherever the original package-provided configuration is available.
+
+The merge engine should classify files:
+
+    Unmodified default.
+
+    User-modified.
+
+    Package-updated.
+
+    User-modified and package-updated.
+
+    Missing.
+
+    Conflicting.
+
+Only uncomplicated cases should be candidates for automatic merging.
+3.8 Log collection for support requests
+My pick: Garuda Toolbox diagnostics + an SOS-style report
+
+1. Garuda \u2014 Diagnostics
+
+Study its ability to collect:
+
+    System information.
+
+    Hardware information.
+
+    Kernel logs.
+
+    Package logs.
+
+    System logs.
+
+    Health-check output.
+
+It can prepare diagnostic information for sharing. 
+Garuda Linux Wiki+1
+
+2. Fedora \u2014 sos
+
+The sos utility is worth studying for structured support bundles.
+
+3. Ubuntu \u2014 Apport
+
+Study its crash reporting and diagnostic collection approach.
+
+My implementation:
+
+sunshine-support collect
+sunshine-support collect --category boot
+sunshine-support collect --category graphics
+sunshine-support collect --category network
+sunshine-support inspect report.tar.zst
+
+Suggested archive:
+sunshine-report/
+\u251c\u2500\u2500 system/
+\u2502   \u251c\u2500\u2500 os-release.txt
+\u2502   \u251c\u2500\u2500 kernel.txt
+\u2502   \u251c\u2500\u2500 hardware.txt
+\u2502   \u2514\u2500\u2500 uptime.txt
+\u251c\u2500\u2500 boot/
+\u2502   \u251c\u2500\u2500 grub.txt
+\u2502   \u251c\u2500\u2500 initramfs.txt
+\u2502   \u2514\u2500\u2500 boot-journal.txt
+\u251c\u2500\u2500 packages/
+\u2502   \u251c\u2500\u2500 installed.txt
+\u2502   \u251c\u2500\u2500 foreign.txt
+\u2502   \u2514\u2500\u2500 pacman.log
+\u251c\u2500\u2500 graphics/
+\u2502   \u251c\u2500\u2500 pci.txt
+\u2502   \u2514\u2500\u2500 drivers.txt
+\u251c\u2500\u2500 network/
+\u2502   \u2514\u2500\u2500 network-state.txt
+\u2514\u2500\u2500 doctor/
+    \u2514\u2500\u2500 results.json
+
+Important: redact usernames, IP addresses, MAC addresses, serial numbers, Wi-Fi SSIDs, mounted personal directories and other identifying information before sharing.
+
+The user must be able to preview the report.
+3.9 Secure Boot
+My pick: systemd-boot/UKI signing concepts + sbctl
+
+Study:
+
+1. Arch ecosystem \u2014 sbctl
+
+sbctl status
+sbctl verify
+sbctl list-files
+
+It manages Secure Boot keys and signing of EFI binaries.
+
+2. Fedora \u2014 Shim and MOK
+
+Study the separation between firmware trust, shim, key enrollment and signed kernel modules.
+
+3. Fedora \u2014 bootupd
+
+Its approach to bootloader updates is interesting because bootloader updates are treated as a distinct operation rather than casually mixed into ordinary OS transactions. 
+Fedora Project Wiki
+
+My implementation:
+
+sunshine-secureboot status
+sunshine-secureboot enroll
+sunshine-secureboot sign
+sunshine-secureboot verify
+sunshine-secureboot rotate-keys
+
+Design decisions:
+
+    Provide a supported enrollment workflow.
+
+    Sign the bootloader.
+
+    Sign the kernel or UKI, depending on the chosen boot architecture.
+
+    Sign out-of-tree kernel modules where necessary.
+
+    Verify signatures before installing new boot artifacts.
+
+    Preserve recovery instructions and key backups.
+
+Do not enable Secure Boot automatically during installation unless the entire boot chain has already been configured and tested.
+3.10 Performance tuning
+My pick: CachyOS + Garuda Performance Tweaks
+
+1. CachyOS
+
+Study its kernel configuration, CPU-specific optimization and scheduler management. 
+CachyOS
+
+2. Garuda \u2014 Performance Tweaks
+
+Study its user-facing performance configuration and gaming-oriented presets. 
+Garuda Linux Wiki
+
+3. Fedora \u2014 tuned
+
+Study profile-based performance management and hardware-aware tuning.
+
+My implementation:
+
+sunshine-performance status
+sunshine-performance profile balanced
+sunshine-performance profile gaming
+sunshine-performance profile powersave
+sunshine-performance profile workstation
+sunshine-performance profile custom
+
+Use profiles rather than independent toggles.
+
+Example:
+balanced:
+  governor: platform-default
+  zram: enabled
+  oom-protection: enabled
+  io-scheduler: hardware-appropriate
+
+gaming:
+  governor: performance-when-supported
+  zram: enabled
+  oom-protection: enabled
+  background-services: minimized
+
+workstation:
+  governor: balanced
+  zram: enabled
+  oom-protection: enabled
+  io-scheduler: hardware-appropriate
+
+powersave:
+  governor: powersave-when-supported
+  zram: enabled
+  oom-protection: enabled
+
+Avoid arbitrary kernel parameters marketed as performance optimizations. Every tweak should have a measurable purpose and a rollback.
+3.11 Gaming setup
+My pick: Garuda Gaming + CachyOS gaming integration
+
+1. Garuda \u2014 Gaming module
+
+Study the one-place installation of:
+
+    Steam.
+
+    Wine.
+
+    Proton-related utilities.
+
+    Game launchers.
+
+    Controller support.
+
+    Emulators.
+
+    Gaming utilities.
+
+Garuda Linux Wiki+1
+
+2. CachyOS
+
+Study its gaming-focused kernel, driver and performance configuration.
+
+3. Arch ecosystem
+
+Use official packages and well-maintained community packages where appropriate.
+
+My implementation:
+
+sunshine-gaming detect
+sunshine-gaming setup
+sunshine-gaming verify
+sunshine-gaming rollback
+
+Its checks should include:
+
+lspci -nnk
+vulkaninfo --summary
+glxinfo -B
+lsmod
+
+The gaming setup should detect:
+
+    32-bit graphics library availability.
+
+    Vulkan implementation.
+
+    GPU driver.
+
+    Steam dependencies.
+
+    Gamepad devices.
+
+    Wine dependencies.
+
+    Audio configuration.
+
+    GameMode support.
+
+    Gamescope compatibility.
+
+It should not install every available gaming package. Provide optional components and an explicit installation preview.
+3.12 Final ranking
+
+These are my engineering priorities, not an assertion that one distribution is universally superior.
+
+Category
+	
+
+First choice
+	
+
+Second choice
+	
+
+Third choice
+
+Update safety
+	
+
+Garuda Update
+	
+
+Cachy-Update
+	
+
+Arch checkupdates
+
+Health checking
+	
+
+Garuda Health
+	
+
+Custom Sunshine doctor
+	
+
+Arch pacman-contrib
+
+Hardware detection
+	
+
+Manjaro MHWD
+	
+
+Garuda Hardware Tool
+	
+
+Custom PCI database
+
+Kernel management
+	
+
+CachyOS Kernel Manager
+	
+
+Manjaro mhwd-kernel
+	
+
+Arch package-based manager
+
+Snapshots
+	
+
+openSUSE Snapper
+	
+
+Garuda Snapper Tools
+	
+
+Fedora OSTree concepts
+
+Mirrors
+	
+
+Reflector
+	
+
+rankmirrors
+	
+
+Custom health ranking
+
+Pacnew merging
+	
+
+pacdiff
+	
+
+Three-way merge integration
+	
+
+Custom Sunshine frontend
+
+Support diagnostics
+	
+
+Garuda Toolbox
+	
+
+Fedora sos
+	
+
+Ubuntu Apport
+
+Secure Boot
+	
+
+sbctl
+	
+
+Fedora Shim/MOK
+	
+
+Fedora bootupd concepts
+
+Performance
+	
+
+CachyOS
+	
+
+Garuda
+	
+
+Fedora tuned
+
+Gaming
+	
+
+Garuda
+	
+
+CachyOS
+	
+
+Arch gaming ecosystem
+
+My overall recommendation: Sunshine OS should take Garuda's integration philosophy, CachyOS's performance and kernel-management ideas, Manjaro's hardware-profile approach, openSUSE's snapshot discipline and Arch's package-management transparency.
+
+Do not reproduce Garuda's complexity. Reproduce its useful integration.
+PART 4. The 15 features Sunshine OS needs to win each audience
+
+The three audiences overlap, but their priorities are different.
+
+A professional wants predictability and recoverability. A gamer wants hardware compatibility and performance without spending an evening fixing Vulkan. An ordinary user wants the computer to work without needing to understand pacman.
+
+The important thing is to build small, independently testable components rather than one enormous maintenance application.
+4.1 Professionals
+Windows vs MacOs vs Linux : r/dotnet
+Share your desktop! - Page 25 - Community - KDE Discuss
+dotfiles | \U0001f4e6 Simple yet powerful cross-platform dotfiles. Easily setup the intuitive Ubuntu Desktop, Linux server (Ubuntu/Fedora/Arch Linux), macOS, and Termux.
+
+Rank
+	
+
+Feature
+	
+
+Implementation as a testable tool
+
+1
+	
+
+Reliable updates
+	
+
+sunshine-update creates a recovery point, validates dependencies and verifies every package transaction.
+
+2
+	
+
+System recovery
+	
+
+sunshine-rescue detects broken installations and provides reproducible recovery operations.
+
+3
+	
+
+Predictable configuration
+	
+
+sunshine-config tracks distribution-managed configuration separately from user-managed configuration.
+
+4
+	
+
+Kernel stability
+	
+
+sunshine-kernel retains a known-working kernel and verifies new kernel installations before switching defaults.
+
+5
+	
+
+Storage health
+	
+
+sunshine-storage checks SMART, filesystem status, free space and Btrfs allocation.
+
+6
+	
+
+Hardware compatibility
+	
+
+sunshine-hardware identifies PCI devices and selects validated driver profiles.
+
+7
+	
+
+Backup integration
+	
+
+sunshine-backup provides verified backup creation, integrity checks and restoration tests.
+
+8
+	
+
+Security management
+	
+
+sunshine-security checks Secure Boot, signatures, firewall state and pending security updates.
+
+9
+	
+
+System observability
+	
+
+sunshine-monitor exposes CPU, memory, disk, network and service health.
+
+10
+	
+
+Configuration migration
+	
+
+sunshine-migrate executes versioned, idempotent migrations with backups and rollback.
+
+11
+	
+
+Support diagnostics
+	
+
+sunshine-support generates sanitized, structured diagnostic archives.
+
+12
+	
+
+Offline recovery
+	
+
+sunshine-offline supports package download and staged installation without requiring the live network during the actual update.
+
+13
+	
+
+Development environment
+	
+
+sunshine-dev installs reproducible development profiles and required toolchains.
+
+14
+	
+
+Virtualization
+	
+
+sunshine-virtualization validates KVM, libvirt, networking and storage configuration.
+
+15
+	
+
+Long-term maintenance
+	
+
+sunshine-maintenance reports outdated packages, stale snapshots, failed services and unresolved configuration migrations.
+
+The professional differentiator is not the number of preinstalled applications.
+
+It is the ability to recover a workstation without losing a working environment or spending hours reconstructing its configuration.
+4.2 Gamers
+KDE Plasma 6.3 will have much better fractional scaling | GamingOnLinux
+Linux Gaming in 2026: The Good, the Bad, and the Reality
+MangoHud w wersji 0.7.1 poprawia popularn\u0105 nak\u0142adk\u0119 wydajno\u015bciow\u0105 do gier dla systemu Linux - Notebookcheck.pl
+
+Rank
+	
+
+Feature
+	
+
+Implementation as a testable tool
+
+1
+	
+
+GPU driver detection
+	
+
+sunshine-gpu identifies GPUs, selects supported drivers and verifies Vulkan functionality.
+
+2
+	
+
+Gaming compatibility
+	
+
+sunshine-gaming checks Steam, Proton dependencies, Wine and 32-bit libraries.
+
+3
+	
+
+Performance profiles
+	
+
+sunshine-performance switches between balanced, gaming and power-saving configurations.
+
+4
+	
+
+Kernel selection
+	
+
+sunshine-kernel offers stable and optional gaming-oriented kernels while retaining a fallback.
+
+5
+	
+
+Vulkan diagnostics
+	
+
+sunshine-vulkan detects missing ICDs, incompatible drivers and 32-bit Vulkan libraries.
+
+6
+	
+
+Controller compatibility
+	
+
+sunshine-input detects gamepads, identifies drivers and tests input events.
+
+7
+	
+
+Audio reliability
+	
+
+sunshine-audio validates PipeWire, device availability and gaming audio configuration.
+
+8
+	
+
+GameMode integration
+	
+
+sunshine-gaming verifies and optionally enables GameMode for supported games.
+
+9
+	
+
+Gamescope integration
+	
+
+sunshine-gamescope validates Gamescope, Vulkan and compositor compatibility.
+
+10
+	
+
+HDR and VRR diagnostics
+	
+
+sunshine-display inspects monitor capabilities, refresh rates, HDR and variable refresh support.
+
+11
+	
+
+Storage performance
+	
+
+sunshine-storage checks disk health, available space and mount options for game libraries.
+
+12
+	
+
+Shader cache management
+	
+
+sunshine-cache reports shader cache usage and provides selective cleanup.
+
+13
+	
+
+Gaming launcher management
+	
+
+sunshine-launchers installs and updates supported game launchers.
+
+14
+	
+
+Streaming and recording
+	
+
+sunshine-streaming checks hardware encoding, audio capture and supported streaming components.
+
+15
+	
+
+Anti-cheat compatibility information
+	
+
+sunshine-compat reports known Linux compatibility limitations without promising that unsupported anti-cheat systems will work.
+
+The most important gaming feature is GPU diagnostics.
+
+A system that installs Steam but leaves Vulkan incorrectly configured is not a gaming distribution.
+
+I would make sunshine-gpu and sunshine-vulkan first-class tools, not hidden functions inside a generic gaming installer.
+4.3 Ordinary users
+Obsidian Flow Shell Theme - KDE Store
+Plasma - KDE Community
+Steam Deck desktop mode plus other stores \u2014 Epic Games Store | GamingOnLinux
+
+Rank
+	
+
+Feature
+	
+
+Implementation as a testable tool
+
+1
+	
+
+One-command updates
+	
+
+sunshine-update performs a guided, verified update without requiring terminal knowledge.
+
+2
+	
+
+Automatic problem detection
+	
+
+sunshine-doctor detects common problems and explains them in understandable language.
+
+3
+	
+
+Automatic recovery
+	
+
+sunshine-doctor --fix safely repairs known problems and asks before dangerous operations.
+
+4
+	
+
+Graphical driver installation
+	
+
+sunshine-hardware exposes validated driver profiles through a simple GUI.
+
+5
+	
+
+Snapshot recovery
+	
+
+sunshine-snapshot provides accessible restore points and recovery instructions.
+
+6
+	
+
+Software installation
+	
+
+sunshine-software provides a curated graphical application catalog with repository, Flatpak and AUR distinctions.
+
+7
+	
+
+Network troubleshooting
+	
+
+sunshine-network diagnoses Wi-Fi, DNS, NetworkManager and connection problems.
+
+8
+	
+
+Audio troubleshooting
+	
+
+sunshine-audio detects missing devices and repairs common PipeWire problems.
+
+9
+	
+
+Display configuration
+	
+
+sunshine-display provides safe display recovery and monitor diagnostics.
+
+10
+	
+
+Storage management
+	
+
+sunshine-storage warns about low disk space and provides safe cleanup suggestions.
+
+11
+	
+
+Printer and peripheral support
+	
+
+sunshine-peripherals detects common devices and configures supported services.
+
+12
+	
+
+Battery management
+	
+
+sunshine-power offers laptop power profiles and battery health reporting.
+
+13
+	
+
+Automatic configuration maintenance
+	
+
+sunshine-config detects pending configuration changes and guides users through merging.
+
+14
+	
+
+Backup assistance
+	
+
+sunshine-backup guides users through protecting personal files independently of OS snapshots.
+
+15
+	
+
+Support assistance
+	
+
+sunshine-support produces a shareable report and explains how to get help.
+4.4 The feature that connects all three audiences
+
+I would create one additional central application:
+
+Sunshine Control Center
+KDE: "Plasma 6 Release Candidate 1 has landed.
+
+We are \u2026" - FLOSS.social
+
+It should not implement its own package manager, driver manager or snapshot engine.
+
+It should be a frontend for your existing tools.
+
+Suggested layout:
+SUNSHINE OS CONTROL CENTER
+
+SYSTEM STATUS
+  System health:       Good
+  Last update:         Today
+  Kernel:              Current
+  Boot configuration:  Valid
+  Storage:             Healthy
+  Drivers:             Valid
+  Snapshots:           5 available
+
+MAINTENANCE
+  [ Update system ]
+  [ Check system ]
+  [ Repair problems ]
+  [ Manage snapshots ]
+
+HARDWARE
+  [ Graphics drivers ]
+  [ Performance ]
+  [ Gaming setup ]
+  [ Power management ]
+
+RECOVERY
+  [ Create snapshot ]
+  [ Restore snapshot ]
+  [ Create support report ]
+  [ Open recovery instructions ]
+
+A professional can ignore the GUI and use the CLI. An ordinary user can use the same functionality without knowing what a kernel module is.
+
+This is where your existing independently updated tools become a real distribution platform.
+PART 5. Automated virtual-machine repair testing
+
+This is arguably the most important part of the entire project.
+
+You cannot claim Sunshine OS is more reliable than EndeavourOS, Garuda or CachyOS merely because it has more repair commands.
+
+You need measurable evidence that its repair mechanisms actually work.
+
+I would build a dedicated test framework named:
+
+sunshine-testbench
+
+Its purpose is to create broken installations, run Sunshine recovery tools, and verify the resulting state.
+5.1 Test architecture
+Securing Your Homelab: SSH Access and Secrets Management with YubiKeys, 1Password, and Ansible
+
+Use:
+
+    QEMU/KVM for virtual machines.
+
+    libvirt for VM lifecycle management.
+
+    OVMF for UEFI testing.
+
+    QEMU's legacy BIOS for BIOS testing.
+
+    qcow2 overlays for disposable test disks.
+
+    pytest for test orchestration.
+
+    SSH for remote command execution.
+
+    QEMU guest agent for shutdown and state reporting.
+
+    Your Sunshine live ISO for rescue testing.
+
+Suggested directory structure:
+sunshine-testbench/
+\u251c\u2500\u2500 config/
+\u2502   \u251c\u2500\u2500 hardware/
+\u2502   \u2502   \u251c\u2500\u2500 uefi.json
+\u2502   \u2502   \u251c\u2500\u2500 bios.json
+\u2502   \u2502   \u251c\u2500\u2500 nvidia-virtual.json
+\u2502   \u2502   \u2514\u2500\u2500 hybrid.json
+\u2502   \u2514\u2500\u2500 scenarios/
+\u2502       \u251c\u2500\u2500 boot.json
+\u2502       \u251c\u2500\u2500 storage.json
+\u2502       \u251c\u2500\u2500 packages.json
+\u2502       \u251c\u2500\u2500 drivers.json
+\u2502       \u2514\u2500\u2500 network.json
+\u251c\u2500\u2500 images/
+\u2502   \u251c\u2500\u2500 golden-uefi.qcow2
+\u2502   \u251c\u2500\u2500 golden-bios.qcow2
+\u2502   \u251c\u2500\u2500 golden-btrfs.qcow2
+\u2502   \u2514\u2500\u2500 golden-ext4.qcow2
+\u251c\u2500\u2500 tests/
+\u2502   \u251c\u2500\u2500 test_boot.py
+\u2502   \u251c\u2500\u2500 test_storage.py
+\u2502   \u251c\u2500\u2500 test_packages.py
+\u2502   \u251c\u2500\u2500 test_graphics.py
+\u2502   \u251c\u2500\u2500 test_network.py
+\u2502   \u251c\u2500\u2500 test_configuration.py
+\u2502   \u2514\u2500\u2500 test_rescue.py
+\u251c\u2500\u2500 fixtures/
+\u251c\u2500\u2500 reports/
+\u2514\u2500\u2500 run.py
+5.2 Install the test dependencies
+
+On the Arch-based build machine:
+
+sudo pacman -S --needed \
+    qemu-desktop \
+    libvirt \
+    virt-manager \
+    virt-install \
+    edk2-ovmf \
+    dnsmasq \
+    bridge-utils \
+    python \
+    python-pip \
+    git \
+    jq \
+    expect \
+    swtpm
+
+Enable libvirt:
+
+sudo systemctl enable --now libvirtd
+
+Install Python test dependencies in an isolated environment:
+
+python -m venv .venv
+source .venv/bin/activate
+
+pip install pytest pytest-timeout pytest-xdist libvirt-python
+
+Verify virtualization:
+
+virsh list --all
+qemu-system-x86_64 --version
+
+5.3 Create golden installation images
+
+You need several clean reference installations.
+
+At minimum:
+
+Image
+	
+
+Firmware
+	
+
+Filesystem
+	
+
+Bootloader
+
+Golden 1
+	
+
+UEFI
+	
+
+Btrfs
+	
+
+GRUB
+
+Golden 2
+	
+
+UEFI
+	
+
+Ext4
+	
+
+GRUB
+
+Golden 3
+	
+
+BIOS
+	
+
+Btrfs
+	
+
+GRUB
+
+Golden 4
+	
+
+BIOS
+	
+
+Ext4
+	
+
+GRUB
+
+Also create:
+
+    Encrypted Btrfs installation.
+
+    Encrypted ext4 installation.
+
+    Separate home filesystem.
+
+    Separate EFI filesystem.
+
+    Multiple installed kernels.
+
+    Btrfs with several snapshots.
+
+    A system with an intentionally customized fstab.
+
+Use a fixed-size disposable virtual disk:
+
+qemu-img create -f qcow2 \
+    golden-uefi.qcow2 40G
+
+Install Sunshine OS into it using the actual Sunshine Calamares installer.
+
+The golden image should be boot-tested before being accepted.
+
+Do not use an image that has already been modified by a failure test as a new baseline.
+5.4 Disposable test instances
+
+Never intentionally break your golden image.
+
+Create a copy-on-write overlay for every test:
+
+qemu-img create \
+    -f qcow2 \
+    -F qcow2 \
+    -b golden-uefi.qcow2 \
+    test-001.qcow2
+
+The test VM can now modify its overlay without altering the original image.
+
+For example:
+
+virt-install \
+    --name sunshine-test-001 \
+    --memory 4096 \
+    --vcpus 4 \
+    --disk path=test-001.qcow2,format=qcow2 \
+    --cdrom sunshine-live.iso \
+    --network network=default \
+    --graphics spice \
+    --noautoconsole
+
+For actual UEFI tests, configure OVMF explicitly using the firmware files installed by edk2-ovmf.
+
+Use a separate VM definition for legacy BIOS.
+
+For the rescue test, boot the Sunshine live ISO and execute:
+
+sunshine-rescue --repair-all --json
+
+The --json option is a proposed interface that should be implemented in your rescue utility.
+5.5 Failure injection: all 40 scenarios
+
+Each scenario should have four stages:
+
+    Create a clean disposable installation.
+
+    Inject exactly one failure.
+
+    Run the appropriate Sunshine repair utility.
+
+    Verify that the original failure is resolved and unrelated system state is preserved.
+
+The following table maps the 40 failures to automated tests.
+
+ID
+	
+
+Failure injection
+	
+
+Expected verification
+
+01
+	
+
+Corrupt GRUB configuration syntax
+	
+
+grub-script-check succeeds and VM boots
+
+02
+	
+
+Remove GRUB EFI executable
+	
+
+EFI executable restored and firmware entry valid
+
+03
+	
+
+Remove Sunshine NVRAM entry
+	
+
+New boot entry exists and points to the correct ESP
+
+04
+	
+
+Remove an initramfs image
+	
+
+mkinitcpio -P recreates it
+
+05
+	
+
+Remove installed kernel modules
+	
+
+Matching kernel package restores module tree
+
+06
+	
+
+Insert invalid kernel parameter
+	
+
+Doctor detects it; validated correction restores boot
+
+07
+	
+
+Replace root UUID with a nonexistent UUID
+	
+
+Doctor detects mismatch and refuses guessing
+
+08
+	
+
+Set incorrect Btrfs root subvolume
+	
+
+Correct root subvolume is identified and boot configuration repaired
+
+09
+	
+
+Remount root read-only
+	
+
+Doctor detects the mount state and investigates kernel errors
+
+10
+	
+
+Inject Btrfs checksum errors in a redundant test filesystem
+	
+
+Scrub detects errors and repairs only when a valid replica exists
+
+11
+	
+
+Introduce ext4 metadata errors in a disposable disk
+	
+
+Offline e2fsck detects and repairs the supported condition
+
+12
+	
+
+Fill root filesystem
+	
+
+Doctor detects low space and performs approved cleanup
+
+13
+	
+
+Exhaust available inodes
+	
+
+Doctor detects inode exhaustion without arbitrary deletion
+
+14
+	
+
+Inject simulated disk-health warnings
+	
+
+Doctor reports storage failure and stops destructive actions
+
+15
+	
+
+Create a Btrfs metadata-space shortage
+	
+
+Doctor detects it and proposes bounded maintenance
+
+16
+	
+
+Remove configured swap file
+	
+
+Doctor detects unavailable swap and preserves unrelated filesystems
+
+17
+	
+
+Leave a pacman lock without a running process
+	
+
+Doctor removes the stale lock
+
+18
+	
+
+Corrupt a disposable package database entry
+	
+
+Doctor detects database inconsistency and follows recovery policy
+
+19
+	
+
+Introduce an invalid test keyring state
+	
+
+Doctor reports signature verification failure and refuses insecure installation
+
+20
+	
+
+Configure an unreachable mirror
+	
+
+Mirror utility identifies the failure and restores a valid mirrorlist
+
+21
+	
+
+Simulate an incomplete package update
+	
+
+Updater detects transaction inconsistency and refuses partial upgrades
+
+22
+	
+
+Remove a required package dependency
+	
+
+Doctor identifies and reinstalls the missing dependency
+
+23
+	
+
+Remove an installation-profile core package
+	
+
+Doctor restores the correct mandatory package
+
+24
+	
+
+Break an AUR build dependency
+	
+
+Updater isolates the AUR failure from repository updates
+
+25
+	
+
+Create .pacnew and .pacsave files
+	
+
+Config manager detects them and presents merge operations
+
+26
+	
+
+Install mismatched NVIDIA test packages
+	
+
+GPU tool identifies the mismatch and selects a valid supported profile
+
+27
+	
+
+Create incorrect hybrid graphics configuration
+	
+
+Hardware tool identifies both GPUs and restores a valid configuration
+
+28
+	
+
+Remove a simulated Broadcom driver package
+	
+
+Hardware tool identifies the missing supported module
+
+29
+	
+
+Stop PipeWire services
+	
+
+Audio tool restarts the appropriate user services
+
+30
+	
+
+Disable SDDM
+	
+
+Doctor detects the failed display manager and restores the service
+
+31
+	
+
+Introduce a broken Plasma user configuration
+	
+
+Doctor isolates the issue to the user profile and preserves the original
+
+32
+	
+
+Introduce invalid KWin/Wayland configuration
+	
+
+Doctor detects the compositor failure without globally disabling Wayland
+
+33
+	
+
+Disable NetworkManager
+	
+
+Doctor restores its service state
+
+34
+	
+
+Software-block Wi-Fi
+	
+
+Network tool identifies and removes the software block
+
+35
+	
+
+Introduce invalid DNS configuration
+	
+
+Network tool identifies failed resolution and restores the appropriate resolver
+
+36
+	
+
+Stop a required system service
+	
+
+Doctor identifies the service and restarts it if safe
+
+37
+	
+
+Replace an fstab UUID with an invalid one
+	
+
+Rescue tool detects the mismatch and refuses to invent a replacement
+
+38
+	
+
+Change /tmp permissions
+	
+
+Doctor restores mode 1777
+
+39
+	
+
+Introduce an incorrect system clock
+	
+
+Doctor identifies the synchronization failure
+
+40
+	
+
+Modify a managed package configuration file
+	
+
+Signed-manifest validation detects the change and offers restoration
+
+Some of these tests require special handling:
+
+    Disk-health tests should use simulated SMART results or virtual device error injection. A qcow2 file cannot accurately reproduce every physical disk failure.
+
+    NVIDIA testing should validate package selection and configuration using emulated or mocked hardware. It does not prove actual NVIDIA hardware compatibility.
+
+    Btrfs corruption testing should use disposable virtual block devices and controlled fault injection, never a production filesystem.
+
+    Secure Boot testing should use a separate OVMF variable store and disposable enrollment keys.
+
+    Network testing should use isolated virtual networks rather than modifying the host's network configuration.
+
+5.6 Example automated test
+
+Here is an actual pytest-style example for testing a missing initramfs.
+
+import subprocess
+from pathlib import Path
+
+
+def run(command, check=True):
+    return subprocess.run(
+        command,
+        check=check,
+        text=True,
+        capture_output=True
+    )
+
+
+def test_missing_initramfs(recovery_vm):
+    # The fixture creates a disposable VM
+    # from a verified Sunshine OS image.
+
+    image = "/boot/initramfs-linux.img"
+
+    # Inject failure.
+    recovery_vm.exec(
+        f"sudo rm -f {image}"
+    )
+
+    # Verify the failure exists.
+    result = recovery_vm.exec(
+        f"test -f {image}",
+        check=False
+    )
+
+    assert result.returncode != 0
+
+    # Run Sunshine repair.
+    recovery_vm.exec(
+        "sudo sunshine-doctor --fix"
+
+The recovery_vm fixture is a testbench component you will implement to manage the VM through libvirt and SSH.
+5.7 Example: test an incorrect fstab UUID
+
+This is particularly important because your rescue tool must never guess.
+
+def test_invalid_fstab_uuid(recovery_vm):
+    recovery_vm.exec(
+        "sudo cp -a /etc/fstab /etc/fstab.test-backup"
+    )
+
+    recovery_vm.exec(
+        "sudo sed -i "
+        "'s/UUID=[^ ]*/UUID=00000000-0000-0000-0000-000000000000/' "
+        "/etc/fstab"
+    )
+
+    result = recovery_vm.exec(
+        "sudo sunshine-doctor --json",
+        check=False
+    )
+
+    assert "fstab" in result.stdout.lower()
+
+    # The doctor must not silently invent
+    # a replacement UUID.
+    result = recovery_vm.exec(
+        "sudo sunshine-doctor --fix --json",
+        check=False
+    )
+
+    assert "requires_user" in result.stdout.lower()
+
+    # The incorrect UUID must remain untouched
+    # until the correct device is identified.
+    result = recovery_vm.exec(
+        "grep 00000000 /etc/fstab",
+        check=False
+    )
+
+    assert result.returncode == 0
+
+The expected behaviour is not necessarily a successful automatic repair.
+
+The expected behaviour is a safe refusal to make an uncertain change.
+5.8 Test the complete recovery environment
+
+Individual utility tests are not enough.
+
+You need full end-to-end tests.
+
+For each supported installation profile:
+
+    Create a clean VM.
+
+    Install Sunshine OS.
+
+    Create a snapshot.
+
+    Inject a failure that prevents normal boot.
+
+    Boot the Sunshine live ISO.
+
+    Run sunshine-rescue --repair-all.
+
+    Verify that the correct installed system was identified.
+
+    Verify that the filesystem was mounted correctly.
+
+    Verify that GRUB and initramfs were restored.
+
+    Reboot without the live ISO.
+
+    Verify successful login.
+
+    Run sunshine-doctor.
+
+    Compare the repaired system with the original installation profile.
+
+A recovery tool that repairs an installation but destroys its separate home partition has failed the test.
+5.9 Test matrix expansion
+
+Do not test only one VM configuration.
+
+I would establish these dimensions:
+
+Dimension
+	
+
+Test configurations
+
+Firmware
+	
+
+UEFI, BIOS
+
+Filesystem
+	
+
+Btrfs, ext4
+
+Encryption
+	
+
+Unencrypted, LUKS
+
+Boot
+	
+
+GRUB UEFI, GRUB BIOS
+
+Kernel
+	
+
+Standard, LTS, multiple kernels
+
+GPU
+	
+
+Virtio, QXL, emulated NVIDIA profile
+
+Storage
+	
+
+SATA, NVMe-like virtio, multiple disks
+
+Mount layout
+	
+
+Single root, separate home, separate EFI
+
+Networking
+	
+
+DHCP, DNS failure, disconnected
+
+Snapshots
+	
+
+None, several, booted snapshot
+
+Not every combination needs a separate full test. Use pairwise coverage for the large matrix, then add dedicated tests for high-risk combinations such as encrypted Btrfs with UEFI and multiple kernels.
+5.10 Continuous integration
+
+Every change to a repair tool should run:
+
+shellcheck scripts/*.sh
+
+Then:
+
+bats tests/unit/
+
+Then:
+
+pytest -v tests/integration/
+
+Finally:
+
+pytest -v tests/recovery/
+
+Suggested pipeline:
+
+COMMIT
+  |
+  v
+STATIC ANALYSIS
+  |
+  v
+UNIT TESTS
+  |
+  v
+PACKAGE BUILD
+  |
+  v
+INSTALLATION TESTS
+  |
+  v
+FAILURE INJECTION
+  |
+  v
+DOCTOR REPAIR TESTS
+  |
+  v
+LIVE RESCUE TESTS
+  |
+  v
+BOOT VERIFICATION
+  |
+  v
+RELEASE CANDIDATE
+
+For the signed manifest system, also test:
+
+    Invalid signatures.
+
+    Expired manifests.
+
+    Downgrade attempts.
+
+    Replayed manifests.
+
+    Missing tool binaries.
+
+    Incompatible tool versions.
+
+    Interrupted downloads.
+
+    Interrupted updates.
+
+    Manifest/tool version mismatches.
+
+The live ISO should contain a known-good recovery tool version even if the installed system's tools are broken.
+
+That is particularly important for your independently updated utilities.
+5.11 Reliability metrics and release criteria
+
+You need objective release gates.
+
+I recommend these initial targets:
+
+Metric
+	
+
+Initial target
+
+Doctor detection coverage
+	
+
+100% of supported failure scenarios
+
+Safe repair success
+	
+
+At least 95%
+
+Destructive repair without authorization
+	
+
+0
+
+Unintended user-data modification
+	
+
+0
+
+Successful recovery of supported boot failures
+	
+
+At least 95%
+
+Successful rollback to a verified snapshot
+	
+
+100% in supported test configurations
+
+Recovery tool crash rate
+	
+
+0 in the standard test suite
+
+Repeated repair idempotency
+	
+
+100%
+
+False-positive critical errors
+	
+
+Below 1%
+
+Invalid signed manifest acceptance
+	
+
+0
+
+These are proposed acceptance targets, not measured Sunshine OS results.
+
+For each test, record:
+
+{
+  "scenario": "missing-initramfs",
+  "injection_success": true,
+  "detection_success": true,
+  "repair_attempted": true,
+  "repair_success": true,
+  "verification_success": true,
+  "data_integrity": true,
+  "duration_seconds": 14.8,
+  "exit_code": 0
+}
+
+One additional test is essential: run the same repair twice.
+
+For example:
+
+sunshine-doctor --fix
+sunshine-doctor --fix
+
+The second execution should not introduce new changes, duplicate configuration entries, create unnecessary snapshots or damage an already repaired installation.
+
+That is how you verify idempotency rather than merely claiming it.
+Final engineering recommendations
+
+There are five architectural decisions I would prioritize before adding more utilities.
+1. Create a shared Sunshine OS repair engine
+
+Currently, you have multiple independent utilities that presumably implement some overlapping functionality.
+
+For example:
+
+    Doctor checks initramfs.
+
+    Updater checks initramfs.
+
+    Kernel manager rebuilds initramfs.
+
+    Boot repair rebuilds initramfs.
+
+    Rescue rebuilds initramfs.
+
+If each independently implements initramfs verification, you will eventually have five slightly different implementations.
+
+Instead:
+sunshine-core/
+\u251c\u2500\u2500 storage/
+\u2502   \u251c\u2500\u2500 detect.sh
+\u2502   \u251c\u2500\u2500 verify.sh
+\u2502   \u2514\u2500\u2500 repair.sh
+\u251c\u2500\u2500 boot/
+\u2502   \u251c\u2500\u2500 detect.sh
+\u2502   \u251c\u2500\u2500 verify.sh
+\u2502   \u2514\u2500\u2500 repair.sh
+\u251c\u2500\u2500 packages/
+\u2502   \u251c\u2500\u2500 detect.sh
+\u2502   \u251c\u2500\u2500 verify.sh
+\u2502   \u2514\u2500\u2500 repair.sh
+\u251c\u2500\u2500 hardware/
+\u2502   \u251c\u2500\u2500 detect.sh
+\u2502   \u251c\u2500\u2500 verify.sh
+\u2502   \u2514\u2500\u2500 repair.sh
+\u251c\u2500\u2500 config/
+\u2502   \u251c\u2500\u2500 detect.sh
+\u2502   \u251c\u2500\u2500 verify.sh
+\u2502   \u2514\u2500\u2500 repair.sh
+\u2514\u2500\u2500 transaction/
+    \u251c\u2500\u2500 backup.sh
+    \u251c\u2500\u2500 execute.sh
+    \u251c\u2500\u2500 rollback.sh
+    \u2514\u2500\u2500 log.sh
+
+Every utility calls the same underlying functions.
+
+For example:
+
+sunshine-core boot verify
+sunshine-core boot repair
+sunshine-core storage inspect
+sunshine-core packages verify
+
+This will significantly reduce duplicated logic.
+2. Make your signed manifest describe the system, not just tool versions
+
+Your existing signed manifest is a particularly valuable foundation.
+
+Extend it to describe:
+
+    Supported installation profiles.
+
+    Mandatory packages.
+
+    Optional packages.
+
+    Supported kernels.
+
+    Required services.
+
+    Driver compatibility.
+
+    Managed configuration files.
+
+    Migration versions.
+
+    Recovery capabilities.
+
+    Minimum compatible tool versions.
+
+For example:
+
+{
+  "schema": 1,
+  "release": "1.0.0",
+  "profiles": {
+    "plasma-desktop": {
+      "required": [
+        "base",
+        "systemd",
+        "linux",
+        "linux-firmware",
+        "plasma-workspace",
+        "kwin",
+        "sddm",
+        "grub",
+        "mkinitcpio",
+        "networkmanager",
+        "pipewire"
+      ],
+      "services": [
+        "sddm",
+        "NetworkManager"
+      ],
+      "capabilities": [
+        "uefi",
+        "grub",
+        "btrfs",
+        "ext4"
+      ]
+    }
+  }
+}
+
+This is illustrative; the real manifest should distinguish mandatory packages, profile-specific packages and alternative providers.
+
+The doctor should compare the installed system against its installation profile rather than against a hardcoded universal package list.
+3. Introduce a transactional repair journal
+
+Every repair should create a journal:
+/var/lib/sunshine/transactions/
+\u2514\u2500\u2500 2026-11-19-001/
+    \u251c\u2500\u2500 metadata.json
+    \u251c\u2500\u2500 plan.json
+    \u251c\u2500\u2500 actions.log
+    \u251c\u2500\u2500 backups/
+    \u251c\u2500\u2500 verification.json
+    \u2514\u2500\u2500 result.json
+
+Example:
+
+{
+  "transaction": "2026-11-19-001",
+  "operation": "initramfs-repair",
+  "status": "completed",
+  "backup_created": true,
+  "actions": [
+    "verify-boot-mount",
+    "verify-kernel-package",
+    "rebuild-initramfs",
+    "verify-initramfs"
+  ],
+  "rollback_available": false
+}
+
+This gives you:
+
+    Reproducibility.
+
+    Debugging information.
+
+    Crash recovery.
+
+    Auditability.
+
+    Better support reports.
+
+    A way to detect interrupted operations.
+
+Not every repair is reversible. Record that honestly.
+4. Treat the live ISO as an independent recovery product
+
+Your live ISO should not merely be an installer with a terminal.
+
+It should have a dedicated recovery environment.
+
+I would include:
+Sunshine Live
+\u251c\u2500\u2500 Install Sunshine OS
+\u251c\u2500\u2500 Repair installed system
+\u251c\u2500\u2500 Restore snapshot
+\u251c\u2500\u2500 Diagnose hardware
+\u251c\u2500\u2500 Test storage
+\u251c\u2500\u2500 Recover bootloader
+\u251c\u2500\u2500 Reset account password
+\u2514\u2500\u2500 Collect support report
+
+It should contain:
+
+    arch-chroot
+
+    cryptsetup
+
+    btrfs-progs
+
+    e2fsprogs
+
+    dosfstools
+
+    smartmontools
+
+    nvme-cli
+
+    efibootmgr
+
+    grub
+
+    mkinitcpio
+
+    pacman
+
+    Your recovery utilities.
+
+    A known-good signed utility manifest.
+
+The live environment must remain usable without Internet access for the fundamental recovery operations.
+
+Network access should be an optional enhancement, not a prerequisite for mounting, diagnosing and repairing a local installation.
+5. Make reliability a measurable product feature
+
+This is the most important strategic recommendation.
+
+Do not advertise Sunshine OS as:
+
+    Faster than Arch.
+
+    More optimized than CachyOS.
+
+    More customizable than EndeavourOS.
+
+    More feature-rich than Garuda.
+
+Those are difficult claims to prove and even harder to maintain.
+
+Instead, make the following promises measurable:
+
+Promise
+	
+
+How to prove it
+
+Updates are safer
+	
+
+Automated transaction and rollback testing
+
+Boot failures are recoverable
+	
+
+40-scenario rescue suite
+
+Hardware setup is easier
+	
+
+Hardware detection coverage
+
+The system is easier to maintain
+	
+
+Doctor detection and repair statistics
+
+Configuration changes are safer
+	
+
+Migration and merge testing
+
+Recovery preserves data
+	
+
+Automated filesystem and data-integrity comparisons
+
+Tools remain independently maintainable
+	
+
+Signed manifest and compatibility tests
+My proposed Sunshine OS development priorities
+
+    Shared repair engine
+
+    Consolidate your existing utilities around common detection, verification, backup and repair functions.
+
+    Transactional updater
+
+    Make every package update a verified operation with recovery preparation.
+
+    Live recovery environment
+
+    Test encrypted Btrfs, ext4, UEFI, BIOS and multiple-kernel installations.
+
+    Hardware intelligence
+
+    Develop the PCI database and validated GPU, hybrid graphics and laptop profiles.
+
+    Automated testbench
+
+    Implement the 40 failure scenarios and run them against every release candidate.
+
+    Control Center
+
+    Give ordinary users one interface for all the functionality already available through your CLI.
+
+My overall assessment: You already have the beginnings of something substantially more interesting than another Arch-based desktop distribution. The differentiator should be the engineering behind its recovery mechanisms.
+
+Garuda demonstrates the value of integrating maintenance, snapshots and hardware configuration. CachyOS demonstrates the value of exposing performance and kernel management. Manjaro demonstrates the value of hardware profiles. Arch provides the transparent package-management foundation.
+
+Sunshine OS should bring these ideas together around one principle:
+
+The user should not need to become a Linux administrator just to keep their computer working, but the system should never take away an experienced user's control.
+
+
+

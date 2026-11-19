@@ -15,5 +15,5 @@ Maintained by the senior developer only. Agents: work in your own git worktree a
 | T7 | Comparison of EndeavourOS / Garuda / CachyOS tools vs Sunshine OS | opencode compare | running | agent/compare |
 | T8 | break-repair harness (test/break-repair.sh, test/break/*.sh) | tak-7a | in progress | agent/tak-7a |
 | T9 | Research notes per breakage scenario | tak-7a | in progress | agent/tak-7a |
-| T10 | Compare Gemini/Grok/ChatGPT answers to the same design prompt | senior | Grok done, ChatGPT generating, Gemini not logged in | team/night-run |
+| T10 | Compare Gemini/Grok/ChatGPT answers to the same design prompt | senior + opencode | done: docs/team/research/ai-comparison.md (Gemini was not logged in) | team/night-run |
 | T11 | fastfetch/hyfetch logo PRs | tak-7a | waiting for the stable Sol release | agent/tak-7a |

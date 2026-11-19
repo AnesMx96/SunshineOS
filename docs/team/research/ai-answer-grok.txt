@@ -1,0 +1,319 @@
+Arch Linux Desktop Breakage Catalogue and Repair Tools
+You are a senior Linux distribution engineer. I maintain Sunshine OS, a desktop distribution based on Arch Linux (KDE Plasma 6 on Wayland, SDDM, GRUB, mkinitcpio, btrfs with snapper and grub-btrfs or ext4 with Timeshift, NetworkManager, PipeWire, Calamares installer, live ISO built with archiso). Its goal is to be more reliable and easier than EndeavourOS, Garuda Linux and CachyOS, so that professionals, gamers and ordinary users choose it over those and over Ubuntu. I already have these shell tools: a doctor (health check with --fix), a pacman repair tool, a boot repair tool, an updater that runs pacman/AUR/Flatpak, a rescue tool that works from the LIVE session (finds the installed system on any disk including LUKS and btrfs subvolumes, mounts it as fstab does, arch-chroot, reinstalls GRUB, rebuilds the initramfs, checks fstab UUIDs, resets passwords, runs fsck), a kernel manager, a performance profile (zram, sysctl, I/O schedulers, earlyoom), a gaming setup, a driver installer (NVIDIA open modules, Broadcom, laptop helpers), a desktop installer, pacman hooks that record "last update" and "incomplete initramfs", and idempotent migration scripts. Tools are updated independently of the ISO through a signed manifest.
+
+Please answer in these exact parts, as detailed and concrete as you can, with exact commands:
+
+PART 1. A catalogue of the 40 most likely ways an Arch-based desktop installation breaks or becomes unusable in real life (boot failures, update failures, driver failures, disk and filesystem problems, login and display problems, network problems, package database problems, user mistakes such as removing a core package or editing fstab wrongly). For each: a short name, how to DETECT it automatically and safely (exact command or file check), how to REPAIR it automatically (exact commands, in which environment: running system, or live session with chroot), the risk of the repair, and what must never be done automatically.
+
+PART 2. The order of operations for a complete one-command repair from the live session ("repair everything") and for a "doctor --fix" on a running system, with the reason for the order and where to stop and ask the user.
+
+PART 3. Which existing tools from other distributions (name the distribution, the package or script name and what exactly it does) are the best to copy or adapt for each of: system update safety, health checking, hardware driver detection (especially NVIDIA and hybrid graphics laptops), kernel management, snapshot and rollback, mirror ranking, pacnew merging, log collection for support requests, secure boot, performance tuning, gaming setup. Rank them and say which one you would pick for each and why.
+
+PART 4. The 15 features a new Arch-based distribution needs to be chosen by (a) professionals, (b) gamers, (c) ordinary users, in priority order, with one sentence on how to implement each as a small testable shell tool or pacman hook.
+
+PART 5. A test plan: how to test all the repairs in virtual machines automatically (break the system on purpose in each of the ways from part 1, run the repair, verify).
+
+Be specific, use numbered lists and code blocks, avoid generic advice.
+
+PART 1. Catalogue of the 40 most likely ways an Arch-based desktop installation breaks
+
+    Broken pacman database / partial upgrade lock
+    Detect: test -f /var/lib/pacman/db.lck || pacman -Qkk 2>&1 | grep -E 'warning|error' ; ls /var/lib/pacman/local/*/desc | wc -l vs expected.
+    Repair (running or chroot): rm -f /var/lib/pacman/db.lck; pacman -Syu --noconfirm or pacman -Syyu.
+    Risk: low if lock only. Never auto-remove packages that are still listed as installed.
+
+    Incomplete/corrupt package transaction
+    Detect: pacman -Qkk 2>&1 | grep -c 'is missing' ; find /var/cache/pacman/pkg -name '*.part'.
+    Repair: pacman -Syu --overwrite '*' then pacman -Qkk | grep missing | cut -d: -f1 | xargs -r pacman -S --noconfirm.
+    Risk: medium (overwrite). Never force --overwrite on critical files without snapshot.
+
+    Missing or broken keyring
+    Detect: pacman-key --list-keys 2>&1 | grep -q 'error\|No such' || pacman -Q archlinux-keyring.
+    Repair (chroot preferred): pacman-key --init; pacman-key --populate archlinux; pacman -Sy archlinux-keyring --noconfirm; pacman-key --populate.
+    Risk: low. Never delete /etc/pacman.d/gnupg blindly.
+
+    Out-of-date mirrorlist / unreachable mirrors
+    Detect: curl -sI $(grep -m1 '^Server' /etc/pacman.d/mirrorlist | cut -d= -f2) | head -1 or pacman -Sy --print 2>&1 | grep -E 'error|failed'.
+    Repair: reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist; pacman -Syy.
+    Risk: low. Never rank while offline without fallback.
+
+    Corrupt or missing /boot/vmlinuz / initramfs
+    Detect: ls /boot/vmlinuz-linux* /boot/initramfs-linux*.img 2>/dev/null | wc -l; file /boot/initramfs-linux.img.
+    Repair (chroot): mkinitcpio -P; grub-mkconfig -o /boot/grub/grub.cfg (or bootctl update).
+    Risk: medium. Never delete old kernels until new ones are confirmed bootable.
+
+    GRUB not installed / wrong EFI entry
+    Detect: efibootmgr -v 2>/dev/null | grep -i grub || ls /boot/efi/EFI/*/grubx64.efi.
+    Repair (live+chroot): grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=Sunshine; grub-mkconfig -o /boot/grub/grub.cfg.
+    Risk: medium (wrong disk). Never run without confirming the EFI partition UUID/mount.
+
+    Wrong root= UUID in GRUB / fstab
+    Detect: grep -E 'root=UUID|UUID=' /boot/grub/grub.cfg /etc/fstab; blkid.
+    Repair (chroot): regenerate fstab with genfstab -U / > /etc/fstab; grub-mkconfig -o /boot/grub/grub.cfg.
+    Risk: high. Never overwrite fstab without backup + verification of every UUID.
+
+    btrfs subvolume not mounted / wrong subvol=
+    Detect: findmnt -n -o OPTIONS / | grep -q subvol; cat /etc/fstab | grep btrfs.
+    Repair (live): mount with correct subvol=@ (or @root), then arch-chroot and fix fstab.
+    Risk: high. Never assume default subvolume names.
+
+    LUKS header / keyslot problems
+    Detect: cryptsetup luksDump /dev/sdX2 2>&1 | grep -E 'Keyslots|Version'.
+    Repair (live only): cryptsetup luksOpen ...; cryptsetup repair if needed; never auto-add keyslots.
+    Risk: extreme. Never run destructive cryptsetup without explicit user confirmation of passphrase.
+
+    Snapper / Timeshift snapshot mount failure
+    Detect: snapper list 2>&1; timeshift --list 2>&1.
+    Repair: remount .snapshots or Timeshift partition, then snapper create or restore.
+    Risk: medium. Never auto-delete the only remaining snapshot.
+
+    NVIDIA proprietary module not built for current kernel
+    Detect: ls /usr/lib/modules/$(uname -r)/extramodules/nvidia* 2>/dev/null; nvidia-smi 2>&1.
+    Repair (running or chroot): pacman -S nvidia-dkms nvidia-utils; dkms autoinstall; mkinitcpio -P.
+    Risk: medium. Never force blacklisting of nouveau without fallback.
+
+    Hybrid graphics (NVIDIA+Intel/AMD) PRIME / offload broken
+    Detect: prime-run glxinfo | grep vendor; cat /etc/X11/xorg.conf.d/*nvidia*.
+    Repair: reinstall nvidia-prime or switch to optimus-manager / envycontrol; regenerate configs.
+    Risk: medium. Never leave system without a fallback display server.
+
+    Broadcom / Realtek Wi-Fi firmware missing
+    Detect: dmesg | grep -E 'firmware|brcm|rtl'; lspci -nnk | grep -A3 Network.
+    Repair: pacman -S linux-firmware broadcom-wl-dkms (or appropriate); modprobe -r + reload.
+    Risk: low. Never load conflicting modules simultaneously.
+
+    PipeWire / WirePlumber service failure
+    Detect: systemctl --user status pipewire wireplumber; pactl info 2>&1.
+    Repair: systemctl --user restart pipewire wireplumber; pacman -S pipewire-pulse.
+    Risk: low. Never remove ALSA compatibility packages automatically.
+
+    SDDM / Plasma Wayland session crash loop
+    Detect: journalctl -b -u sddm -p err; ls ~/.local/share/sddm/xorg-session.log.
+    Repair: switch to X11 temporarily (sddm.conf Session=plasma), clear ~/.cache, reinstall plasma-workspace.
+    Risk: medium. Never delete entire home directory.
+
+    KDE Plasma config corruption
+    Detect: plasmashell --version; qdbus org.kde.KWin /KWin fails.
+    Repair: mv ~/.config/plasma* ~/.config/plasma-backup; kquitapp5 plasmashell; plasmashell &.
+    Risk: low (user configs). Never touch system /etc/xdg.
+
+    NetworkManager unmanaged or no connection
+    Detect: nmcli device status; systemctl status NetworkManager.
+    Repair: systemctl restart NetworkManager; nmcli networking on; nmcli connection up ....
+    Risk: low. Never wipe all connection profiles without backup.
+
+    DNS resolution broken after update
+    Detect: resolvectl status; dig @127.0.0.53 archlinux.org.
+    Repair: systemctl restart systemd-resolved; ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf.
+    Risk: low.
+
+    User removed critical package (e.g. systemd, glibc, mesa)
+    Detect: pacman -Q systemd glibc mesa 2>&1 | grep 'error: package'.
+    Repair (chroot): pacman -S --needed systemd glibc mesa ....
+    Risk: high. Never auto-install without listing what will be pulled.
+
+    fstab contains non-existent UUID / wrong options
+    Detect: findmnt --verify; cat /etc/fstab | while read; do blkid -U ...; done.
+    Repair (chroot): backup, regenerate with genfstab -U /mnt > /etc/fstab, verify.
+    Risk: high. Never auto-edit without dry-run + backup.
+
+    mkinitcpio HOOKS missing (encrypt, btrfs, resume)
+    Detect: grep -E 'HOOKS=|MODULES=' /etc/mkinitcpio.conf; lsinitcpio /boot/initramfs-linux.img | grep -E 'encrypt|btrfs'.
+    Repair: edit conf, mkinitcpio -P.
+    Risk: medium.
+
+    Earlyoom / OOM killer removed critical process
+    Detect: journalctl -b | grep -i 'earlyoom\|Out of memory'.
+    Repair: adjust /etc/default/earlyoom, restart service.
+    Risk: low.
+
+    zram / swap misconfiguration leading to thrashing
+    Detect: swapon --show; zramctl; free -h.
+    Repair: systemctl restart systemd-zram-setup@zram0; or recreate.
+    Risk: low.
+
+    Secure Boot enabled but unsigned kernel/modules
+    Detect: mokutil --sb-state; dmesg | grep -i 'secure boot\|mok'.
+    Repair: enroll keys with sbctl or disable SB temporarily from firmware.
+    Risk: high. Never auto-disable Secure Boot.
+
+    AUR helper left partial builds / orphaned packages
+    Detect: pacman -Qdtq; ls /tmp/yay* /var/tmp/pamac*.
+    Repair: pacman -Rns $(pacman -Qdtq); rm -rf /tmp/yay*.
+    Risk: low (orphans).
+
+    Flatpak runtime mismatch after system update
+    Detect: flatpak update --appstream; flatpak list --runtime | grep -v running.
+    Repair: flatpak update -y; flatpak repair.
+    Risk: low.
+
+    Locale / timezone / keyboard broken
+    Detect: localectl status; timedatectl.
+    Repair: localectl set-locale ...; timedatectl set-timezone ....
+    Risk: low.
+
+    XDG runtime dir / permission problems on /run/user
+    Detect: ls -ld /run/user/$(id -u); echo $XDG_RUNTIME_DIR.
+    Repair: loginctl enable-linger; systemctl --user daemon-reexec.
+    Risk: low.
+
+    Graphics driver blacklisted or wrong module order
+    Detect: lsmod | grep -E 'nvidia|nouveau|amdgpu|i915'; cat /etc/modprobe.d/*.
+    Repair: remove conflicting blacklist, mkinitcpio -P, reboot.
+    Risk: medium.
+
+    Initramfs built without microcode
+    Detect: lsinitcpio /boot/initramfs-linux.img | grep -E 'intel-ucode|amd-ucode'.
+    Repair: ensure packages installed, mkinitcpio -P.
+    Risk: low.
+
+    Btrfs balance / scrub interrupted leaving FS read-only
+    Detect: btrfs filesystem show; dmesg | grep -i 'btrfs.*readonly'.
+    Repair (live): btrfs check --repair (careful), then btrfs balance start.
+    Risk: high. Never run --repair without backup.
+
+    Timeshift / snapper snapshot on wrong device after disk change
+    Detect: compare snapshot device UUID with current.
+    Repair: update config, recreate.
+    Risk: medium.
+
+    Calamares left incomplete install (missing packages)
+    Detect: pacman -Q base linux linux-firmware networkmanager plasma-meta 2>&1.
+    Repair (chroot): install missing meta packages.
+    Risk: medium.
+
+    User edited /etc/default/grub with syntax error
+    Detect: grub-script-check /boot/grub/grub.cfg; grep -E 'GRUB_CMDLINE' /etc/default/grub.
+    Repair: restore from .pacsave or regenerate.
+    Risk: medium.
+
+    Pacnew files left unmerged (especially mkinitcpio, grub, fstab)
+    Detect: find /etc -name '*.pacnew'.
+    Repair: interactive pacdiff or automatic for known-safe files.
+    Risk: medium. Never auto-merge without diff review for critical files.
+
+    Kernel module signing / lockdown mode blocking modules
+    Detect: dmesg | grep -i 'lockdown\|module verification'.
+    Repair: set module.sig_enforce=0 temporarily or enroll keys.
+    Risk: high.
+
+    Display manager fails because of missing Wayland session file
+    Detect: ls /usr/share/wayland-sessions/plasma.desktop.
+    Repair: reinstall plasma-workspace.
+    Risk: low.
+
+    Audio device stuck after suspend (PipeWire)
+    Detect: pw-cli ls | grep -i sink; journalctl -b | grep -i 'pipewire.*suspend'.
+    Repair: systemctl --user restart pipewire-pulse; pulseaudio -k (compat).
+    Risk: low.
+
+    Filesystem full (especially /var or /boot)
+    Detect: df -h / /boot /var; du -sh /var/cache/pacman/pkg.
+    Repair: paccache -rk1; journalctl --vacuum-size=100M.
+    Risk: low. Never delete user data.
+
+    Broken symlink farm after partial package removal
+    Detect: find /usr -xtype l | head; pacman -Qkk 2>&1 | grep 'is a broken'.
+    Repair: reinstall the providing packages.
+    Risk: medium.
+
+PART 2. Order of operations
+
+Live session \u201crepair everything\u201d (one command):
+
+    Identify and unlock LUKS if present (ask for passphrase \u2013 stop and ask).
+    Detect filesystem type + subvolumes (btrfs) or mount points (ext4). Mount exactly as fstab would (read fstab from the candidate root).
+    Bind-mount /dev /proc /sys /run /tmp and EFI if separate.
+    arch-chroot into the system.
+    Backup critical files: /etc/fstab, /etc/default/grub, /etc/mkinitcpio.conf, pacman db.
+    Fix package database + keyring + mirrors (items 1-4).
+    Ensure base packages + kernels are present.
+    Regenerate fstab from live genfstab only if verification fails (ask user).
+    Rebuild all initramfs (mkinitcpio -P).
+    Reinstall bootloader (GRUB or systemd-boot) and regenerate config.
+    Fix NVIDIA/Broadcom modules if hardware detected.
+    Run fsck / btrfs check (read-only first).
+    Create a new snapper/Timeshift snapshot before any further changes.
+    Exit chroot, unmount cleanly, ask user to reboot.
+
+Stop and ask: any destructive action (fsck --repair, cryptsetup, fstab overwrite, Secure Boot key enrollment, deletion of snapshots).
+
+Running system doctor --fix:
+
+    Snapshot (snapper or Timeshift) \u2013 always first.
+    Check and clear pacman lock / partial upgrades.
+    Update keyring + mirrors.
+    pacman -Syu (with timeout and progress).
+    Rebuild initramfs if \u201cincomplete initramfs\u201d hook flagged.
+    Check and restart critical services (NetworkManager, SDDM, PipeWire).
+    Driver reinstall only if nvidia-smi or module load fails.
+    Pacnew report (never auto-merge critical).
+    Health summary + offer reboot if kernel/initramfs changed.
+
+Stop and ask: kernel switch, NVIDIA proprietary install, fstab changes, any removal of packages.
+
+PART 3. Best tools from other distributions to adapt
+
+    System update safety: EndeavourOS eos-update / eos-rankmirrors \u2013 ranked highest; clean, uses reflector + handles AUR safely. Garuda\u2019s update script is more aggressive (avoid).
+    Health checking: Fedora system-check / rpm -V style + Arch\u2019s own pacman -Qkk. Pick EndeavourOS doctor-like scripts + extend with your existing doctor.
+    Hardware driver detection (NVIDIA/hybrid): Ubuntu ubuntu-drivers + Pop!_OS hybrid scripts; also Garuda\u2019s garuda-hardware-detection. Best to adapt Ubuntu\u2019s detection logic + Arch nvidia-dkms path.
+    Kernel management: Manjaro mhwd-kernel / kernel-manager \u2013 cleanest UI + CLI. CachyOS kernel scripts second. Pick Manjaro style.
+    Snapshot and rollback: openSUSE Snapper (native) + grub-btrfs; Timeshift for ext4. Best combination already used by Garuda/Endeavour \u2013 keep and harden.
+    Mirror ranking: Arch reflector + EndeavourOS wrapper. Highest quality.
+    Pacnew merging: Arch pacdiff + etc-update (Gentoo style). Use pacdiff with a safe whitelist.
+    Log collection for support: journalctl --since + inxi -Fxxxz + hwinfo. Garuda and Endeavour both ship good collectors \u2013 adapt Garuda\u2019s.
+    Secure Boot: Fedora sbctl / shim tooling. Best modern choice.
+    Performance tuning: CachyOS / BORE / Zen kernels + Garuda performance profiles. Pick CachyOS sysctl + your existing performance tool.
+    Gaming setup: Proton-GE helpers from GloriousEggroll, Lutris, Steam bootstrap from Pop!_OS / Nobara. Nobara\u2019s gaming meta is the most complete to adapt.
+
+PART 4. 15 features (priority order)
+
+(a) Professionals
+
+    Atomic update + automatic pre-update snapshot \u2013 pacman hook that runs snapper/Timeshift create.
+    One-command system health + repair report \u2013 extend your doctor.
+    Verified boot + Secure Boot enrollment helper \u2013 sbctl wrapper.
+    Declarative package set + migration scripts \u2013 already planned, make idempotent.
+    Remote support log bundle (sanitized) \u2013 sunshine-support-bundle tool.
+
+(b) Gamers
+6. One-click NVIDIA open / proprietary + hybrid switch \u2013 extend driver installer.
+7. Game-mode + MangoHud + Proton-GE manager \u2013 small shell tool.
+8. Performance profile switcher (latency vs throughput) \u2013 your existing tool + sysctl.
+9. Automatic shader cache + DXVK/VKD3D version manager.
+10. Controller + headset udev + PipeWire low-latency preset.
+
+(c) Ordinary users
+11. Graphical \u201cRepair my system\u201d button that launches live-style repair or doctor --fix.
+12. Automatic mirror ranking + update notifier with clear progress.
+13. Snapshot browser with one-click rollback from GRUB.
+14. \u201cReset KDE settings\u201d and \u201cReset network\u201d safe buttons.
+15. First-boot wizard that detects hardware and offers driver/gaming/professional presets.
+
+PART 5. Automated test plan (VMs)
+
+Use QEMU/KVM + cloud-init or Packer + Ansible, or a simple bash driver with virt-install.
+
+For each of the 40 items:
+
+    Boot a clean Sunshine OS VM (btrfs + snapper and a second with ext4 + Timeshift).
+    Inject the failure:
+        rm /boot/vmlinuz-linux
+        echo 'UUID=wrong' >> /etc/fstab
+        pacman -Rdd systemd (in chroot)
+        mv /var/lib/pacman /var/lib/pacman.bak
+        blacklisting modules, corrupt initramfs, etc.
+    Snapshot the broken state.
+    Boot the live ISO, run the full \u201crepair everything\u201d path (or doctor --fix when possible).
+    Verify:
+        system boots to graphical target
+        pacman -Qkk clean
+        nvidia-smi / ip link / systemctl is-system-running
+        specific file hashes or service status for that failure
+    Record pass/fail + time + logs.
+    Run the matrix nightly on a CI runner (GitHub Actions with nested KVM or a dedicated test host).
+
+Maintain a YAML description of each break method so the test harness is data-driven.
+
+
+
