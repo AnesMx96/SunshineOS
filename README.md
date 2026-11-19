@@ -159,6 +159,13 @@ Besides the steps below, the installer notes the install location (`shellprocess
 | Command | Purpose |
 | --- | --- |
 | `sunshine-doctor` | Health check of identity, package manager, desktop, boot files, services and restore points. `--fix` repairs what is safe to repair and never removes your packages or files; `--quiet` prints only problems |
+| `sunshine-rescue` | From the live session: finds the installed system (LUKS, btrfs `@`, ext4, XFS), mounts it like fstab does and repairs package database, kernel, initramfs, GRUB, fstab; password reset, fsck, chroot |
+| `sunshine-toolsync` | Pulls the newest tools from [sunshine-tools](https://github.com/tak0dan/sunshine-tools) (signed manifest, SHA-256 per file, rollback); `sunshine-update` runs it first |
+| `sunshine-kernel` | Several kernels side by side (linux, lts, zen, hardened, CachyOS ...): install, remove, default boot entry |
+| `sunshine-performance` | One switch for zram, sysctl, I/O schedulers, earlyoom, ananicy, TRIM, journal limits; `bench` prints the numbers |
+| `sunshine-gaming` | Graphics stack for the detected GPU, Steam, Proton, Lutris, Gamemode, MangoHud, Gamescope and tuning |
+| `sunshine-drivers` | Detects hardware and installs drivers: NVIDIA (open modules, DKMS for every kernel, Wayland settings, PRIME), Broadcom Wi-Fi, laptop helpers, guest tools |
+| `sunshine-desktops` | Installs GNOME, Xfce, Cinnamon, MATE, Budgie, LXQt, COSMIC, i3, Sway, Hyprland, niri, Openbox, Qtile, bspwm or Awesome next to Plasma |
 | `sunshine-snapshot` | Restore points (btrfs snapshots) in plain words: list, create, delete |
 | `sunshine-boot-repair` | Rebuilds the initramfs, checks the kernel image, regenerates GRUB and its menu on an installed system |
 | `sunshine-fix-pacman` | Clears stale locks, repairs a broken keyring, ranks mirrors, rebuilds damaged databases, repairs the AUR helper; every step reports what really happened |
