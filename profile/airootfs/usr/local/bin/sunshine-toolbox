@@ -52,6 +52,8 @@ SECTIONS = [
     (tr("Keep it healthy"), [
         (tr("🔄  Update everything"), tr("System, apps and extras, with restore points"), lambda: run(["sunshine-update"]), True),
         (tr("🩺  Health check"), tr("Find and repair problems (identity, boot, packages, snapshots)"), lambda: term("sunshine-doctor --fix", "Health check"), True),
+        (tr("🔧  Something does not work"), tr("Network, sound, screen, graphics or disk space: check and repair"), lambda: term("sunshine-fix all", "Fix"), have("sunshine-fix")),
+        (tr("🆘  Get help"), tr("Make a report (personal data removed) to send to whoever helps you"), lambda: term("sunshine-support", "Support report"), have("sunshine-support")),
         (tr("🧹  Clean up"), tr("Free disk space: old downloads, unused packages, logs"), lambda: term("sunshine-cleanup", "Clean up"), True),
         (tr("📦  Fix the package manager"), tr("Lock file, keyring, mirrors, databases"), lambda: term("sunshine-fix-pacman", "Fix pacman"), True),
     ]),
