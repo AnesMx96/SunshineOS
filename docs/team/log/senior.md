@@ -16,3 +16,13 @@ features taken from EndeavourOS / Garuda / CachyOS, a separate tools repository 
 - 02:00 fastfetch logo for upstream prepared locally (scratch/fastfetch-pr, branch logo-sunshineos, ASCII '#' from the repo's own logo). Upstream needs a Logo Request issue first and a stable release: submit after the replacement Sol release is out.
 - 02:19 moved to branch team/night-run; shared layout docs/team/ created (owner order, relayed).
 - 02:21 merged agent/lint and agent/translate (reviewed).
+- 01:40-02:30 Built and tested (static/VM smoke): sunshine-rescue (live repair), -kernel, -performance, -gaming, -drivers, -desktops, -toolsync (+tools repo
+  github.com/tak0dan/sunshine-tools, signed, tamper-tested), -migrate (4 migrations), -pacnew, -reset-plasma, -fix (network/audio/display/gpu/storage),
+  -support (sanitized report), -backup (restic), -state-hook (initramfs_error, last_update), game-run. Doctor extended: every kernel, core packages,
+  obsolete repos, sync dbs, partial upgrade, grub.cfg content, kernel image content, hooks, services, sudoers, clock, DNS, microcode, encrypt hook.
+  Update: smart retry by failure reason, snapshot guard, news manual-intervention check, nvidia/kernel sync check, faillock, keyring first, disk check.
+  Boot: safe-graphics entry, 4G overlay. Research: EndeavourOS ISO unpacked (eos-update, eos-hwtool, calamares), CachyOS-Settings, Garuda pkgbuilds (health,
+  update, hooks, migrations, hardware profiles). ChatGPT and Grok answered the same 5-part design prompt (ai-answers/); Gemini not logged in.
+- 02:24 fast ISO (before the later tools) built; install test on Sol-inst started (test/install-test.sh). Host under load 17 (agents' git snapshots).
+- Lessons: pkill -f kills own shell; sudo -E drops env; VirtualBox NAT guest cannot reach 10.0.2.2 ports (use host LAN IP); opencode free model hit usage limit
+  after ~25 min (switch model); shellcheck was missing so earlier lint runs were silent (installed in ~/.local/bin from pip shellcheck-py).
