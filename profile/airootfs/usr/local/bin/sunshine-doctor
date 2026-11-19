@@ -135,7 +135,12 @@ PY
     if [ $FIX = 1 ]; then cp --sparse=never --reflink=never /boot/vmlinuz-linux /boot/vmlinuz-linux.dense && mv -f /boot/vmlinuz-linux.dense /boot/vmlinuz-linux && fx "kernel rewritten"; fi; fi
 fi
 if grep -q menuentry /boot/grub/grub.cfg 2>/dev/null; then ok "GRUB menu present"; else bad "/boot/grub/grub.cfg is missing or has no boot entries"; [ $FIX = 1 ] && grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 && grep -q menuentry /boot/grub/grub.cfg && fx "GRUB menu regenerated"; fi
-if [ -d /sys/firmware/efi ]; then mountpoint -q /boot/efi && ok "EFI partition mounted" || warn "EFI partition not mounted at /boot/efi (kernel/GRUB updates may not reach it)"; fi
+if [ -d /sys/firmware/efi ]; then
+  if mountpoint -q /boot/efi; then ok "EFI partition mounted"
+  else warn "EFI partition not mounted at /boot/efi (kernel/GRUB updates may not reach it)"
+    if [ $FIX = 1 ] && grep -qE '[[:space:]]/boot/efi[[:space:]]' /etc/fstab; then mount /boot/efi 2>/dev/null && mountpoint -q /boot/efi && fx "EFI partition mounted"; fi
+  fi
+fi
 if findmnt --verify >/dev/null 2>&1; then ok "/etc/fstab consistent"; else warn "/etc/fstab has problems (run: findmnt --verify)"; fi
 fi
 
