@@ -113,6 +113,15 @@ step_pacman() {
   fi
   if [ -x "$M/usr/local/bin/sunshine-repo" ]; then inchroot /usr/local/bin/sunshine-repo ensure --quiet >>"$LOG" 2>&1; fi
 }
+step_core() {
+  sec "Core packages"
+  local missing=() p
+  for p in base linux-firmware mkinitcpio grub sudo networkmanager sddm pipewire pacman; do inchroot pacman -Qq "$p" >/dev/null 2>&1 || missing+=("$p"); done
+  inchroot pacman -Qq linux linux-lts linux-zen linux-hardened linux-cachyos >/dev/null 2>&1 || missing+=(linux)
+  if [ ${#missing[@]} -eq 0 ]; then ok "$(loc "core packages are installed")"; return; fi
+  echo "$(loc "missing"): ${missing[*]}"
+  if inchroot pacman -S --noconfirm --needed "${missing[@]}" >>"$LOG" 2>&1; then ok "$(loc "reinstalled"): ${missing[*]}"; else fail "$(loc "could not reinstall (no network? see") $LOG)"; fi
+}
 step_kernel() {
   sec "Kernel and initramfs"
   local k base any=0
@@ -136,6 +145,16 @@ step_fstab() {
       LABEL=*) blkid -L "${src#LABEL=}" >/dev/null 2>&1 || { bad "fstab: $mp: $(loc "missing label") ${src#LABEL=}"; n=$((n+1)); };;
     esac
   done < <(awk '$1!~/^#/ && NF>=3 && $2!="none" && $3!="swap" {print $1, $2}' "$M/etc/fstab")
+  # the EFI partition is identified safely (FAT32 with the ESP flag), so a wrong UUID there can be corrected; other entries are never guessed
+  if [ -d /sys/firmware/efi ] && [ $n -gt 0 ]; then
+    local esp old new
+    esp=$(lsblk -rpno NAME,PARTTYPE,FSTYPE | awk 'tolower($2)=="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" && $3=="vfat"{print $1; exit}')
+    old=$(awk '$2=="/boot/efi" || $2=="/efi" || $2=="/boot" {print $1}' "$M/etc/fstab" | grep '^UUID=' | head -1)
+    if [ -n "$esp" ] && [ -n "$old" ] && ! blkid -U "${old#UUID=}" >/dev/null 2>&1; then
+      new=$(blkid -s UUID -o value "$esp")
+      if [ -n "$new" ]; then cp "$M/etc/fstab" "$M/etc/fstab.sunshine-old" && sed -i "s/${old#UUID=}/$new/" "$M/etc/fstab" && ok "$(loc "EFI partition UUID in fstab corrected to") $new ($(loc "old file kept as fstab.sunshine-old"))" && n=$((n-1)); fi
+    fi
+  fi
   [ $n = 0 ] && ok "$(loc "every fstab entry points to an existing partition")" || fail "$n $(loc "fstab entries do not match the partitions: fix with: sunshine-rescue chroot, then nano /etc/fstab")"
 }
 efi_dir() { local t; for t in /boot/efi /boot /efi; do [ "$(findmnt -rno FSTYPE "$M$t" 2>/dev/null | head -1)" = vfat ] && { echo "$t"; return; }; done; }
@@ -198,7 +217,7 @@ case "$cmd" in
     line=$(pick "${1:-}") || exit 1
     [ "${SUNSHINE_RESCUE_FSCK:-1}" = 1 ] && do_fsck "$line"
     do_mount "$line"
-    step_pacman; step_kernel; step_fstab; step_boot; step_doctor
+    step_pacman; step_core; step_kernel; step_fstab; step_boot; step_doctor
     do_umount
     echo
     if [ $fails = 0 ]; then printf '%s\n' "${G}$(loc "Repair finished. Restart and remove the live medium.")${N}"; exit 0

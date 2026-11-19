@@ -31,6 +31,15 @@ if [ -d /etc/pacman.d/gnupg ] && pacman-key --list-keys 2>/dev/null | grep -qi '
 else bad "package keyring missing or empty"
   [ $FIX = 1 ] && pacman-key --init >/dev/null 2>&1 && pacman-key --populate >/dev/null 2>&1 && fx "keyring initialised"; fi
 if out=$(pacman -Dk 2>&1); then ok "package database consistent"; else bad "package database problem: $(echo "$out" | head -2 | tr '\n' ' ')"; fi
+for r in $(pacman-conf --repo-list 2>/dev/null); do
+  db=/var/lib/pacman/sync/$r.db
+  if [ ! -s "$db" ]; then dbs_bad="$dbs_bad $r"; elif ! bsdtar -tf "$db" >/dev/null 2>&1; then dbs_bad="$dbs_bad $r"; rm -f "$db"; fi
+done
+if [ -n "${dbs_bad:-}" ]; then warn "package databases missing or damaged:$dbs_bad"; [ $FIX = 1 ] && pacman -Sy >/dev/null 2>&1 && fx "package databases downloaded again"; else ok "package databases are intact"; fi
+# a partial upgrade (pacman -Sy, then installing something, without -u) is the classic way to break Arch
+if [ -r /var/log/pacman.log ] && awk '/synchronizing package lists/{sync=1} /starting full system upgrade/{sync=0} /\[ALPM\] (installed|upgraded) /{ if (sync) bad=1 } END{exit !bad}' /var/log/pacman.log; then
+  warn "packages were installed after a database refresh without a full upgrade (partial upgrade): sunshine-update fixes it"; [ $FIX = 1 ] && pacman -Syu --noconfirm >/tmp/sunshine-partial.log 2>&1 && fx "system fully upgraded"
+else ok "no partial upgrade detected"; fi
 # the packages without which the system cannot boot or log in (a broken removal, a bad cleanup): --fix puts them back from the repositories
 core_missing=
 for p in base linux-firmware mkinitcpio grub sudo networkmanager sddm plasma-desktop pipewire pacman sunshine-base; do pacman -Qq "$p" >/dev/null 2>&1 || core_missing="$core_missing $p"; done
@@ -40,7 +49,8 @@ else bad "core packages missing:$core_missing"
   if [ $FIX = 1 ]; then pacman -S --noconfirm --needed $core_missing >/tmp/sunshine-core.log 2>&1 && fx "reinstalled:$core_missing" || { bad "could not reinstall (see /tmp/sunshine-core.log)"; tail -3 /tmp/sunshine-core.log; }; fi
 fi
 for r in community testing staging extra-testing core-testing multilib-testing; do grep -q "^\[$r\]" /etc/pacman.conf 2>/dev/null && { bad "pacman.conf has the obsolete or unstable repository [$r]"; [ $FIX = 1 ] && /usr/local/bin/sunshine-fix-pacman >/dev/null 2>&1 && fx "obsolete repositories removed"; }; done
-n=$(find /etc -name '*.pacnew' 2>/dev/null | wc -l); [ "$n" -gt 0 ] && warn "$n config update(s) waiting for review (*.pacnew)" || ok "no pending .pacnew files"
+n=$(find /etc -name '*.pacnew' 2>/dev/null | wc -l)
+if [ "$n" -gt 0 ]; then warn "$n config update(s) waiting for review (*.pacnew)"; [ $FIX = 1 ] && [ -x /usr/local/bin/sunshine-pacnew ] && /usr/local/bin/sunshine-pacnew auto 2>/dev/null | sed 's/^/    /' && fx "safe config updates applied (sunshine-pacnew review shows the rest)"; else ok "no pending .pacnew files"; fi
 if /usr/local/bin/sunshine-repo check --quiet; then ok "[sunshine] repository is configured"
 else bad "the [sunshine] package repository is missing or wrong in /etc/pacman.conf"
   [ $FIX = 1 ] && /usr/local/bin/sunshine-repo ensure --quiet && fx "[sunshine] repository restored"; fi
@@ -71,6 +81,7 @@ nk=0
 for kd in /usr/lib/modules/*/; do
   [ -f "$kd/vmlinuz" ] || continue; nk=$((nk+1))
   base=linux; [ -f "$kd/pkgbase" ] && base=$(cat "$kd/pkgbase")
+  if [ -f "/boot/vmlinuz-$base" ] && ! cmp -s "$kd/vmlinuz" "/boot/vmlinuz-$base"; then bad "/boot/vmlinuz-$base differs from the installed kernel (damaged or half-copied)"; [ $FIX = 1 ] && cp --sparse=never --reflink=never "$kd/vmlinuz" "/boot/vmlinuz-$base" && chmod 644 "/boot/vmlinuz-$base" && fx "vmlinuz-$base rewritten"; fi
   [ -f "/boot/vmlinuz-$base" ] && ok "kernel image present: $base" || { bad "/boot/vmlinuz-$base missing"; [ $FIX = 1 ] && cp --sparse=never --reflink=never "$kd/vmlinuz" "/boot/vmlinuz-$base" && chmod 644 "/boot/vmlinuz-$base" && fx "vmlinuz-$base restored"; }
   if [ -s "/boot/initramfs-$base.img" ]; then ok "initramfs present: $base"
   else bad "/boot/initramfs-$base.img missing or empty"
@@ -115,7 +126,7 @@ PY
   else bad "kernel image has holes: GRUB would fail with 'premature end of file'"
     if [ $FIX = 1 ]; then cp --sparse=never --reflink=never /boot/vmlinuz-linux /boot/vmlinuz-linux.dense && mv -f /boot/vmlinuz-linux.dense /boot/vmlinuz-linux && fx "kernel rewritten"; fi; fi
 fi
-[ -f /boot/grub/grub.cfg ] && ok "GRUB menu present" || { bad "/boot/grub/grub.cfg missing"; [ $FIX = 1 ] && grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 && fx "GRUB menu regenerated"; }
+if grep -q menuentry /boot/grub/grub.cfg 2>/dev/null; then ok "GRUB menu present"; else bad "/boot/grub/grub.cfg is missing or has no boot entries"; [ $FIX = 1 ] && grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 && grep -q menuentry /boot/grub/grub.cfg && fx "GRUB menu regenerated"; fi
 if [ -d /sys/firmware/efi ]; then mountpoint -q /boot/efi && ok "EFI partition mounted" || warn "EFI partition not mounted at /boot/efi (kernel/GRUB updates may not reach it)"; fi
 if findmnt --verify >/dev/null 2>&1; then ok "/etc/fstab consistent"; else warn "/etc/fstab has problems (run: findmnt --verify)"; fi
 fi
@@ -154,6 +165,27 @@ if [ $LIVE = 0 ]; then
     if grep -qE '^HOOKS=.*(encrypt|sd-encrypt)' /etc/mkinitcpio.conf; then ok "initramfs can unlock the encrypted disk"
     else bad "the root is encrypted but mkinitcpio.conf has no encrypt hook: the next boot would stop at the passphrase"; fi
   fi
+fi
+
+if [ $LIVE = 0 ]; then
+  bad_hooks=$(. /etc/mkinitcpio.conf 2>/dev/null; for h in "${HOOKS[@]}"; do [ -e "/usr/lib/initcpio/install/$h" ] || [ -e "/etc/initcpio/install/$h" ] || printf '%s ' "$h"; done)
+  [ -z "$bad_hooks" ] && ok "mkinitcpio hooks all exist" || { bad "mkinitcpio.conf names hooks that do not exist: $bad_hooks (the next kernel update would fail to build an initramfs)"; }
+  for svc in NetworkManager sddm; do
+    pacman -Qq "$([ $svc = sddm ] && echo sddm || echo networkmanager)" >/dev/null 2>&1 || continue
+    systemctl is-enabled --quiet "$svc" 2>/dev/null && ok "$svc is enabled" || { bad "$svc is not enabled"; [ $FIX = 1 ] && systemctl enable "$svc" >/dev/null 2>&1 && fx "$svc enabled"; }
+  done
+  systemctl is-active --quiet NetworkManager 2>/dev/null || { warn "NetworkManager is not running"; [ $FIX = 1 ] && systemctl start NetworkManager >/dev/null 2>&1 && fx "NetworkManager started"; }
+  if command -v visudo >/dev/null; then
+    if visudo -c >/dev/null 2>&1; then ok "sudo configuration is valid"
+    else bad "sudo configuration has a syntax error (sudo would refuse to work)"
+      if [ $FIX = 1 ]; then
+        for f in /etc/sudoers.d/*; do [ -f "$f" ] && ! visudo -cf "$f" >/dev/null 2>&1 && mv "$f" "$f.broken" && fx "broken sudoers.d file set aside: $f.broken"; done
+        visudo -c >/dev/null 2>&1 || { [ -f /etc/sudoers.pacnew ] && cp /etc/sudoers /etc/sudoers.broken && cp /etc/sudoers.pacnew /etc/sudoers && fx "sudoers restored from the packaged copy (old one kept as sudoers.broken)"; }
+      fi
+    fi
+  fi
+  [ "$(timedatectl show -p NTPSynchronized --value 2>/dev/null)" = yes ] || { [ $FIX = 1 ] && timedatectl set-ntp true >/dev/null 2>&1 && systemctl restart systemd-timesyncd >/dev/null 2>&1 && fx "time synchronisation switched on"; }
+  ru=$(df --output=pcent / | tail -1 | tr -dc 0-9); if [ "${ru:-0}" -ge 95 ] && [ $FIX = 1 ] && [ -x /usr/local/bin/sunshine-fix ]; then /usr/local/bin/sunshine-fix storage >/dev/null 2>&1; [ "$(df --output=pcent / | tail -1 | tr -dc 0-9)" -lt "$ru" ] && fx "space freed (old package files, logs, thumbnails)"; fi
 fi
 
 sec "Restore points"
