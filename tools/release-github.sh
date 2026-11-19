@@ -6,11 +6,12 @@
 #   tools/release-github.sh                      split + upload (DRY=1 only prints what it would do)
 #   SITE_DIR=<clone of the site repo> DOWNLOAD_URL=<Worker URL> tools/release-github.sh     also write SITE_DIR/release.json
 #   JSON_ONLY=1 SITE_DIR=... DOWNLOAD_URL=... tools/release-github.sh                       only rewrite release.json from the release
+#   ISO=/path/to/file.iso tools/release-github.sh   publish that file instead of the newest ISO in out/
 # Needs: gh (logged in), rsync not required.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 REPO=${GH_REPO:-tak0dan/SunshineOS}; PART_MIB=${PART_MIB:-1900}
-iso=$(ls -t out/*.iso 2>/dev/null | head -1); [ -n "$iso" ] || { echo "no ISO in out/ (run ./make-iso.sh)"; exit 1; }
+iso=${ISO:-$(ls -t out/*.iso 2>/dev/null | head -1)}; [ -n "$iso" ] && [ -f "$iso" ] || { echo "no ISO in out/ (run ./make-iso.sh, or give ISO=/path/to.iso)"; exit 1; }
 name=$(basename "$iso"); ver=$(sed -E 's/^sunshineos-([0-9.]+)-.*/\1/' <<<"$name")
 # Release name: SunshineOS_<D>.<M>.<months>.<big>.<small>_<Release|Beta|Testing>_<date>.iso
 #   <D>.<M>     day.month of the numbering anchor date          (ANCHOR file, kept local and out of git; SUNSHINE_ANCHOR=YYYY-MM-DD overrides)
