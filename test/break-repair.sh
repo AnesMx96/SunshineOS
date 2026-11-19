@@ -47,8 +47,20 @@ bad_count() { printf '%s\n' "$1" | grep -c '✘'; }
 export -f vm vmr vm_su 2>/dev/null; export SSH_PORT SSH_USER SSH_PASS
 vbox() { VBoxManage "$@" >>"$LOG" 2>&1; }
 vm_state() { VBoxManage showvminfo "$NAME" --machinereadable 2>/dev/null | sed -n 's/^VMState="\(.*\)"/\1/p'; }
-power_off() { [ "$(vm_state)" = running ] && vbox controlvm "$NAME" poweroff; local i; for i in 1 2 3 4 5 6 7 8 9 10; do [ "$(vm_state)" = running ] || return 0; sleep 2; done; }
-power_on() { vbox startvm "$NAME" --type gui; }
+power_off() {   # wait until the VM really is powered off (the session lock is released a moment later)
+  local i st; st=$(vm_state)
+  [ "$st" = poweroff ] || [ "$st" = aborted ] || vbox controlvm "$NAME" poweroff
+  for ((i=0; i<40; i++)); do st=$(vm_state); { [ "$st" = poweroff ] || [ "$st" = aborted ]; } && { sleep 3; return 0; }; sleep 2; done
+  return 1
+}
+desktop_env() {   # a VM window needs the desktop session's variables (a shell started over ssh has none)
+  [ -n "${WAYLAND_DISPLAY:-}${DISPLAY:-}" ] && return 0
+  local pid; pid=$(pgrep -u "$(id -u)" -x Hyprland | head -1); [ -n "$pid" ] || pid=$(pgrep -u "$(id -u)" -x plasmashell | head -1)
+  [ -n "$pid" ] || return 1
+  # shellcheck disable=SC2163
+  while IFS= read -r kv; do export "$kv"; done < <(tr '\0' '\n' < "/proc/$pid/environ" | grep -E '^(WAYLAND_DISPLAY|DISPLAY|XDG_RUNTIME_DIR|XDG_SESSION_TYPE|DBUS_SESSION_BUS_ADDRESS|HYPRLAND_INSTANCE_SIGNATURE)=')
+}
+power_on() { desktop_env; local i; for ((i=0; i<10; i++)); do vbox startvm "$NAME" --type gui && return 0; sleep 4; done; return 1; }
 
 for t in sshpass VBoxManage; do command -v "$t" >/dev/null || { echo "missing: $t"; exit 2; }; done
 VBoxManage showvminfo "$NAME" >/dev/null 2>&1 || { echo "no such VM: $NAME"; exit 2; }
