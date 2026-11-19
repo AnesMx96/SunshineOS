@@ -4,4 +4,3 @@ TITLE="/etc/pacman.d/mirrorlist emptied"
 break() { vmr 'cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.break-backup && : > /etc/pacman.d/mirrorlist'; }
 expect_detect() { echo 'mirror'; }
 verify() { vmr 'grep -q ^Server /etc/pacman.d/mirrorlist && pacman -Sy --noconfirm >/dev/null 2>&1'; }
-repair_alt() { vmr 'cp /etc/pacman.d/mirrorlist.break-backup /etc/pacman.d/mirrorlist'; }

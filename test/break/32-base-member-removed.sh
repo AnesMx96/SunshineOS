@@ -4,4 +4,3 @@ TITLE="a small member of the base group removed (which)"
 break() { vmr 'pacman -Rdd --noconfirm which'; }
 expect_detect() { echo 'base (group|member)|core packages missing'; }
 verify() { vmr 'pacman -Qq which'; }
-repair_alt() { vmr 'pacman -S --noconfirm --needed which'; }

@@ -5,4 +5,3 @@ precondition() { vm 'test -d /sys/firmware/efi && command -v efibootmgr >/dev/nu
 break() { vmr 'efibootmgr | grep -i SunshineOS | grep -oE "^Boot[0-9A-Fa-f]+" | sed "s/^Boot//" | while read -r b; do [ -n "$b" ] && efibootmgr -B -b "$b"; done'; }
 expect_detect() { echo 'NVRAM|boot entry|SunshineOS'; }
 verify() { vmr 'efibootmgr | grep -qi SunshineOS'; }
-repair_alt() { vmr 'grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=SunshineOS --recheck >/dev/null 2>&1'; }
