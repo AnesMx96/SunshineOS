@@ -65,6 +65,7 @@ SECTIONS = [
         (tr("🛠  Rescue an installed system"), tr("From the live session: find the installed system and repair its boot, packages and kernel"),
          lambda: term("sunshine-rescue", "Rescue"), LIVE and have("sunshine-rescue")),
         (tr("🥾  Repair the boot loader"), tr("Reinstall GRUB and rebuild boot files"), lambda: term("sunshine-boot-repair", "Boot repair"), not LIVE),
+        (tr("🎨  Reset the desktop look"), tr("Theme, panels or icons look wrong? Put the Sunshine defaults back (your settings are saved first)"), lambda: term("sunshine-reset-plasma", "Reset desktop"), have("sunshine-reset-plasma") and not LIVE),
         (tr("🪪  Check the system identity"), tr("Make sure the system is still Sunshine OS"), lambda: term("sunshine-identity check; sunshine-identity apply", "Identity"), True),
     ]),
     (tr("Make it yours"), [

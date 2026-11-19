@@ -139,6 +139,23 @@ if [ "${use:-0}" -ge 95 ]; then bad "root disk ${use}% full"; elif [ "${use:-0}"
 [ "$(systemctl is-active NetworkManager 2>/dev/null)" = active ] && ok "network service running" || warn "NetworkManager is not running"
 [ -d "/usr/lib/modules/$(uname -r)" ] && ok "running kernel matches installed modules" || warn "kernel was updated: restart to use it"
 
+if [ $LIVE = 0 ]; then
+  # lessons from other distributions' health tools and AI reviews: things that leave a system "booting but unusable"
+  grep -q ' / .* ro[ ,]' /proc/mounts && bad "the root file system is mounted read-only (a disk error forced it): run sunshine-rescue fsck from the live session" || ok "root is writable"
+  if [ -L /etc/resolv.conf ] && [ ! -e /etc/resolv.conf ]; then bad "/etc/resolv.conf is a dead link (no DNS)"; [ $FIX = 1 ] && ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && systemctl enable --now systemd-resolved >/dev/null 2>&1 && fx "DNS link restored"
+  elif [ ! -s /etc/resolv.conf ]; then bad "/etc/resolv.conf is empty (no DNS)"; [ $FIX = 1 ] && ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && systemctl enable --now systemd-resolved >/dev/null 2>&1 && fx "DNS link restored"
+  else ok "DNS configuration present"; fi
+  if [ -f /boot/grub/grub.cfg ]; then
+    case "$(grep -m1 vendor_id /proc/cpuinfo | awk '{print $3}')" in GenuineIntel) u=intel-ucode;; AuthenticAMD) u=amd-ucode;; *) u=;; esac
+    if [ -n "$u" ] && pacman -Qq "$u" >/dev/null 2>&1; then grep -q "$u" /boot/grub/grub.cfg && ok "microcode is in the boot menu" || { warn "$u is installed but the GRUB menu does not load it"; [ $FIX = 1 ] && grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 && fx "boot menu rebuilt (microcode added)"; }; fi
+  fi
+  # an encrypted root needs the encrypt hook in the initramfs, or the system cannot ask for the passphrase
+  if grep -qE 'cryptdevice=|rd.luks' /proc/cmdline || [ "$(findmnt -no SOURCE / | cut -c1-12)" = /dev/mapper/ ]; then
+    if grep -qE '^HOOKS=.*(encrypt|sd-encrypt)' /etc/mkinitcpio.conf; then ok "initramfs can unlock the encrypted disk"
+    else bad "the root is encrypted but mkinitcpio.conf has no encrypt hook: the next boot would stop at the passphrase"; fi
+  fi
+fi
+
 sec "Restore points"
 if [ $LIVE = 1 ]; then ok "live session: restore points are checked on the installed system"
 else
